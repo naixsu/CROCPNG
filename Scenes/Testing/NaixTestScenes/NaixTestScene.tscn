@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://l08x6btacggs"]
+
+[ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="1_sd0yw"]
+[ext_resource type="PackedScene" uid="uid://s741h0igfq5k" path="res://Scenes/Testing/NaixTestScenes/TestPlatforms.tscn" id="2_ac24b"]
+
+[node name="NaixTestScene" type="Node"]
+
+[node name="Player" parent="." instance=ExtResource("1_sd0yw")]
+position = Vector2(225, 146)
+
+[node name="TestPlatform" parent="." instance=ExtResource("2_ac24b")]
+position = Vector2(147, 334)
+rotation = 0.855211
+
+[node name="TestPlatform2" parent="." instance=ExtResource("2_ac24b")]
+position = Vector2(561, 152)
+
+[node name="TestPlatform3" parent="." instance=ExtResource("2_ac24b")]
+position = Vector2(718, 349)
+rotation = -1.5708
+scale = Vector2(0.59, 3.885)

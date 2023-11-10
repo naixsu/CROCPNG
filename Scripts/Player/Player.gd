@@ -5,7 +5,6 @@ extends CharacterBody2D
 
 # Other global vars here
 
-
 func _physics_process(delta):
 	
 	var direction = Input.get_vector("Left", "Right", "Up", "Down")
@@ -18,7 +17,6 @@ func _physics_process(delta):
 	
 	velocity = direction * speed
 	move_and_slide()
-
 
 func update_gun_rotation():
 	# Rotates the gun arrow according to the mouse position

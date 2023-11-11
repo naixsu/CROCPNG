@@ -1,7 +1,10 @@
 extends CharacterBody2D
 
+class_name Player
+
 # Export vars here
 @export var speed = 300
+@export var health = 100
 @export var Bullet : PackedScene
 
 # Onready vars here
@@ -14,17 +17,18 @@ signal player_fired_bullet(bullet, pos, dir)
 
 # Other global vars here
 var dead = false
-var health = 100
 
 func _ready():
 	anim.play("idle")
 	
-
 func _physics_process(delta):
 	var direction = Input.get_vector("Left", "Right", "Up", "Down")
 	
 	velocity = direction * speed
 	
+	# Play the death animation
+	# TODO:
+	# Remove this later when adding the actual death feature
 	if Input.is_action_just_pressed("ui_accept"):
 		dead = not dead
 		anim.play("death")
@@ -35,6 +39,9 @@ func _physics_process(delta):
 		update_animation()
 
 func _unhandled_input(event):
+	# TODO:
+	# Handle Weapon stuff in a separate node for reusability
+	# using signals to fire off from Weapon -> Player -> BulletManager
 	if event.is_action_pressed("Fire"):
 		fire()
 	

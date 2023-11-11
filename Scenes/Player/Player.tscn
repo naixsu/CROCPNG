@@ -162,3 +162,5 @@ rotation = 1.57079
 [node name="FireCooldown" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="StatsContainer (Not functioning for now)" type="Node2D" parent="."]

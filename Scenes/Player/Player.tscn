@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=25 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Texture2D" uid="uid://gxnhy48xdgac" path="res://icon.svg" id="1_57ol8"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
 [ext_resource type="PackedScene" uid="uid://cmksfq3oqnge3" path="res://Scenes/Bullet/Bullet.tscn" id="2_m4sy4"]
 [ext_resource type="Texture2D" uid="uid://7trsw0omcww3" path="res://Assets/Sprites/Player/PlayerDeath.png" id="2_wignm"]
+[ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="3_il21h"]
 [ext_resource type="Texture2D" uid="uid://dxjulnx8uck65" path="res://Assets/Sprites/Player/PlayerIdle.png" id="3_qjmfi"]
 [ext_resource type="Texture2D" uid="uid://clug3m78gurbu" path="res://Assets/Sprites/Player/PlayerRun.png" id="4_xxbxq"]
 
@@ -133,9 +134,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqhsm"]
 size = Vector2(64, 58)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_xmmu7")
 Bullet = ExtResource("2_m4sy4")
+Enemy = ExtResource("3_il21h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

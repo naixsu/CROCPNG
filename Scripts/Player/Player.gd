@@ -1,11 +1,15 @@
 extends CharacterBody2D
 
 class_name Player
+###
+# Grouped to: Player
+###
 
 # Export vars here
 @export var speed = 300
 @export var health = 100
 @export var Bullet : PackedScene
+@export var Enemy : PackedScene
 
 # Onready vars here
 @onready var anim = $AnimatedSprite2D
@@ -32,6 +36,12 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		dead = not dead
 		anim.play("death")
+	
+	if Input.is_action_just_pressed("Spawn"):
+		var e = Enemy.instantiate()
+		e.global_position = get_global_mouse_position()
+		get_tree().root.add_child(e)
+		print("Spawned Enemy")
 		
 	if not dead:
 		update_gun_rotation()

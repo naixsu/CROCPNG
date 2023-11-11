@@ -28,4 +28,4 @@ scale = Vector2(0.59, 3.885)
 script = ExtResource("4_v2twn")
 
 [node name="EnemyA" parent="." instance=ExtResource("5_ea47m")]
-position = Vector2(519, 297)
+position = Vector2(766, 246)

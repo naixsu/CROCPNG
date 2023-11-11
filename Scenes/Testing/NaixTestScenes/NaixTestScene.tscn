@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://l08x6btacggs"]
+[gd_scene load_steps=6 format=3 uid="uid://l08x6btacggs"]
 
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/NaixTestScene.gd" id="1_s22sb"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="1_sd0yw"]
 [ext_resource type="PackedScene" uid="uid://s741h0igfq5k" path="res://Scenes/Testing/NaixTestScenes/TestPlatforms.tscn" id="2_ac24b"]
+[ext_resource type="Script" path="res://Scripts/Bullet/BulletManager.gd" id="4_v2twn"]
+[ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="5_ea47m"]
 
 [node name="NaixTestScene" type="Node"]
+script = ExtResource("1_s22sb")
 
 [node name="Player" parent="." instance=ExtResource("1_sd0yw")]
 position = Vector2(225, 146)
@@ -19,3 +23,9 @@ position = Vector2(561, 152)
 position = Vector2(718, 349)
 rotation = -1.5708
 scale = Vector2(0.59, 3.885)
+
+[node name="BulletManager" type="Node2D" parent="."]
+script = ExtResource("4_v2twn")
+
+[node name="EnemyA" parent="." instance=ExtResource("5_ea47m")]
+position = Vector2(766, 246)

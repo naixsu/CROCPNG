@@ -13,8 +13,9 @@ class_name Player
 
 # Onready vars here
 @onready var anim = $AnimatedSprite2D
-@onready var gun_rotation = $GunRotation
-@onready var fire_cooldown = $FireCooldown
+@onready var gunRotation = $GunRotation
+@onready var fireCooldown = $FireCooldown
+@onready var multiplayerSynchronizer = $MultiplayerSynchronizer
 
 # Signals here
 signal player_fired_bullet(bullet, pos, dir)
@@ -23,30 +24,32 @@ signal player_fired_bullet(bullet, pos, dir)
 var dead = false
 
 func _ready():
+	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	anim.play("idle")
 	
 func _physics_process(delta):
-	var direction = Input.get_vector("Left", "Right", "Up", "Down")
-	
-	velocity = direction * speed
-	
-	# Play the death animation
-	# TODO:
-	# Remove this later when adding the actual death feature
-	if Input.is_action_just_pressed("ui_accept"):
-		dead = not dead
-		anim.play("death")
-	
-	if Input.is_action_just_pressed("Spawn"):
-		var e = Enemy.instantiate()
-		e.global_position = get_global_mouse_position()
-		get_tree().root.add_child(e)
-		print("Spawned Enemy")
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		var direction = Input.get_vector("Left", "Right", "Up", "Down")
 		
-	if not dead:
-		update_gun_rotation()
-		move_and_slide()
-		update_animation()
+		velocity = direction * speed
+		
+		# Play the death animation
+		# TODO:
+		# Remove this later when adding the actual death feature
+		if Input.is_action_just_pressed("ui_accept"):
+			dead = not dead
+			anim.play("death")
+		
+		if Input.is_action_just_pressed("Spawn"):
+			var e = Enemy.instantiate()
+			e.global_position = get_global_mouse_position()
+			get_tree().root.add_child(e)
+			print("Spawned Enemy")
+			
+		if not dead:
+			update_gun_rotation()
+			move_and_slide()
+			update_animation()
 
 func _unhandled_input(event):
 	# TODO:
@@ -58,7 +61,7 @@ func _unhandled_input(event):
 
 func update_gun_rotation():
 	# Rotates the gun arrow according to the mouse position
-	gun_rotation.look_at(get_global_mouse_position())
+	gunRotation.look_at(get_global_mouse_position())
 
 func update_animation():
 	flip_sprite()
@@ -76,10 +79,12 @@ func flip_sprite():
 		anim.flip_h = false
 
 func fire():
-	if fire_cooldown.is_stopped():
+	if fireCooldown.is_stopped():
 		var b = Bullet.instantiate()
-	#	b.global_position = gun_rotation.get_node("BulletSpawn").global_position
-	#	b.rotation_degrees = gun_rotation.rotation_degrees
+#		b.global_position = gunRotation.get_node("BulletSpawn").global_position
+#		b.rotation_degrees = gunRotation.rotation_degrees
+#	# 	Add bullet to the tree
+#		get_tree().root.add_child(b)
 	#
 	#	# Set direction of bullet
 	#	var target = get_global_mouse_position()
@@ -89,10 +94,10 @@ func fire():
 		# Add bullet to the tree
 	#	get_tree().root.add_child(b)
 		var target = get_global_mouse_position()
-		var pos = gun_rotation.get_node("BulletSpawn").global_position
+		var pos = gunRotation.get_node("BulletSpawn").global_position
 		var direction_to_mouse = pos.direction_to(target).normalized()
 		emit_signal("player_fired_bullet", b, pos, direction_to_mouse)
-		fire_cooldown.start()
+		fireCooldown.start()
 
 
 func handle_hit():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=26 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Texture2D" uid="uid://gxnhy48xdgac" path="res://icon.svg" id="1_57ol8"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
@@ -134,6 +134,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqhsm"]
 size = Vector2(64, 58)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ffpdr"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_xmmu7")
 Bullet = ExtResource("2_m4sy4")
@@ -166,3 +172,6 @@ wait_time = 0.2
 one_shot = true
 
 [node name="StatsContainer (Not functioning for now)" type="Node2D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ffpdr")

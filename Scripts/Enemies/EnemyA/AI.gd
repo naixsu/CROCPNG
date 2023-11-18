@@ -8,7 +8,7 @@ enum State {
 	DEAD
 }
 
-@onready var detection_zone = $DetectionZone
+@onready var detectionZone = $DetectionZone
 
 
 var current_state = State.IDLE : set = set_state
@@ -34,6 +34,7 @@ func _process(delta):
 					parent.idle()
 			else:
 				print("No player found")
+				set_state(State.IDLE)
 		State.DEAD:
 			parent.handle_death()
 
@@ -50,7 +51,8 @@ func set_state(new_state):
 
 
 func _on_detection_zone_body_entered(body):
-	if body.is_in_group("Player") and current_state != State.DEAD:
+	print("_on_detection_zone_body_entered ", body)
+	if body.is_in_group("Player") and current_state != State.DEAD and current_state != State.ENGAGE:
 		set_state(State.ENGAGE)
 		player = body
 
@@ -60,3 +62,17 @@ func _on_detection_zone_body_exited(body):
 	if body.is_in_group("Player") and current_state != State.DEAD:
 		set_state(State.IDLE)
 		player = null
+		
+		# Might wanna check if another player is in the vicinity
+		
+		check_for_player()
+
+func check_for_player():
+	print("Checking for another player")
+	# This is not actually the "nearest" player per se
+	# might need to actually calculate and sort this array
+	var nearest_player = detectionZone.get_overlapping_bodies() # Array
+	
+	if len(nearest_player) > 0: # Player/s found
+		_on_detection_zone_body_entered(nearest_player[0])
+	

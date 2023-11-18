@@ -41,7 +41,7 @@ func _physics_process(delta):
 
 #		if Input.is_action_just_pressed("Fire"):
 #			fire.rpc()
-		can_shoot_in_physics()
+#		can_shoot_in_physics()
 		
 		# Play the death animation
 		# TODO:
@@ -56,8 +56,8 @@ func _physics_process(delta):
 #			get_tree().root.add_child(e)
 #			print("Spawned Enemy")
 		
-		if Input.is_action_just_pressed("Spawn"):
-			spawn.rpc()
+#		if Input.is_action_just_pressed("Spawn"):
+#			spawn.rpc()
 			
 		if not dead:
 			update_gun_rotation()
@@ -79,6 +79,7 @@ func _unhandled_input(event):
 		
 #	if event.is_action_pressed("Spawn"):
 #		spawn.rpc()
+	pass
 
 
 func can_shoot_in_physics():
@@ -104,7 +105,7 @@ func flip_sprite():
 	elif get_global_mouse_position().x > global_position.x:
 		anim.flip_h = false
 
-@rpc("any_peer", "call_local", "unreliable")
+@rpc("any_peer", "call_remote")
 func spawn():
 	var e = Enemy.instantiate()
 	e.global_position = get_global_mouse_position()
@@ -120,7 +121,6 @@ func fire():
 		b.rotation_degrees = gunRotation.rotation_degrees
 ##		Add bullet to the tree
 		get_tree().root.add_child(b)
-		
 		
 #		var b = Bullet.instantiate()
 #		b.global_position = gunRotation.get_node("BulletSpawn").global_position

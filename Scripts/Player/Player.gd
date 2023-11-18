@@ -73,12 +73,13 @@ func _unhandled_input(event):
 	# TODO:
 	# Handle Weapon stuff in a separate node for reusability
 	# using signals to fire off from Weapon -> Player -> BulletManager
-	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		if event.is_action_pressed("Fire"):
-			fire.rpc()
+#	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+#		if event.is_action_pressed("Fire"):
+#			fire.rpc()
 		
 #	if event.is_action_pressed("Spawn"):
 #		spawn.rpc()
+	pass
 
 
 func can_shoot_in_physics():
@@ -120,7 +121,6 @@ func fire():
 		b.rotation_degrees = gunRotation.rotation_degrees
 ##		Add bullet to the tree
 		get_tree().root.add_child(b)
-		
 		
 #		var b = Bullet.instantiate()
 #		b.global_position = gunRotation.get_node("BulletSpawn").global_position

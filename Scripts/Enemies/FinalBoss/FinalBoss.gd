@@ -28,6 +28,7 @@ func _process(delta: float) -> void:
 	rotater.rotation_degrees = fmod(newRotation, 360)
 
 func _on_shoot_timer_timeout():
-	for s in rotater.get_children():
-		bulletManager.handle_bullet_spawned(bullet, body.global_position, body.global_direction)
+#	for s in rotater.get_children():
+#		bulletManager.handle_bullet_spawned(bullet, body.global_position, body.global_direction)
+	pass
 		

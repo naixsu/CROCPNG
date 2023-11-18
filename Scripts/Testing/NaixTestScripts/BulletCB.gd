@@ -3,7 +3,8 @@ extends CharacterBody2D
 @export var speed = 1000
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+#var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity = 0
 var direction : Vector2
 
 func _ready():
@@ -39,17 +40,28 @@ func _physics_process(delta):
 #			print("class name ", collider.get_class())
 			print("I collided with ", collisionLayer)
 			print("I'm on mask ", collisionMask)
-			if collisionLayer == 1:
-				if collisionMask == 4: # Enemy
-					print("collided with Enemy", collider)
-					collider.handle_hit()		
-					queue_free()
-				elif collisionMask == 2: # Platform
-					print("collided with Platform", collider)
-					queue_free()
-					
-				elif collisionMask == 256: # Player
-					print("Colliding with player. Ignoring")
+			if collider.is_in_group("Enemy"):
+				print("Collided with enemy ", collider)
+				collider.handle_hit()
+				queue_free()
+			if collider.is_in_group("Player"):
+				print("Collided with player. Ignoring ", collider)
+			
+			if collider.is_in_group("Platform"):
+				print("Collided with platform ", collider)
+				queue_free()
+#			if collisionLayer == 1:
+#				if collisionMask == 4: # Enemy
+#					print("collided with Enemy", collider)
+#					collider.handle_hit()		
+#					print(collider.is_in_group("Enemy"))
+#					queue_free()
+#				elif collisionMask == 2: # Platform
+#					print("collided with Platform", collider)
+#					queue_free()
+#
+#				elif collisionMask == 256: # Player
+#					print("Colliding with player. Ignoring")
 				
 
 			

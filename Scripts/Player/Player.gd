@@ -50,27 +50,35 @@ func _physics_process(delta):
 			dead = not dead
 			anim.play("death")
 		
+#		if Input.is_action_just_pressed("Spawn"):
+#			var e = Enemy.instantiate()
+#			e.global_position = get_global_mouse_position()
+#			get_tree().root.add_child(e)
+#			print("Spawned Enemy")
+		
 		if Input.is_action_just_pressed("Spawn"):
-			var e = Enemy.instantiate()
-			e.global_position = get_global_mouse_position()
-			get_tree().root.add_child(e)
-			print("Spawned Enemy")
+			spawn.rpc()
 			
 		if not dead:
 			update_gun_rotation()
-			move_and_slide()
+#			move_and_slide()
+			move_and_collide(velocity * delta)
 			update_animation()
 #	else: # TODO: Maybe add this in the future
 #		global_position = global_position.lerp(syncPos, .5)
 #		rotation_degrees = lerpf(rotation_degrees, syncRot, .5)
 
 # Commenting as it has synchronization issues
-#func _unhandled_input(event): 
-#	# TODO:
-#	# Handle Weapon stuff in a separate node for reusability
-#	# using signals to fire off from Weapon -> Player -> BulletManager
-#	if event.is_action_pressed("Fire"):
-#		fire.rpc()
+func _unhandled_input(event): 
+	# TODO:
+	# Handle Weapon stuff in a separate node for reusability
+	# using signals to fire off from Weapon -> Player -> BulletManager
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		if event.is_action_pressed("Fire"):
+			fire.rpc()
+		
+#	if event.is_action_pressed("Spawn"):
+#		spawn.rpc()
 
 
 func can_shoot_in_physics():
@@ -96,6 +104,13 @@ func flip_sprite():
 	elif get_global_mouse_position().x > global_position.x:
 		anim.flip_h = false
 
+@rpc("any_peer", "call_local", "unreliable")
+func spawn():
+	var e = Enemy.instantiate()
+	e.global_position = get_global_mouse_position()
+	get_tree().root.add_child(e)
+	print("Spawned Enemy")
+
 @rpc("any_peer", "call_local")
 func fire():
 	if fireCooldown.is_stopped():
@@ -103,8 +118,10 @@ func fire():
 		var b = BulletCB.instantiate()
 		b.global_position = gunRotation.get_node("BulletSpawn").global_position
 		b.rotation_degrees = gunRotation.rotation_degrees
-#		Add bullet to the tree
+##		Add bullet to the tree
 		get_tree().root.add_child(b)
+		
+		
 #		var b = Bullet.instantiate()
 #		b.global_position = gunRotation.get_node("BulletSpawn").global_position
 #		b.rotation_degrees = gunRotation.rotation_degrees
@@ -121,8 +138,8 @@ func fire():
 	#	get_tree().root.add_child(b)
 #		var target = get_global_mouse_position()
 #		var pos = gunRotation.get_node("BulletSpawn").global_position
-#		var direction_to_mouse = pos.direction_to(target).normalized()
-#		emit_signal("player_fired_bullet", b, pos, direction_to_mouse)
+#		var directionToMouse = pos.direction_to(target).normalized()
+#		emit_signal("player_fired_bullet", b, pos, directionToMouse)
 
 		fireCooldown.start()
 

@@ -1,20 +1,26 @@
-extends CharacterBody2D
+extends Area2D
 
-@export var speed = 1000
+class_name Bullet
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var direction : Vector2
 
-func _ready():
-	direction = Vector2(1, 0).rotated(rotation)
+@export var speed = 10
 
+var direction := Vector2.ZERO
 
 func _physics_process(delta):
-	# Add the gravity.
-	velocity = speed * direction
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	if direction != Vector2.ZERO:
+		var velocity = direction * speed
+		
+		global_position += velocity
+		
+
+func set_direction(direction):
+	self.direction = direction
 
 
-	move_and_slide()
+func _on_body_entered(body):
+	if body.has_method("handle_hit"):
+		body.handle_hit()
+		queue_free()
+
+

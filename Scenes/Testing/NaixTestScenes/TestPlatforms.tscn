@@ -6,10 +6,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmu7a"]
 size = Vector2(157, 30)
 
-[node name="TestPlatform" type="Node2D"]
+[node name="TestPlatform" type="Node2D" groups=["Platform"]]
 script = ExtResource("1_p0m2i")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Platform"]]
+collision_mask = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
 scale = Vector2(1.23438, 0.234375)

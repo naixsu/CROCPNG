@@ -154,8 +154,7 @@ properties/3/sync = false
 properties/3/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-collision_layer = 2
-collision_mask = 257
+collision_mask = 4
 script = ExtResource("1_xmmu7")
 Bullet = ExtResource("2_m4sy4")
 Enemy = ExtResource("3_il21h")
@@ -190,6 +189,4 @@ one_shot = true
 [node name="StatsContainer (Not functioning for now)" type="Node2D" parent="."]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_interval = 0.1
-delta_interval = 0.1
 replication_config = SubResource("SceneReplicationConfig_ffpdr")

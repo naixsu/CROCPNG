@@ -6,6 +6,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ledut"]
 
 [node name="BulletCB" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 6
 script = ExtResource("1_p6l13")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]

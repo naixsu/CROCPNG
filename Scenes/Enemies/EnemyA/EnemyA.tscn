@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bvfw8vhc4i3ac"]
+[gd_scene load_steps=29 format=3 uid="uid://bvfw8vhc4i3ac"]
 
 [ext_resource type="Texture2D" uid="uid://dhjqul1exjhlp" path="res://Assets/Sprites/EnemyA/EnemyAIdle.png" id="1_2t4uv"]
 [ext_resource type="Texture2D" uid="uid://b47o86gd8adkm" path="res://Assets/Sprites/EnemyA/EnemyADeath.png" id="1_gjskw"]
@@ -163,7 +163,15 @@ size = Vector2(38, 62)
 [sub_resource type="CircleShape2D" id="CircleShape2D_dctnj"]
 radius = 373.374
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wno4l"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+
 [node name="EnemyA" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_jn4pi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -182,10 +190,12 @@ script = ExtResource("5_5kow7")
 
 [node name="DetectionZone" type="Area2D" parent="AI"]
 collision_layer = 0
-collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AI/DetectionZone"]
 shape = SubResource("CircleShape2D_dctnj")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wno4l")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_entered"]

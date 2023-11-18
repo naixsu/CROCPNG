@@ -20,11 +20,6 @@ func _ready():
 
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 # Gets called on the server and clients
 func peer_connected(id):
 	print("Player connected: " + str(id))

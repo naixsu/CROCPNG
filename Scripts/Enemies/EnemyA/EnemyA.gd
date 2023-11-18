@@ -8,11 +8,12 @@ class_name Enemy
 
 @onready var anim = $AnimatedSprite2D
 @onready var ai = $AI
-
+@onready var multiplayerSynchronizer = $MultiplayerSynchronizer
 @export var health = 100
 @export var speed = 50
 
 func _ready():
+	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	anim.play("idle")
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)

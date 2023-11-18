@@ -164,6 +164,7 @@ size = Vector2(38, 62)
 radius = 373.374
 
 [node name="EnemyA" type="CharacterBody2D" groups=["Enemy"]]
+collision_mask = 4
 script = ExtResource("1_jn4pi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

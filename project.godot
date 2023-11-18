@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="CROCPNG"
-run/main_scene="res://Scenes/Testing/NaixTestScenes/NaixTestScene.tscn"
+run/main_scene="res://Scenes/Testing/NaixTestScenes/Multiplayer.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*res://Scripts/Testing/NaixTestScripts/GameManager.gd"
 
 [display]
 

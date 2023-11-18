@@ -14,6 +14,9 @@ func _ready():
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
+	
+	if "--server" in OS.get_cmdline_args():
+		host_game()
 
 	pass # Replace with function body.
 
@@ -29,6 +32,11 @@ func peer_connected(id):
 # Gets called on the server and clients
 func peer_disconnected(id):
 	print("Player disconnected: " + str(id))
+	GameManager.players.erase(id)
+	var players = get_tree().get_nodes_in_group("Player")
+	for i in players:
+		if i.name == str(id):
+			i.queue_free()
 
 # Called only from clients
 func connected_to_server():
@@ -53,8 +61,7 @@ func connection_failed():
 	print("Connection failed")
 	
 
-
-func _on_host_button_down():
+func host_game():
 	peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, 2)
 	
@@ -66,6 +73,10 @@ func _on_host_button_down():
 	multiplayer.set_multiplayer_peer(peer)
 	print("Waiting for players")
 	
+	# send_player_information(nameEdit.text, multiplayer.get_unique_id())
+
+func _on_host_button_down():
+	host_game()
 	send_player_information(nameEdit.text, multiplayer.get_unique_id())
 	pass # Replace with function body.
 

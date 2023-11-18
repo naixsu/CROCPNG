@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgiky6rcbuxga"]
+[gd_scene load_steps=8 format=3 uid="uid://cgiky6rcbuxga"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestMultiplayerScene.gd" id="1_cahup"]
 [ext_resource type="PackedScene" uid="uid://s741h0igfq5k" path="res://Scenes/Testing/NaixTestScenes/TestPlatforms.tscn" id="2_1merq"]
+[ext_resource type="PackedScene" uid="uid://utq2kx37qqfe" path="res://Scenes/Testing/NaixTestScenes/BulletManager.tscn" id="2_fnk86"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="3_8q6be"]
 [ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="3_jn6np"]
 [ext_resource type="PackedScene" uid="uid://b461wubwupbqh" path="res://Scenes/Enemies/EnemyB/EnemyB.tscn" id="4_v02mc"]
@@ -9,6 +10,7 @@
 
 [node name="TestMultiplayerScene" type="Node2D"]
 script = ExtResource("1_cahup")
+BulletManager = ExtResource("2_fnk86")
 PlayerScene = ExtResource("3_8q6be")
 
 [node name="Platforms" type="Node2D" parent="."]

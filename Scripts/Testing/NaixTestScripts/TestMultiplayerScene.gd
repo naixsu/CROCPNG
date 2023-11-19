@@ -13,10 +13,7 @@ func _ready():
 	for i in GameManager.players:
 		var currentPlayer = PlayerScene.instantiate()
 		
-#		var camera = Camera2D.new()
-#		currentPlayer.add_child(camera)
-#		camera.make_current()
-		
+
 		currentPlayer.name = str(GameManager.players[i].id)
 #		currentPlayer.connect("player_fired_bullet", bullet_manager.handle_bullet_spawned)
 #		currentPlayer.connect("player_fired_bullet", BulletManager.handle_bullet_spawned)
@@ -28,10 +25,8 @@ func _ready():
 			if spawn.name == str(index):
 				currentPlayer.global_position = spawn.global_position
 		index += 1
-		
-		
+				
 	# playerScene.connect("player_fired_bullet", bullet_manager.handle_bullet_spawned)
-
 
 func _unhandled_input(event):
 	if event.is_action_pressed("Spawn"):

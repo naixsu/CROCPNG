@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://xh11sotyuyhu"]
+
+[ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="1_adoj4"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ydyok"]
+vertices = PackedVector2Array(697, 381, 466, 432, 568, 231, 657, 256, 374, 50, 696, 62, 455, 183, 328, 398, 125, 445, 65, 161, 270, 10)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 3, 2, 6), PackedInt32Array(6, 7, 8, 9, 10, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(65, 161, 270, 10, 374, 50, 696, 62, 657, 256, 697, 381, 466, 432, 568, 231, 455, 183, 328, 398, 125, 445)])
+
+[node name="TestPathFinding" type="Node2D"]
+position = Vector2(30, 20)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(-17, -7)
+navigation_polygon = SubResource("NavigationPolygon_ydyok")
+
+[node name="NavTarget" type="Marker2D" parent="."]
+position = Vector2(574, 351)
+
+[node name="NavTarget2" type="Marker2D" parent="."]
+position = Vector2(492, 133)
+
+[node name="NavTarget3" type="Marker2D" parent="."]
+position = Vector2(220, 67)
+
+[node name="EnemyA" parent="." node_paths=PackedStringArray("movementTargets") instance=ExtResource("1_adoj4")]
+position = Vector2(147, 396)
+speed = 200
+movementTargets = [NodePath("../NavTarget"), NodePath("../NavTarget2"), NodePath("../NavTarget3")]

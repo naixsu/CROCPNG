@@ -5,25 +5,25 @@ class_name Enemy
 # Grouped to: Enemy
 ###
 
-
+var i = 0
 @onready var anim = $AnimatedSprite2D
 @onready var ai = $AI
 @onready var multiplayerSynchronizer = $MultiplayerSynchronizer
+@export var player: Player
 @export var health = 100
 @export var speed = 50
+
+@export var movementTargets: Array[Node2D]
 
 func _ready():
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	anim.play("idle")
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
-
-func _physics_process(delta):
-	pass
-
+	ai.initialize_path_finding()
+	
 func _on_animated_sprite_2d_animation_finished():
 	queue_free()
-
 
 func handle_hit():
 	health -= 20
@@ -47,9 +47,19 @@ func go_towards(player):
 
 func idle():
 	anim.play("idle")
+	
+func run():
+	anim.play("run")
 
 func on_state_changed(new_state):
 	print("ENEMY ", new_state)
 	
+#func actor_setup(target):
+#	await get_tree().physics_frame
+#
+#	set_movement_target(target.position)
+	
+	
+
 
 	

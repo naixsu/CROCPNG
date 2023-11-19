@@ -18,6 +18,9 @@ class_name Player
 @onready var fireCooldown = $FireCooldown
 @onready var multiplayerSynchronizer = $MultiplayerSynchronizer
 
+# Camera Onready Vars TO BE DEBUGGED
+@onready var playerCamera = $Camera2D
+
 # Signals here
 signal player_fired_bullet(bullet, pos, dir)
 
@@ -28,8 +31,14 @@ var dead = false
 #var syncRot = 0
 
 func _ready():
+#	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
+	
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	anim.play("idle")
+	
+	#Set the camera to only be active for the local player
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		playerCamera.make_current()
 	
 func _physics_process(delta):
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():

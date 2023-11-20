@@ -5,7 +5,6 @@ class_name Enemy
 # Grouped to: Enemy
 ###
 
-var i = 0
 @onready var anim = $AnimatedSprite2D
 @onready var ai = $AI
 @onready var multiplayerSynchronizer = $MultiplayerSynchronizer
@@ -54,10 +53,6 @@ func run():
 func on_state_changed(new_state):
 	print("ENEMY ", new_state)
 	
-#func actor_setup(target):
-#	await get_tree().physics_frame
-#
-#	set_movement_target(target.position)
 	
 	
 

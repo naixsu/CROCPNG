@@ -5,8 +5,12 @@ extends Control
 
 @onready var nameEdit = $NameEdit
 
-var peer
+# Deprecated
+#@onready var line_edit = $LineEdit
+#@onready var addressEdit = $Address
 
+var peer
+var ipAddress = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,9 +19,19 @@ func _ready():
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
 	
+	# TODO:
+	# work on this so that it only works for server
+	# or deprecate
+#	if OS.has_feature("windows"):
+#		if OS.has_environment("COMPUTERNAME"):
+#			ipAddress =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+#
+#	line_edit.text = ipAddress
+	
 	if "--server" in OS.get_cmdline_args():
 		host_game()
 
+	$ServerBrowser.joinGame.connect(join_by_ip)
 	pass # Replace with function body.
 
 # Gets called on the server and clients
@@ -66,23 +80,34 @@ func host_game():
 	
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
 	multiplayer.set_multiplayer_peer(peer)
-	print("Waiting for players")
+	print("Waiting for players. Hosted at: " + ipAddress)
 	
 	# send_player_information(nameEdit.text, multiplayer.get_unique_id())
 
 func _on_host_button_down():
 	host_game()
 	send_player_information(nameEdit.text, multiplayer.get_unique_id())
+	$ServerBrowser.set_up_broadcast($NameEdit.text + "'s server")
 	pass # Replace with function body.
 
 
 func _on_join_button_down():
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client(address, port)
+	# Deprecated
+#	var ip = addressEdit.text
+#	print("IP: " + ip)
+#	peer.create_client(ip, port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
 	
 	pass # Replace with function body.
+
+func join_by_ip(ip):
+	peer = ENetMultiplayerPeer.new()
+	peer.create_client(ip, port)
+	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+	multiplayer.set_multiplayer_peer(peer)
 
 
 @rpc("any_peer", "call_local") # anyone can call this. maybe try only the host can click start
@@ -94,4 +119,12 @@ func start_game():
 
 func _on_start_game_button_down():
 	start_game.rpc()
+	pass # Replace with function body.
+
+
+func _on_button_button_down():
+	GameManager.players[GameManager.players.size() + 1] = {
+		"name": "test",
+		"id": 1
+	}
 	pass # Replace with function body.

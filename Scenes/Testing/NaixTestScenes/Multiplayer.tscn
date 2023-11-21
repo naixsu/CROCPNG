@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxtn8e8m61sj3"]
+[gd_scene load_steps=4 format=3 uid="uid://bxtn8e8m61sj3"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/MultiplayerController.gd" id="1_wmt0j"]
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ServerBrowser.gd" id="2_7edh8"]
+[ext_resource type="PackedScene" uid="uid://chavk7wh0g8k8" path="res://Scenes/Testing/NaixTestScenes/ServerInfo.tscn" id="3_bgp3x"]
 
 [node name="Multiplayer" type="Control"]
 layout_mode = 3
@@ -10,6 +12,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wmt0j")
+
+[node name="Host" type="Button" parent="."]
+layout_mode = 0
+offset_left = 553.0
+offset_top = 193.0
+offset_right = 608.0
+offset_bottom = 224.0
+text = "Host
+"
 
 [node name="Join" type="Button" parent="."]
 layout_mode = 0
@@ -41,5 +52,106 @@ offset_top = 5.0
 offset_bottom = 42.0
 text = "Name"
 
+[node name="ServerBrowser" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_7edh8")
+ServerInfo = ExtResource("3_bgp3x")
+
+[node name="BroadcastTimer" type="Timer" parent="ServerBrowser"]
+
+[node name="Label" type="Label" parent="ServerBrowser"]
+layout_mode = 0
+offset_left = 757.0
+offset_top = 44.0
+offset_right = 921.0
+offset_bottom = 70.0
+scale = Vector2(1, 1.00725)
+text = "Bound to listen port: "
+
+[node name="Panel" type="Panel" parent="ServerBrowser"]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 435.0
+offset_right = 851.0
+offset_bottom = 682.0
+
+[node name="ServerInfoHeading" type="HBoxContainer" parent="ServerBrowser/Panel"]
+layout_mode = 2
+offset_top = 34.0
+offset_right = 687.0
+offset_bottom = 92.0
+
+[node name="Name" type="Label" parent="ServerBrowser/Panel/ServerInfoHeading"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Name"
+
+[node name="IP" type="Label" parent="ServerBrowser/Panel/ServerInfoHeading"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "IP"
+
+[node name="PlayerCount" type="Label" parent="ServerBrowser/Panel/ServerInfoHeading"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Player Count"
+
+[node name="Join" type="Label" parent="ServerBrowser/Panel/ServerInfoHeading"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Join
+"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerBrowser/Panel"]
+layout_mode = 0
+offset_top = 93.0
+offset_right = 687.0
+offset_bottom = 242.0
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1041.0
+offset_top = 168.0
+offset_right = 1118.0
+offset_bottom = 215.0
+text = "test add player (host)"
+
+[node name="DeprecationLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 190.0
+offset_right = 238.0
+offset_bottom = 216.0
+text = "This is deprecated ^"
+
+[node name="DeprecationLabel2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 996.0
+offset_top = 228.0
+offset_right = 1149.0
+offset_bottom = 254.0
+text = "This is deprecated ^"
+
+[node name="InstructionLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 423.0
+offset_top = 244.0
+offset_right = 576.0
+offset_bottom = 270.0
+text = "For testers: Press this ^ When bound to listen port is false"
+
+[node name="InstructionLabel2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 197.0
+offset_top = 442.0
+offset_right = 822.0
+offset_bottom = 468.0
+text = "For testers: Press the join button that shows up here in Bound to listen port: true"
+
+[connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
 [connection signal="button_down" from="StartGame" to="." method="_on_start_game_button_down"]
+[connection signal="timeout" from="ServerBrowser/BroadcastTimer" to="ServerBrowser" method="_on_broadcast_timer_timeout"]
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

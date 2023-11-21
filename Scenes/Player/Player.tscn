@@ -152,10 +152,6 @@ properties/3/path = NodePath(".:syncRot")
 properties/3/spawn = false
 properties/3/sync = false
 properties/3/watch = false
-properties/4/path = NodePath("Camera2D:enabled")
-properties/4/spawn = true
-properties/4/sync = true
-properties/4/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4

@@ -10,12 +10,13 @@ enum State {
 }
 
 @onready var detectionZone = $DetectionZone
-@export var navigationAgent: NavigationAgent2D
+@onready var navigationAgent = $"../NavigationAgent2D"
 
 var current_state = State.IDLE : set = set_state
 var player: Player = null
 var parent: Enemy = null
 var i = 0
+var markers = []
 
 func initialize_path_finding():
 	set_state(State.OBJECTIVE)
@@ -23,17 +24,32 @@ func initialize_path_finding():
 	navigationAgent.target_desired_distance = 4.0
 	
 	#Below is the beginning for the pathfinding
-	set_movement_target(parent.movementTargets[i].position) #Very first target position
+#	set_movement_target(parent.movementTargets[i].position) #Very first target position
+	init_pathfinding(parent)
 	i += 1
+
+func init_pathfinding(parent):
+	var root = get_tree().get_root()
+	var navArea = root.get_node("TestMultiplayerScene/NavArea")
+	if navArea:
+		var navRegion = navArea.get_node("NavRegion")
+		var navMarkers = navRegion.get_children()
+		
+		for marker in navMarkers:
+			if marker is Marker2D:
+				markers.append(marker)
+	
+	set_movement_target(markers[i].position)
+	
 	
 func _physics_process(delta):
 	
 	#Checks if the current target was reached and goes directly to the next one
 	if navigationAgent.is_navigation_finished():
-		if i >= parent.movementTargets.size():
+		if i >= markers.size():
 			set_state(State.IDLE)
 			return
-		set_movement_target(parent.movementTargets[i].position)
+		set_movement_target(markers[i].position)
 		i += 1
 
 	var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world

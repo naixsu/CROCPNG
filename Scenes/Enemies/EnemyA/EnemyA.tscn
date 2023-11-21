@@ -187,9 +187,8 @@ debug_enabled = true
 position = Vector2(1, 2)
 shape = SubResource("RectangleShape2D_wtbqo")
 
-[node name="AI" type="Node2D" parent="." node_paths=PackedStringArray("navigationAgent")]
+[node name="AI" type="Node2D" parent="."]
 script = ExtResource("5_5kow7")
-navigationAgent = NodePath("../NavigationAgent2D")
 
 [node name="DetectionZone" type="Area2D" parent="AI"]
 collision_layer = 0

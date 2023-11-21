@@ -4,6 +4,7 @@ extends Control
 @export var port = 8910
 
 @onready var nameEdit = $NameEdit
+@onready var line_edit = $LineEdit
 
 var peer
 
@@ -17,6 +18,14 @@ func _ready():
 	
 	if "--server" in OS.get_cmdline_args():
 		host_game()
+	
+	var ipAddress = ""
+	
+	if OS.has_feature("windows"):
+		if OS.has_environment("COMPUTERNAME"):
+			ipAddress =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+	
+	line_edit.text = ipAddress
 
 	pass # Replace with function body.
 

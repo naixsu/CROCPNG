@@ -5,6 +5,7 @@ extends Control
 
 @onready var nameEdit = $NameEdit
 @onready var line_edit = $LineEdit
+@onready var addressEdit = $Address
 
 var peer
 
@@ -87,7 +88,10 @@ func _on_host_button_down():
 
 func _on_join_button_down():
 	peer = ENetMultiplayerPeer.new()
-	peer.create_client(address, port)
+#	peer.create_client(address, port)
+	var ip = addressEdit.text
+	print("IP: " + ip)
+	peer.create_client(ip, port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
 	

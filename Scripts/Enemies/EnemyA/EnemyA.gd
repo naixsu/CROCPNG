@@ -45,8 +45,11 @@ func go_towards(player):
 	anim.play("run")
 	var direction = (player.global_position - global_position).normalized()
 	var new_position = global_position + direction * speed * get_process_delta_time()
-	global_position = new_position
+#	global_position = new_position
+	velocity = direction * speed
+	move_and_slide()
 	
+
 
 func idle():
 	anim.play("idle")

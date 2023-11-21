@@ -17,7 +17,7 @@ var listener : PacketPeerUDP
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	broadcastTimer = $BroadcastTimer
-	set_up()
+#	set_up()
 	
 	
 	pass # Replace with function body.
@@ -54,6 +54,8 @@ func set_up_broadcast(name):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if listener == null:
+		return
 	if listener.get_available_packet_count() > 0:
 		var serverip = listener.get_packet_ip()
 		var serverport = listener.get_packet_port()
@@ -115,3 +117,7 @@ func _exit_tree():
 
 func join_by_ip(ip):
 	joinGame.emit(ip)
+
+
+func _on_find_server_button_down():
+	set_up() # Replace with function body.

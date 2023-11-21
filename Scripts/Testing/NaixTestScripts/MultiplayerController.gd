@@ -8,7 +8,7 @@ extends Control
 @onready var addressEdit = $Address
 
 var peer
-
+var ipAddress = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,16 +17,14 @@ func _ready():
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
 	
-	if "--server" in OS.get_cmdline_args():
-		host_game()
-	
-	var ipAddress = ""
-	
 	if OS.has_feature("windows"):
 		if OS.has_environment("COMPUTERNAME"):
 			ipAddress =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
 	
 	line_edit.text = ipAddress
+	
+	if "--server" in OS.get_cmdline_args():
+		host_game()
 
 	pass # Replace with function body.
 
@@ -76,7 +74,7 @@ func host_game():
 	
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
 	multiplayer.set_multiplayer_peer(peer)
-	print("Waiting for players")
+	print("Waiting for players. Hosted at: " + ipAddress)
 	
 	# send_player_information(nameEdit.text, multiplayer.get_unique_id())
 

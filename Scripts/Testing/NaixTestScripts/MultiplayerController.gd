@@ -72,7 +72,7 @@ func host_game():
 		print("Cannot host: " + str(error))
 		return
 	
-	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
+#	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
 	multiplayer.set_multiplayer_peer(peer)
 	print("Waiting for players. Hosted at: " + ipAddress)
 	
@@ -90,7 +90,7 @@ func _on_join_button_down():
 	var ip = addressEdit.text
 	print("IP: " + ip)
 	peer.create_client(ip, port)
-	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+#	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
 	
 	pass # Replace with function body.

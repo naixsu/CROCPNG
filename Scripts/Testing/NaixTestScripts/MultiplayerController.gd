@@ -26,6 +26,7 @@ func _ready():
 	if "--server" in OS.get_cmdline_args():
 		host_game()
 
+	$ServerBrowser.joinGame.connect(join_by_ip)
 	pass # Replace with function body.
 
 # Gets called on the server and clients
@@ -72,7 +73,7 @@ func host_game():
 		print("Cannot host: " + str(error))
 		return
 	
-#	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
+	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
 	multiplayer.set_multiplayer_peer(peer)
 	print("Waiting for players. Hosted at: " + ipAddress)
 	
@@ -81,6 +82,7 @@ func host_game():
 func _on_host_button_down():
 	host_game()
 	send_player_information(nameEdit.text, multiplayer.get_unique_id())
+	$ServerBrowser.set_up_broadcast($NameEdit.text + "'s server")
 	pass # Replace with function body.
 
 
@@ -90,10 +92,16 @@ func _on_join_button_down():
 	var ip = addressEdit.text
 	print("IP: " + ip)
 	peer.create_client(ip, port)
-#	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
 	
 	pass # Replace with function body.
+
+func join_by_ip(ip):
+	peer = ENetMultiplayerPeer.new()
+	peer.create_client(ip, port)
+	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
+	multiplayer.set_multiplayer_peer(peer)
 
 
 @rpc("any_peer", "call_local") # anyone can call this. maybe try only the host can click start
@@ -105,4 +113,12 @@ func start_game():
 
 func _on_start_game_button_down():
 	start_game.rpc()
+	pass # Replace with function body.
+
+
+func _on_button_button_down():
+	GameManager.players[GameManager.players.size() + 1] = {
+		"name": "test",
+		"id": 1
+	}
 	pass # Replace with function body.

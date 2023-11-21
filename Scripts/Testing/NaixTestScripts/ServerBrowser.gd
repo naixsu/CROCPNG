@@ -61,26 +61,15 @@ func _process(delta):
 		var data = bytes.get_string_from_ascii()
 		var roomInfo = JSON.parse_string(data)
 		
-		print(
-			"Server IP: {0} Server Port: {1} Room Info: {2}"
-			.format({
-				"0": serverip,
-				"1": str(serverport),
-				"2": str(roomInfo)
-			})
-		)
+#		print(
+#			"Server IP: {0} Server Port: {1} Room Info: {2}"
+#			.format({
+#				"0": serverip,
+#				"1": str(serverport),
+#				"2": str(roomInfo)
+#			})
+#		)
 		
-#		var child = $Panel/VBoxContainer.find_child(roomInfo.name)
-#		if child != null:
-#			child.get_node("IP").text = serverip
-#			child.get_node("PlayerCount").text = str(roomInfo.playerCount)
-#		else:
-#			var currentInfo = ServerInfo.instantiate()
-#			currentInfo.name = roomInfo.name
-#			currentInfo.get_node("Name").text = roomInfo.name
-#			currentInfo.get_node("IP").text = serverip
-#			currentInfo.get_node("PlayerCount").text = str(roomInfo.playerCount)
-#			$Panel/VBoxContainer.add_child(currentInfo)
 
 		for i in $Panel/VBoxContainer.get_children():
 			if i.name == roomInfo.name:
@@ -88,12 +77,7 @@ func _process(delta):
 				i.get_node("IP").text = str(serverip)
 				i.get_node("PlayerCount").text = str(roomInfo.playerCount)
 				return
-				
-		# var child = $Panel/VBoxContainer.find_child(roomInfo.name)
-		# if child != null:
-		#	child.get_node("IP").text = str(serverip)
-		#	child.get_node("PlayerCount").text = str(roomInfo.playerCount)
-			#else:
+
 		var currentInfo = ServerInfo.instantiate()
 		currentInfo.name = roomInfo.name
 		currentInfo.get_node("Name").text = roomInfo.name
@@ -107,11 +91,11 @@ func _process(delta):
 			
 
 func _on_broadcast_timer_timeout():
-	print("Broadcasting Game")
+#	print("Broadcasting Game")
 	roomInfo.playerCount = GameManager.players.size()
 	var data = JSON.stringify(roomInfo)
 	var packet = data.to_ascii_buffer()
-	print(roomInfo.playerCount)
+#	print(roomInfo.playerCount)
 	broadcaster.put_packet(packet)
 	pass # Replace with function body.
 #

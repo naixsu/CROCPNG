@@ -4,8 +4,10 @@ extends Control
 @export var port = 8910
 
 @onready var nameEdit = $NameEdit
-@onready var line_edit = $LineEdit
-@onready var addressEdit = $Address
+
+# Deprecated
+#@onready var line_edit = $LineEdit
+#@onready var addressEdit = $Address
 
 var peer
 var ipAddress = ""
@@ -17,11 +19,14 @@ func _ready():
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
 	
-	if OS.has_feature("windows"):
-		if OS.has_environment("COMPUTERNAME"):
-			ipAddress =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
-	
-	line_edit.text = ipAddress
+	# TODO:
+	# work on this so that it only works for server
+	# or deprecate
+#	if OS.has_feature("windows"):
+#		if OS.has_environment("COMPUTERNAME"):
+#			ipAddress =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+#
+#	line_edit.text = ipAddress
 	
 	if "--server" in OS.get_cmdline_args():
 		host_game()
@@ -88,10 +93,11 @@ func _on_host_button_down():
 
 func _on_join_button_down():
 	peer = ENetMultiplayerPeer.new()
-#	peer.create_client(address, port)
-	var ip = addressEdit.text
-	print("IP: " + ip)
-	peer.create_client(ip, port)
+	peer.create_client(address, port)
+	# Deprecated
+#	var ip = addressEdit.text
+#	print("IP: " + ip)
+#	peer.create_client(ip, port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
 	

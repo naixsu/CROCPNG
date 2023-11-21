@@ -33,6 +33,8 @@ func init_pathfinding(parent):
 	var navArea = root.get_node("TestMultiplayerScene/NavArea")
 	if navArea:
 		var navRegion = navArea.get_node("NavRegion")
+#		navRegion.navpoly_map_sync()
+#		navRegion.navmesh.configure(navRegion.get_children())
 		var navMarkers = navRegion.get_children()
 		
 		for marker in navMarkers:
@@ -51,6 +53,7 @@ func _physics_process(delta):
 			return
 		set_movement_target(markers[i].position)
 		i += 1
+
 
 	var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
 	var nextPathPosition: Vector2 = navigationAgent.get_next_path_position()

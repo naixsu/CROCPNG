@@ -190,3 +190,5 @@ one_shot = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ffpdr")
+
+[node name="Camera2D" type="Camera2D" parent="."]

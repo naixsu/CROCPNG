@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://bkb83aql5hcqm"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/FinalBoss/FinalBoss.gd" id="1_wia81"]
+[ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/AI.gd" id="3_1b1rm"]
+[ext_resource type="Texture2D" uid="uid://gxnhy48xdgac" path="res://icon.svg" id="3_mo0k1"]
+[ext_resource type="Script" path="res://Scripts/Bullet/BulletManager.gd" id="4_6405u"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_co21w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mo0k1")
+}],
+"loop": false,
+"name": &"death",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mo0k1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mo0k1")
+}],
+"loop": true,
+"name": &"run",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lob1b"]
+size = Vector2(162, 158)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5sbbe"]
+radius = 373.374
+
+[node name="FinalBoss" type="CharacterBody2D"]
+script = ExtResource("1_wia81")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 2)
+scale = Vector2(1.07914, 1.08094)
+sprite_frames = SubResource("SpriteFrames_co21w")
+animation = &"run"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D"]
+texture_filter = 1
+position = Vector2(0, 2)
+scale = Vector2(1.07914, 1.07148)
+sprite_frames = SubResource("SpriteFrames_co21w")
+animation = &"run"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D/AnimatedSprite2D"]
+texture_filter = 1
+position = Vector2(0, 2)
+scale = Vector2(1.07914, 1.07148)
+sprite_frames = SubResource("SpriteFrames_co21w")
+animation = &"death"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_lob1b")
+one_way_collision = true
+
+[node name="AI" type="Node2D" parent="."]
+script = ExtResource("3_1b1rm")
+
+[node name="DetectionZone" type="Area2D" parent="AI"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AI/DetectionZone"]
+shape = SubResource("CircleShape2D_5sbbe")
+
+[node name="BulletManager" type="Node2D" parent="."]
+position = Vector2(0, 5)
+script = ExtResource("4_6405u")
+
+[node name="ShootTimer" type="Timer" parent="."]
+
+[node name="Rotater" type="Node2D" parent="."]
+
+[connection signal="body_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_entered"]
+[connection signal="body_exited" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_exited"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

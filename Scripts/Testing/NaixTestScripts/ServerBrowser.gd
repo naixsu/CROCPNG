@@ -11,7 +11,8 @@ var broadcaster : PacketPeerUDP
 var listener : PacketPeerUDP
 @export var listenPort : int = 8911
 @export var broadcastPort : int = 8912
-@export var broadcastAddress : String = "192.168.1.255"
+#@export var broadcastAddress : String = "192.168.1.255"
+@export var broadcastAddress : String = "255.255.255.255"
 
 @export var ServerInfo : PackedScene
 # Called when the node enters the scene tree for the first time.

@@ -46,7 +46,8 @@ func _ready():
 	#Set the camera to only be active for the local player
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		playerCamera.make_current()
-	
+
+
 func _physics_process(delta):
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		var direction = Input.get_vector("Left", "Right", "Up", "Down")
@@ -80,6 +81,11 @@ func _physics_process(delta):
 #			move_and_slide()
 			move_and_collide(velocity * delta)
 			update_animation()
+		
+
+	update_camera(delta)
+		
+		
 #	else: # TODO: Maybe add this in the future
 #		global_position = global_position.lerp(syncPos, .5)
 #		rotation_degrees = lerpf(rotation_degrees, syncRot, .5)
@@ -92,20 +98,6 @@ func _unhandled_input(event):
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		if event.is_action_pressed("Fire"):
 			fire.rpc()
-		
-		if event.is_action_pressed("Spawn"):
-#			var random_index = randi_range(0, spawn_points.size() - 1)
-#			var random_spawn_point = spawn_points[random_index]
-#			var enemy_types = ["A", "B", "C"]
-#			var random_enemy_type = enemy_types[randi_range(0, enemy_types.size() - 1)]
-#			root.get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
-			pass
-	#		spawn_enemy.rpc()
-#			var random_index = randi_range(0, spawn_points.size() - 1)
-#			var random_spawn_point = spawn_points[random_index]
-#			var enemy_types = ["A", "B", "C"]
-#			var random_enemy_type = enemy_types[randi_range(0, enemy_types.size() - 1)]
-#			get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
 		
 #	if event.is_action_pressed("Spawn"):
 #		spawn.rpc()
@@ -127,6 +119,15 @@ func update_animation():
 		anim.play("run")
 	else:
 		anim.play("idle")
+
+func update_camera(delta):
+	if Input.is_action_pressed("ZoomIn"):
+		playerCamera.zoomFactor += 0.01
+	elif Input.is_action_pressed("ZoomOut"):
+		playerCamera.zoomFactor -= 0.01
+	else:
+		playerCamera.zoomFactor = 1.0
+	
 
 func flip_sprite():
 	# Flipts the sprite depending on the mouse position

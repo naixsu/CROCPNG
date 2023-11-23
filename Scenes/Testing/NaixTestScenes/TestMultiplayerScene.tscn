@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgiky6rcbuxga"]
+[gd_scene load_steps=7 format=3 uid="uid://cgiky6rcbuxga"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestMultiplayerScene.gd" id="1_cahup"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="3_8q6be"]
 [ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="3_jn6np"]
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/EnemySpawner.gd" id="5_hl27v"]
 [ext_resource type="PackedScene" uid="uid://cps2ukm5wvqn1" path="res://Scenes/Map/Map.tscn" id="5_rj7rh"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
@@ -27,13 +28,11 @@ position = Vector2(-1200, 1950)
 
 [node name="EnemySpawnPoints" type="Node2D" parent="."]
 
-[node name="0" type="Node2D" parent="EnemySpawnPoints" groups=["EnemySpawnPoint"]]
-position = Vector2(770, 106)
+[node name="0" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-816, 1774)
 
-[node name="1" type="Node2D" parent="EnemySpawnPoints" groups=["EnemySpawnPoint"]]
-position = Vector2(665, 106)
-rotation = -4.73227
-scale = Vector2(95.1521, 10.0646)
+[node name="1" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-756, 1774)
 
 [node name="NavArea" type="Node2D" parent="."]
 
@@ -52,3 +51,19 @@ position = Vector2(848, 289)
 
 [node name="Map" parent="." instance=ExtResource("5_rj7rh")]
 position = Vector2(45, 489)
+
+[node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../EnemySpawnPoints")
+script = ExtResource("5_hl27v")
+
+[node name="2" type="Marker2D" parent="."]
+position = Vector2(12, 1774)
+
+[node name="3" type="Marker2D" parent="."]
+position = Vector2(82, 1774)
+
+[node name="4" type="Marker2D" parent="."]
+position = Vector2(840, 1774)
+
+[node name="5" type="Marker2D" parent="."]
+position = Vector2(912, 1774)

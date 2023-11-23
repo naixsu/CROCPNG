@@ -26,13 +26,20 @@ signal player_fired_bullet(bullet, pos, dir)
 
 # Other global vars here
 var dead = false
+var spawn_points = []
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
 #var syncRot = 0
 
 func _ready():
 #	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
-	
+
+#	var spawn_point_parent = root.get_node("EnemySpawnPoints")
+#	var children = spawn_point_parent.get_children()
+#	for child in children:
+#		if child is Marker2D:
+#			spawn_points.append(child)
+
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	anim.play("idle")
 	
@@ -85,6 +92,20 @@ func _unhandled_input(event):
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		if event.is_action_pressed("Fire"):
 			fire.rpc()
+		
+		if event.is_action_pressed("Spawn"):
+#			var random_index = randi_range(0, spawn_points.size() - 1)
+#			var random_spawn_point = spawn_points[random_index]
+#			var enemy_types = ["A", "B", "C"]
+#			var random_enemy_type = enemy_types[randi_range(0, enemy_types.size() - 1)]
+#			root.get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
+			pass
+	#		spawn_enemy.rpc()
+#			var random_index = randi_range(0, spawn_points.size() - 1)
+#			var random_spawn_point = spawn_points[random_index]
+#			var enemy_types = ["A", "B", "C"]
+#			var random_enemy_type = enemy_types[randi_range(0, enemy_types.size() - 1)]
+#			get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
 		
 #	if event.is_action_pressed("Spawn"):
 #		spawn.rpc()

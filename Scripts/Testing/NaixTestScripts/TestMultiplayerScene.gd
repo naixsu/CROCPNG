@@ -4,12 +4,19 @@ extends Node2D
 @export var PlayerScene: PackedScene
 @export var EnemyA: PackedScene
 #@onready var bullet_manager = $BulletManager
+var spawn_points = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var index = 0
 #	var bulletManagerInstance = BulletManager.instantiate()
 #	add_child(bulletManagerInstance)
+	var spawn_point_parent = get_node("EnemySpawnPoints")
+	var children = spawn_point_parent.get_children()
+	for child in children:
+		if child is Marker2D:
+			spawn_points.append(child)
+	
 	for i in GameManager.players:
 		var currentPlayer = PlayerScene.instantiate()
 		
@@ -30,8 +37,16 @@ func _ready():
 
 func _unhandled_input(event):
 	if event.is_action_pressed("Spawn"):
-		spawn_enemy.rpc()
-
+#		spawn_enemy.rpc()
+		var random_index = randi_range(0, spawn_points.size() - 1)
+		var random_spawn_point = spawn_points[random_index].position
+		var enemy_types = ["A", "B", "C"]
+		var random_enemy_type = enemy_types[randi_range(0, enemy_types.size() - 1)]
+#		print("spawn: " + str(random_spawn_point) + " type: " + str(random_enemy_type))
+		get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
+		pass
+			
+	
 @rpc("any_peer", "call_local")
 func spawn_enemy():
 	# Get random spawn point

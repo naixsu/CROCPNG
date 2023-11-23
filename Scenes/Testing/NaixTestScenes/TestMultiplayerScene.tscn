@@ -1,11 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgiky6rcbuxga"]
+[gd_scene load_steps=6 format=3 uid="uid://cgiky6rcbuxga"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestMultiplayerScene.gd" id="1_cahup"]
-[ext_resource type="PackedScene" uid="uid://s741h0igfq5k" path="res://Scenes/Testing/NaixTestScenes/TestPlatforms.tscn" id="2_1merq"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="3_8q6be"]
 [ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="3_jn6np"]
-[ext_resource type="PackedScene" uid="uid://b461wubwupbqh" path="res://Scenes/Enemies/EnemyB/EnemyB.tscn" id="4_v02mc"]
-[ext_resource type="PackedScene" uid="uid://bx77fvysan881" path="res://Scenes/Enemies/EnemyC/EnemyC.tscn" id="5_0qcgn"]
+[ext_resource type="PackedScene" uid="uid://cps2ukm5wvqn1" path="res://Scenes/Map/Map.tscn" id="5_rj7rh"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
 vertices = PackedVector2Array(592, 249, 972, 50, 1234, 344, 1077, 654, 495, 698, 406, 608)
@@ -17,35 +15,15 @@ script = ExtResource("1_cahup")
 PlayerScene = ExtResource("3_8q6be")
 EnemyA = ExtResource("3_jn6np")
 
-[node name="Platforms" type="Node2D" parent="."]
-
-[node name="TestPlatform" parent="Platforms" instance=ExtResource("2_1merq")]
-position = Vector2(540, 191)
-
-[node name="TestPlatform2" parent="Platforms" instance=ExtResource("2_1merq")]
-position = Vector2(268, 484)
-
-[node name="TestPlatform3" parent="Platforms" instance=ExtResource("2_1merq")]
-position = Vector2(764, 411)
-
 [node name="Enemies" type="Node2D" parent="."]
-
-[node name="EnemyA" parent="Enemies" instance=ExtResource("3_jn6np")]
-position = Vector2(870, 153)
-
-[node name="EnemyB" parent="Enemies" instance=ExtResource("4_v02mc")]
-position = Vector2(711, 544)
-
-[node name="EnemyC" parent="Enemies" instance=ExtResource("5_0qcgn")]
-position = Vector2(832, 589)
 
 [node name="PlayerSpawnPoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoint"]]
-position = Vector2(44, 110)
+position = Vector2(-1200, 1800)
 
 [node name="1" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoint"]]
-position = Vector2(144, 56)
+position = Vector2(-1200, 1950)
 
 [node name="EnemySpawnPoints" type="Node2D" parent="."]
 
@@ -60,6 +38,7 @@ scale = Vector2(95.1521, 10.0646)
 [node name="NavArea" type="Node2D" parent="."]
 
 [node name="NavRegion" type="NavigationRegion2D" parent="NavArea"]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_qh2qy")
 
 [node name="Marker2D" type="Marker2D" parent="NavArea/NavRegion"]
@@ -70,3 +49,6 @@ position = Vector2(995, 557)
 
 [node name="Marker2D3" type="Marker2D" parent="NavArea/NavRegion"]
 position = Vector2(848, 289)
+
+[node name="Map" parent="." instance=ExtResource("5_rj7rh")]
+position = Vector2(45, 489)

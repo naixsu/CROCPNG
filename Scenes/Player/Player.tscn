@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=28 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Texture2D" uid="uid://gxnhy48xdgac" path="res://icon.svg" id="1_57ol8"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dxjulnx8uck65" path="res://Assets/Sprites/Player/PlayerIdle.png" id="3_qjmfi"]
 [ext_resource type="PackedScene" uid="uid://c5hp4o5b5b853" path="res://Scenes/Bullet/BulletCB.tscn" id="4_52lxj"]
 [ext_resource type="Texture2D" uid="uid://clug3m78gurbu" path="res://Assets/Sprites/Player/PlayerRun.png" id="4_xxbxq"]
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/CameraZoom.gd" id="9_vptfm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -161,6 +162,7 @@ Enemy = ExtResource("3_il21h")
 BulletCB = ExtResource("4_52lxj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_u23x5")
@@ -192,3 +194,4 @@ one_shot = true
 replication_config = SubResource("SceneReplicationConfig_ffpdr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("9_vptfm")

@@ -13,6 +13,7 @@ var listener : PacketPeerUDP
 @export var broadcastPort : int = 8912
 #@export var broadcastAddress : String = "192.168.1.255"
 @export var broadcastAddress : String = "255.255.255.255"
+#@export var broadcastAddress : String = "172.16.0.255"
 
 @export var ServerInfo : PackedScene
 # Called when the node enters the scene tree for the first time.
@@ -20,6 +21,8 @@ func _ready():
 	broadcastTimer = $BroadcastTimer
 #	set_up()
 	
+	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+	print("Local IP: " + str(ip))
 	
 	pass # Replace with function body.
 	

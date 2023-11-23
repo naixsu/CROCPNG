@@ -11,14 +11,18 @@ var broadcaster : PacketPeerUDP
 var listener : PacketPeerUDP
 @export var listenPort : int = 8911
 @export var broadcastPort : int = 8912
-@export var broadcastAddress : String = "192.168.1.255"
+#@export var broadcastAddress : String = "192.168.1.255"
+@export var broadcastAddress : String = "255.255.255.255"
+#@export var broadcastAddress : String = "172.16.0.255"
 
 @export var ServerInfo : PackedScene
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	broadcastTimer = $BroadcastTimer
-	set_up()
+#	set_up()
 	
+	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+	print("Local IP: " + str(ip))
 	
 	pass # Replace with function body.
 	
@@ -54,6 +58,8 @@ func set_up_broadcast(name):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if listener == null:
+		return
 	if listener.get_available_packet_count() > 0:
 		var serverip = listener.get_packet_ip()
 		var serverport = listener.get_packet_port()
@@ -115,3 +121,7 @@ func _exit_tree():
 
 func join_by_ip(ip):
 	joinGame.emit(ip)
+
+
+func _on_find_server_button_down():
+	set_up() # Replace with function body.

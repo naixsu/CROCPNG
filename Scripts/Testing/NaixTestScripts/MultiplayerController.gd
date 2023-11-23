@@ -11,6 +11,7 @@ extends Control
 
 var peer
 var ipAddress = ""
+var serverName = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,8 +29,12 @@ func _ready():
 #
 #	line_edit.text = ipAddress
 	
+#	if "--server" in OS.get_cmdline_args():
+#		host_game()
 	if "--server" in OS.get_cmdline_args():
-		host_game()
+		var serverIndex = OS.get_cmdline_args().find("--server")
+		serverName = OS.get_cmdline_args()[serverIndex + 1]
+		custom_host(serverName)
 
 	$ServerBrowser.joinGame.connect(join_by_ip)
 	pass # Replace with function body.
@@ -80,9 +85,21 @@ func host_game():
 	
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
 	multiplayer.set_multiplayer_peer(peer)
-	print("Waiting for players. Hosted at: " + ipAddress)
-	
+#	print("Waiting for players. Hosted at: " + ipAddress)
+	$ServerBrowser.set_up_broadcast(nameEdit + "'s server")
 	# send_player_information(nameEdit.text, multiplayer.get_unique_id())
+
+func custom_host(serverName):
+	peer = ENetMultiplayerPeer.new()
+	var error = peer.create_server(port, 32)
+	
+	if error != OK:
+		print("Cannot host: " + str(error))
+		return
+	
+	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
+	multiplayer.set_multiplayer_peer(peer)
+	$ServerBrowser.set_up_broadcast(serverName + "'s server")
 
 func _on_host_button_down():
 	host_game()

@@ -118,6 +118,15 @@ offset_right = 1118.0
 offset_bottom = 215.0
 text = "test add player (host)"
 
+[node name="FindServer" type="Button" parent="."]
+layout_mode = 0
+offset_left = 929.0
+offset_top = 313.0
+offset_right = 1101.0
+offset_bottom = 360.0
+text = "Find Servers
+"
+
 [node name="DeprecationLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 85.0
@@ -155,3 +164,4 @@ text = "For testers: Press the join button that shows up here in Bound to listen
 [connection signal="button_down" from="StartGame" to="." method="_on_start_game_button_down"]
 [connection signal="timeout" from="ServerBrowser/BroadcastTimer" to="ServerBrowser" method="_on_broadcast_timer_timeout"]
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="FindServer" to="ServerBrowser" method="_on_find_server_button_down"]

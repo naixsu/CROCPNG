@@ -33,6 +33,8 @@ func init_pathfinding(parent):
 	var navArea = root.get_node("TestMultiplayerScene/NavArea")
 	if navArea:
 		var navRegion = navArea.get_node("NavRegion")
+#		navRegion.navpoly_map_sync()
+#		navRegion.navmesh.configure(navRegion.get_children())
 		var navMarkers = navRegion.get_children()
 		
 		for marker in navMarkers:
@@ -41,31 +43,56 @@ func init_pathfinding(parent):
 	
 	set_movement_target(markers[i].position)
 	
-	
-func _physics_process(delta):
-	
-	#Checks if the current target was reached and goes directly to the next one
-	if navigationAgent.is_navigation_finished():
-		if i >= markers.size():
-			set_state(State.IDLE)
-			return
-		set_movement_target(markers[i].position)
-		i += 1
-
-	var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
-	var nextPathPosition: Vector2 = navigationAgent.get_next_path_position()
-	var newVelocity: Vector2 = nextPathPosition - currentAgentPosition
-
-	newVelocity = newVelocity.normalized()
-	newVelocity = newVelocity * parent.speed
-
-	parent.velocity = newVelocity
-	parent.move_and_slide()
+#
+#func _physics_process(delta):
+#
+#	#Checks if the current target was reached and goes directly to the next one
+#	if navigationAgent.is_navigation_finished():
+#		if i >= markers.size():
+#			set_state(State.IDLE)
+#			return
+#		set_movement_target(markers[i].position)
+#		i += 1
+#
+#
+#	var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
+#	var nextPathPosition: Vector2 = navigationAgent.get_next_path_position()
+#	var newVelocity: Vector2 = nextPathPosition - currentAgentPosition
+#
+#	newVelocity = newVelocity.normalized()
+#	newVelocity = newVelocity * parent.speed
+#
+#	parent.velocity = newVelocity
+#	parent.move_and_slide()
 
 func set_movement_target(targetPoint: Vector2):
 	navigationAgent.target_position = targetPoint
 	
-func _process(delta):
+#func _process(delta):
+#	if parent.health <= 0:
+#		set_state(State.DEAD)
+#
+#	match current_state:
+#		State.IDLE:
+#			parent.idle()
+#		State.ENGAGE:
+#			if player != null:
+#				parent.flip_sprite(player)
+#				var threshold_distance = 100
+#				if parent.global_position.distance_to(player.global_position)\
+#					> threshold_distance:
+#					parent.go_towards(player)
+#				else:
+#					parent.idle()
+#			else:
+#				print("No player found")
+#				set_state(State.IDLE)
+#		State.DEAD:
+#			parent.handle_death()
+#		State.OBJECTIVE:
+#			parent.run()
+
+func _physics_process(delta):
 	if parent.health <= 0:
 		set_state(State.DEAD)
 	
@@ -88,6 +115,25 @@ func _process(delta):
 			parent.handle_death()
 		State.OBJECTIVE:
 			parent.run()
+			#	#Checks if the current target was reached and goes directly to the next one
+			if navigationAgent.is_navigation_finished():
+				if i >= markers.size():
+					set_state(State.IDLE)
+					return
+				set_movement_target(markers[i].position)
+				i += 1
+
+
+			var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
+			var nextPathPosition: Vector2 = navigationAgent.get_next_path_position()
+			var newVelocity: Vector2 = nextPathPosition - currentAgentPosition
+
+			newVelocity = newVelocity.normalized()
+			newVelocity = newVelocity * parent.speed
+
+			parent.velocity = newVelocity
+			parent.move_and_slide()
+			
 
 
 func initialize(parent):
@@ -108,8 +154,15 @@ func _on_detection_zone_body_entered(body):
 		player = body
 
 func _on_detection_zone_body_exited(body):
-	if body.is_in_group("Player") and current_state != State.DEAD:
-		set_state(State.IDLE)
+	if body.is_in_group("Player") and current_state != State.DEAD: # Player exited radius
+		# Check if there are still nav markers
+		if navigationAgent.is_navigation_finished():
+			if i >= markers.size():
+				set_state(State.IDLE)
+				return
+		else:
+			set_state(State.OBJECTIVE)
+#		set_state(State.IDLE)
 		player = null
 		
 		# Might wanna check if another player is in the vicinity

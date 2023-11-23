@@ -19,8 +19,12 @@ func _ready():
 	anim.play("idle")
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
+	# Delay the initialize_path_finding function
+	await get_tree().create_timer(0.5).timeout
 	ai.initialize_path_finding()
-	
+#	ai.initialize_path_finding()
+
+
 func _on_animated_sprite_2d_animation_finished():
 	queue_free()
 
@@ -41,8 +45,11 @@ func go_towards(player):
 	anim.play("run")
 	var direction = (player.global_position - global_position).normalized()
 	var new_position = global_position + direction * speed * get_process_delta_time()
-	global_position = new_position
+#	global_position = new_position
+	velocity = direction * speed
+	move_and_slide()
 	
+
 
 func idle():
 	anim.play("idle")

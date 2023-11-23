@@ -29,10 +29,22 @@ position = Vector2(-1200, 1950)
 [node name="EnemySpawnPoints" type="Node2D" parent="."]
 
 [node name="0" type="Marker2D" parent="EnemySpawnPoints"]
-position = Vector2(-816, 1774)
+position = Vector2(-816, -1526)
 
 [node name="1" type="Marker2D" parent="EnemySpawnPoints"]
-position = Vector2(-756, 1774)
+position = Vector2(-756, -1526)
+
+[node name="2" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(12, -1526)
+
+[node name="3" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(82, -1526)
+
+[node name="4" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(840, -1526)
+
+[node name="5" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(912, -1526)
 
 [node name="NavArea" type="Node2D" parent="."]
 
@@ -55,15 +67,3 @@ position = Vector2(45, 489)
 [node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../EnemySpawnPoints")
 script = ExtResource("5_hl27v")
-
-[node name="2" type="Marker2D" parent="."]
-position = Vector2(12, 1774)
-
-[node name="3" type="Marker2D" parent="."]
-position = Vector2(82, 1774)
-
-[node name="4" type="Marker2D" parent="."]
-position = Vector2(840, 1774)
-
-[node name="5" type="Marker2D" parent="."]
-position = Vector2(912, 1774)

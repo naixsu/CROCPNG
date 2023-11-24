@@ -149,6 +149,7 @@ properties/0/sync = true
 properties/0/watch = false
 
 [node name="EnemyC" type="CharacterBody2D" groups=["Enemy"]]
+z_index = 1
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_c3xcl")

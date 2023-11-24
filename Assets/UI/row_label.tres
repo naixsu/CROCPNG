@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://ddochaiamxtox"]
+
+[ext_resource type="FontFile" uid="uid://dxpm1nv67r84l" path="res://Assets/Fonts/Ac437_LE_Model_D_CGA.ttf" id="1_nurrr"]
+
+[resource]
+font = ExtResource("1_nurrr")
+font_size = 13

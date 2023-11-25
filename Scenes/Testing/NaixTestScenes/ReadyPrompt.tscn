@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0jre5feen0jg"]
+[gd_scene load_steps=2 format=3 uid="uid://v7cwyu2s7km1"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ReadyPrompt.gd" id="1_k1gbb"]
 

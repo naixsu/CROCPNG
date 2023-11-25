@@ -44,13 +44,15 @@ func _unhandled_input(event):
 		spawn_enemy()
 		pass
 
-@rpc("any_peer")
+
 func spawn_enemy():
 	var random_index = randi_range(0, spawn_points.size() - 1)
 	var random_spawn_point = spawn_points[random_index].position
 	var enemy_types = ["A", "B", "C"]
 	var random_enemy_type = enemy_types[randi_range(0, enemy_types.size() - 1)]
 #		print("spawn: " + str(random_spawn_point) + " type: " + str(random_enemy_type))
+#	if is_multiplayer_authority():
+#		get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
 	get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
 			
 	
@@ -70,11 +72,13 @@ func spawn_enemy():
 func start_wave():
 	GameManager.wave += 1
 	print("Starting Wave %d of %d" % [GameManager.wave, GameManager.maxWave])
-	
+	var spawnDelay = 0.5
 	var enemyGroups = get_node("EnemyGroups")
 	if GameManager.wave == 1:
-		print("Wave 1")
-		for i in range(5):
-			spawn_enemy.rpc()
+		var enemyCount = GameManager.players.size() * 10
+		print("Wave 1: Number of Enemies: %d" % enemyCount)
+		for i in range(enemyCount):
+			await get_tree().create_timer(spawnDelay).timeout
+			spawn_enemy()
 	
 

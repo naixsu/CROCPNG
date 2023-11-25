@@ -25,7 +25,7 @@ func _spawn_enemy(data):
 			enemyScenePath = "res://Scenes/Enemies/EnemyC/EnemyC.tscn"
 	var enemy = load(enemyScenePath).instantiate()
 	enemy.position = data[0]
-	
+		
 	print("Enemey " + enemyType + " spawned at " + str(enemy.position))
 
 	return enemy

@@ -7,9 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://cps2ukm5wvqn1" path="res://Scenes/Map/Map.tscn" id="5_rj7rh"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
-vertices = PackedVector2Array(592, 249, 972, 50, 1234, 344, 1077, 654, 495, 698, 406, 608)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(406, 608, 495, 698, 1077, 654, 1234, 344, 972, 50, 592, 249)])
+vertices = PackedVector2Array(1963, 690, 1992, 2745, -1900, 2726, -1858, -1745, 1969, -1731, 1982, 186)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1900, 2726, 1992, 2745, 1963, 690, 1982, 186, 1969, -1731, -1858, -1745)])
 
 [node name="TestMultiplayerScene" type="Node2D"]
 script = ExtResource("1_cahup")
@@ -49,17 +49,23 @@ position = Vector2(912, -1526)
 [node name="NavArea" type="Node2D" parent="."]
 
 [node name="NavRegion" type="NavigationRegion2D" parent="NavArea"]
-visible = false
 navigation_polygon = SubResource("NavigationPolygon_qh2qy")
 
 [node name="Marker2D" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(523, 612)
+position = Vector2(-657, -659)
+scale = Vector2(3.40694e+07, -1.49809e+09)
 
 [node name="Marker2D2" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(995, 557)
+position = Vector2(612, 1371)
 
 [node name="Marker2D3" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(848, 289)
+position = Vector2(687, -659)
+
+[node name="Marker2D4" type="Marker2D" parent="NavArea/NavRegion"]
+position = Vector2(49, 2212)
+
+[node name="Marker2D5" type="Marker2D" parent="NavArea/NavRegion"]
+position = Vector2(-29, -1207)
 
 [node name="Map" parent="." instance=ExtResource("5_rj7rh")]
 position = Vector2(45, 489)

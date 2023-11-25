@@ -20,9 +20,8 @@ func _ready():
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
 	# Delay the initialize_path_finding function
-	await get_tree().create_timer(0.5).timeout
+#	await get_tree().create_timer(0.5).timeout
 	ai.initialize_path_finding()
-#	ai.initialize_path_finding()
 
 
 func _on_animated_sprite_2d_animation_finished():

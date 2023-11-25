@@ -12,6 +12,7 @@ var startCountdown : bool = false
 var displayCountdown : bool = false
 
 signal toggle_ready
+signal start_wave
 
 func _on_ready_button_button_down():
 #	ready_up.rpc()
@@ -69,3 +70,12 @@ func ready_up():
 func _on_wave_countdown_timeout():
 	displayCountdown = false
 	waveNotif.hide()
+	start_wave.emit()
+	
+	reset_ready()
+
+func reset_ready(): # Reset the readyState of all players
+	var players = get_tree().get_nodes_in_group("Player")
+	for player in players:
+		player.readyState = false
+	

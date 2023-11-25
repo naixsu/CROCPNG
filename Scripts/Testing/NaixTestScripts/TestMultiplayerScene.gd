@@ -6,8 +6,11 @@ extends Node2D
 #@onready var bullet_manager = $BulletManager
 var spawn_points = []
 
+@onready var readyPrompt = $ReadyPrompt
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	readyPrompt.connect("start_wave", start_wave)
 	var index = 0
 #	var bulletManagerInstance = BulletManager.instantiate()
 #	add_child(bulletManagerInstance)
@@ -59,5 +62,9 @@ func spawn_enemy():
 	var enemy = EnemyA.instantiate()
 	add_child(enemy)
 	enemy.global_position = randomSpawnPoint.global_position
+
+func start_wave():
+	GameManager.wave += 1
+	print("Starting Wave %d of %d" % [GameManager.wave, GameManager.maxWave])
 	
 

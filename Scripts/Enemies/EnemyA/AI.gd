@@ -12,14 +12,15 @@ enum State {
 @onready var detectionZone = $DetectionZone
 @onready var navigationAgent = $"../NavigationAgent2D"
 
-var current_state = State.IDLE : set = set_state
+var current_state = State.OBJECTIVE : set = set_state
 var player: Player = null
 var parent: Enemy = null
 var i = 0
 var markers = []
+var prevMarker
+var visitedMarkers = []
 
 func initialize_path_finding():
-	set_state(State.OBJECTIVE)
 	navigationAgent.path_desired_distance = 4.0
 	navigationAgent.target_desired_distance = 4.0
 	
@@ -31,6 +32,7 @@ func initialize_path_finding():
 func init_pathfinding(parent):
 	var root = get_tree().get_root()
 	var navArea = root.get_node("TestMultiplayerScene/NavArea")
+#	var navArea = root.get_node("TestPathFinding/NavArea")
 	if navArea:
 		var navRegion = navArea.get_node("NavRegion")
 #		navRegion.navpoly_map_sync()
@@ -40,10 +42,28 @@ func init_pathfinding(parent):
 		for marker in navMarkers:
 			if marker is Marker2D:
 				markers.append(marker)
-	
-	set_movement_target(markers[i].position)
-	
+	set_movement_target(find_shortest_route())
+#	set_movement_target(markers[i].position)
 #
+func find_shortest_route():
+#	var currPosition = parent.global_position
+	var currMarker = prevMarker
+	for marker in markers:
+		if currMarker == null:
+			currMarker = marker
+
+		if marker.global_position.distance_to(parent.global_position)\
+			< currMarker.global_position.distance_to(parent.global_position)\
+			&& marker != prevMarker && marker not in visitedMarkers:
+				currMarker = marker
+				
+		if prevMarker == currMarker && marker not in visitedMarkers:
+			currMarker = marker
+			
+	prevMarker = currMarker
+	parent.flip_sprite(currMarker)
+	return currMarker.position
+
 #func _physics_process(delta):
 #
 #	#Checks if the current target was reached and goes directly to the next one
@@ -68,29 +88,31 @@ func init_pathfinding(parent):
 func set_movement_target(targetPoint: Vector2):
 	navigationAgent.target_position = targetPoint
 	
-#func _process(delta):
-#	if parent.health <= 0:
-#		set_state(State.DEAD)
-#
-#	match current_state:
-#		State.IDLE:
-#			parent.idle()
-#		State.ENGAGE:
-#			if player != null:
-#				parent.flip_sprite(player)
-#				var threshold_distance = 100
-#				if parent.global_position.distance_to(player.global_position)\
-#					> threshold_distance:
-#					parent.go_towards(player)
-#				else:
-#					parent.idle()
-#			else:
-#				print("No player found")
-#				set_state(State.IDLE)
-#		State.DEAD:
-#			parent.handle_death()
-#		State.OBJECTIVE:
-#			parent.run()
+func _process(delta):
+	if parent.health <= 0:
+		set_state(State.DEAD)
+
+	match current_state:
+		State.IDLE:
+			parent.idle()
+		State.ENGAGE:
+			if player != null:
+				parent.flip_sprite(player)
+				var threshold_distance = 100
+				if parent.global_position.distance_to(player.global_position)\
+					> threshold_distance:
+					parent.go_towards(player)
+				else:
+					parent.idle()
+#					set_state(State.OBJECTIVE)
+			else:
+				print("No player found")
+				set_state(State.IDLE)
+#				set_state(State.OBJECTIVE)
+		State.DEAD:
+			parent.handle_death()
+		State.OBJECTIVE:
+			parent.run()
 
 func _physics_process(delta):
 	if parent.health <= 0:
@@ -101,6 +123,7 @@ func _physics_process(delta):
 			parent.idle()
 		State.ENGAGE:
 			if player != null:
+#				set_movement_target(Vector2.ZERO)
 				parent.flip_sprite(player)
 				var threshold_distance = 100
 				if parent.global_position.distance_to(player.global_position)\
@@ -115,14 +138,16 @@ func _physics_process(delta):
 			parent.handle_death()
 		State.OBJECTIVE:
 			parent.run()
-			#	#Checks if the current target was reached and goes directly to the next one
+			parent.flip_sprite(prevMarker)
+			#Checks if the current target was reached and goes directly to the next one
 			if navigationAgent.is_navigation_finished():
+				visitedMarkers.append(prevMarker)
 				if i >= markers.size():
 					set_state(State.IDLE)
 					return
-				set_movement_target(markers[i].position)
+				set_movement_target(find_shortest_route())
 				i += 1
-
+				
 
 			var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
 			var nextPathPosition: Vector2 = navigationAgent.get_next_path_position()
@@ -162,6 +187,7 @@ func _on_detection_zone_body_exited(body):
 				return
 		else:
 			set_state(State.OBJECTIVE)
+		set_movement_target(markers[i].position) #Prevents jittering in the implementation
 #		set_state(State.IDLE)
 		player = null
 		

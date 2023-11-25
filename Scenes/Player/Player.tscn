@@ -153,6 +153,14 @@ properties/3/path = NodePath(".:syncRot")
 properties/3/spawn = false
 properties/3/sync = false
 properties/3/watch = false
+properties/4/path = NodePath(".:readyState")
+properties/4/spawn = true
+properties/4/sync = true
+properties/4/watch = false
+properties/5/path = NodePath("ReadyLabel:text")
+properties/5/spawn = true
+properties/5/sync = true
+properties/5/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -190,8 +198,21 @@ one_shot = true
 
 [node name="StatsContainer (Not functioning for now)" type="Node2D" parent="."]
 
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("9_vptfm")
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ffpdr")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-script = ExtResource("9_vptfm")
+[node name="ReadyLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -63.0
+offset_right = 20.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2

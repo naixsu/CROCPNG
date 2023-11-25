@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgiky6rcbuxga"]
+[gd_scene load_steps=8 format=3 uid="uid://cgiky6rcbuxga"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestMultiplayerScene.gd" id="1_cahup"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="3_8q6be"]
 [ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="3_jn6np"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/EnemySpawner.gd" id="5_hl27v"]
 [ext_resource type="PackedScene" uid="uid://cps2ukm5wvqn1" path="res://Scenes/Map/Map.tscn" id="5_rj7rh"]
+[ext_resource type="PackedScene" uid="uid://v7cwyu2s7km1" path="res://Scenes/Testing/NaixTestScenes/ReadyPrompt.tscn" id="6_70x88"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
 vertices = PackedVector2Array(1963, 690, 1992, 2745, -1900, 2726, -1858, -1745, 1969, -1731, 1982, 186)
@@ -29,22 +30,60 @@ position = Vector2(-1200, 1950)
 [node name="EnemySpawnPoints" type="Node2D" parent="."]
 
 [node name="0" type="Marker2D" parent="EnemySpawnPoints"]
-position = Vector2(-816, -1526)
+position = Vector2(-816, -1541)
 
 [node name="1" type="Marker2D" parent="EnemySpawnPoints"]
-position = Vector2(-756, -1526)
+position = Vector2(-756, -1541)
 
 [node name="2" type="Marker2D" parent="EnemySpawnPoints"]
-position = Vector2(12, -1526)
+position = Vector2(-864, -1527)
 
 [node name="3" type="Marker2D" parent="EnemySpawnPoints"]
-position = Vector2(82, -1526)
+position = Vector2(-720, -1527)
 
 [node name="4" type="Marker2D" parent="EnemySpawnPoints"]
-position = Vector2(840, -1526)
+position = Vector2(-864, -1503)
 
 [node name="5" type="Marker2D" parent="EnemySpawnPoints"]
-position = Vector2(912, -1526)
+position = Vector2(-720, -1503)
+
+[node name="6" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(10, -1541)
+
+[node name="7" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(70, -1541)
+
+[node name="8" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-38, -1527)
+
+[node name="9" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(106, -1527)
+
+[node name="10" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-38, -1503)
+
+[node name="11" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(106, -1503)
+
+[node name="12" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(850, -1541)
+
+[node name="13" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(910, -1541)
+
+[node name="14" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(802, -1527)
+
+[node name="15" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(946, -1527)
+
+[node name="16" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(802, -1503)
+
+[node name="17" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(946, -1503)
+
+[node name="EnemyGroups" type="Node2D" parent="."]
 
 [node name="NavArea" type="Node2D" parent="."]
 
@@ -71,5 +110,7 @@ position = Vector2(-29, -1207)
 position = Vector2(45, 489)
 
 [node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
-spawn_path = NodePath("../EnemySpawnPoints")
+spawn_path = NodePath("../EnemyGroups")
 script = ExtResource("5_hl27v")
+
+[node name="ReadyPrompt" parent="." instance=ExtResource("6_70x88")]

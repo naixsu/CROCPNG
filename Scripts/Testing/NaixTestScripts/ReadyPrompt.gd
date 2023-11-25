@@ -3,86 +3,37 @@ extends CanvasLayer
 @onready var playerReadyCount = $PlayerReadyCount
 #@onready var players = GameManager.players # init player dict
 
-var readyCount : int = 0
+@export var readyCount : int = 0
 
 signal toggle_ready
-signal update_ready
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-#	readyCount = players.values().count(lambda player: not player["readyState"])
-#	update_ready_count.rpc()
-	update_ready_count()
-
 
 func _on_ready_button_button_down():
 #	ready_up.rpc()
 	ready_up()
 
+func _process(delta):
+	update_ready_count()
+	
+	
 #@rpc("any_peer")
 func update_ready_count():
-#	update_ready_count_rpc.rpc()
-	print()
-	print("Test " + str(multiplayer.get_unique_id()))
 	readyCount = 0
 	# Get all players in the tree
 	var players = get_tree().get_nodes_in_group("Player")
 	for player in players:
 		if player.readyState == true: 
 			readyCount += 1
-			print("Ready player")
-			print(player)
-	
-	print("readyCount: " +  str(readyCount))
+#	var players = GameManager.players
+#	for player in players:
+#		if players[player].readyState: readyCount += 1
 	
 	var text = "Number of Players Ready: {0}/{1}".format({
-		"0": readyCount,
+		"0": str(readyCount),
 		"1": GameManager.players.size()
 	})
 
 	playerReadyCount.text = text
 	
-	print()
-#	print("Updating ready count")
-#	readyCount = 0
-#	for player in players:
-#		var p = players[player]
-#		if p["readyState"]:
-#			readyCount += 1
-
-@rpc("any_peer")
-func update_ready_count_rpc():
-	print("Updating ready count RPC")
-	readyCount = 0
-	var players = GameManager.players
-	for player in players:
-		var p = players[player]
-		if p["readyState"]:
-			readyCount += 1
-
-#	var players = get_tree().get_nodes_in_group("Player")
-#
-#	print(players)
-#	for player in players:
-#		var readyState = player.readyState
-#		if readyState: readyCount += 1
-#	print()
-#	print(readyCount)
-#	print()
 
 func ready_up():
 	toggle_ready.emit()
-#	var player = root.get_node("TestMultiplayerScene/NavArea")
-
-#
-#@rpc("any_peer")
-#func ready_up():
-#	print("ready_up")
-#	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-#		var root = get_tree().get_root()
-#		print("root")
-#		print(root)
-
-
-#func _on_player_update_ready_state():
-#	update_ready_count()

@@ -1,12 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0jre5feen0jg"]
+[gd_scene load_steps=2 format=3 uid="uid://b0jre5feen0jg"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ReadyPrompt.gd" id="1_k1gbb"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gtbde"]
-properties/0/path = NodePath("PlayerReadyCount:text")
-properties/0/spawn = true
-properties/0/sync = true
-properties/0/watch = false
 
 [node name="ReadyPrompt" type="CanvasLayer"]
 script = ExtResource("1_k1gbb")
@@ -22,18 +16,33 @@ offset_bottom = 95.0
 grow_horizontal = 2
 text = "Number of Players Ready: "
 
-[node name="ReadyButton" type="Button" parent="."]
+[node name="ReadyButton" type="Button" parent="PlayerReadyCount"]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -28.0
-offset_top = 127.0
+offset_top = 58.0
 offset_right = 28.0
-offset_bottom = 158.0
+offset_bottom = 89.0
 grow_horizontal = 2
 text = "Ready"
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_gtbde")
+[node name="WaveNotif" type="Label" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.5
+offset_top = 69.0
+offset_right = 102.5
+offset_bottom = 95.0
+grow_horizontal = 2
+text = "Wave Starts In:"
 
-[connection signal="button_down" from="ReadyButton" to="." method="_on_ready_button_button_down"]
+[node name="WaveCountdown" type="Timer" parent="WaveNotif"]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="button_down" from="PlayerReadyCount/ReadyButton" to="." method="_on_ready_button_button_down"]
+[connection signal="timeout" from="WaveNotif/WaveCountdown" to="." method="_on_wave_countdown_timeout"]

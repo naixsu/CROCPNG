@@ -41,30 +41,39 @@ func _ready():
 func _unhandled_input(event):
 	if event.is_action_pressed("Spawn"):
 #		spawn_enemy.rpc()
-		var random_index = randi_range(0, spawn_points.size() - 1)
-		var random_spawn_point = spawn_points[random_index].position
-		var enemy_types = ["A", "B", "C"]
-		var random_enemy_type = enemy_types[randi_range(0, enemy_types.size() - 1)]
-#		print("spawn: " + str(random_spawn_point) + " type: " + str(random_enemy_type))
-		get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
+		spawn_enemy()
 		pass
+
+func spawn_enemy():
+	var random_index = randi_range(0, spawn_points.size() - 1)
+	var random_spawn_point = spawn_points[random_index].position
+	var enemy_types = ["A", "B", "C"]
+	var random_enemy_type = enemy_types[randi_range(0, enemy_types.size() - 1)]
+#		print("spawn: " + str(random_spawn_point) + " type: " + str(random_enemy_type))
+	get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
 			
 	
-@rpc("any_peer", "call_local")
-func spawn_enemy():
-	# Get random spawn point
-	print("Spawn Enemy")
-	var enemySpawnPoints = get_tree().get_nodes_in_group("EnemySpawnPoint")
-	var randomIndex = randi_range(0, enemySpawnPoints.size() - 1)
-	var randomSpawnPoint = enemySpawnPoints[randomIndex]
-	
-	# Instantiate enemy
-	var enemy = EnemyA.instantiate()
-	add_child(enemy)
-	enemy.global_position = randomSpawnPoint.global_position
+#@rpc("any_peer", "call_local")
+#func spawn_enemy():
+#	# Get random spawn point
+#	print("Spawn Enemy")
+#	var enemySpawnPoints = get_tree().get_nodes_in_group("EnemySpawnPoint")
+#	var randomIndex = randi_range(0, enemySpawnPoints.size() - 1)
+#	var randomSpawnPoint = enemySpawnPoints[randomIndex]
+#
+#	# Instantiate enemy
+#	var enemy = EnemyA.instantiate()
+#	add_child(enemy)
+#	enemy.global_position = randomSpawnPoint.global_position
 
 func start_wave():
 	GameManager.wave += 1
 	print("Starting Wave %d of %d" % [GameManager.wave, GameManager.maxWave])
+	
+	var enemyGroups = get_node("EnemyGroups")
+	if GameManager.wave == 1:
+		print("Wave 1")
+		for i in range(20):
+			spawn_enemy()
 	
 

@@ -13,6 +13,10 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(406, 608, 495, 698, 1077, 654, 1234, 344, 972, 50, 592, 249)])
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_n0uep"]
+properties/0/path = NodePath("ReadyPrompt:process_mode")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
 
 [node name="TestMultiplayerScene" type="Node2D"]
 script = ExtResource("1_cahup")

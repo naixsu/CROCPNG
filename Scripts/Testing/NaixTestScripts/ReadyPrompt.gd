@@ -15,17 +15,6 @@ func _ready():
 	update_ready_count()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):	
-	
-	var text = "Number of Players Ready: {0}/{1}".format({
-		"0": readyCount,
-		"1": GameManager.players.size()
-	})
-
-	playerReadyCount.text = text
-
-
 func _on_ready_button_button_down():
 #	ready_up.rpc()
 	ready_up()
@@ -33,8 +22,27 @@ func _on_ready_button_button_down():
 #@rpc("any_peer")
 func update_ready_count():
 #	update_ready_count_rpc.rpc()
+	print()
 	print("Test " + str(multiplayer.get_unique_id()))
+	readyCount = 0
+	# Get all players in the tree
+	var players = get_tree().get_nodes_in_group("Player")
+	for player in players:
+		if player.readyState == true: 
+			readyCount += 1
+			print("Ready player")
+			print(player)
 	
+	print("readyCount: " +  str(readyCount))
+	
+	var text = "Number of Players Ready: {0}/{1}".format({
+		"0": readyCount,
+		"1": GameManager.players.size()
+	})
+
+	playerReadyCount.text = text
+	
+	print()
 #	print("Updating ready count")
 #	readyCount = 0
 #	for player in players:
@@ -63,9 +71,6 @@ func update_ready_count_rpc():
 #	print()
 
 func ready_up():
-	var root = get_tree().get_root()
-	print("root")
-	print(self)
 	toggle_ready.emit()
 #	var player = root.get_node("TestMultiplayerScene/NavArea")
 

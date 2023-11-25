@@ -191,12 +191,13 @@ func handle_hit():
 
 func toggle_ready():
 	print("Player: toggle_ready")
-	readyState = !readyState
-	var idSelf = multiplayer.get_unique_id()
-	var playerSelf = GameManager.players[idSelf]
-	playerSelf["readyState"] = readyState
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		readyState = !readyState
+#	var idSelf = multiplayer.get_unique_id()
+#	var playerSelf = GameManager.players[idSelf]
+#	playerSelf["readyState"] = readyState
 #	update_ready.emit()
-	readyPrompt.update_ready_count()
+		readyPrompt.update_ready_count()
 
 #func _on_ready_prompt_toggle_ready():
 ##	print("here")

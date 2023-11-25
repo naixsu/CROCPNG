@@ -44,6 +44,7 @@ func _unhandled_input(event):
 		spawn_enemy()
 		pass
 
+@rpc("any_peer")
 func spawn_enemy():
 	var random_index = randi_range(0, spawn_points.size() - 1)
 	var random_spawn_point = spawn_points[random_index].position
@@ -73,7 +74,7 @@ func start_wave():
 	var enemyGroups = get_node("EnemyGroups")
 	if GameManager.wave == 1:
 		print("Wave 1")
-		for i in range(20):
-			spawn_enemy()
+		for i in range(5):
+			spawn_enemy.rpc()
 	
 

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="3_jn6np"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/EnemySpawner.gd" id="5_hl27v"]
 [ext_resource type="PackedScene" uid="uid://cps2ukm5wvqn1" path="res://Scenes/Map/Map.tscn" id="5_rj7rh"]
-[ext_resource type="PackedScene" uid="uid://b0jre5feen0jg" path="res://Scenes/Testing/NaixTestScenes/ReadyPrompt.tscn" id="6_70x88"]
+[ext_resource type="PackedScene" path="res://Scenes/Testing/NaixTestScenes/ReadyPrompt.tscn" id="6_70x88"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
 vertices = PackedVector2Array(1963, 690, 1992, 2745, -1900, 2726, -1858, -1745, 1969, -1731, 1982, 186)

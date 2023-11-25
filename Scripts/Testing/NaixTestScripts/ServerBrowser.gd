@@ -58,7 +58,7 @@ func set_up_broadcast(name):
 	var ok = broadcaster.bind(broadcastPort)
 	
 	if ok == OK:
-		print("Bound to Broadcast Port " + str(broadcastPort) + " Successful")
+		print("Bound to Broadcast Port " + str(broadcastPort) + " at " + str(broadcastAddress) + " Successful")
 	else:
 		print("Failed to bind to Broadcast Port!")
 		

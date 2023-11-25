@@ -1,44 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0jre5feen0jg"]
+[gd_scene load_steps=2 format=3 uid="uid://b0jre5feen0jg"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ReadyPrompt.gd" id="1_k1gbb"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gny3a"]
-properties/0/path = NodePath("PlayerReadyCount:text")
-properties/0/spawn = true
-properties/0/sync = true
-properties/0/watch = false
-properties/1/path = NodePath("ReadyButton:text")
-properties/1/spawn = true
-properties/1/sync = true
-properties/1/watch = false
-
-[node name="ReadyPrompt" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -1.0
-offset_bottom = -1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ReadyPrompt" type="CanvasLayer"]
 script = ExtResource("1_k1gbb")
 
 [node name="PlayerReadyCount" type="Label" parent="."]
-layout_mode = 0
-offset_left = 457.0
-offset_top = 56.0
-offset_right = 662.0
-offset_bottom = 82.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.5
+offset_top = 69.0
+offset_right = 102.5
+offset_bottom = 95.0
+grow_horizontal = 2
 text = "Number of Players Ready: "
 
 [node name="ReadyButton" type="Button" parent="."]
-offset_left = 527.0
-offset_top = 117.0
-offset_right = 583.0
-offset_bottom = 148.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.0
+offset_top = 127.0
+offset_right = 28.0
+offset_bottom = 158.0
+grow_horizontal = 2
 text = "Ready"
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_gny3a")
 
 [connection signal="button_down" from="ReadyButton" to="." method="_on_ready_button_button_down"]

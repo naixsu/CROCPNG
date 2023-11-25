@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=28 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Texture2D" uid="uid://gxnhy48xdgac" path="res://icon.svg" id="1_57ol8"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://c5hp4o5b5b853" path="res://Scenes/Bullet/BulletCB.tscn" id="4_52lxj"]
 [ext_resource type="Texture2D" uid="uid://clug3m78gurbu" path="res://Assets/Sprites/Player/PlayerRun.png" id="4_xxbxq"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/CameraZoom.gd" id="9_vptfm"]
-[ext_resource type="PackedScene" uid="uid://b0jre5feen0jg" path="res://Scenes/Testing/NaixTestScenes/ReadyPrompt.tscn" id="10_x3kit"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -154,6 +153,14 @@ properties/3/path = NodePath(".:syncRot")
 properties/3/spawn = false
 properties/3/sync = false
 properties/3/watch = false
+properties/4/path = NodePath(".:readyState")
+properties/4/spawn = true
+properties/4/sync = true
+properties/4/watch = false
+properties/5/path = NodePath("ReadyLabel:text")
+properties/5/spawn = true
+properties/5/sync = true
+properties/5/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -194,11 +201,18 @@ one_shot = true
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("9_vptfm")
 
-[node name="ReadyPrompt" parent="." instance=ExtResource("10_x3kit")]
-offset_left = -560.0
-offset_top = -321.0
-offset_right = -560.0
-offset_bottom = -321.0
-
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ffpdr")
+
+[node name="ReadyLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -63.0
+offset_right = 20.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2

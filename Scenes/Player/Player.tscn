@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=29 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Texture2D" uid="uid://gxnhy48xdgac" path="res://icon.svg" id="1_57ol8"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c5hp4o5b5b853" path="res://Scenes/Bullet/BulletCB.tscn" id="4_52lxj"]
 [ext_resource type="Texture2D" uid="uid://clug3m78gurbu" path="res://Assets/Sprites/Player/PlayerRun.png" id="4_xxbxq"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/CameraZoom.gd" id="9_vptfm"]
+[ext_resource type="PackedScene" uid="uid://b0jre5feen0jg" path="res://Scenes/Testing/NaixTestScenes/ReadyPrompt.tscn" id="10_x3kit"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -190,8 +191,14 @@ one_shot = true
 
 [node name="StatsContainer (Not functioning for now)" type="Node2D" parent="."]
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_ffpdr")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("9_vptfm")
+
+[node name="ReadyPrompt" parent="." instance=ExtResource("10_x3kit")]
+offset_left = -560.0
+offset_top = -321.0
+offset_right = -560.0
+offset_bottom = -321.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ffpdr")

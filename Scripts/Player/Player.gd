@@ -27,6 +27,7 @@ signal player_fired_bullet(bullet, pos, dir)
 # Other global vars here
 var dead = false
 var spawn_points = []
+var readyState = false # had to avoid 'ready' builtin keyword
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
 #var syncRot = 0

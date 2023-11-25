@@ -161,6 +161,7 @@ sprite_frames = SubResource("SpriteFrames_yg01f")
 animation = &"run"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 18.5)

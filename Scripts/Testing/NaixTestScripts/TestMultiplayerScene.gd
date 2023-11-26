@@ -70,15 +70,16 @@ func spawn_enemy():
 #	enemy.global_position = randomSpawnPoint.global_position
 
 func start_wave():
-	GameManager.wave += 1
-	print("Starting Wave %d of %d" % [GameManager.wave, GameManager.maxWave])
-	var spawnDelay = 0.5
-	var enemyGroups = get_node("EnemyGroups")
-	if GameManager.wave == 1:
-		var enemyCount = GameManager.players.size() * 10
-		print("Wave 1: Number of Enemies: %d" % enemyCount)
-		for i in range(enemyCount):
-			await get_tree().create_timer(spawnDelay).timeout
-			spawn_enemy()
+	if is_multiplayer_authority():
+		GameManager.wave += 1
+		print("Starting Wave %d of %d" % [GameManager.wave, GameManager.maxWave])
+		var spawnDelay = 0.5
+		var enemyGroups = get_node("EnemyGroups")
+		if GameManager.wave == 1:
+			var enemyCount = GameManager.players.size() * 10
+			print("Wave 1: Number of Enemies: %d" % enemyCount)
+			for i in range(enemyCount):
+				await get_tree().create_timer(spawnDelay).timeout
+				spawn_enemy()
 	
 

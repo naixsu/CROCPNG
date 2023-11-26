@@ -1,61 +1,89 @@
 [gd_scene load_steps=8 format=3 uid="uid://cgiky6rcbuxga"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestMultiplayerScene.gd" id="1_cahup"]
-[ext_resource type="PackedScene" uid="uid://s741h0igfq5k" path="res://Scenes/Testing/NaixTestScenes/TestPlatforms.tscn" id="2_1merq"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="3_8q6be"]
 [ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="3_jn6np"]
-[ext_resource type="PackedScene" uid="uid://b461wubwupbqh" path="res://Scenes/Enemies/EnemyB/EnemyB.tscn" id="4_v02mc"]
-[ext_resource type="PackedScene" uid="uid://bx77fvysan881" path="res://Scenes/Enemies/EnemyC/EnemyC.tscn" id="5_0qcgn"]
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/EnemySpawner.gd" id="5_hl27v"]
+[ext_resource type="PackedScene" uid="uid://cps2ukm5wvqn1" path="res://Scenes/Map/Map.tscn" id="5_rj7rh"]
+[ext_resource type="PackedScene" uid="uid://v7cwyu2s7km1" path="res://Scenes/Testing/NaixTestScenes/ReadyPrompt.tscn" id="6_70x88"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
-vertices = PackedVector2Array(592, 249, 972, 50, 1234, 344, 1077, 654, 495, 698, 406, 608)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(406, 608, 495, 698, 1077, 654, 1234, 344, 972, 50, 592, 249)])
+vertices = PackedVector2Array(1963, 690, 1992, 2745, -1900, 2726, -1858, -1745, 1969, -1731, 1982, 186)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1900, 2726, 1992, 2745, 1963, 690, 1982, 186, 1969, -1731, -1858, -1745)])
 
 [node name="TestMultiplayerScene" type="Node2D"]
 script = ExtResource("1_cahup")
 PlayerScene = ExtResource("3_8q6be")
 EnemyA = ExtResource("3_jn6np")
 
-[node name="Platforms" type="Node2D" parent="."]
-
-[node name="TestPlatform" parent="Platforms" instance=ExtResource("2_1merq")]
-position = Vector2(540, 191)
-
-[node name="TestPlatform2" parent="Platforms" instance=ExtResource("2_1merq")]
-position = Vector2(268, 484)
-
-[node name="TestPlatform3" parent="Platforms" instance=ExtResource("2_1merq")]
-position = Vector2(764, 411)
-
 [node name="Enemies" type="Node2D" parent="."]
-
-[node name="EnemyA" parent="Enemies" instance=ExtResource("3_jn6np")]
-position = Vector2(870, 153)
-
-[node name="EnemyB" parent="Enemies" instance=ExtResource("4_v02mc")]
-position = Vector2(711, 544)
-
-[node name="EnemyC" parent="Enemies" instance=ExtResource("5_0qcgn")]
-position = Vector2(832, 589)
 
 [node name="PlayerSpawnPoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoint"]]
-position = Vector2(44, 110)
+position = Vector2(-1200, 1800)
 
 [node name="1" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoint"]]
-position = Vector2(144, 56)
+position = Vector2(-1200, 1950)
 
 [node name="EnemySpawnPoints" type="Node2D" parent="."]
 
-[node name="0" type="Node2D" parent="EnemySpawnPoints" groups=["EnemySpawnPoint"]]
-position = Vector2(770, 106)
+[node name="0" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-816, -1541)
 
-[node name="1" type="Node2D" parent="EnemySpawnPoints" groups=["EnemySpawnPoint"]]
-position = Vector2(665, 106)
-rotation = -4.73227
-scale = Vector2(95.1521, 10.0646)
+[node name="1" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-756, -1541)
+
+[node name="2" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-864, -1527)
+
+[node name="3" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-720, -1527)
+
+[node name="4" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-864, -1503)
+
+[node name="5" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-720, -1503)
+
+[node name="6" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(10, -1541)
+
+[node name="7" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(70, -1541)
+
+[node name="8" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-38, -1527)
+
+[node name="9" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(106, -1527)
+
+[node name="10" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-38, -1503)
+
+[node name="11" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(106, -1503)
+
+[node name="12" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(850, -1541)
+
+[node name="13" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(910, -1541)
+
+[node name="14" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(802, -1527)
+
+[node name="15" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(946, -1527)
+
+[node name="16" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(802, -1503)
+
+[node name="17" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(946, -1503)
+
+[node name="EnemyGroups" type="Node2D" parent="."]
 
 [node name="NavArea" type="Node2D" parent="."]
 
@@ -63,10 +91,26 @@ scale = Vector2(95.1521, 10.0646)
 navigation_polygon = SubResource("NavigationPolygon_qh2qy")
 
 [node name="Marker2D" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(523, 612)
+position = Vector2(-657, -659)
+scale = Vector2(3.40694e+07, -1.49809e+09)
 
 [node name="Marker2D2" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(995, 557)
+position = Vector2(612, 1371)
 
 [node name="Marker2D3" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(848, 289)
+position = Vector2(687, -659)
+
+[node name="Marker2D4" type="Marker2D" parent="NavArea/NavRegion"]
+position = Vector2(49, 2212)
+
+[node name="Marker2D5" type="Marker2D" parent="NavArea/NavRegion"]
+position = Vector2(-29, -1207)
+
+[node name="Map" parent="." instance=ExtResource("5_rj7rh")]
+position = Vector2(45, 489)
+
+[node name="EnemySpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../EnemyGroups")
+script = ExtResource("5_hl27v")
+
+[node name="ReadyPrompt" parent="." instance=ExtResource("6_70x88")]

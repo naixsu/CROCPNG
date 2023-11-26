@@ -63,6 +63,7 @@ func send_player_information(name, id):
 		GameManager.players[id] = {
 			"name": name,
 			"id": id,
+			"readyState": false
 			# other: other
 		}
 	
@@ -86,7 +87,7 @@ func host_game():
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
 	multiplayer.set_multiplayer_peer(peer)
 #	print("Waiting for players. Hosted at: " + ipAddress)
-	$ServerBrowser.set_up_broadcast(nameEdit + "'s server")
+	$ServerBrowser.set_up_broadcast(nameEdit.text + "'s server")
 	# send_player_information(nameEdit.text, multiplayer.get_unique_id())
 
 func custom_host(serverName):
@@ -142,6 +143,7 @@ func _on_start_game_button_down():
 func _on_button_button_down():
 	GameManager.players[GameManager.players.size() + 1] = {
 		"name": "test",
-		"id": 1
+		"id": 1, # host ID
+		"readyState": false
 	}
 	pass # Replace with function body.

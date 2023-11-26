@@ -53,8 +53,6 @@ func go_towards(player):
 	velocity = direction * speed
 	move_and_slide()
 	
-
-
 func idle():
 	anim.play("idle")
 	

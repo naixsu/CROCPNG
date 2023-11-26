@@ -45,6 +45,8 @@ func _unhandled_input(event):
 		pass
 
 
+# Might wanna use a resource here so that the wave feature
+# so that waves aren't randomized
 func spawn_enemy():
 	var random_index = randi_range(0, spawn_points.size() - 1)
 	var random_spawn_point = spawn_points[random_index].position
@@ -69,6 +71,9 @@ func spawn_enemy():
 #	add_child(enemy)
 #	enemy.global_position = randomSpawnPoint.global_position
 
+
+# Might wanna use a resource here so that the wave feature
+# isn't hardcoded
 func start_wave():
 	if is_multiplayer_authority():
 		add_wave.rpc()

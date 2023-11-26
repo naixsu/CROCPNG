@@ -75,11 +75,25 @@ func start_wave():
 		print("Starting Wave %d of %d" % [GameManager.wave, GameManager.maxWave])
 		var spawnDelay = 0.5
 		var enemyGroups = get_node("EnemyGroups")
-		if GameManager.wave == 1:
-			var enemyCount = GameManager.players.size() * 10
-			print("Wave 1: Number of Enemies: %d" % enemyCount)
-			for i in range(enemyCount):
-				await get_tree().create_timer(spawnDelay).timeout
-				spawn_enemy()
+		match GameManager.wave:
+			1:
+				var enemyCount = GameManager.players.size() * 10
+				print("Wave %d: Number of Enemies: %d" % [GameManager.wave, enemyCount])
+				for i in range(enemyCount):
+					await get_tree().create_timer(spawnDelay).timeout
+					spawn_enemy()
+					GameManager.enemyCount += 1
+				
+			2:
+				var enemyCount = GameManager.players.size() * 20
+				print("Wave %d: Number of Enemies: %d" % [GameManager.wave, enemyCount])
+				for i in range(enemyCount):
+					await get_tree().create_timer(spawnDelay).timeout
+					spawn_enemy()
+					GameManager.enemyCount += 1
+			
+		
+		
+		
 	
 

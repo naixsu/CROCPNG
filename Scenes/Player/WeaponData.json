@@ -1,0 +1,29 @@
+[
+	{
+		"name": "Pistol",
+		"texture": "res://Assets/Weapons/pistol_equipped.png",
+		"damage": 10,
+		"wait_time": 0.2,
+		"multishot": 1,
+		"deviation_angle": 8,
+		"bullet_speed": 1000,
+	},
+	{
+		"name": "Rifle",
+		"texture": "res://Assets/Weapons/rifle_equipped.png",
+		"damage": 15,
+		"wait_time": 0.1,
+		"multishot": 1,
+		"deviation_angle": 10,
+		"bullet_speed": 1200 
+	},
+	{
+		"name": "Shotgun",
+		"texture": "res://Assets/Weapons/shotgun_equipped.png",
+		"damage": 15,
+		"wait_time": 1,
+		"multishot": 10,
+		"deviation_angle": 60,
+		"bullet_speed": 800 
+	},
+]

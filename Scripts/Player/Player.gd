@@ -25,6 +25,8 @@ class_name Player
 @onready var readyPrompt = get_tree().get_root().get_node("TestMultiplayerScene/ReadyPrompt")
 @onready var readyLabel = $ReadyLabel
 
+@onready var weaponFile = "res://Scenes/Player/WeaponData.json"
+
 # Signals here
 signal player_fired_bullet(bullet, pos, dir)
 signal update_ready
@@ -35,6 +37,7 @@ var spawn_points = []
 @export var readyState = false # had to avoid 'ready' builtin keyword
 
 var weapons: Array = []
+var weaponsData: Array = []
 var currentWeaponIndex = 0
 var currentWeapon
 
@@ -50,7 +53,7 @@ func _ready():
 #	for child in children:
 #		if child is Marker2D:
 #			spawn_points.append(child)
-	init_weapons()
+	init_weapons(weaponFile)
 	readyPrompt.connect("toggle_ready", toggle_ready)
 
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
@@ -114,14 +117,30 @@ func _unhandled_input(event):
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		if event.is_action_pressed("Fire"):
 			fire.rpc()
+			
+		if event.is_action_pressed("SwitchWeapon1"):
+			currentWeaponIndex = 0
+			switch_weapon.rpc()
+		if event.is_action_pressed("SwitchWeapon2"):
+			currentWeaponIndex = 1
+			switch_weapon.rpc()
+		if event.is_action_pressed("SwitchWeapon3"):
+			currentWeaponIndex = 2
+			switch_weapon.rpc()
 		
 #	if event.is_action_pressed("Spawn"):
 #		spawn.rpc()
 	pass
 
-func init_weapons():
+func init_weapons(weaponFile):
 	weapons = weaponsManager.get_children()
 	currentWeapon = weapons[currentWeaponIndex]
+	
+	
+	var f = FileAccess.open(weaponFile, FileAccess.READ)
+	var content = f.get_as_text()
+	weaponsData = JSON.parse_string(content)	
+	
 
 func can_shoot_in_physics():
 	if Input.is_action_just_pressed("Fire"):
@@ -156,6 +175,8 @@ func flip_sprite():
 		anim.flip_h = true
 	elif get_global_mouse_position().x > global_position.x:
 		anim.flip_h = false
+		
+
 
 @rpc("any_peer", "call_remote")
 func spawn():
@@ -163,6 +184,16 @@ func spawn():
 	e.global_position = get_global_mouse_position()
 	get_tree().root.add_child(e)
 	print("Spawned Enemy")
+	
+
+	
+@rpc("any_peer", "call_local")
+func switch_weapon():	
+	currentWeapon.get_node("ArrowIndicator").texture = load(weaponsData[currentWeaponIndex].texture)
+	currentWeapon.get_node("FireCooldown").wait_time = weaponsData[currentWeaponIndex].wait_time
+	currentWeaponIndex = currentWeaponIndex
+	
+	
 
 @rpc("any_peer", "call_local")
 func fire():
@@ -178,10 +209,20 @@ func fire():
 		print("{0} Fire!".format({
 			"0": str(currentWeapon.name)
 		}))
-		var b = BulletCB.instantiate()
-		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
-		b.rotation_degrees = weaponsManager.rotation_degrees
-		get_tree().root.add_child(b)
+#		var b = BulletCB.instantiate()
+#		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
+		
+		#Calculate random bullet spread	and multishot
+		var multishot = weaponsData[currentWeaponIndex].multishot
+		var deviation_angle = weaponsData[currentWeaponIndex].deviation_angle
+		for i in range(multishot):		
+			var b = BulletCB.instantiate()
+			b.global_position = currentWeapon.get_node("BulletSpawn").global_position
+			
+			var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
+			b.rotation_degrees = bullet_rotation
+			
+			get_tree().root.add_child(b)
 		currentWeapon.get_node("FireCooldown").start()
 	pass
 

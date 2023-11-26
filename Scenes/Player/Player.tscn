@@ -210,4 +210,4 @@ grow_vertical = 2
 
 [node name="WeaponsManager" type="Node2D" parent="."]
 
-[node name="Pistol" parent="WeaponsManager" instance=ExtResource("8_l3ssp")]
+[node name="Gun" parent="WeaponsManager" instance=ExtResource("8_l3ssp")]

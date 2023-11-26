@@ -1,3 +1,9 @@
+###
+#
+# Also treating this as a gamestate.
+#
+###
+
 extends CanvasLayer
 
 @onready var playerReadyCount = $PlayerReadyCount
@@ -10,6 +16,7 @@ extends CanvasLayer
 var showReady : bool = true
 var startCountdown : bool = false
 var displayCountdown : bool = false
+var checkForEnemies : bool = false
 
 signal toggle_ready
 signal start_wave
@@ -19,7 +26,8 @@ func _on_ready_button_button_down():
 	ready_up()
 
 func _physics_process(delta):
-	update_ready_count()
+	if showReady:
+		update_ready_count()
 	
 	if startCountdown: 
 		waveCountdown.start()
@@ -28,6 +36,14 @@ func _physics_process(delta):
 	
 	if displayCountdown: 
 		display_countdown()
+	
+	if checkForEnemies:
+		await get_tree().create_timer(1).timeout
+		if GameManager.enemyCount == 0:
+			print("\nNo more enemies\n")
+			checkForEnemies = false
+			showReady = true
+			playerReadyCount.show()
 	
 	
 func display_countdown():
@@ -78,4 +94,5 @@ func reset_ready(): # Reset the readyState of all players
 	var players = get_tree().get_nodes_in_group("Player")
 	for player in players:
 		player.readyState = false
+	checkForEnemies = true
 	

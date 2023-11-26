@@ -9,19 +9,31 @@ class_name Enemy
 @onready var ai = $AI
 @onready var multiplayerSynchronizer = $MultiplayerSynchronizer
 @export var player: Player
-@export var health = 100
-@export var speed = 50
+@export var health : int
+@export var speed : int
 @onready var collision = $CollisionShape2D
 
 @export var movementTargets: Array[Node2D]
+@export var resource : Resource
+
+###
+# EnemyA = Skeleton
+# EnemyB = Ghost
+# EnemyC = Slime
+###
+
 
 func _ready():
 #	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	init_enemy()
 	anim.play("idle")
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
 	ai.initialize_path_finding()
 
+func init_enemy():
+	self.health = resource.health
+	self.speed = resource.speed
 
 func _on_animated_sprite_2d_animation_finished():
 	queue_free()

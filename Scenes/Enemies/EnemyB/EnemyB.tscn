@@ -1,8 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://b461wubwupbqh"]
+[gd_scene load_steps=29 format=3 uid="uid://b461wubwupbqh"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/EnemyA.gd" id="1_qucq8"]
 [ext_resource type="Texture2D" uid="uid://bmouajm75qko3" path="res://Assets/Sprites/EnemyB/EnemyBDeath.png" id="2_0oyxl"]
 [ext_resource type="Texture2D" uid="uid://cid6ruvuvbmuj" path="res://Assets/Sprites/EnemyB/EnemyBIdle.png" id="2_yi3ll"]
+[ext_resource type="Resource" uid="uid://sojji4nlobhy" path="res://Resources/Ghost.tres" id="2_ywa1d"]
 [ext_resource type="Texture2D" uid="uid://bk6enflig6fi1" path="res://Assets/Sprites/EnemyB/EnemyBRun.png" id="3_30r4p"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/AI.gd" id="5_hsimf"]
 
@@ -171,7 +172,7 @@ z_index = 3
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_qucq8")
-speed = 100
+resource = ExtResource("2_ywa1d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

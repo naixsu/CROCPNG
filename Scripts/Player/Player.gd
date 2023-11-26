@@ -38,7 +38,7 @@ var spawn_points = []
 
 var weapons: Array = []
 var weaponsData: Array = []
-var currentWeaponIndex = 0
+@export var currentWeaponIndex = 0
 var currentWeapon
 
 # multiplayer syncing
@@ -119,14 +119,14 @@ func _unhandled_input(event):
 			fire.rpc()
 			
 		if event.is_action_pressed("SwitchWeapon1"):
-			currentWeaponIndex = 0
-			switch_weapon.rpc()
+#			currentWeaponIndex = 0
+			switch_weapon.rpc(0)
 		if event.is_action_pressed("SwitchWeapon2"):
-			currentWeaponIndex = 1
-			switch_weapon.rpc()
+#			currentWeaponIndex = 1
+			switch_weapon.rpc(1)
 		if event.is_action_pressed("SwitchWeapon3"):
-			currentWeaponIndex = 2
-			switch_weapon.rpc()
+#			currentWeaponIndex = 2
+			switch_weapon.rpc(2)
 		
 #	if event.is_action_pressed("Spawn"):
 #		spawn.rpc()
@@ -188,10 +188,10 @@ func spawn():
 
 	
 @rpc("any_peer", "call_local")
-func switch_weapon():	
+func switch_weapon(index):	
+	currentWeaponIndex = index
 	currentWeapon.get_node("ArrowIndicator").texture = load(weaponsData[currentWeaponIndex].texture)
 	currentWeapon.get_node("FireCooldown").wait_time = weaponsData[currentWeaponIndex].wait_time
-	currentWeaponIndex = currentWeaponIndex
 	
 	
 

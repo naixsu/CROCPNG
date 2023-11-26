@@ -165,6 +165,10 @@ properties/6/path = NodePath("WeaponsManager:rotation")
 properties/6/spawn = true
 properties/6/sync = true
 properties/6/watch = false
+properties/7/path = NodePath(".:currentWeaponIndex")
+properties/7/spawn = true
+properties/7/sync = true
+properties/7/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4

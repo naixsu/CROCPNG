@@ -89,6 +89,30 @@ position = Vector2(802, -1503)
 [node name="17" type="Marker2D" parent="EnemySpawnPoints"]
 position = Vector2(946, -1503)
 
+[node name="18" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-1454, -363)
+
+[node name="19" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-1310, -363)
+
+[node name="20" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-1454, -301)
+
+[node name="21" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(-1310, -301)
+
+[node name="22" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(1398, -363)
+
+[node name="23" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(1542, -363)
+
+[node name="24" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(1398, -301)
+
+[node name="25" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(1542, -301)
+
 [node name="EnemyGroups" type="Node2D" parent="."]
 
 [node name="NavArea" type="Node2D" parent="."]

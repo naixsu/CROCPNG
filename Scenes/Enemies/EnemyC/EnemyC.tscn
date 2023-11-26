@@ -1,7 +1,7 @@
 [gd_scene load_steps=27 format=3 uid="uid://bx77fvysan881"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/EnemyA.gd" id="1_c3xcl"]
-[ext_resource type="Resource" uid="uid://48eax743xiln" path="res://Resources/Slime.tres" id="2_b4h7m"]
+[ext_resource type="Resource" uid="uid://48eax743xiln" path="res://Resources/Enemies/Slime.tres" id="2_16ebi"]
 [ext_resource type="Texture2D" uid="uid://dxq0vas2ybden" path="res://Assets/Sprites/EnemyC/EnemyCDeath.png" id="2_fkx5k"]
 [ext_resource type="Texture2D" uid="uid://ce7fynnc241n4" path="res://Assets/Sprites/EnemyC/EnemyCIdle.png" id="3_kvubh"]
 [ext_resource type="Texture2D" uid="uid://snd66d2cibla" path="res://Assets/Sprites/EnemyC/EnemyCRun.png" id="4_338l4"]
@@ -158,7 +158,7 @@ z_index = 3
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_c3xcl")
-resource = ExtResource("2_b4h7m")
+resource = ExtResource("2_16ebi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

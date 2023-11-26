@@ -1,11 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgiky6rcbuxga"]
+[gd_scene load_steps=13 format=3 uid="uid://cgiky6rcbuxga"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestMultiplayerScene.gd" id="1_cahup"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="3_8q6be"]
 [ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="3_jn6np"]
+[ext_resource type="Resource" uid="uid://bse76jgbkri77" path="res://Resources/Waves/Wave1.tres" id="4_d3b61"]
+[ext_resource type="Resource" uid="uid://bii87ljuvqoak" path="res://Resources/Waves/Wave2.tres" id="5_ayrwn"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/EnemySpawner.gd" id="5_hl27v"]
 [ext_resource type="PackedScene" uid="uid://cps2ukm5wvqn1" path="res://Scenes/Map/Map.tscn" id="5_rj7rh"]
 [ext_resource type="PackedScene" uid="uid://v7cwyu2s7km1" path="res://Scenes/Testing/NaixTestScenes/ReadyPrompt.tscn" id="6_70x88"]
+[ext_resource type="Resource" uid="uid://dbwyywkq7wba" path="res://Resources/Waves/Wave3.tres" id="6_jv4mn"]
+[ext_resource type="Resource" uid="uid://b6mokfnhr0864" path="res://Resources/Waves/Wave4.tres" id="7_h5wlv"]
+[ext_resource type="Resource" uid="uid://tojs3bqvecfl" path="res://Resources/Waves/Wave5.tres" id="8_j5emd"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
 vertices = PackedVector2Array(1963, 690, 1992, 2745, -1900, 2726, -1858, -1745, 1969, -1731, 1982, 186)
@@ -16,6 +21,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-1900, 2726, 1992, 2745
 script = ExtResource("1_cahup")
 PlayerScene = ExtResource("3_8q6be")
 EnemyA = ExtResource("3_jn6np")
+waveResources = Array[Resource]([ExtResource("4_d3b61"), ExtResource("5_ayrwn"), ExtResource("6_jv4mn"), ExtResource("7_h5wlv"), ExtResource("8_j5emd")])
 
 [node name="Enemies" type="Node2D" parent="."]
 

@@ -38,7 +38,7 @@ func _physics_process(delta):
 		display_countdown()
 	
 	if checkForEnemies:
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(2).timeout
 		if GameManager.enemyCount == 0:
 			print("\nNo more enemies\n")
 			checkForEnemies = false

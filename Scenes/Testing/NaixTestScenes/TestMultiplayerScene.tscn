@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cgiky6rcbuxga"]
+[gd_scene load_steps=14 format=3 uid="uid://cgiky6rcbuxga"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestMultiplayerScene.gd" id="1_cahup"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="3_8q6be"]
@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://dbwyywkq7wba" path="res://Resources/Waves/Wave3.tres" id="6_jv4mn"]
 [ext_resource type="Resource" uid="uid://b6mokfnhr0864" path="res://Resources/Waves/Wave4.tres" id="7_h5wlv"]
 [ext_resource type="Resource" uid="uid://tojs3bqvecfl" path="res://Resources/Waves/Wave5.tres" id="8_j5emd"]
+[ext_resource type="PackedScene" uid="uid://cvikxkbftncdi" path="res://Scenes/Map/SpawnArea.tscn" id="9_5qv8q"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
 vertices = PackedVector2Array(1963, 690, 1992, 2745, -1900, 2726, -1858, -1745, 1969, -1731, 1982, 186)
@@ -120,21 +121,27 @@ position = Vector2(1542, -301)
 [node name="NavRegion" type="NavigationRegion2D" parent="NavArea"]
 navigation_polygon = SubResource("NavigationPolygon_qh2qy")
 
-[node name="Marker2D" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(-657, -659)
-scale = Vector2(3.40694e+07, -1.49809e+09)
+[node name="SpawnAreas" type="Node2D" parent="NavArea"]
 
-[node name="Marker2D2" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(612, 1371)
+[node name="1" parent="NavArea/SpawnAreas" groups=["MapMarker"] instance=ExtResource("9_5qv8q")]
+z_index = 1
+position = Vector2(-1389, -340)
 
-[node name="Marker2D3" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(687, -659)
+[node name="2" parent="NavArea/SpawnAreas" groups=["MapMarker"] instance=ExtResource("9_5qv8q")]
+z_index = 1
+position = Vector2(-786, -1589)
 
-[node name="Marker2D4" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(49, 2212)
+[node name="3" parent="NavArea/SpawnAreas" groups=["MapMarker"] instance=ExtResource("9_5qv8q")]
+z_index = 1
+position = Vector2(41, -1589)
 
-[node name="Marker2D5" type="Marker2D" parent="NavArea/NavRegion"]
-position = Vector2(-29, -1207)
+[node name="4" parent="NavArea/SpawnAreas" groups=["MapMarker"] instance=ExtResource("9_5qv8q")]
+z_index = 1
+position = Vector2(883, -1589)
+
+[node name="5" parent="NavArea/SpawnAreas" groups=["MapMarker"] instance=ExtResource("9_5qv8q")]
+z_index = 1
+position = Vector2(1475, -340)
 
 [node name="Map" parent="." instance=ExtResource("5_rj7rh")]
 position = Vector2(45, 489)

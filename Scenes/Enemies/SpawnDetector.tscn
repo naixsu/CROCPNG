@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c03x6k027ye3o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_txxdo"]
+radius = 228.876
+
+[node name="SpawnDetector" type="Area2D"]
+collision_layer = 0
+collision_mask = 2048
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_txxdo")

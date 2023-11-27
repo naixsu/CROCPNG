@@ -15,6 +15,7 @@ class_name Enemy
 
 @export var movementTargets: Array[Node2D]
 @export var resource : Resource
+@export var spawn : int
 
 ###
 # EnemyA = Skeleton
@@ -73,9 +74,4 @@ func run():
 
 func on_state_changed(new_state):
 	print("ENEMY ", new_state)
-	
-	
-	
-
-
 	

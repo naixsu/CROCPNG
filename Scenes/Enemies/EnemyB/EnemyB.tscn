@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b461wubwupbqh"]
+[gd_scene load_steps=30 format=3 uid="uid://b461wubwupbqh"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/EnemyA.gd" id="1_qucq8"]
 [ext_resource type="Texture2D" uid="uid://bmouajm75qko3" path="res://Assets/Sprites/EnemyB/EnemyBDeath.png" id="2_0oyxl"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cid6ruvuvbmuj" path="res://Assets/Sprites/EnemyB/EnemyBIdle.png" id="2_yi3ll"]
 [ext_resource type="Texture2D" uid="uid://bk6enflig6fi1" path="res://Assets/Sprites/EnemyB/EnemyBRun.png" id="3_30r4p"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/AI.gd" id="5_hsimf"]
+[ext_resource type="PackedScene" uid="uid://c03x6k027ye3o" path="res://Scenes/Enemies/SpawnDetector.tscn" id="7_twair"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ro6ra"]
 atlas = ExtResource("2_0oyxl")
@@ -184,6 +185,7 @@ frame_progress = 1.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
+avoidance_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 2)
@@ -197,6 +199,8 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AI/DetectionZone"]
 shape = SubResource("CircleShape2D_dctnj")
+
+[node name="SpawnDetector" parent="AI" instance=ExtResource("7_twair")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_20qdh")

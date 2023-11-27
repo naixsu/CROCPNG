@@ -169,7 +169,10 @@ animation = &"run"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
-avoidance_enabled = true
+radius = 50.0
+max_neighbors = 50
+avoidance_layers = 0
+avoidance_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 18.5)

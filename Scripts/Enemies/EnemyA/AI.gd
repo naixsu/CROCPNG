@@ -13,11 +13,11 @@ enum State {
 @onready var navigationAgent = $"../NavigationAgent2D"
 @onready var spawnDetector = $SpawnDetector
 
-var current_state = State.OBJECTIVE : set = set_state
+var current_state = State.IDLE : set = set_state
 var player: Player = null
 var parent: Enemy = null
 var i = 0
-var markers = []
+var markers : Array
 var prevMarker
 var visitedMarkers = []
 var foundInitialSpawn = false
@@ -36,91 +36,40 @@ func initialize_path_finding():
 
 func actor_setup():
 	await get_tree().physics_frame
-
-#func init_pathfinding(parent):
-#	var root = get_tree().get_root()
-#	var navArea = root.get_node("TestMultiplayerScene/NavArea")
-##	var navArea = root.get_node("TestPathFinding/NavArea")
-#	if navArea:
-#		var navRegion = navArea.get_node("NavRegion")
-##		navRegion.navpoly_map_sync()
-##		navRegion.navmesh.configure(navRegion.get_children())
-#		var navMarkers = navRegion.get_children()
-#
-#		for marker in navMarkers:
-#			if marker is Marker2D:
-#				markers.append(marker)
-#	set_movement_target(find_shortest_route())
-##	set_movement_target(markers[i].position)
-#
-#func find_shortest_route():
-##	var currPosition = parent.global_position
-#	var currMarker = prevMarker
-#	for marker in markers:
-#		if currMarker == null:
-#			currMarker = marker
-#
-#		if marker.global_position.distance_to(parent.global_position)\
-#			< currMarker.global_position.distance_to(parent.global_position)\
-#			&& marker != prevMarker && marker not in visitedMarkers:
-#				currMarker = marker
-#
-#		if prevMarker == currMarker && marker not in visitedMarkers:
-#			currMarker = marker
-#
-#	prevMarker = currMarker
-#	parent.flip_sprite(currMarker)
-#	return currMarker.position
-
-#func _physics_process(delta):
-#
-#	#Checks if the current target was reached and goes directly to the next one
-#	if navigationAgent.is_navigation_finished():
-#		if i >= markers.size():
-#			set_state(State.IDLE)
-#			return
-#		set_movement_target(markers[i].position)
-#		i += 1
-#
-#
-#	var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
-#	var nextPathPosition: Vector2 = navigationAgent.get_next_path_position()
-#	var newVelocity: Vector2 = nextPathPosition - currentAgentPosition
-#
-#	newVelocity = newVelocity.normalized()
-#	newVelocity = newVelocity * parent.speed
-#
-#	parent.velocity = newVelocity
-#	parent.move_and_slide()
-#
-#func set_movement_target(targetPoint: Vector2):
-#	navigationAgent.target_position = targetPoint
 	
-#func _process(delta):
-#	if parent.health <= 0:
-#		set_state(State.DEAD)
-#
-#	match current_state:
-#		State.IDLE:
-#			parent.idle()
-#		State.ENGAGE:
-#			if player != null:
-#				parent.flip_sprite(player)
-#				var threshold_distance = 100
-#				if parent.global_position.distance_to(player.global_position)\
-#					> threshold_distance:
-#					parent.go_towards(player)
-#				else:
-#					parent.idle()
-##					set_state(State.OBJECTIVE)
-#			else:
-#				print("No player found")
-#				set_state(State.IDLE)
-##				set_state(State.OBJECTIVE)
-#		State.DEAD:
-#			parent.handle_death()
-#		State.OBJECTIVE:
-#			parent.run()
+	# Set paths
+	var root = get_tree().get_root()
+	var navRegion = root.get_node("TestMultiplayerScene/NavArea/NavRegion")
+	var navPathParent = navRegion.get_node(str(spawn))
+	var pathPoints = navPathParent.get_children()
+	
+	if spawn == 3: # Determine split paths when enemies spawn at area 3
+		# Split paths are LEFT and RIGHT
+		# LEFT: 0, 2, 4
+		# RIGHT: 1, 3, 5
+		var random_choice = randi_range(0, 1) # LEFT: 0 | RIGHT: 1
+		# Hard coding. Feel free to optimize
+		markers.append(pathPoints[0])
+		if random_choice == 0:
+			markers.append(pathPoints[1])
+			markers.append(pathPoints[2])
+			markers.append(pathPoints[3])
+		else:
+			markers.append(pathPoints[4])
+			markers.append(pathPoints[5])
+			markers.append(pathPoints[6])
+		markers.append(pathPoints[7])
+		markers.append(pathPoints[8])
+	else:
+		markers = pathPoints
+		
+	# Set state after init
+	set_state(State.OBJECTIVE)
+	
+
+func set_movement_target(targetPoint: Vector2):
+	navigationAgent.target_position = targetPoint
+	
 
 func _physics_process(delta):	
 	if parent.health <= 0:
@@ -146,26 +95,26 @@ func _physics_process(delta):
 			parent.handle_death()
 		State.OBJECTIVE:
 			parent.run()
-#			parent.flip_sprite(prevMarker)
-#			#Checks if the current target was reached and goes directly to the next one
-#			if navigationAgent.is_navigation_finished():
-#				visitedMarkers.append(prevMarker)
-#				if i >= markers.size():
-#					set_state(State.IDLE)
-#					return
-#				set_movement_target(find_shortest_route())
-#				i += 1
-#
-#
-#			var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
+#			return 
+			parent.flip_sprite(markers[i])
+			#Checks if the current target was reached and goes directly to the next one
+			if navigationAgent.is_navigation_finished():
+				i += 1
+				if i >= markers.size():
+					set_state(State.IDLE)
+					return
+				set_movement_target(markers[i].position)
+
+			var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
 #			var nextPathPosition: Vector2 = navigationAgent.get_next_path_position()
-#			var newVelocity: Vector2 = nextPathPosition - currentAgentPosition
-#
-#			newVelocity = newVelocity.normalized()
-#			newVelocity = newVelocity * parent.speed
-#
-#			parent.velocity = newVelocity
-#			parent.move_and_slide()
+			var nextPathPosition = markers[i].position
+			var newVelocity: Vector2 = nextPathPosition - currentAgentPosition
+
+			newVelocity = newVelocity.normalized()
+			newVelocity = newVelocity * parent.speed
+
+			parent.velocity = newVelocity
+			parent.move_and_slide()
 			
 	
 
@@ -195,12 +144,9 @@ func _on_detection_zone_body_exited(body):
 				return
 		else:
 			set_state(State.OBJECTIVE)
-#		set_movement_target(markers[i].position) #Prevents jittering in the implementation
-#		set_state(State.IDLE)
 		player = null
 		
 		# Might wanna check if another player is in the vicinity
-		
 		check_for_player()
 
 func check_for_player():
@@ -223,5 +169,6 @@ func _on_spawn_detector_area_shape_entered(area_rid, area, area_shape_index, loc
 	await get_tree().physics_frame
 	print("Set parent " + str(parent.name) + " at Spawn Area: " + str(spawn))
 	parent.spawn = spawn
+	initialize_path_finding()
 	# Toggle state
 	foundInitialSpawn = true

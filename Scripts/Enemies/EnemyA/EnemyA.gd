@@ -30,7 +30,7 @@ func _ready():
 	anim.play("idle")
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
-	ai.initialize_path_finding()
+#	ai.initialize_path_finding()
 
 func init_enemy():
 	self.health = resource.health

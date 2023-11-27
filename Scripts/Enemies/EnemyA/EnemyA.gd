@@ -15,6 +15,7 @@ class_name Enemy
 
 @export var movementTargets: Array[Node2D]
 @export var resource : Resource
+@export var spawn : int
 
 ###
 # EnemyA = Skeleton
@@ -29,7 +30,7 @@ func _ready():
 	anim.play("idle")
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
-	ai.initialize_path_finding()
+#	ai.initialize_path_finding()
 
 func init_enemy():
 	self.health = resource.health
@@ -73,9 +74,4 @@ func run():
 
 func on_state_changed(new_state):
 	print("ENEMY ", new_state)
-	
-	
-	
-
-
 	

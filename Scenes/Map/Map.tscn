@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cps2ukm5wvqn1"]
+[gd_scene load_steps=6 format=3 uid="uid://cps2ukm5wvqn1"]
 
 [ext_resource type="Texture2D" uid="uid://b6upjrmp1262o" path="res://Assets/Map/final_map_clean.png" id="1_0pj40"]
 [ext_resource type="PackedScene" uid="uid://bao0ha1dqrvm6" path="res://Scenes/Testing/NaixTestScenes/Collision.tscn" id="2_1lcvq"]
 [ext_resource type="Texture2D" uid="uid://fd4ejaxo5re4" path="res://Assets/Map/map_without_castle.png" id="2_bo23g"]
 [ext_resource type="Texture2D" uid="uid://cbaguo74v2sh1" path="res://Assets/Map/castle.png" id="3_g1qox"]
+[ext_resource type="PackedScene" uid="uid://dfjy042jx6n0m" path="res://Scenes/Testing/NaixTestScenes/OneWay.tscn" id="5_qolvn"]
 
 [node name="Map" type="Node2D"]
 
@@ -264,3 +265,41 @@ scale = Vector2(9.832, 6.3)
 position = Vector2(-1235, 1380)
 rotation = 1.5708
 scale = Vector2(9.832, 6.3)
+
+[node name="OneWay" type="Node2D" parent="Collisions"]
+
+[node name="OneWay" parent="Collisions/OneWay" instance=ExtResource("5_qolvn")]
+position = Vector2(808, -920)
+rotation = 1.5708
+scale = Vector2(5.67, 3.605)
+
+[node name="OneWay2" parent="Collisions/OneWay" instance=ExtResource("5_qolvn")]
+position = Vector2(318, -920)
+rotation = 4.71239
+scale = Vector2(5.67, 3.605)
+
+[node name="OneWay3" parent="Collisions/OneWay" instance=ExtResource("5_qolvn")]
+visible = false
+position = Vector2(405, -779.47)
+rotation = 3.14159
+scale = Vector2(3.74, 1.66)
+
+[node name="OneWay4" parent="Collisions/OneWay" instance=ExtResource("5_qolvn")]
+visible = false
+position = Vector2(720, -779.47)
+rotation = 3.14159
+scale = Vector2(3.74, 1.66)
+
+[node name="OneWay5" parent="Collisions/OneWay" instance=ExtResource("5_qolvn")]
+position = Vector2(558, -1059)
+scale = Vector2(9.355, 4.955)
+
+[node name="OneWay6" parent="Collisions/OneWay" instance=ExtResource("5_qolvn")]
+position = Vector2(721, -736.47)
+rotation = -3.14159
+scale = Vector2(3.74, 14.5)
+
+[node name="OneWay7" parent="Collisions/OneWay" instance=ExtResource("5_qolvn")]
+position = Vector2(405, -736.47)
+rotation = -3.14159
+scale = Vector2(3.74, 14.5)

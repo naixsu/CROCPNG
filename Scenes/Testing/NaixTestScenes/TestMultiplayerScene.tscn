@@ -117,7 +117,6 @@ position = Vector2(1542, -301)
 [node name="EnemyGroups" type="Node2D" parent="."]
 
 [node name="NavArea" type="Node2D" parent="."]
-z_index = 1
 
 [node name="NavRegion" type="NavigationRegion2D" parent="NavArea"]
 navigation_polygon = SubResource("NavigationPolygon_qh2qy")

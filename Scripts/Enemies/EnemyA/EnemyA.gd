@@ -39,6 +39,8 @@ func init_enemy():
 func _on_animated_sprite_2d_animation_finished():
 	queue_free()
 	subtract_enemy.rpc()
+	var moneySpawner = get_tree().get_root().get_node("TestMultiplayerScene/MoneySpawner")
+	moneySpawner.spawn([self.position])
 
 @rpc("any_peer", "call_local")
 func subtract_enemy():

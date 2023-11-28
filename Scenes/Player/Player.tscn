@@ -161,6 +161,30 @@ properties/5/path = NodePath("ReadyLabel:text")
 properties/5/spawn = true
 properties/5/sync = true
 properties/5/watch = false
+properties/6/path = NodePath(".:dead")
+properties/6/spawn = true
+properties/6/sync = true
+properties/6/watch = false
+properties/7/path = NodePath("AnimatedSprite2D:animation")
+properties/7/spawn = true
+properties/7/sync = true
+properties/7/watch = false
+properties/8/path = NodePath(".:respawn")
+properties/8/spawn = true
+properties/8/sync = true
+properties/8/watch = false
+properties/9/path = NodePath("Respawn/RespawnLabel:text")
+properties/9/spawn = true
+properties/9/sync = true
+properties/9/watch = false
+properties/10/path = NodePath(".:displayRespawn")
+properties/10/spawn = true
+properties/10/sync = true
+properties/10/watch = false
+properties/11/path = NodePath("AnimatedSprite2D:frame")
+properties/11/spawn = true
+properties/11/sync = true
+properties/11/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -174,7 +198,7 @@ y_sort_enabled = true
 texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_u23x5")
-animation = &"idle"
+animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
@@ -216,3 +240,20 @@ offset_right = 20.0
 offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Respawn" type="Node2D" parent="."]
+
+[node name="RespawnLabel" type="Label" parent="Respawn"]
+visible = false
+offset_left = -57.0
+offset_top = 38.0
+offset_right = 65.0
+offset_bottom = 64.0
+text = "Respawning In: "
+
+[node name="RespawnTimer" type="Timer" parent="Respawn"]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

@@ -185,6 +185,10 @@ properties/11/path = NodePath("AnimatedSprite2D:frame")
 properties/11/spawn = true
 properties/11/sync = true
 properties/11/watch = false
+properties/12/path = NodePath("MoneyLabel:text")
+properties/12/spawn = true
+properties/12/sync = true
+properties/12/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -254,6 +258,12 @@ text = "Respawning In: "
 [node name="RespawnTimer" type="Timer" parent="Respawn"]
 wait_time = 5.0
 one_shot = true
+
+[node name="MoneyLabel" type="Label" parent="."]
+offset_left = -21.0
+offset_top = -97.0
+offset_right = 19.0
+offset_bottom = -74.0
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

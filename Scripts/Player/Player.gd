@@ -26,6 +26,7 @@ class_name Player
 @onready var respawnNode = $Respawn # Avoiding variable names (resoawn)
 @onready var respawnLabel = $Respawn/RespawnLabel
 @onready var respawnTimer = $Respawn/RespawnTimer
+@onready var moneyLabel = $MoneyLabel
 
 # Signals here
 signal player_fired_bullet(bullet, pos, dir)
@@ -37,6 +38,7 @@ var spawn_points = []
 @export var readyState = false # had to avoid 'ready' builtin keyword
 @export var respawn = false
 @export var displayRespawn = false
+@export var money : int = 300
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
 #var syncRot = 0
@@ -60,6 +62,7 @@ func _ready():
 
 func _process(delta):
 	readyLabel.text = str(readyState)
+	moneyLabel.text = str(money)
 	
 	if respawn:
 		respawnTimer.start()
@@ -125,6 +128,8 @@ func _unhandled_input(event):
 #		spawn.rpc()
 	pass
 
+func set_money(value):
+	money += value
 
 func can_shoot_in_physics():
 	if Input.is_action_just_pressed("Fire"):

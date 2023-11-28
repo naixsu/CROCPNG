@@ -37,10 +37,11 @@ func init_enemy():
 	self.speed = resource.speed
 
 func _on_animated_sprite_2d_animation_finished():
-	queue_free()
 	subtract_enemy.rpc()
-	var moneySpawner = get_tree().get_root().get_node("TestMultiplayerScene/MoneySpawner")
-	moneySpawner.spawn([self.position])
+#	if is_multiplayer_authority():
+#		var moneySpawner = get_tree().get_root().get_node("TestMultiplayerScene/MoneySpawner")
+#		moneySpawner.spawn([self.position])
+	queue_free()
 
 @rpc("any_peer", "call_local")
 func subtract_enemy():

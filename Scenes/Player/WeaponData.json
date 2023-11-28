@@ -2,11 +2,11 @@
 	{
 		"name": "Pistol",
 		"texture": "res://Assets/Weapons/pistol_equipped.png",
-		"damage": 10,
+		"damage": 1000,
 		"wait_time": 0.2,
 		"multishot": 1,
 		"deviation_angle": 8,
-		"bullet_speed": 1000,
+		"bullet_speed": 2000,
 	},
 	{
 		"name": "Rifle",

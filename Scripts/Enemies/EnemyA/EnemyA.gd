@@ -27,8 +27,8 @@ func _ready():
 func _on_animated_sprite_2d_animation_finished():
 	queue_free()
 
-func handle_hit():
-	health -= 20
+func handle_hit(dmg):
+	health -= dmg
 	print("Enemy hit", health)
 
 func handle_death():

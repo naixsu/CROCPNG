@@ -39,6 +39,7 @@ var spawn_points = []
 var weapons: Array = []
 var weaponsData: Array = []
 @export var currentWeaponIndex = 0
+@export var weapon_held_down = false
 var currentWeapon
 
 # multiplayer syncing
@@ -116,7 +117,10 @@ func _unhandled_input(event):
 	# using signals to fire off from Weapon -> Player -> BulletManager
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		if event.is_action_pressed("Fire"):
-			fire.rpc()
+			fire.rpc(true)
+			
+		if event.is_action_released("Fire"):
+			fire.rpc(false)
 			
 		if event.is_action_pressed("SwitchWeapon1"):
 #			currentWeaponIndex = 0
@@ -176,8 +180,6 @@ func flip_sprite():
 	elif get_global_mouse_position().x > global_position.x:
 		anim.flip_h = false
 		
-
-
 @rpc("any_peer", "call_remote")
 func spawn():
 	var e = Enemy.instantiate()
@@ -194,9 +196,17 @@ func switch_weapon(index):
 	currentWeapon.get_node("FireCooldown").wait_time = weaponsData[currentWeaponIndex].wait_time
 	
 	
+#	BulletCB.change_stats()
+	
+	
 
 @rpc("any_peer", "call_local")
-func fire():
+func fire(held_down):
+	if held_down:
+		weapon_held_down = true
+	elif !held_down:
+		weapon_held_down = false
+	
 #	if fireCooldown.is_stopped():
 #		print("Fire")
 #		var b = BulletCB.instantiate()
@@ -205,25 +215,28 @@ func fire():
 ###		Add bullet to the tree
 #		get_tree().root.add_child(b)
 #		fireCooldown.start()
-	if currentWeapon.get_node("FireCooldown").is_stopped():
-		print("{0} Fire!".format({
-			"0": str(currentWeapon.name)
-		}))
-#		var b = BulletCB.instantiate()
-#		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
-		
-		#Calculate random bullet spread	and multishot
-		var multishot = weaponsData[currentWeaponIndex].multishot
-		var deviation_angle = weaponsData[currentWeaponIndex].deviation_angle
-		for i in range(multishot):		
-			var b = BulletCB.instantiate()
-			b.global_position = currentWeapon.get_node("BulletSpawn").global_position
+	while weapon_held_down:
+		if currentWeapon.get_node("FireCooldown").is_stopped():
+			print("{0} Fire!".format({
+				"0": str(currentWeapon.name)
+			}))
+	#		var b = BulletCB.instantiate()
+	#		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
 			
-			var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
-			b.rotation_degrees = bullet_rotation
+			#Calculate random bullet spread	and multishot
+			var multishot = weaponsData[currentWeaponIndex].multishot
+			var deviation_angle = weaponsData[currentWeaponIndex].deviation_angle
+			for i in range(multishot):		
+				var b = BulletCB.instantiate()
+				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
+				b.change_stats(weaponsData[currentWeaponIndex].bullet_speed, weaponsData[currentWeaponIndex].damage)				
+				var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
+				b.rotation_degrees = bullet_rotation
+				
+				get_tree().root.add_child(b)
+			currentWeapon.get_node("FireCooldown").start()
 			
-			get_tree().root.add_child(b)
-		currentWeapon.get_node("FireCooldown").start()
+		await get_tree().create_timer(0.2).timeout
 	pass
 
 

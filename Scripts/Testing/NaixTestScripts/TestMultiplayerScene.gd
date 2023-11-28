@@ -12,6 +12,7 @@ var spawn_points = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	readyPrompt.connect("start_wave", start_wave)
+	readyPrompt.connect("reward_players", reward_players) # Give money after beating a round
 	var index = 0
 #	var bulletManagerInstance = BulletManager.instantiate()
 #	add_child(bulletManagerInstance)
@@ -109,42 +110,21 @@ func start_wave():
 			for enemy in range(count):
 				await get_tree().create_timer(spawnDelay).timeout
 				spawn_enemy(enemyType)
-				
-#		match GameManager.wave:
-#			1:
-#				print("Wave %d: Number of Enemies: %d" % [GameManager.wave, totalEnemies])
-#				for enemyType in enemyArray:
-#					var count = enemyArray[enemyType]
-#					for enemy in range(count):
-#						spawn_enemy(enemyType)
-						
-					
-#		match GameManager.wave:
-#			1:
-#				var waveData = waveResources[GameManager.wave-1]
-#				print("\nWAVE DATA\n")
-#
-#				var enemyCount = GameManager.players.size() * 2
-#				print("Wave %d: Number of Enemies: %d" % [GameManager.wave, enemyCount])
-#				for i in range(enemyCount):
-#					await get_tree().create_timer(spawnDelay).timeout
-#					spawn_enemy()
-#					add_enemy.rpc()
-#
-#
-#			2:
-#				var enemyCount = GameManager.players.size() * 20
-#				print("Wave %d: Number of Enemies: %d" % [GameManager.wave, enemyCount])
-#				for i in range(enemyCount):
-#					await get_tree().create_timer(spawnDelay).timeout
-#					spawn_enemy()
-#					add_enemy.rpc()
+
+func reward_players():
+	print("Reward Players")
+	var players = get_tree().get_nodes_in_group("Player")
+	var rewardMoney = 150 * GameManager.wave
+	
+	for player in players:
+		player.set_money(rewardMoney)
+
 					
 @rpc("any_peer", "call_local")
 func clear_money():
 	print("Clearing Money")
-	var moneySpawner = get_node("MoneyGroups")
-	var children = moneySpawner.get_children()
+	var moneyGroups = get_node("MoneyGroups")
+	var children = moneyGroups.get_children()
 	
 	for child in children:
 		child.queue_free()

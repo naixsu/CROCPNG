@@ -20,6 +20,7 @@ var checkForEnemies : bool = false
 
 signal toggle_ready
 signal start_wave
+signal reward_players
 
 func _on_ready_button_button_down():
 #	ready_up.rpc()
@@ -87,6 +88,8 @@ func _on_wave_countdown_timeout():
 	displayCountdown = false
 	waveNotif.hide()
 	start_wave.emit()
+	if GameManager.wave > 1:
+		reward_players.emit()
 	
 	reset_ready()
 

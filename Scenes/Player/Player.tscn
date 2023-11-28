@@ -189,6 +189,10 @@ properties/12/path = NodePath("MoneyLabel:text")
 properties/12/spawn = true
 properties/12/sync = true
 properties/12/watch = false
+properties/13/path = NodePath(".:money")
+properties/13/spawn = true
+properties/13/sync = true
+properties/13/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4

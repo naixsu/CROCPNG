@@ -128,6 +128,8 @@ func _unhandled_input(event):
 #		spawn.rpc()
 	pass
 
+func set_money(value):
+	money += value
 
 func can_shoot_in_physics():
 	if Input.is_action_just_pressed("Fire"):

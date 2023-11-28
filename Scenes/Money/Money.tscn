@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://blrxw77o0b8e7"]
+[gd_scene load_steps=10 format=3 uid="uid://blrxw77o0b8e7"]
 
 [ext_resource type="Texture2D" uid="uid://c642w2kcgjjic" path="res://Assets/Sprites/Money/money.png" id="1_ox352"]
 [ext_resource type="Script" path="res://Scripts/Money/Money.gd" id="1_utgcy"]
@@ -46,11 +46,24 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s8mki"]
+radius = 16.0
+height = 32.0
+
 [node name="Money" type="Node2D" groups=["Money"]]
 script = ExtResource("1_utgcy")
+value = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_hqleb")
 animation = &"idle"
-frame_progress = 0.540812
+frame_progress = 0.605354
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_s8mki")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

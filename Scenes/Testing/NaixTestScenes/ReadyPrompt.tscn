@@ -28,6 +28,19 @@ offset_bottom = 89.0
 grow_horizontal = 2
 text = "Ready"
 
+[node name="Respawn" type="Label" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.5
+offset_top = 322.0
+offset_right = 102.5
+offset_bottom = 348.0
+grow_horizontal = 2
+text = "Respawning In:"
+horizontal_alignment = 1
+
 [node name="WaveNotif" type="Label" parent="."]
 visible = false
 anchors_preset = 5

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://blrxw77o0b8e7"]
+[gd_scene load_steps=11 format=3 uid="uid://blrxw77o0b8e7"]
 
 [ext_resource type="Texture2D" uid="uid://c642w2kcgjjic" path="res://Assets/Sprites/Money/money.png" id="1_ox352"]
 [ext_resource type="Script" path="res://Scripts/Money/Money.gd" id="1_utgcy"]
@@ -50,6 +50,16 @@ animations = [{
 radius = 16.0
 height = 32.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_irniy"]
+properties/0/path = NodePath(".:value")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+properties/1/path = NodePath("AnimatedSprite2D:animation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/1/watch = false
+
 [node name="Money" type="Node2D" groups=["Money"]]
 script = ExtResource("1_utgcy")
 value = 5
@@ -65,5 +75,8 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CapsuleShape2D_s8mki")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_irniy")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -12,4 +12,5 @@ func _on_area_2d_body_entered(body):
 	if body.is_in_group("Player"):
 		if body.has_method("set_money"):
 			body.set_money(self.value)
-			queue_free()
+			if multiplayer.is_server():
+				queue_free()

@@ -83,6 +83,7 @@ func final_wave():
 
 func start_wave():
 	if is_multiplayer_authority():
+		clear_money.rpc()
 		add_wave.rpc()
 		
 		if GameManager.wave == GameManager.maxWave: # Stopping at 5 for now
@@ -139,6 +140,14 @@ func start_wave():
 #					spawn_enemy()
 #					add_enemy.rpc()
 					
+@rpc("any_peer", "call_local")
+func clear_money():
+	print("Clearing Money")
+	var moneySpawner = get_node("MoneyGroups")
+	var children = moneySpawner.get_children()
+	
+	for child in children:
+		child.queue_free()
 	
 @rpc("any_peer", "call_local")
 func add_wave():

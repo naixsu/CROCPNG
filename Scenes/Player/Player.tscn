@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=29 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Texture2D" uid="uid://gxnhy48xdgac" path="res://icon.svg" id="1_57ol8"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c5hp4o5b5b853" path="res://Scenes/Bullet/BulletCB.tscn" id="4_52lxj"]
 [ext_resource type="Texture2D" uid="uid://clug3m78gurbu" path="res://Assets/Sprites/Player/PlayerRun.png" id="4_xxbxq"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/CameraZoom.gd" id="9_vptfm"]
+[ext_resource type="PackedScene" uid="uid://cwvot8rmj1cvv" path="res://Scenes/Testing/AdiTestScenes/Dash.tscn" id="10_6a1tt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -216,3 +217,5 @@ offset_right = 20.0
 offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Dash" parent="." instance=ExtResource("10_6a1tt")]

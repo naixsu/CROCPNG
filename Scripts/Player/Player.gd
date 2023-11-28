@@ -7,6 +7,8 @@ class_name Player
 
 # Export vars here
 @export var speed = 300
+@export var dashSpeed = 800
+@export var dashLength = 0.3
 @export var health = 100
 @export var Bullet : PackedScene
 @export var Enemy : PackedScene
@@ -17,6 +19,7 @@ class_name Player
 @onready var gunRotation = $GunRotation
 @onready var fireCooldown = $FireCooldown
 @onready var multiplayerSynchronizer = $MultiplayerSynchronizer
+@onready var dash = $Dash
 
 # Camera Onready Vars TO BE DEBUGGED
 @onready var playerCamera = $Camera2D
@@ -31,6 +34,7 @@ signal update_ready
 # Other global vars here
 var dead = false
 var spawn_points = []
+var tempSpeed = speed
 @export var readyState = false # had to avoid 'ready' builtin keyword
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
@@ -60,7 +64,7 @@ func _process(delta):
 func _physics_process(delta):
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		var direction = Input.get_vector("Left", "Right", "Up", "Down")
-		
+		speed = dashSpeed if dash.is_dashing() else tempSpeed
 		velocity = direction * speed
 #		syncPos = global_position
 #		syncRot = rotation_degrees
@@ -75,6 +79,11 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("ui_accept"):
 			dead = not dead
 			anim.play("death")
+
+		if Input.is_action_just_pressed("dash"):
+			var mouse_direction = get_local_mouse_position().normalized()
+			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
+			dash.start_dash(dashLength)
 		
 #		if Input.is_action_just_pressed("Spawn"):
 #			var e = Enemy.instantiate()

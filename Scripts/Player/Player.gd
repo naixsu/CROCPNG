@@ -80,7 +80,7 @@ func _physics_process(delta):
 			dead = not dead
 			anim.play("death")
 
-		if Input.is_action_just_pressed("dash"):
+		if Input.is_action_just_pressed("Dash"):
 			var mouse_direction = get_local_mouse_position().normalized()
 			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
 			dash.start_dash(dashLength)

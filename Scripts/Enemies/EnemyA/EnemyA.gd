@@ -49,8 +49,8 @@ func _on_animated_sprite_2d_animation_finished():
 func subtract_enemy():
 	GameManager.enemyCount -= 1
 
-func handle_hit():
-	health -= 20
+func handle_hit(dmg):
+	health -= dmg
 	print("Enemy hit", health)
 
 func handle_death():

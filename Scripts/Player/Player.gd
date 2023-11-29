@@ -16,9 +16,10 @@ class_name Player
 
 # Onready vars here
 @onready var anim = $AnimatedSprite2D
-@onready var gunRotation = $GunRotation
-@onready var fireCooldown = $FireCooldown
+#@onready var gunRotation = $GunRotation
+#@onready var fireCooldown = $GunRotation/FireCooldown
 @onready var multiplayerSynchronizer = $MultiplayerSynchronizer
+@onready var weaponsManager = $WeaponsManager
 @onready var dash = $Dash
 
 # Camera Onready Vars TO BE DEBUGGED
@@ -31,6 +32,8 @@ class_name Player
 @onready var respawnTimer = $Respawn/RespawnTimer
 @onready var moneyLabel = $MoneyLabel
 
+@onready var weaponFile = "res://Scenes/Player/WeaponData.json"
+
 # Signals here
 signal player_fired_bullet(bullet, pos, dir)
 signal update_ready
@@ -40,9 +43,17 @@ signal update_ready
 var spawn_points = []
 var tempSpeed = speed
 @export var readyState = false # had to avoid 'ready' builtin keyword
+
+var weapons: Array = []
+var weaponsData: Array = []
+@export var currentWeaponIndex = 0
+@export var weapon_held_down = false
+var currentWeapon
+
 @export var respawn = false
 @export var displayRespawn = false
 @export var money : int = 300
+
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
 #var syncRot = 0
@@ -55,6 +66,7 @@ func _ready():
 #	for child in children:
 #		if child is Marker2D:
 #			spawn_points.append(child)
+	init_weapons(weaponFile)
 	readyPrompt.connect("toggle_ready", toggle_ready)
 
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
@@ -132,12 +144,34 @@ func _unhandled_input(event):
 	# using signals to fire off from Weapon -> Player -> BulletManager
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() and not dead:
 		if event.is_action_pressed("Fire"):
-			fire.rpc()
+			fire.rpc(true)
+			
+		if event.is_action_released("Fire"):
+			fire.rpc(false)
+			
+		if event.is_action_pressed("SwitchWeapon1"):
+#			currentWeaponIndex = 0
+			switch_weapon.rpc(0)
+		if event.is_action_pressed("SwitchWeapon2"):
+#			currentWeaponIndex = 1
+			switch_weapon.rpc(1)
+		if event.is_action_pressed("SwitchWeapon3"):
+#			currentWeaponIndex = 2
+			switch_weapon.rpc(2)
 		
 #	if event.is_action_pressed("Spawn"):
 #		spawn.rpc()
 	pass
 
+func init_weapons(weaponFile):
+	weapons = weaponsManager.get_children()
+	currentWeapon = weapons[currentWeaponIndex]
+	
+	
+	var f = FileAccess.open(weaponFile, FileAccess.READ)
+	var content = f.get_as_text()
+	weaponsData = JSON.parse_string(content)	
+	
 func set_money(value):
 	money += value
 
@@ -147,7 +181,9 @@ func can_shoot_in_physics():
 
 func update_gun_rotation():
 	# Rotates the gun arrow according to the mouse position
-	gunRotation.look_at(get_global_mouse_position())
+#	gunRotation.look_at(get_global_mouse_position())
+	weaponsManager.look_at(get_global_mouse_position())
+	pass
 
 func update_animation():
 	flip_sprite()
@@ -172,44 +208,65 @@ func flip_sprite():
 		anim.flip_h = true
 	elif get_global_mouse_position().x > global_position.x:
 		anim.flip_h = false
-
+		
 @rpc("any_peer", "call_remote")
 func spawn():
 	var e = Enemy.instantiate()
 	e.global_position = get_global_mouse_position()
 	get_tree().root.add_child(e)
 	print("Spawned Enemy")
+	
+
+	
+@rpc("any_peer", "call_local")
+func switch_weapon(index):	
+	currentWeaponIndex = index
+	currentWeapon.get_node("ArrowIndicator").texture = load(weaponsData[currentWeaponIndex].texture)
+	currentWeapon.get_node("FireCooldown").wait_time = weaponsData[currentWeaponIndex].wait_time
+	
+	
+#	BulletCB.change_stats()
+	
+	
 
 @rpc("any_peer", "call_local")
-func fire():
-	if fireCooldown.is_stopped():
-		print("Fire")
-		var b = BulletCB.instantiate()
-		b.global_position = gunRotation.get_node("BulletSpawn").global_position
-		b.rotation_degrees = gunRotation.rotation_degrees
-##		Add bullet to the tree
-		get_tree().root.add_child(b)
-		
-#		var b = Bullet.instantiate()
+func fire(held_down):
+	if held_down:
+		weapon_held_down = true
+	elif !held_down:
+		weapon_held_down = false
+	
+#	if fireCooldown.is_stopped():
+#		print("Fire")
+#		var b = BulletCB.instantiate()
 #		b.global_position = gunRotation.get_node("BulletSpawn").global_position
 #		b.rotation_degrees = gunRotation.rotation_degrees
-#	# 	Add bullet to the tree
+###		Add bullet to the tree
 #		get_tree().root.add_child(b)
-	#
-	#	# Set direction of bullet
-	#	var target = get_global_mouse_position()
-	#	var direction_to_mouse = b.global_position.direction_to(target).normalized()
-	#	b.set_direction(direction_to_mouse)
-		
-		# Commenting coz of synch issues
-		# Add bullet to the tree
-	#	get_tree().root.add_child(b)
-#		var target = get_global_mouse_position()
-#		var pos = gunRotation.get_node("BulletSpawn").global_position
-#		var directionToMouse = pos.direction_to(target).normalized()
-#		emit_signal("player_fired_bullet", b, pos, directionToMouse)
-
-		fireCooldown.start()
+#		fireCooldown.start()
+	while weapon_held_down:
+		if currentWeapon.get_node("FireCooldown").is_stopped():
+			print("{0} Fire!".format({
+				"0": str(currentWeapon.name)
+			}))
+	#		var b = BulletCB.instantiate()
+	#		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
+			
+			#Calculate random bullet spread	and multishot
+			var multishot = weaponsData[currentWeaponIndex].multishot
+			var deviation_angle = weaponsData[currentWeaponIndex].deviation_angle
+			for i in range(multishot):		
+				var b = BulletCB.instantiate()
+				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
+				b.change_stats(weaponsData[currentWeaponIndex].bullet_speed, weaponsData[currentWeaponIndex].damage)				
+				var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
+				b.rotation_degrees = bullet_rotation
+				
+				get_tree().root.add_child(b)
+			currentWeapon.get_node("FireCooldown").start()
+			
+		await get_tree().create_timer(0.2).timeout
+	pass
 
 
 func handle_hit():

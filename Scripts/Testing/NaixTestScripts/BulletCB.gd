@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var speed = 1000
+@export var damage = 20
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 #var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -9,8 +10,11 @@ var direction : Vector2
 
 func _ready():
 	direction = Vector2(1, 0).rotated(rotation)
-
-
+	
+func change_stats(new_speed, new_damage):
+	speed = new_speed
+	damage = new_damage
+	
 func _physics_process(delta):
 	# Add the gravity.
 	velocity = speed * direction
@@ -42,7 +46,7 @@ func _physics_process(delta):
 #			print("I'm on mask ", collisionMask)
 			if collider.is_in_group("Enemy"):
 				print("Collided with enemy ", collider)
-				collider.handle_hit()
+				collider.handle_hit(damage)
 				queue_free()
 			if collider.is_in_group("Player"):
 #				print("Collided with player. Ignoring ", collider)

@@ -34,7 +34,7 @@ func _physics_process(delta):
 		# Platform - 1 - 2
 		# Bullet - 1 - 24
 		
-		print("collider ", collider)
+#		print("collider ", collider)
 		
 		if collider is Object:
 			var collisionLayer = collider.get_collision_layer()
@@ -42,17 +42,18 @@ func _physics_process(delta):
 			
 #			print("collider ", collider)
 #			print("class name ", collider.get_class())
-			print("I collided with ", collisionLayer)
-			print("I'm on mask ", collisionMask)
+#			print("I collided with ", collisionLayer)
+#			print("I'm on mask ", collisionMask)
 			if collider.is_in_group("Enemy"):
 				print("Collided with enemy ", collider)
 				collider.handle_hit(damage)
 				queue_free()
 			if collider.is_in_group("Player"):
-				print("Collided with player. Ignoring ", collider)
+#				print("Collided with player. Ignoring ", collider)
+				pass
 			
 			if collider.is_in_group("Platform"):
-				print("Collided with platform ", collider)
+#				print("Collided with platform ", collider)
 				queue_free()
 #			if collisionLayer == 1:
 #				if collisionMask == 4: # Enemy

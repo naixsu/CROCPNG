@@ -17,12 +17,22 @@ var listener : PacketPeerUDP
 @export var broadcastAddress : String
 
 @export var ServerInfo : PackedScene
+var ip : String
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	broadcastTimer = $BroadcastTimer
 #	set_up()
+
+#	Comment out for windows	
+#	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
 	
-	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+	if OS.has_feature("windows"):
+		ip =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+	elif OS.has_feature("x11"):
+		ip =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+	elif OS.has_feature("OSX"):
+		ip =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+		
 	print("Local IP: " + str(ip))
 	var ipOctets = ip.split(".")
 	ipOctets[2] = "1"

@@ -12,17 +12,36 @@ var listener : PacketPeerUDP
 @export var listenPort : int = 8911
 @export var broadcastPort : int = 8912
 #@export var broadcastAddress : String = "192.168.1.255"
-@export var broadcastAddress : String = "255.255.255.255"
+#@export var broadcastAddress : String = "255.255.255.255"
 #@export var broadcastAddress : String = "172.16.0.255"
+@export var broadcastAddress : String
 
 @export var ServerInfo : PackedScene
+var ip : String
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	broadcastTimer = $BroadcastTimer
 #	set_up()
+
+#	Comment out for windows	
+#	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
 	
-	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+	if OS.has_feature("windows"):
+		ip =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+	elif OS.has_feature("x11"):
+		ip =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+	elif OS.has_feature("OSX"):
+		ip =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+		
 	print("Local IP: " + str(ip))
+	var ipOctets = ip.split(".")
+	ipOctets[2] = "1"
+	ipOctets[3] = "255"
+	var modifiedIP = str(ipOctets[0] + "." + ipOctets[1] + "." + ipOctets[2] + "." + ipOctets[3])
+#	print(modifiedIP)
+	broadcastAddress = str(modifiedIP)
+	
+	print("BroadcastAddress: " + str(broadcastAddress))
 	
 	pass # Replace with function body.
 	
@@ -49,7 +68,7 @@ func set_up_broadcast(name):
 	var ok = broadcaster.bind(broadcastPort)
 	
 	if ok == OK:
-		print("Bound to Broadcast Port " + str(broadcastPort) + " Successful")
+		print("Bound to Broadcast Port " + str(broadcastPort) + " at " + str(broadcastAddress) + " Successful")
 	else:
 		print("Failed to bind to Broadcast Port!")
 		
@@ -103,6 +122,7 @@ func _on_broadcast_timer_timeout():
 	var packet = data.to_ascii_buffer()
 #	print(roomInfo.playerCount)
 	broadcaster.put_packet(packet)
+	print("Number of enemies: " + str(GameManager.enemyCount))
 	pass # Replace with function body.
 #
 #	print("Broadcasting Game")

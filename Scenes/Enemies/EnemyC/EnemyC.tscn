@@ -1,10 +1,12 @@
-[gd_scene load_steps=26 format=3 uid="uid://bx77fvysan881"]
+[gd_scene load_steps=28 format=3 uid="uid://bx77fvysan881"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/EnemyA.gd" id="1_c3xcl"]
+[ext_resource type="Resource" uid="uid://48eax743xiln" path="res://Resources/Enemies/Slime.tres" id="2_16ebi"]
 [ext_resource type="Texture2D" uid="uid://dxq0vas2ybden" path="res://Assets/Sprites/EnemyC/EnemyCDeath.png" id="2_fkx5k"]
 [ext_resource type="Texture2D" uid="uid://ce7fynnc241n4" path="res://Assets/Sprites/EnemyC/EnemyCIdle.png" id="3_kvubh"]
 [ext_resource type="Texture2D" uid="uid://snd66d2cibla" path="res://Assets/Sprites/EnemyC/EnemyCRun.png" id="4_338l4"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/AI.gd" id="5_evy3b"]
+[ext_resource type="PackedScene" uid="uid://c03x6k027ye3o" path="res://Scenes/Enemies/SpawnDetector.tscn" id="7_6y3v3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hp0r4"]
 atlas = ExtResource("2_fkx5k")
@@ -147,12 +149,33 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/sync = true
 properties/0/watch = false
+properties/1/path = NodePath(".:health")
+properties/1/spawn = true
+properties/1/sync = true
+properties/1/watch = false
+properties/2/path = NodePath(".:movementTargets")
+properties/2/spawn = false
+properties/2/sync = false
+properties/2/watch = false
+properties/3/path = NodePath(".:spawn")
+properties/3/spawn = false
+properties/3/sync = false
+properties/3/watch = false
+properties/4/path = NodePath(".:dead")
+properties/4/spawn = true
+properties/4/sync = true
+properties/4/watch = false
+properties/5/path = NodePath("AnimatedSprite2D:animation")
+properties/5/spawn = true
+properties/5/sync = true
+properties/5/watch = false
 
 [node name="EnemyC" type="CharacterBody2D" groups=["Enemy"]]
-z_index = 1
+z_index = 3
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_c3xcl")
+resource = ExtResource("2_16ebi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -161,6 +184,11 @@ sprite_frames = SubResource("SpriteFrames_yg01f")
 animation = &"run"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+radius = 50.0
+max_neighbors = 50
+avoidance_layers = 0
+avoidance_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 18.5)
@@ -175,9 +203,13 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AI/DetectionZone"]
 shape = SubResource("CircleShape2D_dctnj")
 
+[node name="SpawnDetector" parent="AI" instance=ExtResource("7_6y3v3")]
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_g5ryl")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_shape_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_area_shape_entered"]
 [connection signal="body_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_exited"]
+[connection signal="area_shape_entered" from="AI/SpawnDetector" to="AI" method="_on_spawn_detector_area_shape_entered"]

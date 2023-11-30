@@ -1,10 +1,12 @@
-[gd_scene load_steps=29 format=3 uid="uid://bvfw8vhc4i3ac"]
+[gd_scene load_steps=31 format=3 uid="uid://bvfw8vhc4i3ac"]
 
 [ext_resource type="Texture2D" uid="uid://dhjqul1exjhlp" path="res://Assets/Sprites/EnemyA/EnemyAIdle.png" id="1_2t4uv"]
 [ext_resource type="Texture2D" uid="uid://b47o86gd8adkm" path="res://Assets/Sprites/EnemyA/EnemyADeath.png" id="1_gjskw"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/EnemyA.gd" id="1_jn4pi"]
+[ext_resource type="Resource" uid="uid://v50odaxyerl1" path="res://Resources/Enemies/Skeleton.tres" id="2_k53gg"]
 [ext_resource type="Texture2D" uid="uid://hy4tj0tsffi4" path="res://Assets/Sprites/EnemyA/EnemyARun.png" id="3_26v0d"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/AI.gd" id="5_5kow7"]
+[ext_resource type="PackedScene" uid="uid://c03x6k027ye3o" path="res://Scenes/Enemies/SpawnDetector.tscn" id="7_cskwc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_10pra"]
 atlas = ExtResource("1_gjskw")
@@ -168,12 +170,17 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/sync = true
 properties/0/watch = false
+properties/1/path = NodePath(".:health")
+properties/1/spawn = true
+properties/1/sync = true
+properties/1/watch = false
 
 [node name="EnemyA" type="CharacterBody2D" groups=["Enemy"]]
-z_index = 1
+z_index = 3
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_jn4pi")
+resource = ExtResource("2_k53gg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -182,6 +189,7 @@ sprite_frames = SubResource("SpriteFrames_yg01f")
 animation = &"run"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
 debug_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -196,6 +204,8 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AI/DetectionZone"]
 shape = SubResource("CircleShape2D_dctnj")
+
+[node name="SpawnDetector" parent="AI" instance=ExtResource("7_cskwc")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_wno4l")

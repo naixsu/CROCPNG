@@ -3,6 +3,10 @@
 extends Node
 
 var players = {}
+var wave = 0
+@export var maxWave = 5
+
+var enemyCount = 0
 
 
 # Called when the node enters the scene tree for the first time.

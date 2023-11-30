@@ -15,7 +15,7 @@ var serverName = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	multiplayer.peer_connected.connect(peer_connected)
+			multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
@@ -63,6 +63,7 @@ func send_player_information(name, id):
 		GameManager.players[id] = {
 			"name": name,
 			"id": id,
+			"readyState": false
 			# other: other
 		}
 	
@@ -142,6 +143,7 @@ func _on_start_game_button_down():
 func _on_button_button_down():
 	GameManager.players[GameManager.players.size() + 1] = {
 		"name": "test",
-		"id": 1
+		"id": 1, # host ID
+		"readyState": false
 	}
 	pass # Replace with function body.

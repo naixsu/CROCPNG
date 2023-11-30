@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WaveResource" load_steps=2 format=3 uid="uid://tojs3bqvecfl"]
+
+[ext_resource type="Script" path="res://Scripts/ResourceScripts/WaveResource.gd" id="1_v8syn"]
+
+[resource]
+script = ExtResource("1_v8syn")
+SkeletonCount = 20
+GhostCount = 15
+SlimeCount = 25
+Boss = true

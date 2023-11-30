@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 GameManager="*res://Scripts/Testing/NaixTestScripts/GameManager.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/codeandweb.texturepacker/plugin.cfg")
+
 [input]
 
 Left={
@@ -64,4 +68,5 @@ ZoomOut={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"

@@ -17,3 +17,5 @@ mono_crash.*.json
 .DS_Store
 Assets/.DS_Store
 Assets/Sprites/.DS_Store
+
+*.DS_Store

@@ -231,6 +231,18 @@ properties/22/path = NodePath(".:weaponMods")
 properties/22/spawn = true
 properties/22/sync = true
 properties/22/watch = false
+properties/23/path = NodePath(".:dmgAdd")
+properties/23/spawn = true
+properties/23/sync = true
+properties/23/watch = false
+properties/24/path = NodePath(".:accSub")
+properties/24/spawn = true
+properties/24/sync = true
+properties/24/watch = false
+properties/25/path = NodePath(".:bulletSpeedAdd")
+properties/25/spawn = true
+properties/25/sync = true
+properties/25/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4

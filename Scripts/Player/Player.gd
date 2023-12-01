@@ -85,6 +85,10 @@ var currentWeapon
 	}
 }
 
+@export var dmgAdd : float
+@export var accSub : float
+@export var bulletSpeedAdd : float
+
 
 # Shop stuff
 var playerShop
@@ -470,9 +474,12 @@ func fire(held_down):
 	#		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
 			
 			# add the mods from weaponMods
-			var dmgAdd = weaponUpgrades.values()[currentWeaponIndex]["damage"][2]
-			var accSub = weaponUpgrades.values()[currentWeaponIndex]["accuracy"][2]
-			var bulletSpeedAdd = weaponUpgrades.values()[currentWeaponIndex]["bulletSpeed"][2]
+			dmgAdd = weaponUpgrades.values()[currentWeaponIndex]["damage"][2]
+			accSub = weaponUpgrades.values()[currentWeaponIndex]["accuracy"][2]
+			bulletSpeedAdd = weaponUpgrades.values()[currentWeaponIndex]["bulletSpeed"][2]
+			
+			print(str(name))
+			print("dmgAdd " + str(dmgAdd) + " " + str(weaponsData[currentWeaponIndex].damage + dmgAdd))
 			
 			#Calculate random bullet spread	and multishot
 			var multishot = weaponsData[currentWeaponIndex].multishot
@@ -480,7 +487,7 @@ func fire(held_down):
 			for i in range(multishot):		
 				var b = BulletCB.instantiate()
 				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
-				b.change_stats.rpc(
+				b.change_stats(
 						weaponsData[currentWeaponIndex].bullet_speed + bulletSpeedAdd, 
 						weaponsData[currentWeaponIndex].damage + dmgAdd
 					)				

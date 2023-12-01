@@ -64,23 +64,37 @@ var playerAnim2D
 var healthProgressBar
 var speedProgressBar
 var dashProgressBar
+var hb
+var sb
+var db
 
 var pistolShop
 var pistolDmgProgressBar
 var pistolAccProgressBar
 var pistolBSProgressBar
+var pdb
+var pab
+var pbb
 
 var rifleShop
 var rifleDmgProgressBar
 var rifleAccProgressBar
 var rifleBSProgressBar
+var rdb
+var rab
+var rbb
 
 var shotgunShop
 var shotgunDmgProgressBar
 var shotgunAccProgressBar
 var shotgunBSProgressBar
+var sdb
+var sab
+var sbb
 
-var shopMoneyText
+var shopMoneyLabel
+
+var shopButtons = []
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
 #var syncRot = 0
@@ -186,35 +200,57 @@ func init_weapons(weaponFile):
 
 func init_shop():
 	print("Initializing shop")
-	# Shop > TabContainer > Player > Panel > Player
 	playerShop = shop.get_node("TabContainer").get_node("Player")
 	playerAnim2D = playerShop.get_node("Panel").get_node("Player")
 	playerAnim2D = self.anim
 	healthProgressBar = playerShop.get_node("Health").get_node("ProgressBar")
 	speedProgressBar = playerShop.get_node("Speed").get_node("ProgressBar")
 	dashProgressBar = playerShop.get_node("Dash").get_node("ProgressBar")
+	hb = playerShop.get_node("Health").get_node("HealthButton")
+	sb = playerShop.get_node("Speed").get_node("SpeedButton")
+	db = playerShop.get_node("Dash").get_node("DashButton")
 	
 	pistolShop = shop.get_node("TabContainer").get_node("Pistol")
 	pistolDmgProgressBar = pistolShop.get_node("Damage").get_node("ProgressBar")
 	pistolAccProgressBar = pistolShop.get_node("Accuracy").get_node("ProgressBar")
 	pistolBSProgressBar = pistolShop.get_node("Bulletspeed").get_node("ProgressBar")
+	pdb = pistolShop.get_node("Damage").get_node("PDmgButton")
+	pab = pistolShop.get_node("Accuracy").get_node("PAccButton")
+	pbb = pistolShop.get_node("Bulletspeed").get_node("PBSButton")
 	
 	rifleShop = shop.get_node("TabContainer").get_node("Rifle")
 	rifleDmgProgressBar = rifleShop.get_node("Damage").get_node("ProgressBar")
 	rifleAccProgressBar = rifleShop.get_node("Accuracy").get_node("ProgressBar")
 	rifleBSProgressBar = rifleShop.get_node("Bulletspeed").get_node("ProgressBar")
+	rdb = rifleShop.get_node("Damage").get_node("RDmgButton")
+	rab = rifleShop.get_node("Accuracy").get_node("RAccButton")
+	rbb = rifleShop.get_node("Bulletspeed").get_node("RBSButton")
 	
 	shotgunShop = shop.get_node("TabContainer").get_node("Shotgun")
-	shotgunDmgProgressBar = rifleShop.get_node("Damage").get_node("ProgressBar")
-	shotgunAccProgressBar = rifleShop.get_node("Accuracy").get_node("ProgressBar")
-	shotgunBSProgressBar = rifleShop.get_node("Bulletspeed").get_node("ProgressBar")
+	shotgunDmgProgressBar = shotgunShop.get_node("Damage").get_node("ProgressBar")
+	shotgunAccProgressBar = shotgunShop.get_node("Accuracy").get_node("ProgressBar")
+	shotgunBSProgressBar = shotgunShop.get_node("Bulletspeed").get_node("ProgressBar")
+	sdb = shotgunShop.get_node("Damage").get_node("SDmgButton")
+	sab = shotgunShop.get_node("Accuracy").get_node("SAccButton")
+	sbb = shotgunShop.get_node("Bulletspeed").get_node("SBSButton")
 	
-	shopMoneyText = shop.get_node("Money").get_node("MoneyLabel").text
+	shopMoneyLabel = shop.get_node("Money").get_node("MoneyLabel")
+	
+	shopButtons = [hb, sb, db,
+					pdb, pab, pbb,
+					rdb, rab, rbb,
+					sdb, sab, sbb,
+					]
+	update_money_label()
 
+func update_money_label():
+	shopMoneyLabel.text = str(money) + " Credits"
+	
 @rpc("any_peer", "call_local")
 func show_shop():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		shop.visible = true
+		update_shop_buttons()
 		
 @rpc("any_peer", "call_local")
 func hide_shop():
@@ -231,17 +267,22 @@ func hide_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		readyPrompt.visible = false
 
+func update_shop_buttons():
+	for button in shopButtons:
+		print(button)
+
 func player_upgrade(subject, stat):
 	print("Upgrade Pressed " + " " + subject + " " + stat )
 	match subject:
 		"player":
 			upgrade_player(stat)
 		"pistol":
-			pass
+			upgrade_pistol(stat)
 		"rifle":
-			pass
+			upgrade_rifle(stat)
 		"shotgun":
-			pass
+			upgrade_shotgun(stat)
+	update_money_label()
 
 func upgrade_player(stat):
 	print("Upgrading player " + stat)
@@ -250,14 +291,67 @@ func upgrade_player(stat):
 			health += 25
 			maxHealth = health
 			healthProgressBar.value += 25
+			set_money(-shop.playerHealthCost)
 		"speed":
 			speed += 25
 			maxSpeed = speed
 			speedProgressBar.value += 25
+			set_money(-shop.playerSpeedCost)
 		"dash":
 			canDash = true
 			dashProgressBar.value = 100
-			
+			set_money(-shop.playerDashCost)
+	
+
+#func upgrade_pistol(stat):
+#	print("Upgrading pistol " + stat)
+#	match stat:
+#		"damage":
+#			pistolDmgProgressBar.value += 25
+#		"accuracy":
+#			pistolAccProgressBar.value += 25
+#		"bulletSpeed":
+#			pistolBSProgressBar.value += 25
+#
+#func upgrade_rifle(stat):
+#	print("Upgrading rifle " + stat)
+#	match stat:
+#		"damage":
+#			rifleDmgProgressBar.value += 25
+#		"accuracy":
+#			rifleAccProgressBar.value += 25
+#		"bulletSpeed":
+#			rifleBSProgressBar.value += 25
+#
+#func upgrade_shotgun(stat):
+#	print("Upgrading shotgun " + stat)
+#	match stat:
+#		"damage":
+#			shotgunDmgProgressBar.value += 25
+#		"accuracy":
+#			shotgunAccProgressBar.value += 25
+#		"bulletSpeed":
+#			shotgunBSProgressBar.value += 25
+
+func upgrade_weapon(stat, dmgProgressBar, accProgressBar, bsProgressBar):
+	print("Upgrading " + stat)
+	match stat:
+		"damage":
+			dmgProgressBar.value += 25
+		"accuracy":
+			accProgressBar.value += 25
+		"bulletSpeed":
+			bsProgressBar.value += 25
+
+func upgrade_pistol(stat):
+	upgrade_weapon(stat, pistolDmgProgressBar, pistolAccProgressBar, pistolBSProgressBar)
+
+func upgrade_rifle(stat):
+	upgrade_weapon(stat, rifleDmgProgressBar, rifleAccProgressBar, rifleBSProgressBar)
+
+func upgrade_shotgun(stat):
+	upgrade_weapon(stat, shotgunDmgProgressBar, shotgunAccProgressBar, shotgunBSProgressBar)
+
 	
 func set_money(value):
 	money += value

@@ -1,0 +1,19 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dld16dcqgxplk"]
+
+[ext_resource type="Texture2D" uid="uid://ndvhcqav5fhl" path="res://Assets/UI/exit-hover.png" id="1_7gnl8"]
+[ext_resource type="Texture2D" uid="uid://cn3jq5e7y1uj8" path="res://Assets/UI/exit-normal.png" id="2_twc5p"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pj204"]
+texture = ExtResource("1_7gnl8")
+texture_margin_left = 51.1861
+texture_margin_right = 15.6635
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0evgf"]
+texture = ExtResource("2_twc5p")
+texture_margin_left = 51.4658
+texture_margin_right = 17.6214
+region_rect = Rect2(0, 0, 168, 56)
+
+[resource]
+Button/styles/hover = SubResource("StyleBoxTexture_pj204")
+Button/styles/normal = SubResource("StyleBoxTexture_0evgf")

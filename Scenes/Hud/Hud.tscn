@@ -1,0 +1,361 @@
+[gd_scene load_steps=16 format=3 uid="uid://78ewr0q8slcu"]
+
+[ext_resource type="Texture2D" uid="uid://y4028okknkyq" path="res://Assets/Sprites/Player/PlayerIcon.png" id="1_76pxs"]
+[ext_resource type="FontFile" uid="uid://bqtnqifpuafdf" path="res://Assets/Fonts/Oswald-VariableFont_wght.ttf" id="1_pect6"]
+[ext_resource type="Texture2D" uid="uid://kiabpxc0b0wf" path="res://Assets/Sprites/Money/money_idle.png" id="2_sa1up"]
+[ext_resource type="Texture2D" uid="uid://dwwdg5bb2asig" path="res://Assets/UI/panel-brown-big.png" id="3_kr3si"]
+[ext_resource type="Theme" uid="uid://cegwbnegoxa8" path="res://Assets/UI/healthbar.tres" id="5_vux4w"]
+
+[sub_resource type="Theme" id="Theme_qbbp3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eydfk"]
+bg_color = Color(0.741176, 1, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.0823529, 0, 1)
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 3
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="Theme" id="Theme_ena5w"]
+
+[sub_resource type="Theme" id="Theme_cj1mm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ywrbi"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Theme" id="Theme_lohg8"]
+ProgressBar/colors/font_color = Color(0.882353, 0.882353, 0.882353, 1)
+ProgressBar/styles/background = SubResource("StyleBoxFlat_ywrbi")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kg3t8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_haq1x"]
+bg_color = Color(0.45098, 0.623529, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+corner_detail = 20
+shadow_size = 5
+anti_aliasing_size = 0.01
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s24gx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 5
+border_color = Color(0.976471, 0.976471, 0.976471, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0cxbr"]
+bg_color = Color(0.952941, 0.952941, 0.952941, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="Hud" type="CanvasLayer"]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Rows" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TopRow" type="HBoxContainer" parent="MarginContainer/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+alignment = 1
+
+[node name="Ready" type="VBoxContainer" parent="MarginContainer/Rows/TopRow"]
+layout_mode = 2
+theme = SubResource("Theme_qbbp3")
+alignment = 2
+
+[node name="ReadyPrompt" type="HBoxContainer" parent="MarginContainer/Rows/TopRow/Ready"]
+layout_mode = 2
+alignment = 1
+
+[node name="Ready(" type="Label" parent="MarginContainer/Rows/TopRow/Ready/ReadyPrompt"]
+layout_mode = 2
+text = "Ready ("
+horizontal_alignment = 1
+
+[node name="CurrentReady" type="Label" parent="MarginContainer/Rows/TopRow/Ready/ReadyPrompt"]
+layout_mode = 2
+text = "$readyCur"
+horizontal_alignment = 1
+
+[node name="Separator" type="Label" parent="MarginContainer/Rows/TopRow/Ready/ReadyPrompt"]
+layout_mode = 2
+text = "/"
+horizontal_alignment = 1
+
+[node name="MaxPlayers" type="Label" parent="MarginContainer/Rows/TopRow/Ready/ReadyPrompt"]
+layout_mode = 2
+text = "$playerMax"
+horizontal_alignment = 1
+
+[node name=")" type="Label" parent="MarginContainer/Rows/TopRow/Ready/ReadyPrompt"]
+layout_mode = 2
+text = ")"
+horizontal_alignment = 1
+
+[node name="ReadyButton" type="Button" parent="MarginContainer/Rows/TopRow/Ready"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_pect6")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_eydfk")
+text = "READY"
+
+[node name="WavePrompt" type="HBoxContainer" parent="MarginContainer/Rows/TopRow"]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[node name="text1" type="Label" parent="MarginContainer/Rows/TopRow/WavePrompt"]
+layout_mode = 2
+text = "Wave begins in"
+horizontal_alignment = 1
+
+[node name="CurrentReady" type="Label" parent="MarginContainer/Rows/TopRow/WavePrompt"]
+layout_mode = 2
+text = "$waveSec"
+horizontal_alignment = 1
+
+[node name="text2" type="Label" parent="MarginContainer/Rows/TopRow/WavePrompt"]
+layout_mode = 2
+text = "second(s)."
+horizontal_alignment = 1
+
+[node name="MiddleRow" type="HBoxContainer" parent="MarginContainer/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+mouse_filter = 2
+alignment = 1
+
+[node name="LeftCol" type="VBoxContainer" parent="MarginContainer/Rows/MiddleRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WavePrompt" type="HBoxContainer" parent="MarginContainer/Rows/MiddleRow/LeftCol"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="MarginContainer/Rows/MiddleRow/LeftCol/WavePrompt"]
+layout_mode = 2
+text = "Wave "
+
+[node name="CurrentWave" type="Label" parent="MarginContainer/Rows/MiddleRow/LeftCol/WavePrompt"]
+layout_mode = 2
+text = "$waveCur"
+
+[node name="EnemiesPrompt" type="HBoxContainer" parent="MarginContainer/Rows/MiddleRow/LeftCol"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="MarginContainer/Rows/MiddleRow/LeftCol/EnemiesPrompt"]
+layout_mode = 2
+text = "Enemies: "
+
+[node name="WaveEnemies" type="Label" parent="MarginContainer/Rows/MiddleRow/LeftCol/EnemiesPrompt"]
+layout_mode = 2
+text = "$waveEnemies"
+
+[node name="RightCol" type="VBoxContainer" parent="MarginContainer/Rows/MiddleRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Shop" type="HBoxContainer" parent="MarginContainer/Rows/MiddleRow/RightCol"]
+layout_mode = 2
+alignment = 2
+
+[node name="OpenShop" type="Button" parent="MarginContainer/Rows/MiddleRow/RightCol/Shop"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_pect6")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_eydfk")
+text = "$moneyCur"
+alignment = 2
+
+[node name="MoneyIcon" type="TextureRect" parent="MarginContainer/Rows/MiddleRow/RightCol/Shop/OpenShop"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_sa1up")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Rows/MiddleRow/RightCol/Shop"]
+layout_mode = 2
+theme = SubResource("Theme_ena5w")
+theme_override_constants/separation = 45
+
+[node name="BottomRow" type="CenterContainer" parent="MarginContainer/Rows"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Background" type="TextureRect" parent="MarginContainer/Rows/BottomRow"]
+custom_minimum_size = Vector2(1000, 100)
+layout_mode = 2
+texture = ExtResource("3_kr3si")
+expand_mode = 1
+
+[node name="Contents" type="HBoxContainer" parent="MarginContainer/Rows/BottomRow"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme = SubResource("Theme_cj1mm")
+
+[node name="PlayerIcon" type="CenterContainer" parent="MarginContainer/Rows/BottomRow/Contents"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Rows/BottomRow/Contents/PlayerIcon"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_76pxs")
+
+[node name="Health" type="CenterContainer" parent="MarginContainer/Rows/BottomRow/Contents"]
+layout_mode = 2
+
+[node name="HealthBar" type="ProgressBar" parent="MarginContainer/Rows/BottomRow/Contents/Health"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+mouse_filter = 2
+theme = SubResource("Theme_lohg8")
+theme_override_constants/outline_size = 50
+theme_override_styles/background = SubResource("StyleBoxFlat_kg3t8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_haq1x")
+value = 50.0
+show_percentage = false
+
+[node name="HealthDetails" type="HBoxContainer" parent="MarginContainer/Rows/BottomRow/Contents/Health/HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_vux4w")
+alignment = 1
+
+[node name="text" type="Label" parent="MarginContainer/Rows/BottomRow/Contents/Health/HealthBar/HealthDetails"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("1_pect6")
+theme_override_font_sizes/font_size = 20
+text = "HP"
+
+[node name="HealthCurrent" type="Label" parent="MarginContainer/Rows/BottomRow/Contents/Health/HealthBar/HealthDetails"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("1_pect6")
+theme_override_font_sizes/font_size = 20
+text = "$healthCur"
+
+[node name="text2" type="Label" parent="MarginContainer/Rows/BottomRow/Contents/Health/HealthBar/HealthDetails"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("1_pect6")
+theme_override_font_sizes/font_size = 20
+text = "/"
+
+[node name="HealthMax" type="Label" parent="MarginContainer/Rows/BottomRow/Contents/Health/HealthBar/HealthDetails"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("1_pect6")
+theme_override_font_sizes/font_size = 20
+text = "$healthMax"
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/Rows/BottomRow/Contents"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HotBar" type="CenterContainer" parent="MarginContainer/Rows/BottomRow/Contents"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Slots" type="GridContainer" parent="MarginContainer/Rows/BottomRow/Contents/HotBar"]
+layout_mode = 2
+theme_override_constants/h_separation = 25
+columns = 4
+
+[node name="Slot1" type="Panel" parent="MarginContainer/Rows/BottomRow/Contents/HotBar/Slots"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_s24gx")
+
+[node name="Slot2" type="Panel" parent="MarginContainer/Rows/BottomRow/Contents/HotBar/Slots"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0cxbr")
+
+[node name="Slot3" type="Panel" parent="MarginContainer/Rows/BottomRow/Contents/HotBar/Slots"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0cxbr")
+
+[node name="Slot4" type="Panel" parent="MarginContainer/Rows/BottomRow/Contents/HotBar/Slots"]
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0cxbr")

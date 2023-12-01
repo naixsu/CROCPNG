@@ -17,13 +17,13 @@ class_name Enemy
 @export var resource : Resource
 @export var spawn : int
 @export var dead = false
+@onready var healthLabel = $Label
 
 ###
 # EnemyA = Skeleton
 # EnemyB = Ghost
 # EnemyC = Slime
 ###
-
 
 func _ready():
 #	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
@@ -32,6 +32,9 @@ func _ready():
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
 #	ai.initialize_path_finding()
+
+func _process(delta):
+	healthLabel.text = str(health)
 
 func init_enemy():
 	self.health = resource.health

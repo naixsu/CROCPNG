@@ -10,7 +10,7 @@ var direction : Vector2
 
 func _ready():
 	direction = Vector2(1, 0).rotated(rotation)
-	
+
 func change_stats(new_speed, new_damage):
 	speed = new_speed
 	damage = new_damage
@@ -36,7 +36,7 @@ func _physics_process(delta):
 		
 #		print("collider ", collider)
 		
-		if collider is Object:
+		if collider is Object and multiplayer.is_server():
 			var collisionLayer = collider.get_collision_layer()
 			var collisionMask = collider.get_collision_mask()
 			

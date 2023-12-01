@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgabyw6mh7aua"
-path="res://.godot/imported/button-active.png-0e4b85e9b5b862a362265f98243b20bd.ctex"
+uid="uid://0ox5umv7ga1v"
+path="res://.godot/imported/GodotEyes.png-7fbe5b9387e8458e877f6f437153fc40.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/button-active.png"
-dest_files=["res://.godot/imported/button-active.png-0e4b85e9b5b862a362265f98243b20bd.ctex"]
+source_file="res://Assets/Splash Screen/GodotEyes.png"
+dest_files=["res://.godot/imported/GodotEyes.png-7fbe5b9387e8458e877f6f437153fc40.ctex"]
 
 [params]
 

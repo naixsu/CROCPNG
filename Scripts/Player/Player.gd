@@ -31,6 +31,7 @@ class_name Player
 @onready var respawnLabel = $Respawn/RespawnLabel
 @onready var respawnTimer = $Respawn/RespawnTimer
 @onready var moneyLabel = $MoneyLabel
+@onready var shop = $Shop
 
 @onready var weaponFile = "res://Scenes/Player/WeaponData.json"
 
@@ -54,6 +55,29 @@ var currentWeapon
 @export var displayRespawn = false
 @export var money : int = 300
 
+# Shop stuff
+var playerShop
+var playerAnim2D
+var healthProgressBar
+var speedProgressBar
+var dashProgressBar
+
+var pistolShop
+var pistolDmgProgressBar
+var pistolAccProgressBar
+var pistolBSProgressBar
+
+var rifleShop
+var rifleDmgProgressBar
+var rifleAccProgressBar
+var rifleBSProgressBar
+
+var shotgunShop
+var shotgunDmgProgressBar
+var shotgunAccProgressBar
+var shotgunBSProgressBar
+
+var shopMoneyText
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
 #var syncRot = 0
@@ -67,6 +91,7 @@ func _ready():
 #		if child is Marker2D:
 #			spawn_points.append(child)
 	init_weapons(weaponFile)
+	init_shop()
 	readyPrompt.connect("toggle_ready", toggle_ready)
 
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
@@ -171,6 +196,33 @@ func init_weapons(weaponFile):
 	weapons = weaponsManager.get_children()
 	currentWeapon = weapons[currentWeaponIndex]
 	currentWeapon.get_node("FireCooldown").wait_time = weaponsData[currentWeaponIndex].wait_time
+
+func init_shop():
+	print("Initializing shop")
+	# Shop > TabContainer > Player > Panel > Player
+	playerShop = shop.get_node("TabContainer").get_node("Player")
+	playerAnim2D = playerShop.get_node("Panel").get_node("Player")
+	playerAnim2D = self.anim
+	healthProgressBar = playerShop.get_node("Health").get_node("ProgressBar")
+	speedProgressBar = playerShop.get_node("Speed").get_node("ProgressBar")
+	dashProgressBar = playerShop.get_node("Dash").get_node("ProgressBar")
+	
+	pistolShop = shop.get_node("TabContainer").get_node("Pistol")
+	pistolDmgProgressBar = pistolShop.get_node("Damage").get_node("ProgressBar")
+	pistolAccProgressBar = pistolShop.get_node("Accuracy").get_node("ProgressBar")
+	pistolBSProgressBar = pistolShop.get_node("Bulletspeed").get_node("ProgressBar")
+	
+	rifleShop = shop.get_node("TabContainer").get_node("Rifle")
+	rifleDmgProgressBar = rifleShop.get_node("Damage").get_node("ProgressBar")
+	rifleAccProgressBar = rifleShop.get_node("Accuracy").get_node("ProgressBar")
+	rifleBSProgressBar = rifleShop.get_node("Bulletspeed").get_node("ProgressBar")
+	
+	shotgunShop = shop.get_node("TabContainer").get_node("Shotgun")
+	shotgunDmgProgressBar = rifleShop.get_node("Damage").get_node("ProgressBar")
+	shotgunAccProgressBar = rifleShop.get_node("Accuracy").get_node("ProgressBar")
+	shotgunBSProgressBar = rifleShop.get_node("Bulletspeed").get_node("ProgressBar")
+	
+	shopMoneyText = shop.get_node("Money").get_node("MoneyLabel").text
 	
 func set_money(value):
 	money += value

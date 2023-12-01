@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=30 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
 [ext_resource type="PackedScene" uid="uid://cmksfq3oqnge3" path="res://Scenes/Bullet/Bullet.tscn" id="2_m4sy4"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cd3kn0qojj0bm" path="res://Scenes/Testing/JoshTestScenes/Gun.tscn" id="8_l3ssp"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/CameraZoom.gd" id="9_vptfm"]
 [ext_resource type="Script" path="res://Scripts/Player/Dash.gd" id="10_4nm7p"]
+[ext_resource type="PackedScene" uid="uid://drd34lgtxp0nd" path="res://Scenes/Shop/Shop.tscn" id="11_m3tdw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -279,6 +280,11 @@ offset_left = -21.0
 offset_top = -97.0
 offset_right = 19.0
 offset_bottom = -74.0
+
+[node name="Shop" parent="." instance=ExtResource("11_m3tdw")]
+visible = false
+z_index = 11
+position = Vector2(-576, -324)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

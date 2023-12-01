@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cgiky6rcbuxga"]
+[gd_scene load_steps=17 format=3 uid="uid://cgiky6rcbuxga"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestMultiplayerScene.gd" id="1_cahup"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="3_8q6be"]
@@ -13,11 +13,15 @@
 [ext_resource type="Resource" uid="uid://tojs3bqvecfl" path="res://Resources/Waves/Wave5.tres" id="8_j5emd"]
 [ext_resource type="PackedScene" uid="uid://cvikxkbftncdi" path="res://Scenes/Map/SpawnArea.tscn" id="9_5qv8q"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/MoneySpawner.gd" id="13_5f8yc"]
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/Shop.gd" id="14_a0ar7"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
 vertices = PackedVector2Array(1963, 690, 1992, 2745, -1900, 2726, -1858, -1745, 1969, -1731, 1982, 186)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1900, 2726, 1992, 2745, 1963, 690, 1982, 186, 1969, -1731, -1858, -1745)])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y3mj0"]
+size = Vector2(491, 426)
 
 [node name="TestMultiplayerScene" type="Node2D"]
 script = ExtResource("1_cahup")
@@ -267,3 +271,17 @@ script = ExtResource("5_hl27v")
 [node name="MoneySpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../MoneyGroups")
 script = ExtResource("13_5f8yc")
+
+[node name="ShopNode" type="Node2D" parent="."]
+script = ExtResource("14_a0ar7")
+
+[node name="Area2D" type="Area2D" parent="ShopNode"]
+position = Vector2(-1357, 1571)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShopNode/Area2D"]
+position = Vector2(59.5, -146)
+shape = SubResource("RectangleShape2D_y3mj0")
+
+[connection signal="body_entered" from="ShopNode/Area2D" to="ShopNode" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="ShopNode/Area2D" to="ShopNode" method="_on_area_2d_body_exited"]

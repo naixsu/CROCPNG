@@ -50,7 +50,7 @@ func _physics_process(delta):
 		
 #		print("collider ", collider)
 		
-		if collider is Object:
+		if collider is Object and multiplayer.is_server():
 			var collisionLayer = collider.get_collision_layer()
 			var collisionMask = collider.get_collision_mask()
 			

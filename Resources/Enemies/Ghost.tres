@@ -5,4 +5,4 @@
 [resource]
 script = ExtResource("1_to7dm")
 speed = 125
-health = 75
+health = 100.0

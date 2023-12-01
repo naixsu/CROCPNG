@@ -336,6 +336,11 @@ func update_shop_buttons():
 			shopButtons[i].visible = true
 
 func player_upgrade(subject, stat):
+	
+	upgrade_stats.rpc(subject, stat)
+
+@rpc("any_peer", "call_local")
+func upgrade_stats(subject, stat):
 	print("Upgrade Pressed " + " " + subject + " " + stat )
 	match subject:
 		"player":
@@ -484,17 +489,25 @@ func fire(held_down):
 			#Calculate random bullet spread	and multishot
 			var multishot = weaponsData[currentWeaponIndex].multishot
 			var deviation_angle = weaponsData[currentWeaponIndex].deviation_angle - accSub
-			for i in range(multishot):		
-				var b = BulletCB.instantiate()
-				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
-				b.change_stats(
-						weaponsData[currentWeaponIndex].bullet_speed + bulletSpeedAdd, 
-						weaponsData[currentWeaponIndex].damage + dmgAdd
-					)				
-				var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
-				b.rotation_degrees = bullet_rotation
-				
-				get_tree().root.add_child(b)
+			for i in range(multishot):
+				if multiplayer.is_server():
+					var bulletSpawner = get_tree().get_root().get_node("TestMultiplayerScene/BulletSpawner")
+					bulletSpawner.spawn([
+						currentWeapon.get_node("BulletSpawn").global_position, # position
+						weaponsData[currentWeaponIndex].bullet_speed + bulletSpeedAdd, # bulletSpeed
+						weaponsData[currentWeaponIndex].damage + dmgAdd, # Damage
+						weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle), # bullet rotation
+					])
+#				var b = BulletCB.instantiate()
+#				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
+#				b.change_stats(
+#						weaponsData[currentWeaponIndex].bullet_speed + bulletSpeedAdd, 
+#						weaponsData[currentWeaponIndex].damage + dmgAdd
+#					)				
+#				var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
+#				b.rotation_degrees = bullet_rotation
+#
+#				get_tree().root.add_child(b)
 			currentWeapon.get_node("FireCooldown").start()
 			
 		await get_tree().create_timer(0.2).timeout

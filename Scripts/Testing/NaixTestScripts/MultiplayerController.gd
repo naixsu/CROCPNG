@@ -15,7 +15,7 @@ var serverName = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-			multiplayer.peer_connected.connect(peer_connected)
+	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)

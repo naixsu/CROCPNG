@@ -41,6 +41,7 @@ class_name Player
 signal update_ready
 signal upgrade(stat)
 
+
 # Other global vars here
 @export var dead = false
 var spawn_points = []
@@ -95,6 +96,8 @@ var sbb
 var shopMoneyLabel
 
 var shopButtons = []
+var shopPrices = []
+var weaponUpgrades : Dictionary
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
 #var syncRot = 0
@@ -236,11 +239,37 @@ func init_shop():
 	
 	shopMoneyLabel = shop.get_node("Money").get_node("MoneyLabel")
 	
-	shopButtons = [hb, sb, db,
+	# HARDCODED
+	# THESE HAVE TO BE IN ORDER
+	shopButtons = [	hb, sb, db,
 					pdb, pab, pbb,
 					rdb, rab, rbb,
 					sdb, sab, sbb,
 					]
+
+	shopPrices = [	shop.playerHealthCost, shop.playerSpeedCost, shop.playerDashCost,
+					shop.pistolDmgCost, shop.pistolAccCost, shop.pistolBSCost,
+					shop.rifleDmgCost, shop.rifleAccCost, shop.rifleBSCost,
+					shop.shotgunDmgCost, shop.shotgunAccCost, shop.shotgunBSCost,
+					]
+	
+	weaponUpgrades = {
+		"pistol": {
+			"damage": [pistolDmgProgressBar, shop.pistolDmgCost],
+			"accuracy": [pistolAccProgressBar, shop.pistolAccCost],
+			"bulletSpeed": [pistolBSProgressBar, shop.pistolBSCost]
+		},
+		"rifle": {
+			"damage": [rifleDmgProgressBar, shop.rifleDmgCost],
+			"accuracy": [rifleAccProgressBar, shop.rifleAccCost],
+			"bulletSpeed": [rifleBSProgressBar, shop.rifleBSCost]
+		},
+		"shotgun": {
+			"damage": [shotgunDmgProgressBar, shop.shotgunDmgCost],
+			"accuracy": [shotgunAccProgressBar, shop.shotgunAccCost],
+			"bulletSpeed": [shotgunBSProgressBar, shop.shotgunBSCost]
+		}
+	}
 	update_money_label()
 
 func update_money_label():
@@ -268,8 +297,11 @@ func hide_ready():
 		readyPrompt.visible = false
 
 func update_shop_buttons():
-	for button in shopButtons:
-		print(button)
+	for i in shopButtons.size():
+		if money < shopPrices[i]:
+			shopButtons[i].visible = false
+		else:
+			shopButtons[i].visible = true
 
 func player_upgrade(subject, stat):
 	print("Upgrade Pressed " + " " + subject + " " + stat )
@@ -283,6 +315,7 @@ func player_upgrade(subject, stat):
 		"shotgun":
 			upgrade_shotgun(stat)
 	update_money_label()
+	update_shop_buttons()
 
 func upgrade_player(stat):
 	print("Upgrading player " + stat)
@@ -301,6 +334,22 @@ func upgrade_player(stat):
 			canDash = true
 			dashProgressBar.value = 100
 			set_money(-shop.playerDashCost)
+
+func upgrade_weapon(weapon, stat):
+	print("Upgrading " + weapon + " " + stat)
+	if weaponUpgrades.has(weapon) and weaponUpgrades[weapon].has(stat):
+		var progressBarsCost = weaponUpgrades[weapon][stat]
+		progressBarsCost[0].value += 25
+		set_money(-progressBarsCost[1])
+
+func upgrade_pistol(stat):
+	upgrade_weapon("pistol", stat)
+
+func upgrade_rifle(stat):
+	upgrade_weapon("rifle", stat)
+
+func upgrade_shotgun(stat):
+	upgrade_weapon("shotgun", stat)
 	
 
 #func upgrade_pistol(stat):
@@ -308,49 +357,58 @@ func upgrade_player(stat):
 #	match stat:
 #		"damage":
 #			pistolDmgProgressBar.value += 25
+#			set_money(-shop.pistolDmgCost)
 #		"accuracy":
 #			pistolAccProgressBar.value += 25
+#			set_money(-shop.pistolAccCost)
 #		"bulletSpeed":
 #			pistolBSProgressBar.value += 25
+#			set_money(-shop.pistolBSCost)
 #
 #func upgrade_rifle(stat):
 #	print("Upgrading rifle " + stat)
 #	match stat:
 #		"damage":
 #			rifleDmgProgressBar.value += 25
+#			set_money(-shop.rifleDmgCost)
 #		"accuracy":
 #			rifleAccProgressBar.value += 25
+#			set_money(-shop.rifleAccCost)
 #		"bulletSpeed":
 #			rifleBSProgressBar.value += 25
+#			set_money(-shop.rifleBSCost)
 #
 #func upgrade_shotgun(stat):
 #	print("Upgrading shotgun " + stat)
 #	match stat:
 #		"damage":
 #			shotgunDmgProgressBar.value += 25
+#			set_money(-shop.shotgunDmgCost)
 #		"accuracy":
 #			shotgunAccProgressBar.value += 25
+#			set_money(-shop.shotgunAccCost)
 #		"bulletSpeed":
 #			shotgunBSProgressBar.value += 25
+#			set_money(-shop.shotgunBSCost)
 
-func upgrade_weapon(stat, dmgProgressBar, accProgressBar, bsProgressBar):
-	print("Upgrading " + stat)
-	match stat:
-		"damage":
-			dmgProgressBar.value += 25
-		"accuracy":
-			accProgressBar.value += 25
-		"bulletSpeed":
-			bsProgressBar.value += 25
+#func upgrade_weapon(stat, dmgProgressBar, accProgressBar, bsProgressBar):
+#	print("Upgrading " + stat)
+#	match stat:
+#		"damage":
+#			dmgProgressBar.value += 25
+#		"accuracy":
+#			accProgressBar.value += 25
+#		"bulletSpeed":
+#			bsProgressBar.value += 25
 
-func upgrade_pistol(stat):
-	upgrade_weapon(stat, pistolDmgProgressBar, pistolAccProgressBar, pistolBSProgressBar)
-
-func upgrade_rifle(stat):
-	upgrade_weapon(stat, rifleDmgProgressBar, rifleAccProgressBar, rifleBSProgressBar)
-
-func upgrade_shotgun(stat):
-	upgrade_weapon(stat, shotgunDmgProgressBar, shotgunAccProgressBar, shotgunBSProgressBar)
+#func upgrade_pistol(stat):
+#	upgrade_weapon(stat, pistolDmgProgressBar, pistolAccProgressBar, pistolBSProgressBar)
+#
+#func upgrade_rifle(stat):
+#	upgrade_weapon(stat, rifleDmgProgressBar, rifleAccProgressBar, rifleBSProgressBar)
+#
+#func upgrade_shotgun(stat):
+#	upgrade_weapon(stat, shotgunDmgProgressBar, shotgunAccProgressBar, shotgunBSProgressBar)
 
 	
 func set_money(value):

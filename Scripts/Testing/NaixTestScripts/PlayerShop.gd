@@ -38,7 +38,6 @@ var shotgunAccCost = 50
 var shotgunBSCost = 60
 
 
-
 func _process(delta):
 	if health.get_node("ProgressBar").value == 100:
 		health.get_node("HealthButton").visible = false

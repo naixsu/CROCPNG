@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://blrxw77o0b8e7"]
+
+[ext_resource type="Texture2D" uid="uid://c642w2kcgjjic" path="res://Assets/Sprites/Money/money.png" id="1_ox352"]
+[ext_resource type="Script" path="res://Scripts/Money/Money.gd" id="1_utgcy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdb4j"]
+atlas = ExtResource("1_ox352")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n40e0"]
+atlas = ExtResource("1_ox352")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_js44t"]
+atlas = ExtResource("1_ox352")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkbgo"]
+atlas = ExtResource("1_ox352")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulqdj"]
+atlas = ExtResource("1_ox352")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hqleb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdb4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n40e0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_js44t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kkbgo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ulqdj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s8mki"]
+radius = 16.0
+height = 32.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_irniy"]
+properties/0/path = NodePath(".:value")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+properties/1/path = NodePath("AnimatedSprite2D:animation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/1/watch = false
+
+[node name="Money" type="Node2D" groups=["Money"]]
+script = ExtResource("1_utgcy")
+value = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_hqleb")
+animation = &"idle"
+frame_progress = 0.605354
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_s8mki")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_irniy")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

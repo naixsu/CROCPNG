@@ -18,8 +18,6 @@ var player: Player = null
 var parent: Enemy = null
 var i = 0
 var markers : Array
-var prevMarker
-var visitedMarkers = []
 var foundInitialSpawn = false
 var spawn: int
 
@@ -35,6 +33,9 @@ func initialize_path_finding():
 #	i += 1
 
 func actor_setup():
+	
+	if parent.dead: return
+	
 	await get_tree().physics_frame
 	
 	# Set paths

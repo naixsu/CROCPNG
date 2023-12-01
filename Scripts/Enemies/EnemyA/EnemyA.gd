@@ -16,6 +16,7 @@ class_name Enemy
 @export var movementTargets: Array[Node2D]
 @export var resource : Resource
 @export var spawn : int
+@export var dead = false
 
 ###
 # EnemyA = Skeleton
@@ -37,20 +38,26 @@ func init_enemy():
 	self.speed = resource.speed
 
 func _on_animated_sprite_2d_animation_finished():
-	queue_free()
-	subtract_enemy.rpc()
+	if multiplayer.is_server():
+		subtract_enemy.rpc()
+		var moneySpawner = get_tree().get_root().get_node("TestMultiplayerScene/MoneySpawner")
+		moneySpawner.spawn([self.position])
+		await get_tree().physics_frame # Delay queue a bit
+		queue_free()
 
 @rpc("any_peer", "call_local")
 func subtract_enemy():
 	GameManager.enemyCount -= 1
 
-func handle_hit():
-	health -= 20
+func handle_hit(dmg):
+	health -= dmg
 	print("Enemy hit", health)
 
 func handle_death():
-	collision.disabled = true
-	anim.play("death")
+	if not dead:
+		collision.disabled = true
+		anim.play("death")
+		dead = true
 
 func flip_sprite(player):
 	if player.global_position.x < global_position.x:

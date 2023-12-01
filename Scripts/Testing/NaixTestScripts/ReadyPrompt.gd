@@ -1,25 +1,35 @@
+###
+#
+# Also treating this as a gamestate.
+#
+###
+
 extends CanvasLayer
 
 @onready var playerReadyCount = $PlayerReadyCount
 @onready var waveNotif = $WaveNotif
 @onready var waveCountdown = $WaveNotif/WaveCountdown
-#@onready var players = GameManager.players # init player dict
+@onready var respawnLabel = $Respawn
 
 @export var readyCount : int = 0
 
 var showReady : bool = true
 var startCountdown : bool = false
 var displayCountdown : bool = false
+var checkForEnemies : bool = false
 
 signal toggle_ready
 signal start_wave
+signal reward_players
 
 func _on_ready_button_button_down():
 #	ready_up.rpc()
 	ready_up()
 
+
 func _physics_process(delta):
-	update_ready_count()
+	if showReady:
+		update_ready_count()
 	
 	if startCountdown: 
 		waveCountdown.start()
@@ -29,6 +39,13 @@ func _physics_process(delta):
 	if displayCountdown: 
 		display_countdown()
 	
+	if checkForEnemies:
+		await get_tree().create_timer(1).timeout
+		if GameManager.enemyCount == 0:
+			print("\nNo more enemies\n")
+			checkForEnemies = false
+			showReady = true
+			playerReadyCount.show()
 	
 func display_countdown():
 	startCountdown = false
@@ -71,6 +88,8 @@ func _on_wave_countdown_timeout():
 	displayCountdown = false
 	waveNotif.hide()
 	start_wave.emit()
+	if GameManager.wave > 1:
+		reward_players.emit()
 	
 	reset_ready()
 
@@ -78,4 +97,5 @@ func reset_ready(): # Reset the readyState of all players
 	var players = get_tree().get_nodes_in_group("Player")
 	for player in players:
 		player.readyState = false
+	checkForEnemies = true
 	

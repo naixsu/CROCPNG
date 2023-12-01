@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0upnpb00xhh3"]
+
+[ext_resource type="Texture2D" uid="uid://dx02m8mky7vlm" path="res://Assets/Win-Lose Banners/Win banner.png" id="1_3jghy"]
+
+[node name="Win Banner" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(551, 317)
+scale = Vector2(5.46094, 5.46094)
+texture = ExtResource("1_3jghy")

@@ -7,6 +7,8 @@ class_name Player
 
 # Export vars here
 @export var speed = 300
+@export var dashSpeed = 800
+@export var dashLength = 0.3
 @export var health = 100
 @export var Bullet : PackedScene
 @export var Enemy : PackedScene
@@ -18,12 +20,17 @@ class_name Player
 #@onready var fireCooldown = $GunRotation/FireCooldown
 @onready var multiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var weaponsManager = $WeaponsManager
+@onready var dash = $Dash
 
 # Camera Onready Vars TO BE DEBUGGED
 @onready var playerCamera = $Camera2D
 
 @onready var readyPrompt = get_tree().get_root().get_node("TestMultiplayerScene/ReadyPrompt")
 @onready var readyLabel = $ReadyLabel
+@onready var respawnNode = $Respawn # Avoiding variable names (resoawn)
+@onready var respawnLabel = $Respawn/RespawnLabel
+@onready var respawnTimer = $Respawn/RespawnTimer
+@onready var moneyLabel = $MoneyLabel
 
 @onready var weaponFile = "res://Scenes/Player/WeaponData.json"
 
@@ -32,8 +39,9 @@ signal player_fired_bullet(bullet, pos, dir)
 signal update_ready
 
 # Other global vars here
-var dead = false
+@export var dead = false
 var spawn_points = []
+var tempSpeed = speed
 @export var readyState = false # had to avoid 'ready' builtin keyword
 
 var weapons: Array = []
@@ -41,6 +49,10 @@ var weaponsData: Array = []
 @export var currentWeaponIndex = 0
 @export var weapon_held_down = false
 var currentWeapon
+
+@export var respawn = false
+@export var displayRespawn = false
+@export var money : int = 300
 
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
@@ -66,12 +78,20 @@ func _ready():
 
 func _process(delta):
 	readyLabel.text = str(readyState)
-
+	moneyLabel.text = str(money)
+	
+	if respawn:
+		respawnTimer.start()
+		respawnLabel.show()
+		displayRespawn = true
+	
+	if displayRespawn: 
+		display_respawn()
 
 func _physics_process(delta):
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		var direction = Input.get_vector("Left", "Right", "Up", "Down")
-		
+		speed = dashSpeed if dash.is_dashing() else tempSpeed
 		velocity = direction * speed
 #		syncPos = global_position
 #		syncRot = rotation_degrees
@@ -84,8 +104,15 @@ func _physics_process(delta):
 		# TODO:
 		# Remove this later when adding the actual death feature
 		if Input.is_action_just_pressed("ui_accept"):
-			dead = not dead
-			anim.play("death")
+			die.rpc()
+
+		if Input.is_action_just_pressed("Dash"):
+			var mouse_direction = get_local_mouse_position().normalized()
+			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
+			dash.start_dash(dashLength)
+			
+		
+		
 		
 #		if Input.is_action_just_pressed("Spawn"):
 #			var e = Enemy.instantiate()
@@ -115,7 +142,7 @@ func _unhandled_input(event):
 	# TODO:
 	# Handle Weapon stuff in a separate node for reusability
 	# using signals to fire off from Weapon -> Player -> BulletManager
-	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() and not dead:
 		if event.is_action_pressed("Fire"):
 			fire.rpc(true)
 			
@@ -145,6 +172,8 @@ func init_weapons(weaponFile):
 	var content = f.get_as_text()
 	weaponsData = JSON.parse_string(content)	
 	
+func set_money(value):
+	money += value
 
 func can_shoot_in_physics():
 	if Input.is_action_just_pressed("Fire"):
@@ -268,3 +297,34 @@ func toggle_ready():
 ##	var multiplayerController = root.get_node("Multiplayer")
 ##	multiplayerController.test_pass(str(name), idSelf, readyState)
 #	update_ready_state.emit()
+
+
+@rpc("any_peer", "call_local")
+func die():
+	dead = true
+	anim.play("death")
+
+func _on_animated_sprite_2d_animation_finished():
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		start_respawn.rpc()
+
+@rpc("any_peer", "call_local")
+func start_respawn():
+	respawn = true
+
+func display_respawn():
+	respawn = false
+	respawnLabel.text = "Respawning In: %0.1fs" % respawnTimer.time_left
+
+func _on_respawn_timer_timeout():
+	var root = get_tree().get_root()
+	var playerSpawnPoint = root.get_node("TestMultiplayerScene/PlayerSpawnPoints")
+	var spawnPoints = playerSpawnPoint.get_children()
+
+	var randomIndex = randi_range(0, spawnPoints.size() - 1)
+	var randomSpawnPoint = spawnPoints[randomIndex].position
+	
+	self.position = randomSpawnPoint
+	
+	dead = false
+	respawnLabel.hide()

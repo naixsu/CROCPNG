@@ -207,6 +207,10 @@ properties/16/path = NodePath(".:weapon_held_down")
 properties/16/spawn = true
 properties/16/sync = true
 properties/16/watch = false
+properties/17/path = NodePath(".:canDash")
+properties/17/spawn = true
+properties/17/sync = true
+properties/17/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4

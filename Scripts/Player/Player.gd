@@ -36,14 +36,15 @@ class_name Player
 @onready var weaponFile = "res://Scenes/Player/WeaponData.json"
 
 # Signals here
-signal player_fired_bullet(bullet, pos, dir)
 signal update_ready
+signal upgrade(stat)
 
 # Other global vars here
 @export var dead = false
 var spawn_points = []
 var tempSpeed = speed
 @export var readyState = false # had to avoid 'ready' builtin keyword
+@export var canDash = false
 
 var weapons: Array = []
 var weaponsData: Array = []
@@ -93,6 +94,7 @@ func _ready():
 	init_weapons(weaponFile)
 	init_shop()
 	readyPrompt.connect("toggle_ready", toggle_ready)
+	shop.connect("upgrade", player_upgrade)
 
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	anim.play("idle")
@@ -121,39 +123,22 @@ func _physics_process(delta):
 #		syncPos = global_position
 #		syncRot = rotation_degrees
 
-#		if Input.is_action_just_pressed("Fire"):
-#			fire.rpc()
-#		can_shoot_in_physics()
-		
 		# Play the death animation
 		# TODO:
 		# Remove this later when adding the actual death feature
 		if Input.is_action_just_pressed("ui_accept"):
 			die.rpc()
 
-		if Input.is_action_just_pressed("Dash"):
+		if Input.is_action_just_pressed("Dash") and canDash:
 			var mouse_direction = get_local_mouse_position().normalized()
 			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
 			dash.start_dash(dashLength)
-			
-		
-		
-		
-#		if Input.is_action_just_pressed("Spawn"):
-#			var e = Enemy.instantiate()
-#			e.global_position = get_global_mouse_position()
-#			get_tree().root.add_child(e)
-#			print("Spawned Enemy")
-		
-#		if Input.is_action_just_pressed("Spawn"):
-#			spawn.rpc()
 			
 		if not dead:
 			update_gun_rotation()
 #			move_and_slide()
 			move_and_collide(velocity * delta)
 			update_animation()
-		
 
 	update_camera(delta)
 		
@@ -223,6 +208,18 @@ func init_shop():
 	shotgunBSProgressBar = rifleShop.get_node("Bulletspeed").get_node("ProgressBar")
 	
 	shopMoneyText = shop.get_node("Money").get_node("MoneyLabel").text
+
+func player_upgrade(subject, stat):
+	print("Upgrade Pressed " + " " + subject + " " + stat )
+	match subject:
+		"player":
+			pass
+		"pistol":
+			pass
+		"rifle":
+			pass
+		"shotgun":
+			pass
 	
 func set_money(value):
 	money += value

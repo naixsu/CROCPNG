@@ -164,13 +164,13 @@ func _unhandled_input(event):
 	pass
 
 func init_weapons(weaponFile):
-	weapons = weaponsManager.get_children()
-	currentWeapon = weapons[currentWeaponIndex]
-	
-	
 	var f = FileAccess.open(weaponFile, FileAccess.READ)
 	var content = f.get_as_text()
 	weaponsData = JSON.parse_string(content)	
+	
+	weapons = weaponsManager.get_children()
+	currentWeapon = weapons[currentWeaponIndex]
+	currentWeapon.get_node("FireCooldown").wait_time = weaponsData[currentWeaponIndex].wait_time
 	
 func set_money(value):
 	money += value

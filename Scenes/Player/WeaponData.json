@@ -2,8 +2,8 @@
 	{
 		"name": "Pistol",
 		"texture": "res://Assets/Weapons/pistol_equipped.png",
-		"damage": 1000,
-		"wait_time": 0.2,
+		"damage": 5,
+		"wait_time": 0.5,
 		"multishot": 1,
 		"deviation_angle": 8,
 		"bullet_speed": 2000,
@@ -12,7 +12,7 @@
 		"name": "Rifle",
 		"texture": "res://Assets/Weapons/rifle_equipped.png",
 		"damage": 15,
-		"wait_time": 0.1,
+		"wait_time": 0.4,
 		"multishot": 1,
 		"deviation_angle": 10,
 		"bullet_speed": 1200 

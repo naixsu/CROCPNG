@@ -252,6 +252,7 @@ grow_vertical = 2
 [node name="WeaponsManager" type="Node2D" parent="."]
 
 [node name="Gun" parent="WeaponsManager" instance=ExtResource("8_l3ssp")]
+
 [node name="Dash" type="Node2D" parent="."]
 script = ExtResource("10_4nm7p")
 

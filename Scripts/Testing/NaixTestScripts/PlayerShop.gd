@@ -1,6 +1,22 @@
 extends Node2D
 
 signal upgrade(subject, stat)
+
+@onready var health = $TabContainer/Player/Health
+@onready var speed = $TabContainer/Player/Speed
+@onready var dash = $TabContainer/Player/Dash
+
+
+
+
+func _process(delta):
+	if health.get_node("ProgressBar").value == 100:
+		health.get_node("HealthButton").visible = false
+	if speed.get_node("ProgressBar").value == 100:
+		speed.get_node("SpeedButton").visible = false 
+	if dash.get_node("ProgressBar").value == 100:
+		dash.get_node("DashButton").visible = false
+		
 # Player
 func _on_health_button_pressed():
 	upgrade.emit("player", "health")

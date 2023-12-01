@@ -7,9 +7,11 @@ class_name Player
 
 # Export vars here
 @export var speed = 300
+@export var maxSpeed = speed
 @export var dashSpeed = 800
 @export var dashLength = 0.3
 @export var health = 100
+@export var maxHealth = health
 @export var Bullet : PackedScene
 @export var Enemy : PackedScene
 @export var BulletCB : PackedScene
@@ -42,7 +44,7 @@ signal upgrade(stat)
 # Other global vars here
 @export var dead = false
 var spawn_points = []
-var tempSpeed = speed
+var tempSpeed = maxSpeed
 @export var readyState = false # had to avoid 'ready' builtin keyword
 @export var canDash = false
 
@@ -118,8 +120,13 @@ func _process(delta):
 func _physics_process(delta):
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		var direction = Input.get_vector("Left", "Right", "Up", "Down")
-		speed = dashSpeed if dash.is_dashing() else tempSpeed
-		velocity = direction * speed
+#		speed = dashSpeed if dash.is_dashing() else tempSpeed
+#		velocity = direction * speed
+		if dash.is_dashing():
+			velocity = direction * dashSpeed
+		else:
+			velocity = direction * speed
+		
 #		syncPos = global_position
 #		syncRot = rotation_degrees
 
@@ -141,12 +148,7 @@ func _physics_process(delta):
 			update_animation()
 
 	update_camera(delta)
-		
-		
-#	else: # TODO: Maybe add this in the future
-#		global_position = global_position.lerp(syncPos, .5)
-#		rotation_degrees = lerpf(rotation_degrees, syncRot, .5)
-
+	
 # Commenting as it has synchronization issues
 func _unhandled_input(event): 
 	# TODO:
@@ -209,17 +211,53 @@ func init_shop():
 	
 	shopMoneyText = shop.get_node("Money").get_node("MoneyLabel").text
 
+@rpc("any_peer", "call_local")
+func show_shop():
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		shop.visible = true
+		
+@rpc("any_peer", "call_local")
+func hide_shop():
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		shop.visible = false
+
+@rpc("any_peer", "call_local")
+func show_ready():
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		readyPrompt.visible = true
+		
+@rpc("any_peer", "call_local")
+func hide_ready():
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		readyPrompt.visible = false
+
 func player_upgrade(subject, stat):
 	print("Upgrade Pressed " + " " + subject + " " + stat )
 	match subject:
 		"player":
-			pass
+			upgrade_player(stat)
 		"pistol":
 			pass
 		"rifle":
 			pass
 		"shotgun":
 			pass
+
+func upgrade_player(stat):
+	print("Upgrading player " + stat)
+	match stat:
+		"health":
+			health += 25
+			maxHealth = health
+			healthProgressBar.value += 25
+		"speed":
+			speed += 25
+			maxSpeed = speed
+			speedProgressBar.value += 25
+		"dash":
+			canDash = true
+			dashProgressBar.value = 100
+			
 	
 func set_money(value):
 	money += value

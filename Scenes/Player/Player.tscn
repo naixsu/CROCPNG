@@ -211,6 +211,22 @@ properties/17/path = NodePath(".:canDash")
 properties/17/spawn = true
 properties/17/sync = true
 properties/17/watch = false
+properties/18/path = NodePath(".:speed")
+properties/18/spawn = true
+properties/18/sync = true
+properties/18/watch = false
+properties/19/path = NodePath(".:health")
+properties/19/spawn = true
+properties/19/sync = true
+properties/19/watch = false
+properties/20/path = NodePath(".:maxHealth")
+properties/20/spawn = true
+properties/20/sync = true
+properties/20/watch = false
+properties/21/path = NodePath(".:maxSpeed")
+properties/21/spawn = true
+properties/21/sync = true
+properties/21/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4

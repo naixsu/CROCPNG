@@ -7,6 +7,7 @@
 		"multishot": 1,
 		"deviation_angle": 8,
 		"bullet_speed": 2000,
+		"bullet_life": 10
 	},
 	{
 		"name": "Rifle",
@@ -15,7 +16,8 @@
 		"wait_time": 0.1,
 		"multishot": 1,
 		"deviation_angle": 10,
-		"bullet_speed": 1200 
+		"bullet_speed": 1200,
+		"bullet_life": 0.2
 	},
 	{
 		"name": "Shotgun",
@@ -24,6 +26,7 @@
 		"wait_time": 1,
 		"multishot": 10,
 		"deviation_angle": 60,
-		"bullet_speed": 800 
+		"bullet_speed": 800,
+		"bullet_life": 0.5
 	},
 ]

@@ -224,12 +224,15 @@ func fire(held_down):
 	#		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
 			
 			#Calculate random bullet spread	and multishot
-			var multishot = weaponsData[currentWeaponIndex].multishot
-			var deviation_angle = weaponsData[currentWeaponIndex].deviation_angle
+			var currentWeaponData = weaponsData[currentWeaponIndex]
+			
+			var multishot = currentWeaponData.multishot
+			var deviation_angle = currentWeaponData.deviation_angle
 			for i in range(multishot):		
 				var b = BulletCB.instantiate()
 				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
-				b.change_stats(weaponsData[currentWeaponIndex].bullet_speed, weaponsData[currentWeaponIndex].damage)				
+				b.change_stats(currentWeaponData.bullet_speed, currentWeaponData.damage)	
+				b.set_timer(currentWeaponData.bullet_life)			
 				var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
 				b.rotation_degrees = bullet_rotation
 				

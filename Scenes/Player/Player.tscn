@@ -227,6 +227,10 @@ properties/21/path = NodePath(".:maxSpeed")
 properties/21/spawn = true
 properties/21/sync = true
 properties/21/watch = false
+properties/22/path = NodePath(".:weaponMods")
+properties/22/spawn = true
+properties/22/sync = true
+properties/22/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4

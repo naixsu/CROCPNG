@@ -58,6 +58,33 @@ var currentWeapon
 @export var respawn = false
 @export var displayRespawn = false
 @export var money : int = 300
+@export var weaponMods = {
+	"pistol": {
+		"damage": 0,
+		"accuracy": 0,
+		"bulletSpeed": 0,
+		"dUp": 1.25,
+		"aUp": 2,
+		"bsUp": 62.5
+	},
+	"rifle": {
+		"damage": 0,
+		"accuracy": 0,
+		"bulletSpeed": 0,
+		"dUp": 2.5,
+		"aUp": 1.25,
+		"bsUp": 75
+	},
+	"shotgun": {
+		"damage": 0,
+		"accuracy": 0,
+		"bulletSpeed": 0,
+		"dUp": 2.5,
+		"aUp": 7.5,
+		"bsUp": 200
+	}
+}
+
 
 # Shop stuff
 var playerShop
@@ -73,9 +100,10 @@ var pistolShop
 var pistolDmgProgressBar
 var pistolAccProgressBar
 var pistolBSProgressBar
-var pdb
-var pab
-var pbb
+var pdb # damage button
+var pab # acc button
+var pbb # bulletspeed button
+
 
 var rifleShop
 var rifleDmgProgressBar
@@ -84,6 +112,7 @@ var rifleBSProgressBar
 var rdb
 var rab
 var rbb
+
 
 var shotgunShop
 var shotgunDmgProgressBar
@@ -103,13 +132,6 @@ var weaponUpgrades : Dictionary
 #var syncRot = 0
 
 func _ready():
-#	set_process(get_multiplayer_authority() == multiplayer.get_unique_id())
-
-#	var spawn_point_parent = root.get_node("EnemySpawnPoints")
-#	var children = spawn_point_parent.get_children()
-#	for child in children:
-#		if child is Marker2D:
-#			spawn_points.append(child)
 	init_weapons(weaponFile)
 	init_shop()
 	readyPrompt.connect("toggle_ready", toggle_ready)
@@ -187,9 +209,6 @@ func _unhandled_input(event):
 		if event.is_action_pressed("SwitchWeapon3"):
 #			currentWeaponIndex = 2
 			switch_weapon.rpc(2)
-		
-#	if event.is_action_pressed("Spawn"):
-#		spawn.rpc()
 	pass
 
 func init_weapons(weaponFile):
@@ -255,19 +274,28 @@ func init_shop():
 	
 	weaponUpgrades = {
 		"pistol": {
-			"damage": [pistolDmgProgressBar, shop.pistolDmgCost],
-			"accuracy": [pistolAccProgressBar, shop.pistolAccCost],
-			"bulletSpeed": [pistolBSProgressBar, shop.pistolBSCost]
+			"damage": [pistolDmgProgressBar, shop.pistolDmgCost, 0, 1.25],
+			"accuracy": [pistolAccProgressBar, shop.pistolAccCost, 0, 2],
+			"bulletSpeed": [pistolBSProgressBar, shop.pistolBSCost, 0, 62.5],
+#			"dUp": 1.25,
+#			"aUp": 2,
+#			"bsUp": 62.5
 		},
 		"rifle": {
-			"damage": [rifleDmgProgressBar, shop.rifleDmgCost],
-			"accuracy": [rifleAccProgressBar, shop.rifleAccCost],
-			"bulletSpeed": [rifleBSProgressBar, shop.rifleBSCost]
+			"damage": [rifleDmgProgressBar, shop.rifleDmgCost, 0, 2.5],
+			"accuracy": [rifleAccProgressBar, shop.rifleAccCost, 0, 1.25],
+			"bulletSpeed": [rifleBSProgressBar, shop.rifleBSCost, 0, 75],
+#			"dUp": 2.5,
+#			"aUp": 1.25,
+#			"bsUp": 75
 		},
 		"shotgun": {
-			"damage": [shotgunDmgProgressBar, shop.shotgunDmgCost],
-			"accuracy": [shotgunAccProgressBar, shop.shotgunAccCost],
-			"bulletSpeed": [shotgunBSProgressBar, shop.shotgunBSCost]
+			"damage": [shotgunDmgProgressBar, shop.shotgunDmgCost, 0, 2.5],
+			"accuracy": [shotgunAccProgressBar, shop.shotgunAccCost, 0, 7.5],
+			"bulletSpeed": [shotgunBSProgressBar, shop.shotgunBSCost, 0, 200],
+#			"dUp": 2.5,
+#			"aUp": 7.5,
+#			"bsUp": 200
 		}
 	}
 	update_money_label()
@@ -335,12 +363,16 @@ func upgrade_player(stat):
 			dashProgressBar.value = 100
 			set_money(-shop.playerDashCost)
 
+# General function
 func upgrade_weapon(weapon, stat):
 	print("Upgrading " + weapon + " " + stat)
 	if weaponUpgrades.has(weapon) and weaponUpgrades[weapon].has(stat):
-		var progressBarsCost = weaponUpgrades[weapon][stat]
-		progressBarsCost[0].value += 25
-		set_money(-progressBarsCost[1])
+		var values = weaponUpgrades[weapon][stat]
+		values[0].value += 25 # Progress Bar Value
+		set_money(-values[1]) # Upgrade Cost
+		weaponUpgrades[weapon][stat][2] += weaponUpgrades[weapon][stat][3] # Stat - Stat Up
+		print(weaponUpgrades[weapon])
+#		upgrade_weapon_stat(weapon, stat)
 
 func upgrade_pistol(stat):
 	upgrade_weapon("pistol", stat)
@@ -352,71 +384,26 @@ func upgrade_shotgun(stat):
 	upgrade_weapon("shotgun", stat)
 	
 
-#func upgrade_pistol(stat):
-#	print("Upgrading pistol " + stat)
-#	match stat:
-#		"damage":
-#			pistolDmgProgressBar.value += 25
-#			set_money(-shop.pistolDmgCost)
-#		"accuracy":
-#			pistolAccProgressBar.value += 25
-#			set_money(-shop.pistolAccCost)
-#		"bulletSpeed":
-#			pistolBSProgressBar.value += 25
-#			set_money(-shop.pistolBSCost)
-#
-#func upgrade_rifle(stat):
-#	print("Upgrading rifle " + stat)
-#	match stat:
-#		"damage":
-#			rifleDmgProgressBar.value += 25
-#			set_money(-shop.rifleDmgCost)
-#		"accuracy":
-#			rifleAccProgressBar.value += 25
-#			set_money(-shop.rifleAccCost)
-#		"bulletSpeed":
-#			rifleBSProgressBar.value += 25
-#			set_money(-shop.rifleBSCost)
-#
-#func upgrade_shotgun(stat):
-#	print("Upgrading shotgun " + stat)
-#	match stat:
-#		"damage":
-#			shotgunDmgProgressBar.value += 25
-#			set_money(-shop.shotgunDmgCost)
-#		"accuracy":
-#			shotgunAccProgressBar.value += 25
-#			set_money(-shop.shotgunAccCost)
-#		"bulletSpeed":
-#			shotgunBSProgressBar.value += 25
-#			set_money(-shop.shotgunBSCost)
-
-#func upgrade_weapon(stat, dmgProgressBar, accProgressBar, bsProgressBar):
-#	print("Upgrading " + stat)
-#	match stat:
-#		"damage":
-#			dmgProgressBar.value += 25
-#		"accuracy":
-#			accProgressBar.value += 25
-#		"bulletSpeed":
-#			bsProgressBar.value += 25
-
-#func upgrade_pistol(stat):
-#	upgrade_weapon(stat, pistolDmgProgressBar, pistolAccProgressBar, pistolBSProgressBar)
-#
-#func upgrade_rifle(stat):
-#	upgrade_weapon(stat, rifleDmgProgressBar, rifleAccProgressBar, rifleBSProgressBar)
-#
-#func upgrade_shotgun(stat):
-#	upgrade_weapon(stat, shotgunDmgProgressBar, shotgunAccProgressBar, shotgunBSProgressBar)
+func upgrade_weapon_stat(weapon, stat):
+	if weaponMods.has(weapon) and weaponMods[weapon].has(stat):
+		# dUp - dmg up
+		# aUp - acc up
+		# bsUp - bulletspeed up
+		print("Weapon Mod")
+		match stat:
+			"damage":
+				weaponMods[weapon][stat] += weaponMods[weapon]["dUp"]
+			"accuracy":
+				weaponMods[weapon][stat] += weaponMods[weapon]["aUp"]
+			"bulletSpeed":
+				weaponMods[weapon][stat] += weaponMods[weapon]["bsUp"]
+		print("Weapon Mod")
+		print(weaponMods[weapon])
+		
 
 	
 func set_money(value):
 	money += value
-
-func can_shoot_in_physics():
-	if Input.is_action_just_pressed("Fire"):
-		fire.rpc()	
 
 func update_gun_rotation():
 	# Rotates the gun arrow according to the mouse position
@@ -440,7 +427,6 @@ func update_camera(delta):
 	else:
 		playerCamera.zoomFactor = 1.0
 	
-
 func flip_sprite():
 	# Flipts the sprite depending on the mouse position
 	if get_global_mouse_position().x < global_position.x:
@@ -448,14 +434,6 @@ func flip_sprite():
 	elif get_global_mouse_position().x > global_position.x:
 		anim.flip_h = false
 		
-@rpc("any_peer", "call_remote")
-func spawn():
-	var e = Enemy.instantiate()
-	e.global_position = get_global_mouse_position()
-	get_tree().root.add_child(e)
-	print("Spawned Enemy")
-	
-
 	
 @rpc("any_peer", "call_local")
 func switch_weapon(index):	
@@ -491,13 +469,21 @@ func fire(held_down):
 	#		var b = BulletCB.instantiate()
 	#		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
 			
+			# add the mods from weaponMods
+			var dmgAdd = weaponUpgrades.values()[currentWeaponIndex]["damage"][2]
+			var accSub = weaponUpgrades.values()[currentWeaponIndex]["accuracy"][2]
+			var bulletSpeedAdd = weaponUpgrades.values()[currentWeaponIndex]["bulletSpeed"][2]
+			
 			#Calculate random bullet spread	and multishot
 			var multishot = weaponsData[currentWeaponIndex].multishot
-			var deviation_angle = weaponsData[currentWeaponIndex].deviation_angle
+			var deviation_angle = weaponsData[currentWeaponIndex].deviation_angle - accSub
 			for i in range(multishot):		
 				var b = BulletCB.instantiate()
 				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
-				b.change_stats(weaponsData[currentWeaponIndex].bullet_speed, weaponsData[currentWeaponIndex].damage)				
+				b.change_stats.rpc(
+						weaponsData[currentWeaponIndex].bullet_speed + bulletSpeedAdd, 
+						weaponsData[currentWeaponIndex].damage + dmgAdd
+					)				
 				var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
 				b.rotation_degrees = bullet_rotation
 				

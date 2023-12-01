@@ -10,7 +10,8 @@ var direction : Vector2
 
 func _ready():
 	direction = Vector2(1, 0).rotated(rotation)
-	
+
+@rpc("any_peer", "call_local")
 func change_stats(new_speed, new_damage):
 	speed = new_speed
 	damage = new_damage

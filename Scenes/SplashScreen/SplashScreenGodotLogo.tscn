@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b71whrt7fx38b"]
+
+[ext_resource type="Texture2D" uid="uid://cjb6wcqo2krn7" path="res://Assets/Splash Screen/GodotLogo.png" id="1_4lypx"]
+[ext_resource type="Script" path="res://Scripts/SplashScreen/SplashScreen.gd" id="1_bnaue"]
+
+[node name="SplashScreenGodotLogo" type="VBoxContainer"]
+script = ExtResource("1_bnaue")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_4lypx")

@@ -11,8 +11,11 @@ config_version=5
 [application]
 
 config/name="CROCPNG"
-run/main_scene="res://Scenes/Testing/NaixTestScenes/Multiplayer.tscn"
+run/main_scene="res://Scenes/SplashScreen/SplashScreenManager.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
+boot_splash/image="res://Assets/Splash Screen/Splash.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [autoload]

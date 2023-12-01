@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=6 format=3 uid="uid://dbgqyu07lw23u"]
 
-[ext_resource type="Texture2D" uid="uid://ben514estr6va" path="res://Assets/UI/start-hover.png" id="1_ht4ss"]
-[ext_resource type="Texture2D" uid="uid://c33kbufiyjk73" path="res://Assets/UI/start-normal.png" id="1_won20"]
+[ext_resource type="Texture2D" path="res://Assets/UI/start-hover.png" id="1_ht4ss"]
+[ext_resource type="Texture2D" path="res://Assets/UI/start-normal.png" id="1_won20"]
 [ext_resource type="FontFile" uid="uid://ctxdq4lqft0lv" path="res://Assets/Fonts/Ac437_IBM_EGA_8x8.ttf" id="3_yxu34"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l6bw0"]

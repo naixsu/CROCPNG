@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://bxtn8e8m61sj3"]
+[gd_scene load_steps=15 format=3 uid="uid://bxtn8e8m61sj3"]
 
 [ext_resource type="Theme" uid="uid://dud7ila1t2fw1" path="res://Assets/UI/base_theme.tres" id="1_f14hw"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/MultiplayerController.gd" id="1_wmt0j"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ServerBrowser.gd" id="2_7edh8"]
+[ext_resource type="Texture2D" uid="uid://bvmiicc2tjbiy" path="res://Assets/Splash Screen/SplashScreenBG.png" id="3_37vqk"]
 [ext_resource type="PackedScene" uid="uid://chavk7wh0g8k8" path="res://Scenes/Testing/NaixTestScenes/ServerInfo.tscn" id="3_bgp3x"]
 [ext_resource type="Texture2D" uid="uid://d1jku4yxq3q35" path="res://Assets/UI/crocs-logo.png" id="4_ggktp"]
 [ext_resource type="Theme" uid="uid://dbgqyu07lw23u" path="res://Assets/UI/start_button.tres" id="4_me80j"]
@@ -23,6 +24,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_f14hw")
 script = ExtResource("1_wmt0j")
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("3_37vqk")
 
 [node name="Border" type="TextureRect" parent="."]
 layout_mode = 0

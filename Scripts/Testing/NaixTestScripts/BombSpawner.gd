@@ -8,8 +8,8 @@ func _init():
 func _spawn_bomb(data):
 	var bombScenePath = "res://Scenes/Bomb/Bomb.tscn"
 	var bomb = load(bombScenePath).instantiate()
-	
-	bomb.position = data[0]
+	var enemy = data[0]
+	bomb.position = enemy.position
 	bomb.isHeld = false
 	
 	print("Bomb spawned at " + str(bomb.position))

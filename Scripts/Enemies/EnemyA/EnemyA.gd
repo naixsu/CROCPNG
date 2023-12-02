@@ -20,7 +20,7 @@ class_name Enemy
 @onready var healthLabel = $Label
 @onready var target = $Target
 
-var hasBomb : bool = false
+@export var hasBomb : bool = false
 
 ###
 # EnemyA = Skeleton
@@ -66,10 +66,32 @@ func handle_hit(dmg):
 
 func handle_death():
 	if not dead:
+		if hasBomb:
+			handle_bomb_drop()
 		collision.disabled = true
 		hasBomb = false
 		anim.play("death")
 		dead = true
+
+
+func handle_bomb_drop():
+	if multiplayer.is_server():
+		var root = get_tree().get_root()
+		var multiplayerScene = root.get_node("TestMultiplayerScene")
+		multiplayerScene.find_to_hold_bomb.rpc()
+#		multiplayerScene.spawn_bomb(self)
+		# Find the next enemy
+#		var root = get_tree().get_root()
+#		var enemyGroups = root.get_node("TestMultiplayerScene/EnemyGroups")
+#
+#		if enemyGroups.get_children().size() == 0: return
+#
+#		var child = enemyGroups.get_child(-1)
+#		child.hasBomb = true
+		
+		pass
+		
+	
 
 func flip_sprite(player):
 	if player.global_position.x < global_position.x:

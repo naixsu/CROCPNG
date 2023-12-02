@@ -25,9 +25,10 @@ func set_timer(bullet_life):
 func change_stats(new_speed, new_damage):
 	speed = new_speed
 	damage = new_damage
-	
+
 func destroy_self():
-	queue_free()
+	if multiplayer.is_server():
+		queue_free()
 	
 func _physics_process(delta):
 	# Add the gravity.

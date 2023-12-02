@@ -184,6 +184,10 @@ properties/5/path = NodePath("AnimatedSprite2D:animation")
 properties/5/spawn = true
 properties/5/sync = true
 properties/5/watch = false
+properties/6/path = NodePath(".:hasBomb")
+properties/6/spawn = true
+properties/6/sync = true
+properties/6/watch = false
 
 [node name="EnemyB" type="CharacterBody2D" groups=["Enemy"]]
 z_index = 3

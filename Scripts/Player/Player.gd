@@ -472,9 +472,9 @@ func fire(held_down):
 #		fireCooldown.start()
 	while weapon_held_down:
 		if currentWeapon.get_node("FireCooldown").is_stopped():
-			print("{0} Fire!".format({
-				"0": str(currentWeapon.name)
-			}))
+#			print("{0} Fire!".format({
+#				"0": str(currentWeapon.name)
+#			}))
 	#		var b = BulletCB.instantiate()
 	#		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
 			
@@ -483,8 +483,8 @@ func fire(held_down):
 			accSub = weaponUpgrades.values()[currentWeaponIndex]["accuracy"][2]
 			bulletSpeedAdd = weaponUpgrades.values()[currentWeaponIndex]["bulletSpeed"][2]
 			
-			print(str(name))
-			print("dmgAdd " + str(dmgAdd) + " " + str(weaponsData[currentWeaponIndex].damage + dmgAdd))
+#			print(str(name))
+#			print("dmgAdd " + str(dmgAdd) + " " + str(weaponsData[currentWeaponIndex].damage + dmgAdd))
 			
 			#Calculate random bullet spread	and multishot
 #<<<<<<< HEAD

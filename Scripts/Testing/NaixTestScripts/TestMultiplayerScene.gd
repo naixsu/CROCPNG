@@ -60,10 +60,32 @@ func spawn_enemy(enemy_type: String):
 	get_node("EnemySpawner").spawn([random_spawn_point, enemy_type])
 	add_enemy.rpc()
 
-func spawn_bomb(enemyPos):
-	get_node("BombSpawner").spawn([enemyPos])
+func spawn_bomb(enemy):
+	clear_bombs()
+	get_node("BombSpawner").spawn([enemy])
 	print("Spawn Bomb")
+
+func clear_bombs():
+	if multiplayer.is_server():
+		var bombGroups = get_node("BombGroups")
+		if bombGroups.get_children().size() == 0: return
+		
+		var child = bombGroups.get_child(0)
+		
+		if child != null:
+			child.queue_free()
+			print("Cleared bomb")
 			
+@rpc("any_peer", "call_local")
+func find_to_hold_bomb():
+	var enemyGroups = get_node("EnemyGroups")
+	var children = enemyGroups.get_children()
+	if children != null:
+		for child in children:
+			if not child.hasBomb:
+				child.hasBomb = true
+				print("Next bomb holder is " + str(child.name))
+				break
 
 # Might wanna use a resource here so that the wave feature
 # isn't hardcoded

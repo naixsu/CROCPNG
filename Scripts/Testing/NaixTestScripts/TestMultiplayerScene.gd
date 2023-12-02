@@ -60,9 +60,9 @@ func spawn_enemy(enemy_type: String):
 	get_node("EnemySpawner").spawn([random_spawn_point, enemy_type])
 	add_enemy.rpc()
 
-func spawn_bomb(enemy):
+func spawn_bomb(enemyPos):
 	clear_bombs()
-	get_node("BombSpawner").spawn([enemy])
+	get_node("BombSpawner").spawn([enemyPos])
 	print("Spawn Bomb")
 
 func clear_bombs():
@@ -78,14 +78,21 @@ func clear_bombs():
 			
 @rpc("any_peer", "call_local")
 func find_to_hold_bomb():
+	await get_tree().create_timer(0.1).timeout
 	var enemyGroups = get_node("EnemyGroups")
 	var children = enemyGroups.get_children()
 	if children != null:
 		for child in children:
-			if not child.hasBomb:
+			if not child.hasBomb and not child.dead:
 				child.hasBomb = true
 				print("Next bomb holder is " + str(child.name))
 				break
+
+
+@rpc("any_peer", "call_local")
+func lose():
+	print("You lost")
+
 
 # Might wanna use a resource here so that the wave feature
 # isn't hardcoded

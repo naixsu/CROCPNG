@@ -1,11 +1,15 @@
 extends Node2D
 
 var isHeld : bool = false
-# Called when the node enters the scene tree for the first time.
+
+@onready var anim = $AnimatedSprite2D
+
 func _ready():
-	pass # Replace with function body.
+	anim.play("detonate")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _on_animated_sprite_2d_animation_finished():
+	if multiplayer.is_server():
+		queue_free()
+		var root = get_tree().get_root()
+		var multScene = root.get_node("TestMultiplayerScene")
+		multScene.lose.rpc()

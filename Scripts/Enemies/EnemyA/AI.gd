@@ -108,6 +108,10 @@ func _physics_process(delta):
 				if i >= markers.size():
 					set_state(State.IDLE)
 					reachedFinal = true
+					
+					if parent.hasBomb:
+						parent.handle_bomb_drop()
+					
 					return
 				set_movement_target(markers[i].position)
 

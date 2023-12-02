@@ -66,15 +66,22 @@ func handle_hit(dmg):
 
 func handle_death():
 	if not dead:
+		dead = true
 		if hasBomb:
-			handle_bomb_drop()
+			handle_bomb_transfer()
 		collision.disabled = true
 		hasBomb = false
 		anim.play("death")
-		dead = true
-
+		
 
 func handle_bomb_drop():
+	if multiplayer.is_server():
+		var root = get_tree().get_root()
+		var multiplayerScene = root.get_node("TestMultiplayerScene")
+		multiplayerScene.spawn_bomb(self.position)
+		hasBomb = false
+
+func handle_bomb_transfer():
 	if multiplayer.is_server():
 		var root = get_tree().get_root()
 		var multiplayerScene = root.get_node("TestMultiplayerScene")

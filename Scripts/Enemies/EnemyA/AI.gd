@@ -36,7 +36,8 @@ func actor_setup():
 	
 	if parent.dead: return
 	
-	await get_tree().physics_frame
+	# await get_tree().physics_frame
+	await get_tree().create_timer(0.2).timeout
 	
 	# Set paths
 	var root = get_tree().get_root()

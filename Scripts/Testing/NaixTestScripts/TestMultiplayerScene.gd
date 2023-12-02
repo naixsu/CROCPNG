@@ -59,31 +59,23 @@ func spawn_enemy(enemy_type: String):
 #		get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
 	get_node("EnemySpawner").spawn([random_spawn_point, enemy_type])
 	add_enemy.rpc()
-			
-	
-#@rpc("any_peer", "call_local")
-#func spawn_enemy():
-#	# Get random spawn point
-#	print("Spawn Enemy")
-#	var enemySpawnPoints = get_tree().get_nodes_in_group("EnemySpawnPoint")
-#	var randomIndex = randi_range(0, enemySpawnPoints.size() - 1)
-#	var randomSpawnPoint = enemySpawnPoints[randomIndex]
-#
-#	# Instantiate enemy
-#	var enemy = EnemyA.instantiate()
-#	add_child(enemy)
-#	enemy.global_position = randomSpawnPoint.global_position
 
+func spawn_bomb(enemyPos):
+	get_node("BombSpawner").spawn([enemyPos])
+	print("Spawn Bomb")
+			
 
 # Might wanna use a resource here so that the wave feature
 # isn't hardcoded
 func final_wave():
-	if is_multiplayer_authority():
+#	if is_multiplayer_authority():
+	if multiplayer.is_server():
 		print("Final Wave")
 
 
 func start_wave():
-	if is_multiplayer_authority():
+#	if is_multiplayer_authority():
+	if multiplayer.is_server():
 		clear_money.rpc()
 		add_wave.rpc()
 		
@@ -105,11 +97,22 @@ func start_wave():
 		}
 		var totalEnemies = skeletonCount + ghostCount + slimeCount
 		print("Wave %d: Number of Enemies: %d" % [GameManager.wave, totalEnemies])
+		
+		# Spawn bomb once
+		var bombSpawned = false
+		
 		for enemyType in enemyArray:
 			var count = enemyArray[enemyType]
 			for enemy in range(count):
 				await get_tree().create_timer(spawnDelay).timeout
 				spawn_enemy(enemyType)
+				
+				await get_tree().create_timer(0.1).timeout
+				if not bombSpawned:
+					var child = enemyGroups.get_child(0) # get first child, first enemy
+					spawn_bomb(child.position)
+					bombSpawned = true
+					
 
 func reward_players():
 	print("Reward Players")

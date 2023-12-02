@@ -121,7 +121,7 @@ func _on_broadcast_timer_timeout():
 	var packet = data.to_ascii_buffer()
 #	print(roomInfo.playerCount)
 	broadcaster.put_packet(packet)
-	print("Number of enemies: " + str(GameManager.enemyCount))
+	# print("Number of enemies: " + str(GameManager.enemyCount))
 	pass # Replace with function body.
 #
 #	print("Broadcasting Game")

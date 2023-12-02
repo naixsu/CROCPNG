@@ -18,6 +18,9 @@ class_name Enemy
 @export var spawn : int
 @export var dead = false
 @onready var healthLabel = $Label
+@onready var target = $Target
+
+@export var hasBomb : bool = false
 
 ###
 # EnemyA = Skeleton
@@ -35,6 +38,11 @@ func _ready():
 
 func _process(delta):
 	healthLabel.text = str(health)
+	
+	if hasBomb:
+		target.visible = true
+	else:
+		target.visible = false
 
 func init_enemy():
 	self.health = resource.health
@@ -58,9 +66,39 @@ func handle_hit(dmg):
 
 func handle_death():
 	if not dead:
-		collision.disabled = true
-		anim.play("death")
 		dead = true
+		if hasBomb:
+			handle_bomb_transfer()
+		collision.disabled = true
+		hasBomb = false
+		anim.play("death")
+		
+
+func handle_bomb_drop():
+	if multiplayer.is_server():
+		var root = get_tree().get_root()
+		var multiplayerScene = root.get_node("TestMultiplayerScene")
+		multiplayerScene.spawn_bomb(self.position)
+		hasBomb = false
+
+func handle_bomb_transfer():
+	if multiplayer.is_server():
+		var root = get_tree().get_root()
+		var multiplayerScene = root.get_node("TestMultiplayerScene")
+		multiplayerScene.find_to_hold_bomb.rpc()
+#		multiplayerScene.spawn_bomb(self)
+		# Find the next enemy
+#		var root = get_tree().get_root()
+#		var enemyGroups = root.get_node("TestMultiplayerScene/EnemyGroups")
+#
+#		if enemyGroups.get_children().size() == 0: return
+#
+#		var child = enemyGroups.get_child(-1)
+#		child.hasBomb = true
+		
+		pass
+		
+	
 
 func flip_sprite(player):
 	if player.global_position.x < global_position.x:

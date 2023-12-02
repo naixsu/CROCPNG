@@ -20,6 +20,7 @@ var i = 0
 var markers : Array
 var foundInitialSpawn = false
 var spawn: int
+var reachedFinal = false
 
 func initialize_path_finding():
 	navigationAgent.path_desired_distance = 4.0
@@ -104,6 +105,7 @@ func _physics_process(delta):
 				i += 1
 				if i >= markers.size():
 					set_state(State.IDLE)
+					reachedFinal = true
 					return
 				set_movement_target(markers[i].position)
 
@@ -140,6 +142,9 @@ func _on_detection_zone_body_entered(body):
 func _on_detection_zone_body_exited(body):
 	if body.is_in_group("Player") and current_state != State.DEAD: # Player exited radius
 		# Check if there are still nav markers
+		if reachedFinal:
+			i -= 1
+			set_movement_target(markers[i].position)
 		if navigationAgent.is_navigation_finished():
 			if i >= markers.size():
 				set_state(State.IDLE)

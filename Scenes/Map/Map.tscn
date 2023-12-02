@@ -36,6 +36,16 @@ position = Vector2(-563, -12)
 position = Vector2(-716, -660)
 scale = Vector2(2.449, 6.23)
 
+[node name="Collision8" parent="Collisions/Top" instance=ExtResource("2_1lcvq")]
+position = Vector2(-995, -791)
+rotation = 1.5708
+scale = Vector2(2.449, 6.23)
+
+[node name="Collision9" parent="Collisions/Top" instance=ExtResource("2_1lcvq")]
+position = Vector2(2121, -791)
+rotation = 1.5708
+scale = Vector2(2.449, 6.23)
+
 [node name="Collision2" parent="Collisions/Top" instance=ExtResource("2_1lcvq")]
 position = Vector2(-716, -980)
 scale = Vector2(2.449, 6.23)

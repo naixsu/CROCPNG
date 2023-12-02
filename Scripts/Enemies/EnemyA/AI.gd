@@ -63,6 +63,8 @@ func actor_setup():
 			markers.append(pathPoints[6])
 		markers.append(pathPoints[7])
 		markers.append(pathPoints[8])
+		markers.append(pathPoints[9])
+		markers.append(pathPoints[10])
 	else:
 		markers = pathPoints
 		

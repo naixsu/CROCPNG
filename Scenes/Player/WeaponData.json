@@ -6,16 +6,18 @@
 		"wait_time": 0.5,
 		"multishot": 1,
 		"deviation_angle": 8,
-		"bullet_speed": 2000
+		"bullet_speed": 2000,
+		"bullet_life": 3
 	},
 	{
 		"name": "Rifle",
 		"texture": "res://Assets/Weapons/rifle_equipped.png",
 		"damage": 15,
-		"wait_time": 0.4,
+		"wait_time": 0.15,
 		"multishot": 1,
-		"deviation_angle": 10,
-		"bullet_speed": 1200 
+		"deviation_angle": 15,
+		"bullet_speed": 1200,
+		"bullet_life": 0.6
 	},
 	{
 		"name": "Shotgun",
@@ -24,6 +26,7 @@
 		"wait_time": 1,
 		"multishot": 5,
 		"deviation_angle": 60,
-		"bullet_speed": 800 
+		"bullet_speed": 800,
+		"bullet_life": 0.4
 	}
 ]

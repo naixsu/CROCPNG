@@ -10,10 +10,24 @@ var direction : Vector2
 
 func _ready():
 	direction = Vector2(1, 0).rotated(rotation)
-
+	
+func set_timer(bullet_life):
+	var timer := Timer.new()
+	
+	
+	timer.wait_time = bullet_life
+	timer.one_shot = true	
+	timer.autostart = true
+	
+	timer.connect("timeout", destroy_self)
+	add_child(timer)
+	
 func change_stats(new_speed, new_damage):
 	speed = new_speed
 	damage = new_damage
+	
+func destroy_self():
+	queue_free()
 	
 func _physics_process(delta):
 	# Add the gravity.

@@ -487,16 +487,34 @@ func fire(held_down):
 			print("dmgAdd " + str(dmgAdd) + " " + str(weaponsData[currentWeaponIndex].damage + dmgAdd))
 			
 			#Calculate random bullet spread	and multishot
-			var multishot = weaponsData[currentWeaponIndex].multishot
-			var deviation_angle = weaponsData[currentWeaponIndex].deviation_angle - accSub
+#<<<<<<< HEAD
+#			var currentWeaponData = weaponsData[currentWeaponIndex]
+#
+#			var multishot = currentWeaponData.multishot
+#			var deviation_angle = currentWeaponData.deviation_angle
+#			for i in range(multishot):		
+#				var b = BulletCB.instantiate()
+#				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
+#				b.change_stats(currentWeaponData.bullet_speed, currentWeaponData.damage)	
+#				b.set_timer(currentWeaponData.bullet_life)			
+#				var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
+#				b.rotation_degrees = bullet_rotation
+#
+#				get_tree().root.add_child(b)
+#=======
+			var currentWeaponData = weaponsData[currentWeaponIndex]
+			
+			var multishot = currentWeaponData.multishot
+			var deviation_angle = currentWeaponData.deviation_angle - accSub
 			for i in range(multishot):
 				if multiplayer.is_server():
 					var bulletSpawner = get_tree().get_root().get_node("TestMultiplayerScene/BulletSpawner")
 					bulletSpawner.spawn([
 						currentWeapon.get_node("BulletSpawn").global_position, # position
-						weaponsData[currentWeaponIndex].bullet_speed + bulletSpeedAdd, # bulletSpeed
-						weaponsData[currentWeaponIndex].damage + dmgAdd, # Damage
+						currentWeaponData.bullet_speed + bulletSpeedAdd, # bulletSpeed
+						currentWeaponData.damage + dmgAdd, # Damage
 						weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle), # bullet rotation
+						currentWeaponData.bullet_life
 					])
 #				var b = BulletCB.instantiate()
 #				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
@@ -508,6 +526,7 @@ func fire(held_down):
 #				b.rotation_degrees = bullet_rotation
 #
 #				get_tree().root.add_child(b)
+#>>>>>>> epic-general
 			currentWeapon.get_node("FireCooldown").start()
 			
 		await get_tree().create_timer(0.2).timeout

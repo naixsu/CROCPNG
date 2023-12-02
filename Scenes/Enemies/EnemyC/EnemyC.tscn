@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bx77fvysan881"]
+[gd_scene load_steps=29 format=3 uid="uid://bx77fvysan881"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/EnemyA.gd" id="1_c3xcl"]
 [ext_resource type="Resource" uid="uid://48eax743xiln" path="res://Resources/Enemies/Slime.tres" id="2_16ebi"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://snd66d2cibla" path="res://Assets/Sprites/EnemyC/EnemyCRun.png" id="4_338l4"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/AI.gd" id="5_evy3b"]
 [ext_resource type="PackedScene" uid="uid://c03x6k027ye3o" path="res://Scenes/Enemies/SpawnDetector.tscn" id="7_6y3v3"]
+[ext_resource type="PackedScene" uid="uid://cmpv86pljwd6w" path="res://Scenes/Bomb/Target.tscn" id="8_bjdca"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hp0r4"]
 atlas = ExtResource("2_fkx5k")
@@ -208,6 +209,7 @@ collision_layer = 0
 shape = SubResource("CircleShape2D_dctnj")
 
 [node name="SpawnDetector" parent="AI" instance=ExtResource("7_6y3v3")]
+position = Vector2(0, 4)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_g5ryl")
@@ -217,6 +219,10 @@ offset_left = -18.0
 offset_top = -18.0
 offset_right = 22.0
 offset_bottom = 5.0
+
+[node name="Target" parent="." instance=ExtResource("8_bjdca")]
+visible = false
+position = Vector2(0, 20)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_shape_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_area_shape_entered"]

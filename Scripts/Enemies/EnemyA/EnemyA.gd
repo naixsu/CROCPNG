@@ -18,6 +18,9 @@ class_name Enemy
 @export var spawn : int
 @export var dead = false
 @onready var healthLabel = $Label
+@onready var target = $Target
+
+var hasBomb : bool = false
 
 ###
 # EnemyA = Skeleton
@@ -35,6 +38,11 @@ func _ready():
 
 func _process(delta):
 	healthLabel.text = str(health)
+	
+	if hasBomb:
+		target.visible = true
+	else:
+		target.visible = false
 
 func init_enemy():
 	self.health = resource.health
@@ -59,6 +67,7 @@ func handle_hit(dmg):
 func handle_death():
 	if not dead:
 		collision.disabled = true
+		hasBomb = false
 		anim.play("death")
 		dead = true
 

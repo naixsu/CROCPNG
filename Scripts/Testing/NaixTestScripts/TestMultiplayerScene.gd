@@ -110,7 +110,8 @@ func start_wave():
 				await get_tree().create_timer(0.1).timeout
 				if not bombSpawned:
 					var child = enemyGroups.get_child(0) # get first child, first enemy
-					spawn_bomb(child.position)
+#					spawn_bomb(child.position)
+					child.hasBomb = true
 					bombSpawned = true
 					
 

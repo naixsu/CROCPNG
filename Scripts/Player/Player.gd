@@ -34,6 +34,7 @@ class_name Player
 @onready var respawnTimer = $Respawn/RespawnTimer
 @onready var moneyLabel = $MoneyLabel
 @onready var shop = $Shop
+@onready var nameLabel = $NameLabel
 
 @onready var weaponFile = "res://Scenes/Player/WeaponData.json"
 
@@ -143,6 +144,11 @@ func _ready():
 
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	anim.play("idle")
+	
+#	print(GameManager.players[str(name)])
+	
+	
+	nameLabel.text = str(GameManager.players[name.to_int()].name)
 	
 	#Set the camera to only be active for the local player
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():

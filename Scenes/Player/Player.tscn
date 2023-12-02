@@ -243,6 +243,10 @@ properties/25/path = NodePath(".:bulletSpeedAdd")
 properties/25/spawn = true
 properties/25/sync = true
 properties/25/watch = false
+properties/26/path = NodePath("NameLabel:text")
+properties/26/spawn = true
+properties/26/sync = true
+properties/26/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -274,6 +278,7 @@ script = ExtResource("9_vptfm")
 replication_config = SubResource("SceneReplicationConfig_ffpdr")
 
 [node name="ReadyLabel" type="Label" parent="."]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -316,6 +321,18 @@ offset_left = -21.0
 offset_top = -97.0
 offset_right = 19.0
 offset_bottom = -74.0
+
+[node name="NameLabel" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.5
+offset_top = -61.0
+offset_right = 23.5
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Name"
 
 [node name="Shop" parent="." instance=ExtResource("11_m3tdw")]
 visible = false

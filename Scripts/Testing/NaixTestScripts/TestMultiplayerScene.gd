@@ -27,6 +27,7 @@ func _ready():
 		
 
 		currentPlayer.name = str(GameManager.players[i].id)
+#		currentPlayer.name = str(GameManager.players[i].name)
 #		currentPlayer.connect("player_fired_bullet", bullet_manager.handle_bullet_spawned)
 #		currentPlayer.connect("player_fired_bullet", BulletManager.handle_bullet_spawned)
 #		currentPlayer.connect("player_fired_bullet", bulletManagerInstance.handle_bullet_spawned)

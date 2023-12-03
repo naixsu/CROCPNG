@@ -14,7 +14,7 @@ func _spawn_bullet(data):
 	bullet.global_position = data[0]
 	bullet.speed = data[1]
 	bullet.damage = data[2]
-	bullet.direction = data[3]
+	bullet.rotation_degrees = data[3]
 	bullet.set_timer(data[4])
 	
 	return bullet

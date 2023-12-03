@@ -5,7 +5,9 @@ extends Node
 
 @onready var click = $GlobalSounds/Click
 @onready var type = $GlobalSounds/Type
+@onready var pickup = $GlobalSounds/Pickup
 
+@onready var playerSounds = $PlayerSounds
 
 
 # Called when the node enters the scene tree for the first time.

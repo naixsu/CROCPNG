@@ -207,7 +207,7 @@ script = ExtResource("10_jitev")
 [node name="Rotater" type="Node2D" parent="BulletHell"]
 
 [node name="Speed" type="Timer" parent="BulletHell"]
-wait_time = 0.3
+wait_time = 0.5
 autostart = true
 
 [connection signal="body_entered" from="AI/HitBox" to="AI" method="_on_hit_box_body_entered"]

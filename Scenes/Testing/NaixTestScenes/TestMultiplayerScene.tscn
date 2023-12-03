@@ -272,6 +272,9 @@ position = Vector2(47, 2250)
 
 [node name="BossPath" type="Node2D" parent="NavArea/NavRegion"]
 
+[node name="START" type="Marker2D" parent="NavArea/NavRegion/BossPath"]
+position = Vector2(45, -1460)
+
 [node name="LAST" type="Marker2D" parent="NavArea/NavRegion/BossPath"]
 position = Vector2(47, 2250)
 

@@ -36,7 +36,10 @@ func init_enemy():
 
 func on_state_changed(new_state):
 	print("BOSS ", new_state)
-
+	
+func idle():
+	anim.play("idle")
+	
 func run():
 	anim.play("run")
 
@@ -44,3 +47,16 @@ func attack_player(player):
 	if player.iFramesTimer.is_stopped():
 		print("Attacking player " + str(player.name))
 		player.handle_hit(resource.damage)
+
+func handle_bomb_drop():
+	if multiplayer.is_server():
+		var root = get_tree().get_root()
+		var multiplayerScene = root.get_node("TestMultiplayerScene")
+		multiplayerScene.spawn_bomb(self.position)
+		hasBomb = false
+
+func handle_bomb_transfer():
+	if multiplayer.is_server():
+		var root = get_tree().get_root()
+		var multiplayerScene = root.get_node("TestMultiplayerScene")
+		multiplayerScene.find_to_hold_bomb.rpc()

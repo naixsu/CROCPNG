@@ -137,7 +137,7 @@ shape = SubResource("CapsuleShape2D_acw5c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 15
-scale = Vector2(2, 2)
+scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_lvc3e")
 animation = &"detonate"
 frame = 19

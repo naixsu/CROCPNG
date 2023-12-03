@@ -35,6 +35,7 @@ class_name Player
 @onready var moneyLabel = $MoneyLabel
 @onready var shop = $Shop
 @onready var nameLabel = $NameLabel
+@onready var healthLabel = $HealthLabel
 
 @onready var weaponFile = "res://Scenes/Player/WeaponData.json"
 
@@ -157,6 +158,7 @@ func _ready():
 func _process(delta):
 	readyLabel.text = str(readyState)
 	moneyLabel.text = str(money)
+	healthLabel.text = str(health)
 	
 	if respawn:
 		respawnTimer.start()

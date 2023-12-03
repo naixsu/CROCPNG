@@ -339,5 +339,11 @@ visible = false
 z_index = 11
 position = Vector2(-576, -324)
 
+[node name="HealthLabel" type="Label" parent="."]
+offset_left = -20.0
+offset_top = 47.0
+offset_right = 20.0
+offset_bottom = 70.0
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

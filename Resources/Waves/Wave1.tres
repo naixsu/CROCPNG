@@ -6,5 +6,5 @@
 script = ExtResource("1_r7wi3")
 SkeletonCount = 0
 GhostCount = 0
-SlimeCount = 10
-Boss = false
+SlimeCount = 1
+Boss = true

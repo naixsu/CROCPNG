@@ -50,15 +50,22 @@ func _ready():
 
 # Might wanna use a resource here so that the wave feature
 # so that waves aren't randomized
-func spawn_enemy(enemy_type: String):
-	var random_index = randi_range(0, spawn_points.size() - 1)
-	var random_spawn_point = spawn_points[random_index].position
+func spawn_enemy(enemyType: String):
+	var randomIndex : int
+	var randomSpawnPoint : Vector2
+	if enemyType == "D":
+		randomIndex = 26 # hard coded
+		randomSpawnPoint = spawn_points[randomIndex].position
+	else:
+		
+		randomIndex = randi_range(0, spawn_points.size() - 1)
+		randomSpawnPoint = spawn_points[randomIndex].position
 #	var enemy_types = ["A", "B", "C"]
 #	var random_enemy_type = enemy_types[randi_range(0, enemy_types.size() - 1)]
 #		print("spawn: " + str(random_spawn_point) + " type: " + str(random_enemy_type))
 #	if is_multiplayer_authority():
 #		get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
-	get_node("EnemySpawner").spawn([random_spawn_point, enemy_type])
+	get_node("EnemySpawner").spawn([randomSpawnPoint, enemyType])
 	add_enemy.rpc()
 
 func spawn_bomb(enemyPos):
@@ -101,6 +108,7 @@ func final_wave():
 #	if is_multiplayer_authority():
 	if multiplayer.is_server():
 		print("Final Wave")
+		
 
 
 func start_wave():
@@ -109,8 +117,14 @@ func start_wave():
 		clear_money.rpc()
 		add_wave.rpc()
 		
-		if GameManager.wave == GameManager.maxWave: # Stopping at 5 for now
+#		if GameManager.wave == GameManager.maxWave: # Stopping at 5 for now
+#			final_wave()
+		var finalWave = false
+		if GameManager.wave == 1:
+#			final_wave()
 			final_wave()
+			finalWave = true
+			
 			
 		print("Starting Wave %d of %d" % [GameManager.wave, GameManager.maxWave])
 		var spawnDelay = 0.3
@@ -130,6 +144,16 @@ func start_wave():
 		
 		# Spawn bomb once
 		var bombSpawned = false
+		
+		if finalWave:
+			await get_tree().create_timer(spawnDelay).timeout
+			spawn_enemy("D")
+			await get_tree().create_timer(0.1).timeout
+			if not bombSpawned:
+				var child = enemyGroups.get_child(0) # get first child, first enemy
+#					spawn_bomb(child.position)
+				child.hasBomb = true
+				bombSpawned = true
 		
 		for enemyType in enemyArray:
 			var count = enemyArray[enemyType]

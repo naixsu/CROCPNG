@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 class_name Enemy
+
 ###
 # Grouped to: Enemy
 ###
@@ -22,9 +23,6 @@ class_name Enemy
 @onready var SoundManager = $SoundManager
 
 @export var hasBomb : bool = false
-
-var coll
-
 ###
 # EnemyA = Skeleton
 # EnemyB = Ghost

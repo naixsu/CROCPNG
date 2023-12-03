@@ -62,7 +62,8 @@ func _physics_process(delta):
 				
 			if collider.is_in_group("Player"):
 #				print("Collided with player. Ignoring ", collider)
-				pass
+				collider.handle_hit(damage)
+				queue_free()
 			
 			if collider.is_in_group("Platform"):
 				collider.handle_hit()

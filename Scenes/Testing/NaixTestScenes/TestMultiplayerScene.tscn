@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cgiky6rcbuxga"]
+[gd_scene load_steps=20 format=3 uid="uid://cgiky6rcbuxga"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestMultiplayerScene.gd" id="1_cahup"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="3_8q6be"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/MoneySpawner.gd" id="13_5f8yc"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/Shop.gd" id="14_a0ar7"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/BulletSpawner.gd" id="15_ukqrf"]
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/BossBulletSpawner.gd" id="16_0xng7"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/BombSpawner.gd" id="16_71ens"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
@@ -120,6 +121,9 @@ position = Vector2(1398, -301)
 
 [node name="25" type="Marker2D" parent="EnemySpawnPoints"]
 position = Vector2(1542, -301)
+
+[node name="26BossSpawn" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(43, -1503)
 
 [node name="EnemyGroups" type="Node2D" parent="."]
 
@@ -267,6 +271,14 @@ position = Vector2(47, 1627)
 [node name="LAST" type="Marker2D" parent="NavArea/NavRegion/5"]
 position = Vector2(47, 2250)
 
+[node name="BossPath" type="Node2D" parent="NavArea/NavRegion"]
+
+[node name="START" type="Marker2D" parent="NavArea/NavRegion/BossPath"]
+position = Vector2(45, -1460)
+
+[node name="LAST" type="Marker2D" parent="NavArea/NavRegion/BossPath"]
+position = Vector2(47, 2250)
+
 [node name="SpawnAreas" type="Node2D" parent="NavArea"]
 
 [node name="1" parent="NavArea/SpawnAreas" groups=["MapMarker"] instance=ExtResource("9_5qv8q")]
@@ -320,6 +332,10 @@ shape = SubResource("RectangleShape2D_y3mj0")
 [node name="BulletSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../BulletGroups")
 script = ExtResource("15_ukqrf")
+
+[node name="BossBulletSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../BulletGroups")
+script = ExtResource("16_0xng7")
 
 [node name="BombGroups" type="Node2D" parent="."]
 

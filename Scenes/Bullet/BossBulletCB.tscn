@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2tvgg15mdvg3"]
+
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/BulletCB.gd" id="1_w21w5"]
+[ext_resource type="Texture2D" uid="uid://rpy5yt612pbl" path="res://Assets/Weapons/bullet.png" id="2_6g4qb"]
+[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="3_2dist"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xeges"]
+radius = 8.0
+height = 26.0
+
+[node name="BulletCB" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_w21w5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+texture_filter = 1
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_xeges")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-2.23517e-08, -2.23517e-08)
+texture = ExtResource("2_6g4qb")
+
+[node name="SoundManager" parent="." instance=ExtResource("3_2dist")]

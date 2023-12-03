@@ -460,6 +460,7 @@ func check_hit():
 	
 @rpc("any_peer", "call_local")
 func switch_weapon(index):	
+	SoundManager.weaponSwitch.play()
 	currentWeaponIndex = index
 	currentWeapon.get_node("ArrowIndicator").texture = load(weaponsData[currentWeaponIndex].texture)
 	currentWeapon.get_node("FireCooldown").wait_time = weaponsData[currentWeaponIndex].wait_time
@@ -552,6 +553,7 @@ func handle_hit(dmg):
 
 func toggle_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		SoundManager.click.play()
 		readyState = !readyState
 #		var idSelf = multiplayer.get_unique_id()
 #		var playerSelf = GameManager.players[idSelf]

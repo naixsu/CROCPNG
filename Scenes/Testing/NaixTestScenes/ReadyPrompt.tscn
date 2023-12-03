@@ -1,13 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://v7cwyu2s7km1"]
+[gd_scene load_steps=2 format=3 uid="uid://v7cwyu2s7km1"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ReadyPrompt.gd" id="1_k1gbb"]
-[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="2_1d5nt"]
 
 [node name="ReadyPrompt" type="CanvasLayer"]
 script = ExtResource("1_k1gbb")
-
-[node name="SoundManager" parent="." instance=ExtResource("2_1d5nt")]
-position = Vector2(473.5, 69)
 
 [node name="PlayerReadyCount" type="Label" parent="."]
 anchors_preset = 5

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bao0ha1dqrvm6" path="res://Scenes/Testing/NaixTestScenes/Collision.tscn" id="2_1lcvq"]
 [ext_resource type="Texture2D" uid="uid://fd4ejaxo5re4" path="res://Assets/Map/map_without_castle.png" id="2_bo23g"]
 [ext_resource type="Texture2D" uid="uid://cbaguo74v2sh1" path="res://Assets/Map/castle.png" id="3_g1qox"]
-[ext_resource type="PackedScene" path="res://Scenes/Testing/NaixTestScenes/OneWay.tscn" id="5_qolvn"]
+[ext_resource type="PackedScene" uid="uid://78j46c7xa8yj" path="res://Scenes/Testing/NaixTestScenes/OneWay.tscn" id="5_qolvn"]
 
 [node name="Map" type="Node2D"]
 

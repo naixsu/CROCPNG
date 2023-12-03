@@ -7,8 +7,8 @@ extends Node
 @onready var type = $GlobalSounds/Type
 @onready var pickup = $GlobalSounds/Pickup
 @onready var collHit = $GlobalSounds/CollHit
-@onready var enemyHit = $EnemySounds/EnemyHit
 
+@onready var enemyHit = $EnemySounds/EnemyHit
 
 @onready var pistol = $PlayerSounds/Pistol
 @onready var rifle = $PlayerSounds/Rifle

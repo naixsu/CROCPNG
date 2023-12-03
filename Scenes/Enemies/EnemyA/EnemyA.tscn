@@ -254,3 +254,5 @@ offset_bottom = 56.0
 [connection signal="body_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_exited"]
 [connection signal="area_shape_entered" from="AI/SpawnDetector" to="AI" method="_on_spawn_detector_area_shape_entered"]
+[connection signal="body_entered" from="AI/HitBox" to="AI" method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="AI/HitBox" to="AI" method="_on_hit_box_body_exited"]

@@ -6,3 +6,4 @@
 script = ExtResource("1_to7dm")
 speed = 125
 health = 100.0
+damage = 25

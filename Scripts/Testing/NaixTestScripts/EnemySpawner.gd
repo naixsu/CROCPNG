@@ -23,6 +23,8 @@ func _spawn_enemy(data):
 			enemyScenePath = "res://Scenes/Enemies/EnemyB/EnemyB.tscn"
 		"C":
 			enemyScenePath = "res://Scenes/Enemies/EnemyC/EnemyC.tscn"
+		"D":
+			enemyScenePath = "res://Scenes/Enemies/FinalBoss/Boss.tscn"
 	var enemy = load(enemyScenePath).instantiate()
 	enemy.position = data[0]
 		

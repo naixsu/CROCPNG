@@ -17,6 +17,7 @@ var listener : PacketPeerUDP
 @export var broadcastAddress : String
 
 @export var ServerInfo : PackedScene
+@onready var SoundManager = $"../SoundManager"
 var ip : String
 # Called when the node enters the scene tree for the first time.
 func _ready():

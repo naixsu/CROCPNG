@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bsabsu06d6xb3"]
+[gd_scene load_steps=8 format=3 uid="uid://bsabsu06d6xb3"]
 
 [ext_resource type="Script" path="res://Scripts/Sound/SoundManager.gd" id="1_xt0a1"]
-[ext_resource type="AudioStream" uid="uid://bvia1o52a10l6" path="res://Assets/Sound/click sound.mp3" id="2_dwa48"]
+[ext_resource type="AudioStream" uid="uid://bj61q38nwdri1" path="res://Assets/Sound/click.wav" id="2_besm3"]
 [ext_resource type="AudioStream" uid="uid://dulq76xfy7go6" path="res://Assets/Sound/type.wav" id="3_xgvd0"]
 [ext_resource type="AudioStream" uid="uid://jptm2kl5lb8" path="res://Assets/Sound/pickupCoin.wav" id="4_baj01"]
+[ext_resource type="AudioStream" uid="uid://bl4e1mey5cua3" path="res://Assets/Sound/Pistol.wav" id="5_rtgij"]
+[ext_resource type="AudioStream" uid="uid://b0l66u4r64p1o" path="res://Assets/Sound/Rifle.wav" id="6_k8i3a"]
+[ext_resource type="AudioStream" uid="uid://dgly55uf0pqdc" path="res://Assets/Sound/Shotgun.wav" id="7_h0e7e"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_xt0a1")
@@ -11,8 +14,7 @@ script = ExtResource("1_xt0a1")
 [node name="GlobalSounds" type="Node2D" parent="."]
 
 [node name="Click" type="AudioStreamPlayer2D" parent="GlobalSounds"]
-stream = ExtResource("2_dwa48")
-volume_db = -5.0
+stream = ExtResource("2_besm3")
 
 [node name="Type" type="AudioStreamPlayer2D" parent="GlobalSounds"]
 stream = ExtResource("3_xgvd0")
@@ -24,3 +26,15 @@ stream = ExtResource("4_baj01")
 volume_db = -5.0
 
 [node name="PlayerSounds" type="Node2D" parent="."]
+
+[node name="Pistol" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("5_rtgij")
+max_distance = 500.0
+
+[node name="Rifle" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("6_k8i3a")
+max_distance = 500.0
+
+[node name="Shotgun" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("7_h0e7e")
+max_distance = 500.0

@@ -40,6 +40,7 @@ class_name Player
 @onready var weaponFile = "res://Scenes/Player/WeaponData.json"
 @onready var iFramesTimer = $IFramesTimer
 @onready var collision = $CollisionShape2D
+@onready var SoundManager = $SoundManager # Capitalizing this
 
 
 # Signals here
@@ -479,6 +480,7 @@ func fire(held_down):
 #		fireCooldown.start()
 	while weapon_held_down:
 		if currentWeapon.get_node("FireCooldown").is_stopped():
+			SoundManager.gunSounds[currentWeaponIndex].play()
 #			print("{0} Fire!".format({
 #				"0": str(currentWeapon.name)
 #			}))

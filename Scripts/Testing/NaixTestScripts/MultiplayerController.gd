@@ -4,6 +4,7 @@ extends Control
 @export var port = 8910
 
 @onready var nameEdit = $NameEdit
+@onready var SoundManager = $SoundManager # Capitalizing this
 
 # Deprecated
 #@onready var line_edit = $LineEdit

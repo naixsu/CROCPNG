@@ -2,6 +2,7 @@ extends Node2D
 
 @export var value : int
 @onready var anim = $AnimatedSprite2D
+@onready var SoundManager = $SoundManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

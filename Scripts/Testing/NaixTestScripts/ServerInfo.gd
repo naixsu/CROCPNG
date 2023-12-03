@@ -1,4 +1,5 @@
 extends HBoxContainer
+@onready var SoundManager = $SoundManager
 
 signal joinGame(ip)
 

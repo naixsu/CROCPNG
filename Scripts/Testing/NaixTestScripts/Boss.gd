@@ -5,6 +5,7 @@ class_name Boss
 @onready var anim = $Anim
 @onready var ai = $AI
 @onready var target = $Target
+@onready var SoundManager = $SoundManager
 
 @export var health : int
 @export var speed : int
@@ -60,3 +61,8 @@ func handle_bomb_transfer():
 		var root = get_tree().get_root()
 		var multiplayerScene = root.get_node("TestMultiplayerScene")
 		multiplayerScene.find_to_hold_bomb.rpc()
+
+func handle_hit(dmg):
+	SoundManager.enemyHit.play()
+	health -= dmg
+	print("Enemy hit", health)

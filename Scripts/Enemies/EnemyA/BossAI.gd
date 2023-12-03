@@ -109,3 +109,18 @@ func set_state(new_state):
 #		set_state(State.ATTACKING)
 
 		
+
+
+func _on_hit_box_body_entered(body):
+	if body.is_in_group("Player") and current_state != State.DEAD:
+		print("Colliding with player")
+		player = body
+		set_state(State.ATTACKING)
+
+
+
+
+func _on_hit_box_body_exited(body):
+	if body.is_in_group("Player") and current_state != State.DEAD:
+		print("Not colliding with player") # Replace with function body.
+		set_state(State.OBJECTIVE)

@@ -6,4 +6,4 @@
 script = ExtResource("1_oa682")
 speed = 75
 health = 1000.0
-damage = 50
+damage = 20

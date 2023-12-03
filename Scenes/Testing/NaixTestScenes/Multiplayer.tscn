@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://bxtn8e8m61sj3"]
 
-[ext_resource type="Theme" uid="uid://dud7ila1t2fw1" path="res://Assets/UI/base_theme.tres" id="1_f14hw"]
+[ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="1_f14hw"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/MultiplayerController.gd" id="1_wmt0j"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ServerBrowser.gd" id="2_7edh8"]
 [ext_resource type="Texture2D" uid="uid://bvmiicc2tjbiy" path="res://Assets/Splash Screen/SplashScreenBG.png" id="3_37vqk"]
@@ -255,7 +255,7 @@ texture = ExtResource("6_1x86m")
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
 [connection signal="button_down" from="StartGame" to="." method="_on_start_game_button_down"]
-[connection signal="button_down" from="ExitGame" to="." method="_on_start_game_button_down"]
+[connection signal="button_down" from="ExitGame" to="." method="_on_exit_game_button_down"]
 [connection signal="timeout" from="ServerBrowser/BroadcastTimer" to="ServerBrowser" method="_on_broadcast_timer_timeout"]
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_down" from="FindServer" to="ServerBrowser" method="_on_find_server_button_down"]

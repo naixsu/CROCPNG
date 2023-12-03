@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ce7fynnc241n4" path="res://Assets/Sprites/EnemyC/EnemyCIdle.png" id="3_kvubh"]
 [ext_resource type="Texture2D" uid="uid://snd66d2cibla" path="res://Assets/Sprites/EnemyC/EnemyCRun.png" id="4_338l4"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/AI.gd" id="5_evy3b"]
-[ext_resource type="PackedScene" uid="uid://c03x6k027ye3o" path="res://Scenes/Enemies/SpawnDetector.tscn" id="7_6y3v3"]
+[ext_resource type="PackedScene" path="res://Scenes/Enemies/SpawnDetector.tscn" id="7_6y3v3"]
 [ext_resource type="PackedScene" uid="uid://cmpv86pljwd6w" path="res://Scenes/Bomb/Target.tscn" id="8_bjdca"]
 [ext_resource type="PackedScene" uid="uid://b5hn8tq25p4dg" path="res://Scenes/Enemies/HitBox.tscn" id="8_m0rju"]
 

@@ -103,6 +103,7 @@ func custom_host(serverName):
 	$ServerBrowser.set_up_broadcast(serverName + "'s server")
 
 func _on_host_button_down():
+	SoundManager.click.play()
 	host_game()
 	send_player_information(nameEdit.text, multiplayer.get_unique_id())
 	$ServerBrowser.set_up_broadcast($NameEdit.text + "'s server")
@@ -136,6 +137,7 @@ func start_game():
 	
 
 func _on_start_game_button_down():
+	SoundManager.click.play()
 	start_game.rpc()
 	pass # Replace with function body.
 
@@ -147,3 +149,8 @@ func _on_button_button_down():
 		"readyState": false
 	}
 	pass # Replace with function body.
+
+
+func _on_exit_game_button_down():
+	SoundManager.click.play()
+	get_tree().quit()

@@ -1,6 +1,11 @@
-extends HBoxContainer
+extends Node
 
-signal joinGame(ip)
+
+@onready var globalSounds = $GlobalSounds
+
+@onready var click = $GlobalSounds/Click
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,9 +15,3 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-
-
-func _on_join_button_button_down():
-	SoundManager.click.play()
-	joinGame.emit($IP.text)
-	pass # Replace with function body.

@@ -144,4 +144,5 @@ func join_by_ip(ip):
 
 
 func _on_find_server_button_down():
+	SoundManager.click.play()
 	set_up() # Replace with function body.

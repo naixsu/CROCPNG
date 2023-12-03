@@ -121,6 +121,9 @@ position = Vector2(1398, -301)
 [node name="25" type="Marker2D" parent="EnemySpawnPoints"]
 position = Vector2(1542, -301)
 
+[node name="26BossSpawn" type="Marker2D" parent="EnemySpawnPoints"]
+position = Vector2(43, -1503)
+
 [node name="EnemyGroups" type="Node2D" parent="."]
 
 [node name="NavArea" type="Node2D" parent="."]

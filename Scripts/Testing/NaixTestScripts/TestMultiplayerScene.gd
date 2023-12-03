@@ -50,15 +50,22 @@ func _ready():
 
 # Might wanna use a resource here so that the wave feature
 # so that waves aren't randomized
-func spawn_enemy(enemy_type: String):
-	var random_index = randi_range(0, spawn_points.size() - 1)
-	var random_spawn_point = spawn_points[random_index].position
+func spawn_enemy(enemyType: String):
+	var randomIndex : int
+	var randomSpawnPoint : Vector2
+	if enemyType == "D":
+		randomIndex = 26 # hard coded
+		randomSpawnPoint = spawn_points[randomIndex].position
+	else:
+		
+		randomIndex = randi_range(0, spawn_points.size() - 1)
+		randomSpawnPoint = spawn_points[randomIndex].position
 #	var enemy_types = ["A", "B", "C"]
 #	var random_enemy_type = enemy_types[randi_range(0, enemy_types.size() - 1)]
 #		print("spawn: " + str(random_spawn_point) + " type: " + str(random_enemy_type))
 #	if is_multiplayer_authority():
 #		get_node("EnemySpawner").spawn([random_spawn_point, random_enemy_type])
-	get_node("EnemySpawner").spawn([random_spawn_point, enemy_type])
+	get_node("EnemySpawner").spawn([randomSpawnPoint, enemyType])
 	add_enemy.rpc()
 
 func spawn_bomb(enemyPos):

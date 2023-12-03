@@ -1,10 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://877xce1h11m1"]
+[gd_scene load_steps=27 format=3 uid="uid://877xce1h11m1"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/Boss.gd" id="1_s21bl"]
 [ext_resource type="Texture2D" uid="uid://bu2rvk5ugp10u" path="res://Assets/Sprites/Boss/BossSpecialAttack.png" id="2_28bn2"]
 [ext_resource type="Resource" uid="uid://d8tugsjxh2vh" path="res://Resources/Enemies/Boss.tres" id="2_ew8tf"]
 [ext_resource type="Texture2D" uid="uid://dck7jy0twd1rm" path="res://Assets/Sprites/Boss/BossWalk.png" id="3_q4xrk"]
 [ext_resource type="PackedScene" uid="uid://cmpv86pljwd6w" path="res://Scenes/Bomb/Target.tscn" id="4_2xe8o"]
+[ext_resource type="Texture2D" uid="uid://co6l1hlmyy8ou" path="res://Assets/Sprites/Boss/BossIdle.png" id="4_4saml"]
+[ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/BossAI.gd" id="5_4n4kq"]
+[ext_resource type="PackedScene" uid="uid://b5hn8tq25p4dg" path="res://Scenes/Enemies/HitBox.tscn" id="5_qjcdv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ax31q"]
 atlas = ExtResource("2_28bn2")
@@ -33,6 +36,22 @@ region = Rect2(170, 0, 34, 34)
 [sub_resource type="AtlasTexture" id="AtlasTexture_gcevh"]
 atlas = ExtResource("2_28bn2")
 region = Rect2(204, 0, 34, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwvuo"]
+atlas = ExtResource("4_4saml")
+region = Rect2(0, 0, 34, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_haqkb"]
+atlas = ExtResource("4_4saml")
+region = Rect2(34, 0, 34, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r6rbh"]
+atlas = ExtResource("4_4saml")
+region = Rect2(68, 0, 34, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mm4l"]
+atlas = ExtResource("4_4saml")
+region = Rect2(102, 0, 34, 34)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8cdb5"]
 atlas = ExtResource("3_q4xrk")
@@ -77,6 +96,23 @@ animations = [{
 "loop": true,
 "name": &"attack",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwvuo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_haqkb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r6rbh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mm4l")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -136,13 +172,17 @@ texture_filter = 1
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_pf73o")
 animation = &"run"
-frame_progress = 0.462863
+frame_progress = 0.0901673
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-8, 1)
 shape = SubResource("CapsuleShape2D_au6jf")
 
 [node name="AI" type="Node2D" parent="."]
+script = ExtResource("5_4n4kq")
+
+[node name="HitBox" parent="AI" instance=ExtResource("5_qjcdv")]
+scale = Vector2(5.675, 12.185)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ua4ir")
@@ -150,3 +190,7 @@ replication_config = SubResource("SceneReplicationConfig_ua4ir")
 [node name="Target" parent="." instance=ExtResource("4_2xe8o")]
 visible = false
 scale = Vector2(7, 7)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[connection signal="body_entered" from="AI/HitBox" to="AI" method="_on_hit_box_body_entered"]

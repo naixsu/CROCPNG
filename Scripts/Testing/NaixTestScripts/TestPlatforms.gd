@@ -1,6 +1,5 @@
 extends Node2D
-
-class_name Platform
+@onready var SoundManager = $"../SoundManager"
 
 func handle_hit():
-	queue_free()
+	SoundManager.collHit.play()

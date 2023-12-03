@@ -1,17 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://s741h0igfq5k"]
 
 [ext_resource type="Texture2D" uid="uid://gxnhy48xdgac" path="res://icon.svg" id="1_a6qhg"]
-[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestPlatforms.gd" id="1_p0m2i"]
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/Platforms.gd" id="2_r7ssi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmu7a"]
 size = Vector2(157, 30)
 
 [node name="TestPlatform" type="Node2D" groups=["Platform"]]
-script = ExtResource("1_p0m2i")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Platform"]]
 collision_layer = 4
 collision_mask = 0
+script = ExtResource("2_r7ssi")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
 scale = Vector2(1.23438, 0.234375)

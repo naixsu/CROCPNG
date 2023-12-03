@@ -30,6 +30,8 @@ volume_db = -5.0
 
 [node name="CollHit" type="AudioStreamPlayer2D" parent="GlobalSounds"]
 stream = ExtResource("5_d1gkn")
+volume_db = -10.0
+pitch_scale = 1.5
 
 [node name="PlayerSounds" type="Node2D" parent="."]
 

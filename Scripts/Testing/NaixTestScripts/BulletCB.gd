@@ -66,4 +66,5 @@ func _physics_process(delta):
 			
 			if collider.is_in_group("Platform"):
 				collider.handle_hit()
+				queue_free()
 

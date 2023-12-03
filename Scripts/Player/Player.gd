@@ -422,6 +422,7 @@ func upgrade_weapon_stat(weapon, stat):
 		print(weaponMods[weapon])
 
 func set_money(value):
+	SoundManager.pickup.play()
 	money += value
 
 func update_gun_rotation():
@@ -544,6 +545,7 @@ func fire(held_down):
 
 func handle_hit(dmg):
 	iFramesTimer.start()
+	SoundManager.playerHit.play()
 	health -= dmg
 	print("Player hit", health)
 	

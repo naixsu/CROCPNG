@@ -10,6 +10,7 @@ extends CanvasLayer
 @onready var waveNotif = $WaveNotif
 @onready var waveCountdown = $WaveNotif/WaveCountdown
 @onready var respawnLabel = $Respawn
+@onready var SoundManager = $SoundManager
 
 @export var readyCount : int = 0
 
@@ -23,6 +24,7 @@ signal start_wave
 signal reward_players
 
 func _on_ready_button_button_down():
+	SoundManager.click.play()
 #	ready_up.rpc()
 	ready_up()
 

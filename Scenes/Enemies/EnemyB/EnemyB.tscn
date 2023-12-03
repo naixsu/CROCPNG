@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://b461wubwupbqh"]
+[gd_scene load_steps=33 format=3 uid="uid://b461wubwupbqh"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/EnemyA.gd" id="1_qucq8"]
 [ext_resource type="Texture2D" uid="uid://bmouajm75qko3" path="res://Assets/Sprites/EnemyB/EnemyBDeath.png" id="2_0oyxl"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://Scenes/Enemies/SpawnDetector.tscn" id="7_twair"]
 [ext_resource type="PackedScene" uid="uid://cmpv86pljwd6w" path="res://Scenes/Bomb/Target.tscn" id="8_5ocau"]
 [ext_resource type="PackedScene" uid="uid://b5hn8tq25p4dg" path="res://Scenes/Enemies/HitBox.tscn" id="8_drbdj"]
+[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="10_ff74k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ro6ra"]
 atlas = ExtResource("2_0oyxl")
@@ -241,6 +242,8 @@ offset_left = -17.0
 offset_top = 29.0
 offset_right = 23.0
 offset_bottom = 52.0
+
+[node name="SoundManager" parent="." instance=ExtResource("10_ff74k")]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_entered"]

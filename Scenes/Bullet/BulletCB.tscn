@@ -19,6 +19,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_xeges")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
 position = Vector2(-2.23517e-08, -2.23517e-08)
 texture = ExtResource("2_uirlr")
 

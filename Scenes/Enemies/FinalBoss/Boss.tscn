@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://877xce1h11m1"]
+[gd_scene load_steps=29 format=3 uid="uid://877xce1h11m1"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/Boss.gd" id="1_s21bl"]
 [ext_resource type="Texture2D" uid="uid://bu2rvk5ugp10u" path="res://Assets/Sprites/Boss/BossSpecialAttack.png" id="2_28bn2"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/BossAI.gd" id="5_4n4kq"]
 [ext_resource type="PackedScene" uid="uid://b5hn8tq25p4dg" path="res://Scenes/Enemies/HitBox.tscn" id="5_qjcdv"]
 [ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="8_8jrb1"]
+[ext_resource type="Script" path="res://Scripts/Enemies/FinalBoss/BulletHell.gd" id="10_jitev"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ax31q"]
 atlas = ExtResource("2_28bn2")
@@ -175,7 +176,7 @@ texture_filter = 1
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_pf73o")
 animation = &"run"
-frame_progress = 0.512858
+frame_progress = 0.884722
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-8, 1)
@@ -200,5 +201,15 @@ debug_enabled = true
 
 [node name="SoundManager" parent="." instance=ExtResource("8_8jrb1")]
 
+[node name="BulletHell" type="Node2D" parent="."]
+script = ExtResource("10_jitev")
+
+[node name="Rotater" type="Node2D" parent="BulletHell"]
+
+[node name="Speed" type="Timer" parent="BulletHell"]
+wait_time = 0.5
+autostart = true
+
 [connection signal="body_entered" from="AI/HitBox" to="AI" method="_on_hit_box_body_entered"]
 [connection signal="body_exited" from="AI/HitBox" to="AI" method="_on_hit_box_body_exited"]
+[connection signal="timeout" from="BulletHell/Speed" to="BulletHell" method="_on_speed_timeout"]

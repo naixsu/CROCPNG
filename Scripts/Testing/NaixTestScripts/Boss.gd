@@ -6,6 +6,7 @@ class_name Boss
 @onready var ai = $AI
 @onready var target = $Target
 @onready var SoundManager = $SoundManager
+@onready var bulletHell = $BulletHell
 
 @export var health : int
 @export var speed : int
@@ -19,6 +20,7 @@ func _ready():
 	anim.play("run")
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
+	bulletHell.initialize(self)
 
 func _process(delta):
 #	healthLabel.text = str(health)

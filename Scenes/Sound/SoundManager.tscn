@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsabsu06d6xb3"]
+[gd_scene load_steps=4 format=3 uid="uid://bsabsu06d6xb3"]
 
 [ext_resource type="Script" path="res://Scripts/Sound/SoundManager.gd" id="1_xt0a1"]
 [ext_resource type="AudioStream" uid="uid://bvia1o52a10l6" path="res://Assets/Sound/click sound.mp3" id="2_dwa48"]
+[ext_resource type="AudioStream" uid="uid://dulq76xfy7go6" path="res://Assets/Sound/type.wav" id="3_xgvd0"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_xt0a1")
@@ -11,3 +12,8 @@ script = ExtResource("1_xt0a1")
 [node name="Click" type="AudioStreamPlayer2D" parent="GlobalSounds"]
 stream = ExtResource("2_dwa48")
 volume_db = -5.0
+
+[node name="Type" type="AudioStreamPlayer2D" parent="GlobalSounds"]
+stream = ExtResource("3_xgvd0")
+volume_db = -5.0
+pitch_scale = 0.4

@@ -4,6 +4,7 @@ extends Node
 @onready var globalSounds = $GlobalSounds
 
 @onready var click = $GlobalSounds/Click
+@onready var type = $GlobalSounds/Type
 
 
 

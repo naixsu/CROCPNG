@@ -154,3 +154,8 @@ func _on_button_button_down():
 func _on_exit_game_button_down():
 	SoundManager.click.play()
 	get_tree().quit()
+
+
+func _on_name_edit_text_changed(new_text):
+#	SoundManager.type.set_pitch_scale(randf_range(0.4, 0.5))
+	SoundManager.type.play()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bx77fvysan881"]
+[gd_scene load_steps=30 format=3 uid="uid://bx77fvysan881"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/EnemyA.gd" id="1_c3xcl"]
 [ext_resource type="Resource" uid="uid://48eax743xiln" path="res://Resources/Enemies/Slime.tres" id="2_16ebi"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/AI.gd" id="5_evy3b"]
 [ext_resource type="PackedScene" uid="uid://c03x6k027ye3o" path="res://Scenes/Enemies/SpawnDetector.tscn" id="7_6y3v3"]
 [ext_resource type="PackedScene" uid="uid://cmpv86pljwd6w" path="res://Scenes/Bomb/Target.tscn" id="8_bjdca"]
+[ext_resource type="PackedScene" uid="uid://b5hn8tq25p4dg" path="res://Scenes/Enemies/HitBox.tscn" id="8_m0rju"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hp0r4"]
 atlas = ExtResource("2_fkx5k")
@@ -140,7 +141,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wtbqo"]
-size = Vector2(38, 29)
+size = Vector2(30, 29)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dctnj"]
 radius = 373.374
@@ -200,7 +201,7 @@ avoidance_layers = 0
 avoidance_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 18.5)
+position = Vector2(0, 18)
 shape = SubResource("RectangleShape2D_wtbqo")
 
 [node name="AI" type="Node2D" parent="."]
@@ -214,6 +215,9 @@ shape = SubResource("CircleShape2D_dctnj")
 
 [node name="SpawnDetector" parent="AI" instance=ExtResource("7_6y3v3")]
 position = Vector2(0, 4)
+
+[node name="HitBox" parent="AI" instance=ExtResource("8_m0rju")]
+position = Vector2(0, 20)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_g5ryl")
@@ -233,3 +237,5 @@ position = Vector2(0, 20)
 [connection signal="body_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_exited"]
 [connection signal="area_shape_entered" from="AI/SpawnDetector" to="AI" method="_on_spawn_detector_area_shape_entered"]
+[connection signal="body_entered" from="AI/HitBox" to="AI" method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="AI/HitBox" to="AI" method="_on_hit_box_body_exited"]

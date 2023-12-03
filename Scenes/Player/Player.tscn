@@ -345,5 +345,8 @@ offset_top = 47.0
 offset_right = 20.0
 offset_bottom = 70.0
 
+[node name="IFramesTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

@@ -38,6 +38,9 @@ class_name Player
 @onready var healthLabel = $HealthLabel
 
 @onready var weaponFile = "res://Scenes/Player/WeaponData.json"
+@onready var iFramesTimer = $IFramesTimer
+@onready var collision = $CollisionShape2D
+
 
 # Signals here
 signal update_ready
@@ -184,8 +187,8 @@ func _physics_process(delta):
 		# Play the death animation
 		# TODO:
 		# Remove this later when adding the actual death feature
-		if Input.is_action_just_pressed("ui_accept"):
-			die.rpc()
+#		if Input.is_action_just_pressed("ui_accept"):
+#			die.rpc()
 
 		if Input.is_action_just_pressed("Dash") and canDash:
 			var mouse_direction = get_local_mouse_position().normalized()
@@ -197,6 +200,7 @@ func _physics_process(delta):
 #			move_and_slide()
 			move_and_collide(velocity * delta)
 			update_animation()
+			check_hit()
 
 	update_camera(delta)
 	
@@ -400,7 +404,6 @@ func upgrade_rifle(stat):
 func upgrade_shotgun(stat):
 	upgrade_weapon("shotgun", stat)
 	
-
 func upgrade_weapon_stat(weapon, stat):
 	if weaponMods.has(weapon) and weaponMods[weapon].has(stat):
 		# dUp - dmg up
@@ -416,9 +419,7 @@ func upgrade_weapon_stat(weapon, stat):
 				weaponMods[weapon][stat] += weaponMods[weapon]["bsUp"]
 		print("Weapon Mod")
 		print(weaponMods[weapon])
-		
 
-	
 func set_money(value):
 	money += value
 
@@ -451,6 +452,9 @@ func flip_sprite():
 	elif get_global_mouse_position().x > global_position.x:
 		anim.flip_h = false
 		
+func check_hit():
+	if health <= 0:
+		die.rpc()
 	
 @rpc("any_peer", "call_local")
 func switch_weapon(index):	
@@ -458,11 +462,6 @@ func switch_weapon(index):
 	currentWeapon.get_node("ArrowIndicator").texture = load(weaponsData[currentWeaponIndex].texture)
 	currentWeapon.get_node("FireCooldown").wait_time = weaponsData[currentWeaponIndex].wait_time
 	
-	
-#	BulletCB.change_stats()
-	
-	
-
 @rpc("any_peer", "call_local")
 func fire(held_down):
 	if held_down:
@@ -541,8 +540,9 @@ func fire(held_down):
 	pass
 
 
-func handle_hit():
-	health -= 20
+func handle_hit(dmg):
+	iFramesTimer.start()
+	health -= dmg
 	print("Player hit", health)
 	
 
@@ -572,6 +572,7 @@ func toggle_ready():
 func die():
 	dead = true
 	anim.play("death")
+	collision.disabled = true
 
 func _on_animated_sprite_2d_animation_finished():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
@@ -597,3 +598,5 @@ func _on_respawn_timer_timeout():
 	
 	dead = false
 	respawnLabel.hide()
+	collision.disabled = false
+	health = maxHealth

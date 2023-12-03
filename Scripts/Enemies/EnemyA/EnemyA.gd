@@ -22,6 +22,8 @@ class_name Enemy
 
 @export var hasBomb : bool = false
 
+var coll
+
 ###
 # EnemyA = Skeleton
 # EnemyB = Ghost
@@ -123,3 +125,7 @@ func run():
 func on_state_changed(new_state):
 	print("ENEMY ", new_state)
 	
+func attack_player(player):
+	if player.iFramesTimer.is_stopped():
+		print("Attacking player " + str(player.name))
+		player.handle_hit(resource.damage)

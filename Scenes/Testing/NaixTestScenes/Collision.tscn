@@ -1,16 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://bao0ha1dqrvm6"]
+[gd_scene load_steps=4 format=3 uid="uid://bao0ha1dqrvm6"]
 
+[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="1_j272o"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestPlatforms.gd" id="1_q1052"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dmu7a"]
 size = Vector2(157, 30)
 
 [node name="Collision" type="Node2D" groups=["Platform"]]
-script = ExtResource("1_q1052")
+
+[node name="SoundManager" parent="." instance=ExtResource("1_j272o")]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Platform"]]
 collision_layer = 4
 collision_mask = 0
+script = ExtResource("1_q1052")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-0.5, 0)

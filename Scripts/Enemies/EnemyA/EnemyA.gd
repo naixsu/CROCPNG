@@ -19,6 +19,7 @@ class_name Enemy
 @export var dead = false
 @onready var healthLabel = $Label
 @onready var target = $Target
+@onready var SoundManager = $SoundManager
 
 @export var hasBomb : bool = false
 
@@ -63,6 +64,7 @@ func subtract_enemy():
 	GameManager.enemyCount -= 1
 
 func handle_hit(dmg):
+	SoundManager.enemyHit.play()
 	health -= dmg
 	print("Enemy hit", health)
 

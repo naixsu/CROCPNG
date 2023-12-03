@@ -16,5 +16,6 @@ func _spawn_bullet(data):
 	bullet.damage = data[2]
 	bullet.rotation_degrees = data[3]
 	bullet.set_timer(data[4])
+#	bullet.SoundManager.position = data[0]
 	
 	return bullet

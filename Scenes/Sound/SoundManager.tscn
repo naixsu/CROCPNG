@@ -1,0 +1,66 @@
+[gd_scene load_steps=12 format=3 uid="uid://bsabsu06d6xb3"]
+
+[ext_resource type="Script" path="res://Scripts/Sound/SoundManager.gd" id="1_xt0a1"]
+[ext_resource type="AudioStream" uid="uid://bj61q38nwdri1" path="res://Assets/Sound/click.wav" id="2_besm3"]
+[ext_resource type="AudioStream" uid="uid://dulq76xfy7go6" path="res://Assets/Sound/type.wav" id="3_xgvd0"]
+[ext_resource type="AudioStream" uid="uid://dck6qgo8jcjdi" path="res://Assets/Sound/PickupCoin3.wav" id="4_drmmu"]
+[ext_resource type="AudioStream" uid="uid://dijbr2olptlb4" path="res://Assets/Sound/CollHit2.wav" id="5_d1gkn"]
+[ext_resource type="AudioStream" uid="uid://cqopt5y6du4kd" path="res://Assets/Sound/Hit.wav" id="5_pinyw"]
+[ext_resource type="AudioStream" uid="uid://bl4e1mey5cua3" path="res://Assets/Sound/Pistol.wav" id="5_rtgij"]
+[ext_resource type="AudioStream" uid="uid://b0l66u4r64p1o" path="res://Assets/Sound/Rifle.wav" id="6_k8i3a"]
+[ext_resource type="AudioStream" uid="uid://dgly55uf0pqdc" path="res://Assets/Sound/Shotgun.wav" id="7_h0e7e"]
+[ext_resource type="AudioStream" uid="uid://di6o0klu68yyj" path="res://Assets/Sound/PlayerHit.wav" id="8_qs3qd"]
+[ext_resource type="AudioStream" uid="uid://cwnv7qdqb5s34" path="res://Assets/Sound/Switch2.wav" id="10_fwfya"]
+
+[node name="SoundManager" type="Node2D"]
+script = ExtResource("1_xt0a1")
+
+[node name="GlobalSounds" type="Node2D" parent="."]
+
+[node name="Click" type="AudioStreamPlayer2D" parent="GlobalSounds"]
+stream = ExtResource("2_besm3")
+volume_db = 5.0
+
+[node name="Type" type="AudioStreamPlayer2D" parent="GlobalSounds"]
+stream = ExtResource("3_xgvd0")
+volume_db = -5.0
+pitch_scale = 0.4
+
+[node name="Pickup" type="AudioStreamPlayer2D" parent="GlobalSounds"]
+stream = ExtResource("4_drmmu")
+volume_db = -5.0
+
+[node name="CollHit" type="AudioStreamPlayer2D" parent="GlobalSounds"]
+stream = ExtResource("5_d1gkn")
+volume_db = -10.0
+pitch_scale = 1.5
+
+[node name="PlayerSounds" type="Node2D" parent="."]
+
+[node name="Pistol" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("5_rtgij")
+max_distance = 500.0
+
+[node name="Rifle" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("6_k8i3a")
+max_distance = 500.0
+
+[node name="Shotgun" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("7_h0e7e")
+max_distance = 500.0
+
+[node name="PlayerHit" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("8_qs3qd")
+max_distance = 1000.0
+
+[node name="WeaponSwitch" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("10_fwfya")
+volume_db = -5.0
+max_distance = 1000.0
+
+[node name="EnemySounds" type="Node2D" parent="."]
+
+[node name="EnemyHit" type="AudioStreamPlayer2D" parent="EnemySounds"]
+stream = ExtResource("5_pinyw")
+volume_db = -5.0
+max_distance = 1000.0

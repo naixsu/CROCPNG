@@ -14,8 +14,8 @@ var parent: Boss = null
 const radius = 100
 var direction
 var theta: float = 0.0
-@export var bulletSpeed = 200
-@export var bulletLife = 10
+@export var bulletSpeed = 800
+@export var bulletLifeTime = 4
 @export_range(0, 2 * PI) var alpha: float = 0.0
 
 func _ready():
@@ -33,14 +33,11 @@ func shoot(angle):
 	if multiplayer.is_server():
 		var bulletSpawner = get_tree().get_root().get_node("TestMultiplayerScene/BossBulletSpawner")
 		bulletSpawner.spawn([
-#			currentWeapon.get_node("BulletSpawn").global_position, # position
 			parent.global_position, # position
-#			currentWeaponData.bullet_speed + bulletSpeedAdd, # bulletSpeed
 			bulletSpeed, # bulletSpeed
-#			currentWeaponData.damage + dmgAdd, # Damage
 			parent.resource.damage, # damage
-#			weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle), # bullet rotation
 			get_vector(angle), # bullet rotation
+			bulletLifeTime # lifetime
 		])
 
 func initialize(parent):

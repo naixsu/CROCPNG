@@ -27,7 +27,7 @@ func _on_melee_hit_area_entered(area):
 
 func _on_melee_sprite_animation_finished():
 	print(\"Finish Anim\")
-#	finished_anim.emit()
+	finished_anim.emit()
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_na2fe"]

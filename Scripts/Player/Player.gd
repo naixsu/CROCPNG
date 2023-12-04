@@ -545,16 +545,18 @@ func fire(held_down):
 func melee():
 	print("Melee")
 	var currentWeaponData = weaponsData[currentWeaponIndex]
-#	currentWeapon.get_node("ArrowIndicator").visible = false
+	currentWeapon.get_node("ArrowIndicator").visible = false
 	meleeNode.visible = true
 	meleeNode.position = currentWeapon.get_node("BulletSpawn").position
-	meleeNode.rotation_degrees = weaponsManager.rotation_degrees
+#	meleeNode.rotation_degrees = weaponsManager.rotation_degrees
 	meleeNode.play_melee()
 	print(currentWeaponData.damage + dmgAdd)
 #	currentWeapon.get_node("FireCooldown").start()
 
 func finished_anim():
+	print("Finished")
 	currentWeapon.get_node("ArrowIndicator").visible = true
+	meleeNode.visible = false
 
 func handle_hit(dmg):
 	iFramesTimer.start()

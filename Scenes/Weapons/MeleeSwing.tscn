@@ -12,6 +12,8 @@ signal finished_anim
 func _ready():
 	melee.play(\"MeleeSwing\")
 
+func play_melee():
+	melee.play(\"MeleeSwing\")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -24,9 +26,9 @@ func _on_melee_hit_area_entered(area):
 
 
 func _on_melee_sprite_animation_finished():
-	print(\"Finished Anim\")
-	finished_anim.emit() # Replace with function body. # Replace with function body.
-
+	print(\"Finish Anim\")
+#	finished_anim.emit()
+"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_na2fe"]
 atlas = ExtResource("1_ekusu")
@@ -137,7 +139,6 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_hyyci"]
 resource_name = "Swing"
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -198,13 +199,11 @@ script = SubResource("GDScript_heic1")
 
 [node name="MeleeSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(557, 307)
 sprite_frames = SubResource("SpriteFrames_jlxe7")
 animation = &"MeleeSwing"
 speed_scale = 2.0
 
 [node name="MeleeHit" type="Area2D" parent="."]
-position = Vector2(557, 307)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeHit"]
 position = Vector2(-9.5, -6)
@@ -212,6 +211,7 @@ shape = SubResource("RectangleShape2D_coexp")
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
 libraries = {
 "": SubResource("AnimationLibrary_g0le6")
 }

@@ -55,7 +55,7 @@ var tempSpeed = maxSpeed
 @export var readyState = false # had to avoid 'ready' builtin keyword
 @export var canDash = false
 
-var weapons: Array = []
+var weapons
 var weaponsData: Array = []
 @export var currentWeaponIndex = 0
 @export var weapon_held_down = false
@@ -226,6 +226,8 @@ func _unhandled_input(event):
 		if event.is_action_pressed("SwitchWeapon3"):
 #			currentWeaponIndex = 2
 			switch_weapon.rpc(2)
+		if event.is_action_pressed("SwitchWeapon4"):
+			switch_weapon.rpc(3)
 	pass
 
 func init_weapons(weaponFile):
@@ -233,8 +235,10 @@ func init_weapons(weaponFile):
 	var content = f.get_as_text()
 	weaponsData = JSON.parse_string(content)	
 	
-	weapons = weaponsManager.get_children()
-	currentWeapon = weapons[currentWeaponIndex]
+#	weapons = weaponsManager.get_children()
+#	currentWeapon = weapons[currentWeaponIndex]
+	weapons = weaponsManager.get_child(0)
+	currentWeapon = weapons
 	currentWeapon.get_node("FireCooldown").wait_time = weaponsData[currentWeaponIndex].wait_time
 
 func init_shop():

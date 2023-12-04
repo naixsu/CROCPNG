@@ -4,9 +4,10 @@ enum Pattern {
 	COUNTER,
 	CLOCKWISE,
 	CLOVER,
+	RADIAL,
 }
 
-var currentPattern = Pattern.CLOCKWISE : set = set_pattern
+var currentPattern = Pattern.RADIAL : set = set_pattern
 var rotateSpeed
 var shootTimerWaitTime
 var spawnPointCount = 4
@@ -38,17 +39,22 @@ func _ready():
 #	print("Step %d Spawnpointcount %d" % [step, spawnPointCount])
 
 	
+func reset_theta():
+	theta = 0
 
 func set_step():
 	match currentPattern:
 		Pattern.CLOCKWISE, Pattern.COUNTER:
+			step = 2
+			bulletInterval.set_wait_time(0.4)
+		Pattern.CLOVER:
 			step = 6
 			bulletInterval.set_wait_time(0.5)
-		Pattern.CLOVER:
-			pass
-	
-
-	
+		Pattern.RADIAL:
+			step = 8
+			bulletInterval.set_wait_time(0.7)
+			
+	reset_theta()
 
 
 func shoot_clockwise(angle):
@@ -58,44 +64,45 @@ func shoot_clockwise(angle):
 		if currentPattern == Pattern.COUNTER:
 			theta *= -1 
 		
-		for i in range(2):
-#			print((theta * (i + 1)) + (interval * step) + circleDiv)
-			
-#			var rot = (theta * (i + 1)) + (interval * step) + circleDiv
+		for i in range(step):
 			var rot = theta + ((maxAngle / 2) * i)
 			print(rot)
 			bulletSpawner.spawn([
 				self.global_position, # position
 				bulletSpeed, # bulletSpeed
 				parent.resource.damage, # damage
-#				theta + (interval * step), # rotation
 				rot, # rotation
 				bulletLifeTime # lifetime
 			])
 		print("\n")
-			
-	
-	
-	
 
 func shoot_clover(angle):
 	if multiplayer.is_server():
 		get_vector(angle)
 		
-		if currentPattern == Pattern.COUNTER:
-			theta *= -1 
-		
 		for i in range(step):
-#			print((theta * (i + 1)) + (interval * step) + circleDiv)
-			
-#			var rot = (theta * (i + 1)) + (interval * step) + circleDiv
 			var rot = theta + (circleDiv * i)
 			print(rot)
 			bulletSpawner.spawn([
 				self.global_position, # position
 				bulletSpeed, # bulletSpeed
 				parent.resource.damage, # damage
-#				theta + (interval * step), # rotation
+				rot, # rotation
+				bulletLifeTime # lifetime
+			])
+		print("\n")
+
+func shoot_radial(angle):
+	if multiplayer.is_server():
+		get_vector(angle)
+		
+		for i in range(step):
+			var rot = circleDiv * i
+			print(rot)
+			bulletSpawner.spawn([
+				self.global_position, # position
+				bulletSpeed, # bulletSpeed
+				parent.resource.damage, # damage
 				rot, # rotation
 				bulletLifeTime # lifetime
 			])
@@ -137,3 +144,5 @@ func _on_speed_timeout():
 			shoot_clockwise(theta)
 		Pattern.CLOVER:
 			shoot_clover(theta)
+		Pattern.RADIAL:
+			shoot_radial(theta)

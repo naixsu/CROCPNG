@@ -16,6 +16,8 @@ func _ready():
 	readyPrompt.connect("start_wave", start_wave)
 	readyPrompt.connect("reward_players", reward_players) # Give money after beating a round
 	readyPrompt.connect("win_banner", win_banner)
+	readyPrompt.connect("pre_wave", pre_wave)
+	pre_wave()
 	var index = 0
 #	var bulletManagerInstance = BulletManager.instantiate()
 #	add_child(bulletManagerInstance)
@@ -105,18 +107,30 @@ func lose():
 	print("You lost")
 	lose_banner()
 
+func pre_wave():
+	if multiplayer.is_server():
+		SoundManager.startWave.stop()
+		SoundManager.preWave.play()
+		
+
 func start_wave():
 #	if is_multiplayer_authority():
 	if multiplayer.is_server():
-		clear_money.rpc()
 		add_wave.rpc()
+		clear_money.rpc()
+		SoundManager.preWave.stop()
+		if GameManager.wave == 1: # Change for final wave
+#			final_wave()
+			
+			final_wave.rpc()
+		else:
+			SoundManager.startWave.play()
+		
+		
 		
 #		if GameManager.wave == GameManager.maxWave: # Stopping at 5 for now
 #			final_wave()
 
-		if GameManager.wave == 1:
-#			final_wave()
-			final_wave.rpc()
 			
 			
 			

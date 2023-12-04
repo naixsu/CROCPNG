@@ -136,6 +136,7 @@ func start_game():
 	var scene = load("res://Scenes/Testing/NaixTestScenes/TestMultiplayerScene.tscn").instantiate()
 	get_tree().root.add_child(scene)
 	self.hide()
+	SoundManager.mainMenu.stop()
 	
 
 func _on_start_game_button_down():

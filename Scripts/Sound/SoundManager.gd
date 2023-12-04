@@ -19,6 +19,8 @@ extends Node
 @onready var weaponSwitch = $PlayerSounds/WeaponSwitch
 @onready var playerDeath = $PlayerSounds/PlayerDeath
 
+@onready var preWave = $StreamPlayer/PreWave
+@onready var startWave = $StreamPlayer/StartWave
 @onready var finalWave = $StreamPlayer/FinalWave
 @onready var lose = $StreamPlayer/Lose
 @onready var win = $StreamPlayer/Win

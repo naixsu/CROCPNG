@@ -5,9 +5,10 @@ enum Pattern {
 	CLOCKWISE,
 	CLOVER,
 	RADIAL,
+	CROSS
 }
 
-var currentPattern = Pattern.RADIAL : set = set_pattern
+var currentPattern = Pattern.CROSS : set = set_pattern
 var rotateSpeed
 var shootTimerWaitTime
 var spawnPointCount = 4
@@ -34,8 +35,7 @@ func _ready():
 	set_pattern_variables()
 	# set_pattern(Pattern.CLOCKWISE)
 	set_step()
-	interval = rightAngle / step
-	circleDiv = maxAngle / step
+	
 #	print("Step %d Spawnpointcount %d" % [step, spawnPointCount])
 
 	
@@ -47,15 +47,34 @@ func set_step():
 		Pattern.CLOCKWISE, Pattern.COUNTER:
 			step = 2
 			bulletInterval.set_wait_time(0.4)
+			circleDiv = maxAngle / step
+			interval = rightAngle / step
 		Pattern.CLOVER:
 			step = 6
 			bulletInterval.set_wait_time(0.5)
+			circleDiv = maxAngle / step
+			interval = rightAngle / step
 		Pattern.RADIAL:
 			step = 8
 			bulletInterval.set_wait_time(0.7)
+			circleDiv = maxAngle / step
+			interval = rightAngle / step
+		Pattern.CROSS:
+			step = 4
+			bulletInterval.set_wait_time(0.8)
+			circleDiv = maxAngle / step
+			interval = circleDiv / 2
 			
 	reset_theta()
 
+func spawn_bullet(pos, bulletSpeed, dmg, rot, bulletLifeTime):
+	bulletSpawner.spawn([
+		pos, # position
+		bulletSpeed, # bulletSpeed
+		dmg, # damage
+		rot, # rotation
+		bulletLifeTime # lifetime
+	])
 
 func shoot_clockwise(angle):
 	if multiplayer.is_server():
@@ -67,13 +86,13 @@ func shoot_clockwise(angle):
 		for i in range(step):
 			var rot = theta + ((maxAngle / 2) * i)
 			print(rot)
-			bulletSpawner.spawn([
+			spawn_bullet(
 				self.global_position, # position
 				bulletSpeed, # bulletSpeed
 				parent.resource.damage, # damage
 				rot, # rotation
 				bulletLifeTime # lifetime
-			])
+			)
 		print("\n")
 
 func shoot_clover(angle):
@@ -83,13 +102,13 @@ func shoot_clover(angle):
 		for i in range(step):
 			var rot = theta + (circleDiv * i)
 			print(rot)
-			bulletSpawner.spawn([
+			spawn_bullet(
 				self.global_position, # position
 				bulletSpeed, # bulletSpeed
 				parent.resource.damage, # damage
 				rot, # rotation
 				bulletLifeTime # lifetime
-			])
+			)
 		print("\n")
 
 func shoot_radial(angle):
@@ -99,14 +118,30 @@ func shoot_radial(angle):
 		for i in range(step):
 			var rot = circleDiv * i
 			print(rot)
-			bulletSpawner.spawn([
+			spawn_bullet(
 				self.global_position, # position
 				bulletSpeed, # bulletSpeed
 				parent.resource.damage, # damage
 				rot, # rotation
 				bulletLifeTime # lifetime
-			])
+			)
 		print("\n")
+
+func shoot_cross(angle):
+	if multiplayer.is_server():
+		
+		get_vector(angle)
+		
+		for i in range(step):
+			var rot = theta + (circleDiv * i)
+			print(rot)
+			spawn_bullet(
+				self.global_position, # position
+				bulletSpeed, # bulletSpeed
+				parent.resource.damage, # damage
+				rot, # rotation
+				bulletLifeTime # lifetime
+			)
 
 func initialize(parent):
 	self.parent = parent
@@ -146,3 +181,5 @@ func _on_speed_timeout():
 			shoot_clover(theta)
 		Pattern.RADIAL:
 			shoot_radial(theta)
+		Pattern.CROSS:
+			shoot_cross(theta)

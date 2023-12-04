@@ -5,6 +5,7 @@ extends Node
 var players = {}
 var wave = 0
 @export var maxWave = 5
+var finalWave = false
 
 var enemyCount = 0
 

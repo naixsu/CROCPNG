@@ -7,6 +7,7 @@ class_name Boss
 @onready var target = $Target
 @onready var SoundManager = $SoundManager
 @onready var bulletHell = $BulletHell
+@onready var collision = $CollisionShape2D
 
 @export var health : int
 @export var speed : int
@@ -68,3 +69,22 @@ func handle_hit(dmg):
 	SoundManager.enemyHit.play()
 	health -= dmg
 	print("Enemy hit", health)
+
+func handle_death():
+	if not dead:
+		dead = true
+		if hasBomb:
+			handle_bomb_transfer()
+		collision.disabled = true
+		hasBomb = false
+		anim.play("death")
+
+
+func _on_anim_animation_finished():
+	if multiplayer.is_server():
+		subtract_enemy.rpc()
+		queue_free()
+
+@rpc("any_peer", "call_local")
+func subtract_enemy():
+	GameManager.enemyCount -= 1

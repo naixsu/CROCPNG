@@ -18,6 +18,8 @@ extends Node
 @onready var playerHit = $PlayerSounds/PlayerHit
 @onready var weaponSwitch = $PlayerSounds/WeaponSwitch
 
+@onready var finalWave = $WaveSounds/finalWave
+
 var gunSounds : Array
 
 # Called when the node enters the scene tree for the first time.

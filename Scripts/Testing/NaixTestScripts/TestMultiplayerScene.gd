@@ -9,6 +9,7 @@ var spawn_points = []
 @onready var readyPrompt = $ReadyPrompt
 @export var waveResources : Array[Resource]
 @onready var endBanner = $EndBanner
+@onready var SoundManager = $SoundManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -190,6 +191,7 @@ func add_enemy():
 		
 @rpc("any_peer", "call_local")
 func final_wave():
+	SoundManager.finalWave.play()
 	GameManager.finalWave = true
 	print("Final Wave")
 

@@ -42,6 +42,8 @@ class_name Player
 @onready var collision = $CollisionShape2D
 @onready var SoundManager = $SoundManager # Capitalizing this
 
+@onready var meleeNode = $WeaponsManager/Melee
+
 
 # Signals here
 signal update_ready
@@ -148,6 +150,7 @@ func _ready():
 	init_shop()
 	readyPrompt.connect("toggle_ready", toggle_ready)
 	shop.connect("upgrade", player_upgrade)
+	meleeNode.connect("finished_anim", finished_anim)
 
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	anim.play("idle")
@@ -542,8 +545,14 @@ func fire(held_down):
 func melee():
 	print("Melee")
 	var currentWeaponData = weaponsData[currentWeaponIndex]
+	currentWeapon.get_node("ArrowIndicator").visible = false
+	meleeNode.position = position
+	meleeNode.visible = true
 	print(currentWeaponData.damage + dmgAdd)
 #	currentWeapon.get_node("FireCooldown").start()
+
+func finished_anim():
+	currentWeapon.get_node("ArrowIndicator").visible = true
 
 func handle_hit(dmg):
 	iFramesTimer.start()

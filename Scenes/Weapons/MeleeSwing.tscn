@@ -5,6 +5,8 @@
 [sub_resource type="GDScript" id="GDScript_heic1"]
 script/source = "extends Node2D
 
+signal finished_anim
+
 @onready var melee = $MeleeSprite
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,7 +21,12 @@ func _process(delta):
 func _on_melee_hit_area_entered(area):
 	if area.is_in_group(\"hurtbox\"):
 		area.take_damage()
-"
+
+
+func _on_melee_sprite_animation_finished():
+	print(\"Finished Anim\")
+	finished_anim.emit() # Replace with function body. # Replace with function body.
+
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_na2fe"]
 atlas = ExtResource("1_ekusu")
@@ -65,14 +72,68 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jiw1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_na2fe")
 }],
-"loop": true,
+"loop": false,
 "name": &"MeleeSwing",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_coexp"]
 size = Vector2(19.5512, 36.3565)
+
+[sub_resource type="Animation" id="Animation_ge61a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeleeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeleeHit/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeleeHit/CollisionShape2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeleeHit/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-9.5, -6)]
+}
 
 [sub_resource type="Animation" id="Animation_hyyci"]
 resource_name = "Swing"
@@ -126,57 +187,6 @@ tracks/3/keys = {
 "values": [Vector2(-9.5, -6), Vector2(-19.3751, -6.9516), Vector2(-2.40613, -5.16104), Vector2(12.1208, 14.6117), Vector2(9.5824, 17.407), Vector2(3.70001, -4.68115), Vector2(-9.99999, -6.00001)]
 }
 
-[sub_resource type="Animation" id="Animation_ge61a"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MeleeSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MeleeHit/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("MeleeHit/CollisionShape2D:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("MeleeHit/CollisionShape2D:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-9.5, -6)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g0le6"]
 _data = {
 "RESET": SubResource("Animation_ge61a"),
@@ -198,7 +208,6 @@ position = Vector2(557, 307)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeHit"]
 position = Vector2(-9.5, -6)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_coexp")
 disabled = true
 
@@ -207,4 +216,5 @@ libraries = {
 "": SubResource("AnimationLibrary_g0le6")
 }
 
+[connection signal="animation_finished" from="MeleeSprite" to="." method="_on_melee_sprite_animation_finished"]
 [connection signal="area_entered" from="MeleeHit" to="." method="_on_melee_hit_area_entered"]

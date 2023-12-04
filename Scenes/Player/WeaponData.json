@@ -28,5 +28,15 @@
 		"deviation_angle": 60,
 		"bullet_speed": 800,
 		"bullet_life": 0.4
+	},
+	{
+		"name": "Melee",
+		"texture": "res://Assets/Weapons/melee_equipped.png",
+		"damage": 10,
+		"wait_time": 1,
+		"multishot": 1,
+		"deviation_angle": 1,
+		"bullet_speed": 1,
+		"bullet_life": 1
 	}
 ]

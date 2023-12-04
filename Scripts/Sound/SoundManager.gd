@@ -13,6 +13,7 @@ extends Node
 @onready var pistol = $PlayerSounds/Pistol
 @onready var rifle = $PlayerSounds/Rifle
 @onready var shotgun = $PlayerSounds/Shotgun
+@onready var melee = $PlayerSounds/Melee
 @onready var playerHit = $PlayerSounds/PlayerHit
 @onready var weaponSwitch = $PlayerSounds/WeaponSwitch
 
@@ -20,5 +21,5 @@ var gunSounds : Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	gunSounds = [pistol, rifle, shotgun] # Replace with function body.
+	gunSounds = [pistol, rifle, shotgun, melee] # Replace with function body.
 

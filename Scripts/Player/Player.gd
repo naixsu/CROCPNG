@@ -481,6 +481,8 @@ func fire(held_down):
 #		get_tree().root.add_child(b)
 #		fireCooldown.start()
 	while weapon_held_down:
+		if dead:
+			break
 		if currentWeapon.get_node("FireCooldown").is_stopped():
 			SoundManager.gunSounds[currentWeaponIndex].play()
 #			print("{0} Fire!".format({

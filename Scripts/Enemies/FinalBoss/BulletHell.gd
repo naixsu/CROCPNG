@@ -192,6 +192,8 @@ func _on_speed_timeout():
 			shoot_radial(theta)
 		Pattern.CROSS:
 			shoot_cross(theta)
+		
+	parent.SoundManager.bossShoot.play()
 
 
 func _on_pattern_duration_timeout():

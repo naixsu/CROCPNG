@@ -9,6 +9,7 @@ extends Node
 @onready var collHit = $GlobalSounds/CollHit
 
 @onready var enemyHit = $EnemySounds/EnemyHit
+@onready var bossShoot = $EnemySounds/BossShoot
 
 @onready var pistol = $PlayerSounds/Pistol
 @onready var rifle = $PlayerSounds/Rifle

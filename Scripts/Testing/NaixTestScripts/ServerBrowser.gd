@@ -17,6 +17,7 @@ var listener : PacketPeerUDP
 @export var broadcastAddress : String
 
 @export var ServerInfo : PackedScene
+@onready var SoundManager = $"../SoundManager"
 var ip : String
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,14 +26,13 @@ func _ready():
 
 #	Comment out for windows	
 #	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
-	
+	print("test")
 	if OS.has_feature("windows"):
 		ip =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
 	elif OS.has_feature("x11"):
 		ip =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
-	elif OS.has_feature("OSX"):
-		ip =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
-		
+	elif OS.has_feature("macos"):
+		ip = IP.resolve_hostname("localhost", 1)
 	print("Local IP: " + str(ip))
 	var ipOctets = ip.split(".")
 	ipOctets[2] = "1"
@@ -122,7 +122,7 @@ func _on_broadcast_timer_timeout():
 	var packet = data.to_ascii_buffer()
 #	print(roomInfo.playerCount)
 	broadcaster.put_packet(packet)
-	print("Number of enemies: " + str(GameManager.enemyCount))
+	# print("Number of enemies: " + str(GameManager.enemyCount))
 	pass # Replace with function body.
 #
 #	print("Broadcasting Game")
@@ -145,4 +145,5 @@ func join_by_ip(ip):
 
 
 func _on_find_server_button_down():
+	SoundManager.click.play()
 	set_up() # Replace with function body.

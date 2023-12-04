@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://dq44npo13yh8q"]
+
+[ext_resource type="PackedScene" uid="uid://ddy000jtufmxu" path="res://Scenes/SplashScreen/SplashScreenStudioLogo.tscn" id="2_3mbhy"]
+[ext_resource type="PackedScene" uid="uid://bxtn8e8m61sj3" path="res://Scenes/Testing/NaixTestScenes/Multiplayer.tscn" id="2_sa0io"]
+[ext_resource type="Texture2D" uid="uid://0vn2sw3ud340" path="res://Assets/Splash Screen/Splash.png" id="3_5nirb"]
+[ext_resource type="Script" path="res://Scripts/SplashScreen/SplashScreenFade.gd" id="3_j3vr7"]
+[ext_resource type="PackedScene" uid="uid://b71whrt7fx38b" path="res://Scenes/SplashScreen/SplashScreenGodotLogo.tscn" id="4_nrf4k"]
+[ext_resource type="PackedScene" uid="uid://dbexfhj44j1pg" path="res://Scenes/SplashScreen/SplashScreenCredits.tscn" id="5_pqd4b"]
+[ext_resource type="Script" path="res://Scripts/SplashScreen/SplashScreen.gd" id="6_utbk3"]
+
+[node name="SplashScreenManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("3_j3vr7")
+_move_to = ExtResource("2_sa0io")
+
+[node name="Texture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_5nirb")
+
+[node name="SplashScreenContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SplashScreenGodotLogo" parent="SplashScreenContainer" instance=ExtResource("4_nrf4k")]
+layout_mode = 2
+_time = 1.5
+
+[node name="SplashScreenCredits" parent="SplashScreenContainer" instance=ExtResource("5_pqd4b")]
+layout_mode = 2
+script = ExtResource("6_utbk3")
+_time = 1.5
+
+[node name="SplashScreenStudioLogo" parent="SplashScreenContainer" instance=ExtResource("2_3mbhy")]
+layout_mode = 2
+_time = 1.5

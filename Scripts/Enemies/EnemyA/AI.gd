@@ -6,7 +6,8 @@ enum State {
 	IDLE,
 	ENGAGE,
 	DEAD,
-	OBJECTIVE
+	OBJECTIVE,
+	ATTACKING
 }
 
 @onready var detectionZone = $DetectionZone
@@ -20,6 +21,7 @@ var i = 0
 var markers : Array
 var foundInitialSpawn = false
 var spawn: int
+var reachedFinal = false
 
 func initialize_path_finding():
 	navigationAgent.path_desired_distance = 4.0
@@ -36,7 +38,8 @@ func actor_setup():
 	
 	if parent.dead: return
 	
-	await get_tree().physics_frame
+	# await get_tree().physics_frame
+	await get_tree().create_timer(0.2).timeout
 	
 	# Set paths
 	var root = get_tree().get_root()
@@ -61,6 +64,8 @@ func actor_setup():
 			markers.append(pathPoints[6])
 		markers.append(pathPoints[7])
 		markers.append(pathPoints[8])
+		markers.append(pathPoints[9])
+		markers.append(pathPoints[10])
 	else:
 		markers = pathPoints
 		
@@ -83,12 +88,13 @@ func _physics_process(delta):
 			if player != null:
 #				set_movement_target(Vector2.ZERO)
 				parent.flip_sprite(player)
-				var threshold_distance = 100
-				if parent.global_position.distance_to(player.global_position)\
-					> threshold_distance:
-					parent.go_towards(player)
-				else:
-					parent.idle()
+#				var threshold_distance = 100
+#				if parent.global_position.distance_to(player.global_position)\
+#					> threshold_distance:
+#					parent.go_towards(player)
+#				else:
+#					parent.idle()
+				parent.go_towards(player)
 			else:
 				print("No player found")
 				set_state(State.IDLE)
@@ -103,6 +109,11 @@ func _physics_process(delta):
 				i += 1
 				if i >= markers.size():
 					set_state(State.IDLE)
+					reachedFinal = true
+					
+					if parent.hasBomb:
+						parent.handle_bomb_drop()
+					
 					return
 				set_movement_target(markers[i].position)
 
@@ -116,8 +127,10 @@ func _physics_process(delta):
 
 			parent.velocity = newVelocity
 			parent.move_and_slide()
-			
-	
+#			parent.coll = parent.move_and_collide(parent.velocity * delta)
+		State.ATTACKING:
+			parent.attack_player(player)
+
 
 func initialize(parent):
 	self.parent = parent
@@ -132,6 +145,8 @@ func set_state(new_state):
 
 func _on_detection_zone_body_entered(body):
 	print("_on_detection_zone_body_entered ", body)
+	if body == null:
+		return 
 	if body.is_in_group("Player") and current_state != State.DEAD and current_state != State.ENGAGE:
 		set_state(State.ENGAGE)
 		player = body
@@ -139,12 +154,16 @@ func _on_detection_zone_body_entered(body):
 func _on_detection_zone_body_exited(body):
 	if body.is_in_group("Player") and current_state != State.DEAD: # Player exited radius
 		# Check if there are still nav markers
-		if navigationAgent.is_navigation_finished():
-			if i >= markers.size():
-				set_state(State.IDLE)
-				return
-		else:
-			set_state(State.OBJECTIVE)
+#		if reachedFinal:
+#			i -= 1
+#			set_movement_target(markers[i].position)
+#		if navigationAgent.is_navigation_finished():
+#			if i >= markers.size():
+#				set_state(State.IDLE)
+#				return
+#		else:
+#			set_state(State.OBJECTIVE)
+		set_reset()
 		player = null
 		
 		# Might wanna check if another player is in the vicinity
@@ -158,6 +177,8 @@ func check_for_player():
 	
 	if len(nearest_player) > 0: # Player/s found
 		_on_detection_zone_body_entered(nearest_player[0])
+	else:
+		return null
 
 
 func _on_spawn_detector_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
@@ -173,3 +194,30 @@ func _on_spawn_detector_area_shape_entered(area_rid, area, area_shape_index, loc
 	initialize_path_finding()
 	# Toggle state
 	foundInitialSpawn = true
+
+
+func _on_hit_box_body_entered(body):
+	if body.is_in_group("Player") and current_state != State.DEAD:
+		print("Colliding with player")
+		player = body
+		set_state(State.ATTACKING)
+
+
+func _on_hit_box_body_exited(body):
+	if body.is_in_group("Player") and current_state != State.DEAD:
+		print("Not colliding with player") # Replace with function body.
+		
+		_on_detection_zone_body_entered(player)
+		
+	
+func set_reset():
+	if check_for_player() == null:
+		if reachedFinal:
+			i -= 1
+			set_movement_target(markers[i].position)
+		if navigationAgent.is_navigation_finished():
+			if i >= markers.size():
+				set_state(State.IDLE)
+				return
+		else:
+			set_state(State.OBJECTIVE)

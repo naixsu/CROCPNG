@@ -1,4 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfjy042jx6n0m"]
+[gd_scene load_steps=4 format=3 uid="uid://78j46c7xa8yj"]
+
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/OneWay.gd" id="1_kc7lx"]
+[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="2_kccue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ij7j"]
 size = Vector2(52, 6)
@@ -6,7 +9,10 @@ size = Vector2(52, 6)
 [node name="OneWay" type="StaticBody2D" groups=["Platform"]]
 collision_layer = 4
 collision_mask = 0
+script = ExtResource("1_kc7lx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_3ij7j")
 one_way_collision = true
+
+[node name="SoundManager" parent="." instance=ExtResource("2_kccue")]

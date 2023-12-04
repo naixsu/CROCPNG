@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bx77fvysan881"]
+[gd_scene load_steps=31 format=3 uid="uid://bx77fvysan881"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/EnemyA.gd" id="1_c3xcl"]
 [ext_resource type="Resource" uid="uid://48eax743xiln" path="res://Resources/Enemies/Slime.tres" id="2_16ebi"]
@@ -6,7 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://ce7fynnc241n4" path="res://Assets/Sprites/EnemyC/EnemyCIdle.png" id="3_kvubh"]
 [ext_resource type="Texture2D" uid="uid://snd66d2cibla" path="res://Assets/Sprites/EnemyC/EnemyCRun.png" id="4_338l4"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyA/AI.gd" id="5_evy3b"]
-[ext_resource type="PackedScene" uid="uid://c03x6k027ye3o" path="res://Scenes/Enemies/SpawnDetector.tscn" id="7_6y3v3"]
+[ext_resource type="PackedScene" path="res://Scenes/Enemies/SpawnDetector.tscn" id="7_6y3v3"]
+[ext_resource type="PackedScene" uid="uid://cmpv86pljwd6w" path="res://Scenes/Bomb/Target.tscn" id="8_bjdca"]
+[ext_resource type="PackedScene" uid="uid://b5hn8tq25p4dg" path="res://Scenes/Enemies/HitBox.tscn" id="8_m0rju"]
+[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="10_af50g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hp0r4"]
 atlas = ExtResource("2_fkx5k")
@@ -139,7 +142,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wtbqo"]
-size = Vector2(38, 29)
+size = Vector2(30, 29)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dctnj"]
 radius = 373.374
@@ -169,6 +172,14 @@ properties/5/path = NodePath("AnimatedSprite2D:animation")
 properties/5/spawn = true
 properties/5/sync = true
 properties/5/watch = false
+properties/6/path = NodePath("Label:text")
+properties/6/spawn = true
+properties/6/sync = true
+properties/6/watch = false
+properties/7/path = NodePath(".:hasBomb")
+properties/7/spawn = true
+properties/7/sync = true
+properties/7/watch = false
 
 [node name="EnemyC" type="CharacterBody2D" groups=["Enemy"]]
 z_index = 3
@@ -191,7 +202,7 @@ avoidance_layers = 0
 avoidance_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 18.5)
+position = Vector2(0, 18)
 shape = SubResource("RectangleShape2D_wtbqo")
 
 [node name="AI" type="Node2D" parent="."]
@@ -204,12 +215,30 @@ collision_layer = 0
 shape = SubResource("CircleShape2D_dctnj")
 
 [node name="SpawnDetector" parent="AI" instance=ExtResource("7_6y3v3")]
+position = Vector2(0, 4)
+
+[node name="HitBox" parent="AI" instance=ExtResource("8_m0rju")]
+position = Vector2(0, 20)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_g5ryl")
+
+[node name="Target" parent="." instance=ExtResource("8_bjdca")]
+visible = false
+position = Vector2(0, 20)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 22.0
+offset_bottom = 5.0
+
+[node name="SoundManager" parent="." instance=ExtResource("10_af50g")]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_shape_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_area_shape_entered"]
 [connection signal="body_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_exited"]
 [connection signal="area_shape_entered" from="AI/SpawnDetector" to="AI" method="_on_spawn_detector_area_shape_entered"]
+[connection signal="body_entered" from="AI/HitBox" to="AI" method="_on_hit_box_body_entered"]
+[connection signal="body_exited" from="AI/HitBox" to="AI" method="_on_hit_box_body_exited"]

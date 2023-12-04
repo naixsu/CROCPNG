@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=32 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
 [ext_resource type="PackedScene" uid="uid://cmksfq3oqnge3" path="res://Scenes/Bullet/Bullet.tscn" id="2_m4sy4"]
@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://cd3kn0qojj0bm" path="res://Scenes/Testing/JoshTestScenes/Gun.tscn" id="8_l3ssp"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/CameraZoom.gd" id="9_vptfm"]
 [ext_resource type="Script" path="res://Scripts/Player/Dash.gd" id="10_4nm7p"]
+[ext_resource type="PackedScene" uid="uid://cyhantwrwy4de" path="res://Scenes/Weapons/MeleeSwing.tscn" id="10_gi0mu"]
+[ext_resource type="PackedScene" uid="uid://drd34lgtxp0nd" path="res://Scenes/Shop/Shop.tscn" id="11_m3tdw"]
+[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="12_x5l6h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -206,6 +209,46 @@ properties/16/path = NodePath(".:weapon_held_down")
 properties/16/spawn = true
 properties/16/sync = true
 properties/16/watch = false
+properties/17/path = NodePath(".:canDash")
+properties/17/spawn = true
+properties/17/sync = true
+properties/17/watch = false
+properties/18/path = NodePath(".:speed")
+properties/18/spawn = true
+properties/18/sync = true
+properties/18/watch = false
+properties/19/path = NodePath(".:health")
+properties/19/spawn = true
+properties/19/sync = true
+properties/19/watch = false
+properties/20/path = NodePath(".:maxHealth")
+properties/20/spawn = true
+properties/20/sync = true
+properties/20/watch = false
+properties/21/path = NodePath(".:maxSpeed")
+properties/21/spawn = true
+properties/21/sync = true
+properties/21/watch = false
+properties/22/path = NodePath(".:weaponMods")
+properties/22/spawn = true
+properties/22/sync = true
+properties/22/watch = false
+properties/23/path = NodePath(".:dmgAdd")
+properties/23/spawn = true
+properties/23/sync = true
+properties/23/watch = false
+properties/24/path = NodePath(".:accSub")
+properties/24/spawn = true
+properties/24/sync = true
+properties/24/watch = false
+properties/25/path = NodePath(".:bulletSpeedAdd")
+properties/25/spawn = true
+properties/25/sync = true
+properties/25/watch = false
+properties/26/path = NodePath("NameLabel:text")
+properties/26/spawn = true
+properties/26/sync = true
+properties/26/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -237,6 +280,7 @@ script = ExtResource("9_vptfm")
 replication_config = SubResource("SceneReplicationConfig_ffpdr")
 
 [node name="ReadyLabel" type="Label" parent="."]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -252,6 +296,10 @@ grow_vertical = 2
 [node name="WeaponsManager" type="Node2D" parent="."]
 
 [node name="Gun" parent="WeaponsManager" instance=ExtResource("8_l3ssp")]
+
+[node name="Melee" parent="WeaponsManager" instance=ExtResource("10_gi0mu")]
+visible = false
+
 [node name="Dash" type="Node2D" parent="."]
 script = ExtResource("10_4nm7p")
 
@@ -278,6 +326,34 @@ offset_left = -21.0
 offset_top = -97.0
 offset_right = 19.0
 offset_bottom = -74.0
+
+[node name="NameLabel" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.5
+offset_top = -61.0
+offset_right = 23.5
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Name"
+
+[node name="Shop" parent="." instance=ExtResource("11_m3tdw")]
+visible = false
+z_index = 11
+position = Vector2(-576, -324)
+
+[node name="HealthLabel" type="Label" parent="."]
+offset_left = -20.0
+offset_top = 47.0
+offset_right = 20.0
+offset_bottom = 70.0
+
+[node name="IFramesTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SoundManager" parent="." instance=ExtResource("12_x5l6h")]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

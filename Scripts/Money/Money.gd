@@ -2,6 +2,7 @@ extends Node2D
 
 @export var value : int
 @onready var anim = $AnimatedSprite2D
+@onready var SoundManager = $SoundManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,4 +14,5 @@ func _on_area_2d_body_entered(body):
 		if body.has_method("set_money"):
 			body.set_money(self.value)
 			if multiplayer.is_server():
+#				SoundManager.pickup.play()
 				queue_free()

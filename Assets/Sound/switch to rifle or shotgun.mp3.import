@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://byuowbscvlfle"
+path="res://.godot/imported/switch to rifle or shotgun.mp3-4ffb69dc16456d6d1cf9659f0c2db91a.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/switch to rifle or shotgun.mp3"
+dest_files=["res://.godot/imported/switch to rifle or shotgun.mp3-4ffb69dc16456d6d1cf9659f0c2db91a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

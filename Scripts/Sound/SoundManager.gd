@@ -19,9 +19,10 @@ extends Node
 @onready var weaponSwitch = $PlayerSounds/WeaponSwitch
 @onready var playerDeath = $PlayerSounds/PlayerDeath
 
-@onready var finalWave = $WaveSounds/FinalWave
-@onready var lose = $WaveSounds/Lose
-@onready var win = $WaveSounds/Win
+@onready var finalWave = $StreamPlayer/FinalWave
+@onready var lose = $StreamPlayer/Lose
+@onready var win = $StreamPlayer/Win
+@onready var mainMenu = $StreamPlayer/MainMenu
 
 var gunSounds : Array
 

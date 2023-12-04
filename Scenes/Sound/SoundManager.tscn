@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bsabsu06d6xb3"]
+[gd_scene load_steps=19 format=3 uid="uid://bsabsu06d6xb3"]
 
 [ext_resource type="Script" path="res://Scripts/Sound/SoundManager.gd" id="1_xt0a1"]
 [ext_resource type="AudioStream" uid="uid://bj61q38nwdri1" path="res://Assets/Sound/click.wav" id="2_besm3"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://bweotu7lnpxex" path="res://Assets/Sound/BossMusic.mp3" id="14_umpqv"]
 [ext_resource type="AudioStream" uid="uid://dqaec5ntkeooi" path="res://Assets/Sound/Lose3.wav" id="16_tompq"]
 [ext_resource type="AudioStream" uid="uid://byf6tasg84j3a" path="res://Assets/Sound/Win.wav" id="17_h2mtf"]
+[ext_resource type="AudioStream" uid="uid://po1ob3fm2rqc" path="res://Assets/Sound/RE Aoharu 8bit ver.mp3" id="18_pfo3f"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_xt0a1")
@@ -86,16 +87,20 @@ stream = ExtResource("13_a6k2v")
 volume_db = 5.0
 max_distance = 5000.0
 
-[node name="WaveSounds" type="Node2D" parent="."]
+[node name="StreamPlayer" type="Node2D" parent="."]
 
-[node name="FinalWave" type="AudioStreamPlayer" parent="WaveSounds"]
+[node name="FinalWave" type="AudioStreamPlayer" parent="StreamPlayer"]
 stream = ExtResource("14_umpqv")
 volume_db = -10.0
 
-[node name="Lose" type="AudioStreamPlayer" parent="WaveSounds"]
+[node name="Lose" type="AudioStreamPlayer" parent="StreamPlayer"]
 stream = ExtResource("16_tompq")
 volume_db = -10.0
 
-[node name="Win" type="AudioStreamPlayer" parent="WaveSounds"]
+[node name="Win" type="AudioStreamPlayer" parent="StreamPlayer"]
 stream = ExtResource("17_h2mtf")
+volume_db = -10.0
+
+[node name="MainMenu" type="AudioStreamPlayer" parent="StreamPlayer"]
+stream = ExtResource("18_pfo3f")
 volume_db = -10.0

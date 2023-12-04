@@ -20,6 +20,7 @@ signal upgrade(subject, stat)
 @onready var sAccuracy = $TabContainer/Shotgun/Accuracy
 @onready var sBulletspeed = $TabContainer/Shotgun/Bulletspeed
 
+@onready var mDamage = $TabContainer/Melee/Damage
 
 var playerHealthCost = 25
 var playerSpeedCost = 40
@@ -37,6 +38,7 @@ var shotgunDmgCost = 30
 var shotgunAccCost = 50
 var shotgunBSCost = 60
 
+var meleeDmgCost = 50
 
 func _process(delta):
 	if health.get_node("ProgressBar").value == 100:
@@ -61,11 +63,14 @@ func _process(delta):
 		rBulletspeed.get_node("RBSButton").visible = false
 	
 	if sDamage.get_node("ProgressBar").value == 100:
-		pDamage.get_node("SDmgButton").visible = false
+		sDamage.get_node("SDmgButton").visible = false
 	if sAccuracy.get_node("ProgressBar").value == 100:
-		pAccuracy.get_node("SAccButton").visible = false
+		sAccuracy.get_node("SAccButton").visible = false
 	if sBulletspeed.get_node("ProgressBar").value == 100:
-		pBulletspeed.get_node("SBSButton").visible = false
+		sBulletspeed.get_node("SBSButton").visible = false
+	
+	if mDamage.get_node("ProgressBar").value == 100:
+		mDamage.get_node("MDmgButton").visible = false
 
 		
 # Player
@@ -99,3 +104,7 @@ func _on_s_acc_button_pressed():
 	upgrade.emit("shotgun", "accuracy")
 func _on_sbs_button_pressed():
 	upgrade.emit("shotgun", "bulletSpeed")
+
+# Melee
+func _on_m_dmg_button_pressed():
+	upgrade.emit("melee", "damage") 

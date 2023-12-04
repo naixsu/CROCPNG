@@ -114,7 +114,6 @@ var pdb # damage button
 var pab # acc button
 var pbb # bulletspeed button
 
-
 var rifleShop
 var rifleDmgProgressBar
 var rifleAccProgressBar
@@ -123,7 +122,6 @@ var rdb
 var rab
 var rbb
 
-
 var shotgunShop
 var shotgunDmgProgressBar
 var shotgunAccProgressBar
@@ -131,6 +129,10 @@ var shotgunBSProgressBar
 var sdb
 var sab
 var sbb
+
+var meleeShop
+var meleeDmgProgressBar
+var mdb
 
 var shopMoneyLabel
 
@@ -277,6 +279,10 @@ func init_shop():
 	sab = shotgunShop.get_node("Accuracy").get_node("SAccButton")
 	sbb = shotgunShop.get_node("Bulletspeed").get_node("SBSButton")
 	
+	meleeShop = shop.get_node("TabContainer").get_node("Melee")
+	meleeDmgProgressBar = meleeShop.get_node("Damage").get_node("ProgressBar")
+	mdb = meleeShop.get_node("Damage").get_node("MDmgButton")
+	
 	shopMoneyLabel = shop.get_node("Money").get_node("MoneyLabel")
 	
 	# HARDCODED
@@ -291,6 +297,7 @@ func init_shop():
 					shop.pistolDmgCost, shop.pistolAccCost, shop.pistolBSCost,
 					shop.rifleDmgCost, shop.rifleAccCost, shop.rifleBSCost,
 					shop.shotgunDmgCost, shop.shotgunAccCost, shop.shotgunBSCost,
+					shop.meleeDmgCost
 					]
 	
 	weaponUpgrades = {
@@ -317,6 +324,9 @@ func init_shop():
 #			"dUp": 2.5,
 #			"aUp": 7.5,
 #			"bsUp": 200
+		},
+		"melee": {
+			"damage": [meleeDmgProgressBar, shop.meleeDmgCost, 0, 5],
 		}
 	}
 	update_money_label()
@@ -368,6 +378,8 @@ func upgrade_stats(subject, stat):
 			upgrade_rifle(stat)
 		"shotgun":
 			upgrade_shotgun(stat)
+		"melee":
+			upgrade_melee(stat)
 	update_money_label()
 	update_shop_buttons()
 
@@ -408,6 +420,9 @@ func upgrade_rifle(stat):
 
 func upgrade_shotgun(stat):
 	upgrade_weapon("shotgun", stat)
+
+func upgrade_melee(stat):
+	upgrade_weapon("melee", stat)
 	
 func upgrade_weapon_stat(weapon, stat):
 	if weaponMods.has(weapon) and weaponMods[weapon].has(stat):
@@ -497,58 +512,38 @@ func fire(held_down):
 			
 			# add the mods from weaponMods
 			dmgAdd = weaponUpgrades.values()[currentWeaponIndex]["damage"][2]
-			accSub = weaponUpgrades.values()[currentWeaponIndex]["accuracy"][2]
-			bulletSpeedAdd = weaponUpgrades.values()[currentWeaponIndex]["bulletSpeed"][2]
+			if currentWeaponIndex != 3:
+				accSub = weaponUpgrades.values()[currentWeaponIndex]["accuracy"][2]
+				bulletSpeedAdd = weaponUpgrades.values()[currentWeaponIndex]["bulletSpeed"][2]
+
+				var currentWeaponData = weaponsData[currentWeaponIndex]
+				
+				var multishot = currentWeaponData.multishot
+				var deviation_angle = currentWeaponData.deviation_angle - accSub
+				for i in range(multishot):
+					if multiplayer.is_server():
+						var bulletSpawner = get_tree().get_root().get_node("TestMultiplayerScene/BulletSpawner")
+						bulletSpawner.spawn([
+							currentWeapon.get_node("BulletSpawn").global_position, # position
+							currentWeaponData.bullet_speed + bulletSpeedAdd, # bulletSpeed
+							currentWeaponData.damage + dmgAdd, # Damage
+							weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle), # bullet rotation
+							currentWeaponData.bullet_life
+						])
+				
+			else:
+				melee()
 			
-#			print(str(name))
-#			print("dmgAdd " + str(dmgAdd) + " " + str(weaponsData[currentWeaponIndex].damage + dmgAdd))
-			
-			#Calculate random bullet spread	and multishot
-#<<<<<<< HEAD
-#			var currentWeaponData = weaponsData[currentWeaponIndex]
-#
-#			var multishot = currentWeaponData.multishot
-#			var deviation_angle = currentWeaponData.deviation_angle
-#			for i in range(multishot):		
-#				var b = BulletCB.instantiate()
-#				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
-#				b.change_stats(currentWeaponData.bullet_speed, currentWeaponData.damage)	
-#				b.set_timer(currentWeaponData.bullet_life)			
-#				var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
-#				b.rotation_degrees = bullet_rotation
-#
-#				get_tree().root.add_child(b)
-#=======
-			var currentWeaponData = weaponsData[currentWeaponIndex]
-			
-			var multishot = currentWeaponData.multishot
-			var deviation_angle = currentWeaponData.deviation_angle - accSub
-			for i in range(multishot):
-				if multiplayer.is_server():
-					var bulletSpawner = get_tree().get_root().get_node("TestMultiplayerScene/BulletSpawner")
-					bulletSpawner.spawn([
-						currentWeapon.get_node("BulletSpawn").global_position, # position
-						currentWeaponData.bullet_speed + bulletSpeedAdd, # bulletSpeed
-						currentWeaponData.damage + dmgAdd, # Damage
-						weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle), # bullet rotation
-						currentWeaponData.bullet_life
-					])
-#				var b = BulletCB.instantiate()
-#				b.global_position = currentWeapon.get_node("BulletSpawn").global_position
-#				b.change_stats(
-#						weaponsData[currentWeaponIndex].bullet_speed + bulletSpeedAdd, 
-#						weaponsData[currentWeaponIndex].damage + dmgAdd
-#					)				
-#				var bullet_rotation = weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle)
-#				b.rotation_degrees = bullet_rotation
-#
-#				get_tree().root.add_child(b)
-#>>>>>>> epic-general
 			currentWeapon.get_node("FireCooldown").start()
 			
 		await get_tree().create_timer(0.2).timeout
 	pass
 
+func melee():
+	print("Melee")
+	var currentWeaponData = weaponsData[currentWeaponIndex]
+	print(currentWeaponData.damage + dmgAdd)
+#	currentWeapon.get_node("FireCooldown").start()
 
 func handle_hit(dmg):
 	iFramesTimer.start()

@@ -1,14 +1,14 @@
 extends Node2D
 
 enum Pattern {
-	COUNTER,
 	CLOCKWISE,
+	COUNTER,
 	CLOVER,
 	RADIAL,
 	CROSS
 }
 
-var currentPattern = Pattern.CROSS : set = set_pattern
+var currentPattern = Pattern.CLOCKWISE : set = set_pattern
 var rotateSpeed
 var shootTimerWaitTime
 var spawnPointCount = 4
@@ -34,7 +34,9 @@ func _ready():
 	
 	set_pattern_variables()
 	# set_pattern(Pattern.CLOCKWISE)
-	set_step()
+	
+	
+	print(Pattern.size())
 	
 #	print("Step %d Spawnpointcount %d" % [step, spawnPointCount])
 
@@ -43,6 +45,7 @@ func reset_theta():
 	theta = 0
 
 func set_step():
+	print("currentPattern " + str(currentPattern))
 	match currentPattern:
 		Pattern.CLOCKWISE, Pattern.COUNTER:
 			step = 2
@@ -79,12 +82,13 @@ func spawn_bullet(pos, bulletSpeed, dmg, rot, bulletLifeTime):
 func shoot_clockwise(angle):
 	if multiplayer.is_server():
 		get_vector(angle)
-		
+		var flip = 1
 		if currentPattern == Pattern.COUNTER:
-			theta *= -1 
+			flip = -1
 		
 		for i in range(step):
-			var rot = theta + ((maxAngle / 2) * i)
+			var rot = (theta + ((maxAngle / 2) * i)) * flip
+			
 			print(rot)
 			spawn_bullet(
 				self.global_position, # position
@@ -147,12 +151,12 @@ func initialize(parent):
 	self.parent = parent
 
 func set_pattern_variables():
-#	set_pattern(randi_range (0, 4))
-	rotateSpeed = randi_range (100, 300)
-#	spawnPointCount = randi_range (6, 8)
-	shootTimerWaitTime = randf_range (0.6, 1.0)
-#	print("speed: %d, count: %d, wait_time: %1f" % [rotateSpeed, spawnPointCount, shootTimerWaitTime])
-
+	set_pattern(randi_range (0, Pattern.size()))
+#	set_pattern(randi_range(0, 1))
+#	set_pattern(Pattern.COUNTER)
+	set_step()
+	
+	
 func set_pattern(newPattern):
 	if newPattern == currentPattern:
 		return

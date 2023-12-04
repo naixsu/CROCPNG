@@ -180,6 +180,7 @@ func get_vector(angle):
 	return rot
 
 func _on_speed_timeout():
+	if parent.dead: return # stop shooting
 	match currentPattern:
 		Pattern.CLOCKWISE:
 			shoot_clockwise(theta)

@@ -8,11 +8,13 @@ var spawn_points = []
 
 @onready var readyPrompt = $ReadyPrompt
 @export var waveResources : Array[Resource]
+@onready var endBanner = $EndBanner
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	readyPrompt.connect("start_wave", start_wave)
 	readyPrompt.connect("reward_players", reward_players) # Give money after beating a round
+	readyPrompt.connect("win_banner", win_banner)
 	var index = 0
 #	var bulletManagerInstance = BulletManager.instantiate()
 #	add_child(bulletManagerInstance)
@@ -100,16 +102,7 @@ func find_to_hold_bomb():
 @rpc("any_peer", "call_local")
 func lose():
 	print("You lost")
-
-
-# Might wanna use a resource here so that the wave feature
-# isn't hardcoded
-func final_wave():
-#	if is_multiplayer_authority():
-	if multiplayer.is_server():
-		print("Final Wave")
-		
-
+	lose_banner()
 
 func start_wave():
 #	if is_multiplayer_authority():
@@ -119,11 +112,11 @@ func start_wave():
 		
 #		if GameManager.wave == GameManager.maxWave: # Stopping at 5 for now
 #			final_wave()
-		var finalWave = false
+
 		if GameManager.wave == 1:
 #			final_wave()
-			final_wave()
-			finalWave = true
+			final_wave.rpc()
+			
 			
 			
 		print("Starting Wave %d of %d" % [GameManager.wave, GameManager.maxWave])
@@ -145,7 +138,7 @@ func start_wave():
 		# Spawn bomb once
 		var bombSpawned = false
 		
-		if finalWave:
+		if GameManager.finalWave:
 			await get_tree().create_timer(spawnDelay).timeout
 			spawn_enemy("D")
 			await get_tree().create_timer(0.1).timeout
@@ -195,6 +188,23 @@ func add_wave():
 func add_enemy():
 	GameManager.enemyCount += 1	
 		
-		
-	
+@rpc("any_peer", "call_local")
+func final_wave():
+	GameManager.finalWave = true
+	print("Final Wave")
+
+@rpc("any_peer", "call_local")
+func set_game_over():
+	GameManager.gameOver = true
+	print("Game Over")
+
+func win_banner():
+	endBanner.visible = true
+	endBanner.get_node("Banners").get_node("WinBanner").visible = true
+	set_game_over.rpc()
+
+func lose_banner():
+	endBanner.visible = true
+	endBanner.get_node("Banners").get_node("LoseBanner").visible = true
+	set_game_over.rpc()
 

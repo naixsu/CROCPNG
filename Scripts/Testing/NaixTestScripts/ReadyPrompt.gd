@@ -21,6 +21,7 @@ var checkForEnemies : bool = false
 signal toggle_ready
 signal start_wave
 signal reward_players
+signal win_banner
 
 func _on_ready_button_button_down():
 #	ready_up.rpc()
@@ -41,7 +42,11 @@ func _physics_process(delta):
 	
 	if checkForEnemies:
 		await get_tree().create_timer(1).timeout
-		if GameManager.enemyCount == 0:
+		if GameManager.finalWave and GameManager.enemyCount == 0:
+			print("\nNo more enemies and Final Wave\n")
+			checkForEnemies = false
+			win_banner.emit()
+		elif GameManager.enemyCount == 0:
 			print("\nNo more enemies\n")
 			checkForEnemies = false
 			showReady = true

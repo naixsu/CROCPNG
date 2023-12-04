@@ -202,11 +202,13 @@ func set_game_over():
 
 func win_banner():
 	endBanner.visible = true
+	SoundManager.win.play()
 	endBanner.get_node("Banners").get_node("WinBanner").visible = true
 	set_game_over.rpc()
 
 func lose_banner():
 	endBanner.visible = true
+	SoundManager.lose.play()
 	endBanner.get_node("Banners").get_node("LoseBanner").visible = true
 	set_game_over.rpc()
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bsabsu06d6xb3"]
+[gd_scene load_steps=18 format=3 uid="uid://bsabsu06d6xb3"]
 
 [ext_resource type="Script" path="res://Scripts/Sound/SoundManager.gd" id="1_xt0a1"]
 [ext_resource type="AudioStream" uid="uid://bj61q38nwdri1" path="res://Assets/Sound/click.wav" id="2_besm3"]
@@ -12,8 +12,11 @@
 [ext_resource type="AudioStream" uid="uid://di6o0klu68yyj" path="res://Assets/Sound/PlayerHit.wav" id="8_qs3qd"]
 [ext_resource type="AudioStream" uid="uid://bufsiwb4xl8lu" path="res://Assets/Sound/whoosh.mp3" id="9_orvn1"]
 [ext_resource type="AudioStream" uid="uid://cwnv7qdqb5s34" path="res://Assets/Sound/Switch2.wav" id="10_fwfya"]
+[ext_resource type="AudioStream" uid="uid://51iyxr7n88b6" path="res://Assets/Sound/PlayerDeath.wav" id="12_cjc4c"]
 [ext_resource type="AudioStream" uid="uid://dnveuvp8hgrew" path="res://Assets/Sound/BossShoot6.wav" id="13_a6k2v"]
 [ext_resource type="AudioStream" uid="uid://bweotu7lnpxex" path="res://Assets/Sound/BossMusic.mp3" id="14_umpqv"]
+[ext_resource type="AudioStream" uid="uid://dqaec5ntkeooi" path="res://Assets/Sound/Lose3.wav" id="16_tompq"]
+[ext_resource type="AudioStream" uid="uid://byf6tasg84j3a" path="res://Assets/Sound/Win.wav" id="17_h2mtf"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_xt0a1")
@@ -66,6 +69,11 @@ stream = ExtResource("10_fwfya")
 volume_db = -5.0
 max_distance = 1000.0
 
+[node name="PlayerDeath" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("12_cjc4c")
+volume_db = -5.0
+max_distance = 1000.0
+
 [node name="EnemySounds" type="Node2D" parent="."]
 
 [node name="EnemyHit" type="AudioStreamPlayer2D" parent="EnemySounds"]
@@ -80,6 +88,14 @@ max_distance = 5000.0
 
 [node name="WaveSounds" type="Node2D" parent="."]
 
-[node name="finalWave" type="AudioStreamPlayer" parent="WaveSounds"]
+[node name="FinalWave" type="AudioStreamPlayer" parent="WaveSounds"]
 stream = ExtResource("14_umpqv")
+volume_db = -10.0
+
+[node name="Lose" type="AudioStreamPlayer" parent="WaveSounds"]
+stream = ExtResource("16_tompq")
+volume_db = -10.0
+
+[node name="Win" type="AudioStreamPlayer" parent="WaveSounds"]
+stream = ExtResource("17_h2mtf")
 volume_db = -10.0

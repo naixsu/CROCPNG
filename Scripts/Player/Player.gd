@@ -591,6 +591,7 @@ func toggle_ready():
 @rpc("any_peer", "call_local")
 func die():
 	dead = true
+	SoundManager.playerDeath.play()
 	anim.play("death")
 	collision.disabled = true
 

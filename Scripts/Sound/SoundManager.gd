@@ -17,8 +17,11 @@ extends Node
 @onready var melee = $PlayerSounds/Melee
 @onready var playerHit = $PlayerSounds/PlayerHit
 @onready var weaponSwitch = $PlayerSounds/WeaponSwitch
+@onready var playerDeath = $PlayerSounds/PlayerDeath
 
-@onready var finalWave = $WaveSounds/finalWave
+@onready var finalWave = $WaveSounds/FinalWave
+@onready var lose = $WaveSounds/Lose
+@onready var win = $WaveSounds/Win
 
 var gunSounds : Array
 

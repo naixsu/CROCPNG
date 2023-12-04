@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=31 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
 [ext_resource type="PackedScene" uid="uid://cmksfq3oqnge3" path="res://Scenes/Bullet/Bullet.tscn" id="2_m4sy4"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/CameraZoom.gd" id="9_vptfm"]
 [ext_resource type="Script" path="res://Scripts/Player/Dash.gd" id="10_4nm7p"]
 [ext_resource type="PackedScene" uid="uid://drd34lgtxp0nd" path="res://Scenes/Shop/Shop.tscn" id="11_m3tdw"]
+[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="12_x5l6h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -347,6 +348,8 @@ offset_bottom = 70.0
 
 [node name="IFramesTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="SoundManager" parent="." instance=ExtResource("12_x5l6h")]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

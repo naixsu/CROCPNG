@@ -40,6 +40,7 @@ class_name Player
 @onready var weaponFile = "res://Scenes/Player/WeaponData.json"
 @onready var iFramesTimer = $IFramesTimer
 @onready var collision = $CollisionShape2D
+@onready var SoundManager = $SoundManager # Capitalizing this
 
 
 # Signals here
@@ -421,6 +422,7 @@ func upgrade_weapon_stat(weapon, stat):
 		print(weaponMods[weapon])
 
 func set_money(value):
+	SoundManager.pickup.play()
 	money += value
 
 func update_gun_rotation():
@@ -458,6 +460,7 @@ func check_hit():
 	
 @rpc("any_peer", "call_local")
 func switch_weapon(index):	
+	SoundManager.weaponSwitch.play()
 	currentWeaponIndex = index
 	currentWeapon.get_node("ArrowIndicator").texture = load(weaponsData[currentWeaponIndex].texture)
 	currentWeapon.get_node("FireCooldown").wait_time = weaponsData[currentWeaponIndex].wait_time
@@ -478,7 +481,10 @@ func fire(held_down):
 #		get_tree().root.add_child(b)
 #		fireCooldown.start()
 	while weapon_held_down:
+		if dead:
+			break
 		if currentWeapon.get_node("FireCooldown").is_stopped():
+			SoundManager.gunSounds[currentWeaponIndex].play()
 #			print("{0} Fire!".format({
 #				"0": str(currentWeapon.name)
 #			}))
@@ -542,12 +548,14 @@ func fire(held_down):
 
 func handle_hit(dmg):
 	iFramesTimer.start()
+	SoundManager.playerHit.play()
 	health -= dmg
 	print("Player hit", health)
 	
 
 func toggle_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		SoundManager.click.play()
 		readyState = !readyState
 #		var idSelf = multiplayer.get_unique_id()
 #		var playerSelf = GameManager.players[idSelf]

@@ -210,6 +210,11 @@ script = ExtResource("10_jitev")
 wait_time = 0.5
 autostart = true
 
+[node name="PatternDuration" type="Timer" parent="BulletHell"]
+wait_time = 5.0
+autostart = true
+
 [connection signal="body_entered" from="AI/HitBox" to="AI" method="_on_hit_box_body_entered"]
 [connection signal="body_exited" from="AI/HitBox" to="AI" method="_on_hit_box_body_exited"]
 [connection signal="timeout" from="BulletHell/BulletInterval" to="BulletHell" method="_on_speed_timeout"]
+[connection signal="timeout" from="BulletHell/PatternDuration" to="BulletHell" method="_on_pattern_duration_timeout"]

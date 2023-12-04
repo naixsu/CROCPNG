@@ -27,6 +27,7 @@ var maxAngle : float = 360
 var circleDiv : float
 var bulletSpawner 
 @onready var bulletInterval = $BulletInterval
+@onready var patternDuration = $PatternDuration
 
 
 func _ready():
@@ -45,7 +46,7 @@ func reset_theta():
 	theta = 0
 
 func set_step():
-	print("currentPattern " + str(currentPattern))
+	
 	match currentPattern:
 		Pattern.CLOCKWISE, Pattern.COUNTER:
 			step = 2
@@ -89,7 +90,7 @@ func shoot_clockwise(angle):
 		for i in range(step):
 			var rot = (theta + ((maxAngle / 2) * i)) * flip
 			
-			print(rot)
+#			print(rot)
 			spawn_bullet(
 				self.global_position, # position
 				bulletSpeed, # bulletSpeed
@@ -97,15 +98,15 @@ func shoot_clockwise(angle):
 				rot, # rotation
 				bulletLifeTime # lifetime
 			)
-		print("\n")
+#		print("\n")
 
 func shoot_clover(angle):
 	if multiplayer.is_server():
 		get_vector(angle)
-		
+#		print("Shoot clover")
 		for i in range(step):
 			var rot = theta + (circleDiv * i)
-			print(rot)
+#			print(rot)
 			spawn_bullet(
 				self.global_position, # position
 				bulletSpeed, # bulletSpeed
@@ -113,15 +114,16 @@ func shoot_clover(angle):
 				rot, # rotation
 				bulletLifeTime # lifetime
 			)
-		print("\n")
+#		print("\n")
 
 func shoot_radial(angle):
 	if multiplayer.is_server():
 		get_vector(angle)
+#		print("shoot radial")
 		
 		for i in range(step):
 			var rot = circleDiv * i
-			print(rot)
+#			print(rot)
 			spawn_bullet(
 				self.global_position, # position
 				bulletSpeed, # bulletSpeed
@@ -129,16 +131,17 @@ func shoot_radial(angle):
 				rot, # rotation
 				bulletLifeTime # lifetime
 			)
-		print("\n")
+#		print("\n")
 
 func shoot_cross(angle):
 	if multiplayer.is_server():
 		
 		get_vector(angle)
+#		print("shoot cross")
 		
 		for i in range(step):
 			var rot = theta + (circleDiv * i)
-			print(rot)
+#			print(rot)
 			spawn_bullet(
 				self.global_position, # position
 				bulletSpeed, # bulletSpeed
@@ -162,6 +165,7 @@ func set_pattern(newPattern):
 		return
 	
 	currentPattern = newPattern
+	print("currentPattern " + str(currentPattern))
 	
 func get_vector(angle):
 	# update theta
@@ -169,7 +173,7 @@ func get_vector(angle):
 #	theta = angle + step
 #	theta = (angle + interval) % maxAngle
 	theta = fmod(angle + interval, maxAngle)
-	print("theta " + str(theta))
+#	print("theta " + str(theta))
 #	theta = 180
 	var rot = Vector2(cos(theta), sin(theta))
 #	print(rot)
@@ -187,3 +191,14 @@ func _on_speed_timeout():
 			shoot_radial(theta)
 		Pattern.CROSS:
 			shoot_cross(theta)
+
+
+func _on_pattern_duration_timeout():
+	var nextPattern = currentPattern + 1
+	if nextPattern > Pattern.size() - 1:
+		nextPattern = 0
+	print("SwitchPattern")
+	set_pattern(nextPattern)
+	set_step()
+	
+#	set_pattern(Pattern.keys()[nextPattern])

@@ -79,7 +79,6 @@ func handle_death():
 		hasBomb = false
 		anim.play("death")
 
-
 func _on_anim_animation_finished():
 	if multiplayer.is_server():
 		subtract_enemy.rpc()

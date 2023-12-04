@@ -165,6 +165,7 @@ func _ready():
 		playerCamera.make_current()
 
 func _process(delta):
+	if GameManager.gameOver: return 
 	readyLabel.text = str(readyState)
 	moneyLabel.text = str(money)
 	healthLabel.text = str(health)
@@ -178,6 +179,7 @@ func _process(delta):
 		display_respawn()
 
 func _physics_process(delta):
+	if GameManager.gameOver: return 
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		var direction = Input.get_vector("Left", "Right", "Up", "Down")
 #		speed = dashSpeed if dash.is_dashing() else tempSpeed
@@ -212,6 +214,7 @@ func _physics_process(delta):
 	
 # Commenting as it has synchronization issues
 func _unhandled_input(event): 
+	if GameManager.gameOver: return 
 	# TODO:
 	# Handle Weapon stuff in a separate node for reusability
 	# using signals to fire off from Weapon -> Player -> BulletManager

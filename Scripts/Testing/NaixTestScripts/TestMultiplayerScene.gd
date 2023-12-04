@@ -102,6 +102,7 @@ func find_to_hold_bomb():
 @rpc("any_peer", "call_local")
 func lose():
 	print("You lost")
+	lose_banner()
 
 func start_wave():
 #	if is_multiplayer_authority():
@@ -192,7 +193,18 @@ func final_wave():
 	GameManager.finalWave = true
 	print("Final Wave")
 
+@rpc("any_peer", "call_local")
+func set_game_over():
+	GameManager.gameOver = true
+	print("Game Over")
+
 func win_banner():
 	endBanner.visible = true
 	endBanner.get_node("Banners").get_node("WinBanner").visible = true
+	set_game_over.rpc()
+
+func lose_banner():
+	endBanner.visible = true
+	endBanner.get_node("Banners").get_node("LoseBanner").visible = true
+	set_game_over.rpc()
 

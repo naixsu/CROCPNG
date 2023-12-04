@@ -6,6 +6,7 @@ var players = {}
 var wave = 0
 @export var maxWave = 5
 var finalWave = false
+var gameOver = false
 
 var enemyCount = 0
 

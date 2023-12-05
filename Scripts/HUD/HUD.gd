@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var playerIcon = $PlayerIcon
 @onready var hotBar = $HotBar
 @onready var moneyAnim = $MoneyAnim
+@onready var moneyText = $MoneyText
 
 
 # Called when the node enters the scene tree for the first time.

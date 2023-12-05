@@ -43,6 +43,7 @@ class_name Player
 @onready var SoundManager = $SoundManager # Capitalizing this
 
 @onready var meleeNode = $WeaponsManager/Melee
+@onready var hud = $HUD
 
 
 # Signals here
@@ -148,6 +149,7 @@ var weaponUpgrades : Dictionary
 func _ready():
 	init_weapons(weaponFile)
 	init_shop()
+	update_hud()
 	readyPrompt.connect("toggle_ready", toggle_ready)
 	shop.connect("upgrade", player_upgrade)
 	meleeNode.connect("finished_anim", finished_anim)
@@ -163,12 +165,14 @@ func _ready():
 	#Set the camera to only be active for the local player
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		playerCamera.make_current()
+		
 
 func _process(delta):
 	if GameManager.gameOver: return 
 	readyLabel.text = str(readyState)
 	moneyLabel.text = str(money)
 	healthLabel.text = str(health)
+	update_hud()
 	
 	if respawn:
 		respawnTimer.start()
@@ -337,6 +341,17 @@ func init_shop():
 	}
 	update_money_label()
 
+func update_hud():
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		if shop.visible: # hide HUD when shop is open
+			hud.visible = false
+		else:
+			hud.visible = true
+		hud.moneyText.text = str(money)
+		# Calculate max health to healthbar
+		hud.healthBar.max_value = maxHealth
+		hud.healthBar.value = health
+
 func update_money_label():
 	shopMoneyLabel.text = str(money) + " Credits"
 	
@@ -369,7 +384,6 @@ func update_shop_buttons():
 			shopButtons[i].visible = true
 
 func player_upgrade(subject, stat):
-	
 	upgrade_stats.rpc(subject, stat)
 
 @rpc("any_peer", "call_local")

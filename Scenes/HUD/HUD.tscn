@@ -66,14 +66,21 @@ texture = ExtResource("2_w76v0")
 texture_filter = 1
 position = Vector2(288, 576)
 sprite_frames = SubResource("SpriteFrames_mnvvn")
-frame_progress = 0.654133
+frame_progress = 0.24613
+
+[node name="MoneyText" type="RichTextLabel" parent="."]
+offset_left = 309.0
+offset_top = 564.0
+offset_right = 349.0
+offset_bottom = 604.0
+text = "test"
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 offset_left = 256.0
 offset_top = 608.0
 offset_right = 555.0
 offset_bottom = 637.0
-value = 100.0
+step = 0.01
 nine_patch_stretch = true
 stretch_margin_left = 3
 stretch_margin_top = 3

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://chavk7wh0g8k8"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ServerInfo.gd" id="1_7jrb0"]
-[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="2_b7gqd"]
+[ext_resource type="PackedScene" path="res://Scenes/Sound/SoundManager.tscn" id="2_b7gqd"]
 
 [node name="ServerInfo" type="HBoxContainer"]
 script = ExtResource("1_7jrb0")

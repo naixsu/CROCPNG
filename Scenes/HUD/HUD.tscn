@@ -1,0 +1,212 @@
+[gd_scene load_steps=36 format=3 uid="uid://bpi2k8viyaihf"]
+
+[ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="1_v7k06"]
+[ext_resource type="Texture2D" uid="uid://3mur45ljt52o" path="res://Assets/Sprites/HUD/ProgressBar.png" id="2_ngjni"]
+[ext_resource type="Texture2D" uid="uid://c53ojbxeknsfx" path="res://Assets/Sprites/Player/Player_icon.png" id="2_w76v0"]
+[ext_resource type="Texture2D" uid="uid://bnnfgcdhyqfg5" path="res://Assets/Sprites/HUD/Over.png" id="3_hajsq"]
+[ext_resource type="Texture2D" uid="uid://d3h07pkq442w4" path="res://Assets/Weapons/pistol_equipped.png" id="5_qxsee"]
+[ext_resource type="Texture2D" uid="uid://2651msniwivg" path="res://Assets/Weapons/rifle_equipped.png" id="6_5r1ue"]
+[ext_resource type="Texture2D" uid="uid://cuye14fit4nx7" path="res://Assets/Weapons/shotgun_equipped.png" id="7_74o6n"]
+[ext_resource type="Texture2D" uid="uid://dty6a8v7bthsa" path="res://Assets/Weapons/melee_equipped.png" id="8_4vbfh"]
+[ext_resource type="Texture2D" uid="uid://c642w2kcgjjic" path="res://Assets/Sprites/Money/money.png" id="10_6n8ya"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4cm4"]
+atlas = ExtResource("10_6n8ya")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mrt8b"]
+atlas = ExtResource("10_6n8ya")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jq6v"]
+atlas = ExtResource("10_6n8ya")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6e2k"]
+atlas = ExtResource("10_6n8ya")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcqwa"]
+atlas = ExtResource("10_6n8ya")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mnvvn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4cm4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mrt8b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2jq6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6e2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcqwa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yiqvs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v586r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ud5mb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g6ap4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xb5uu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vrpsa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ftorx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ypfal"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_718yt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_824vd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64ucu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xg4lt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_irjax"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cvrip"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ty3b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d8lcr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68jap"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3finp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_unh52"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1pba"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_v7k06")
+
+[node name="PlayerIcon" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(136, 556)
+scale = Vector2(5.26563, 5.26563)
+texture = ExtResource("2_w76v0")
+
+[node name="MoneyAnim" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(288, 576)
+sprite_frames = SubResource("SpriteFrames_mnvvn")
+frame_progress = 0.95
+
+[node name="MoneyText" type="RichTextLabel" parent="."]
+offset_left = 309.0
+offset_top = 564.0
+offset_right = 349.0
+offset_bottom = 604.0
+text = "test"
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_left = 256.0
+offset_top = 608.0
+offset_right = 555.0
+offset_bottom = 637.0
+step = 0.01
+value = 50.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_ngjni")
+texture_over = ExtResource("3_hajsq")
+texture_progress = ExtResource("2_ngjni")
+tint_under = Color(0.643137, 0, 0, 1)
+tint_over = Color(0, 0.0627451, 0.0627451, 1)
+tint_progress = Color(0, 0.956863, 0.380392, 1)
+
+[node name="HotBar" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HotBar"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -72.0
+offset_right = 258.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.55, 1.55)
+alignment = 1
+
+[node name="PistolButton" type="Button" parent="HotBar/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_yiqvs")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_v586r")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ud5mb")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_g6ap4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xb5uu")
+disabled = true
+button_mask = 0
+icon = ExtResource("5_qxsee")
+
+[node name="RifleButton" type="Button" parent="HotBar/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vrpsa")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ftorx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ypfal")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_718yt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_824vd")
+disabled = true
+button_mask = 0
+icon = ExtResource("6_5r1ue")
+
+[node name="ShotgunButton" type="Button" parent="HotBar/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_64ucu")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_xg4lt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_irjax")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_cvrip")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6ty3b")
+disabled = true
+button_mask = 0
+icon = ExtResource("7_74o6n")
+
+[node name="MeleeButton" type="Button" parent="HotBar/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_d8lcr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_68jap")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_3finp")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_unh52")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_v1pba")
+disabled = true
+button_mask = 0
+icon = ExtResource("8_4vbfh")

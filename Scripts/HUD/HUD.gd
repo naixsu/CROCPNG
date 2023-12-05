@@ -1,11 +1,11 @@
 extends CanvasLayer
 
 
-@onready var healthBar = $HealthBar
+@onready var healthBar = $CenterContainer/VBoxContainer/HealthContainer/HealthBar
 @onready var playerIcon = $PlayerIcon
 @onready var hotBar = $HotBar
-@onready var moneyAnim = $MoneyAnim
-@onready var moneyText = $MoneyText
+@onready var moneyAnim = $CenterContainer/VBoxContainer/MoneyContainer/Money/MoneyAnim
+@onready var moneyText = $CenterContainer/VBoxContainer/MoneyContainer/Money/MoneyText
 @onready var pistolButton = $HotBar/HBoxContainer/PistolButton
 @onready var rifleButton = $HotBar/HBoxContainer/RifleButton
 @onready var shotgunButton = $HotBar/HBoxContainer/ShotgunButton

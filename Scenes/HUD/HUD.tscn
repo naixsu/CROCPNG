@@ -1,14 +1,58 @@
-[gd_scene load_steps=36 format=3 uid="uid://bpi2k8viyaihf"]
+[gd_scene load_steps=41 format=3 uid="uid://bpi2k8viyaihf"]
 
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="1_v7k06"]
 [ext_resource type="Texture2D" uid="uid://3mur45ljt52o" path="res://Assets/Sprites/HUD/ProgressBar.png" id="2_ngjni"]
 [ext_resource type="Texture2D" uid="uid://c53ojbxeknsfx" path="res://Assets/Sprites/Player/Player_icon.png" id="2_w76v0"]
+[ext_resource type="Texture2D" uid="uid://b486t6uq5pmuw" path="res://Assets/UI/hotbar-bg.png" id="3_1ux4k"]
 [ext_resource type="Texture2D" uid="uid://bnnfgcdhyqfg5" path="res://Assets/Sprites/HUD/Over.png" id="3_hajsq"]
 [ext_resource type="Texture2D" uid="uid://d3h07pkq442w4" path="res://Assets/Weapons/pistol_equipped.png" id="5_qxsee"]
 [ext_resource type="Texture2D" uid="uid://2651msniwivg" path="res://Assets/Weapons/rifle_equipped.png" id="6_5r1ue"]
 [ext_resource type="Texture2D" uid="uid://cuye14fit4nx7" path="res://Assets/Weapons/shotgun_equipped.png" id="7_74o6n"]
 [ext_resource type="Texture2D" uid="uid://dty6a8v7bthsa" path="res://Assets/Weapons/melee_equipped.png" id="8_4vbfh"]
-[ext_resource type="Texture2D" uid="uid://c642w2kcgjjic" path="res://Assets/Sprites/Money/money.png" id="10_6n8ya"]
+[ext_resource type="Texture2D" uid="uid://c4mteccnfadll" path="res://Assets/UI/panel-brown.png" id="9_653lp"]
+[ext_resource type="Texture2D" uid="uid://brf2ri8fovlqp" path="res://Assets/Sprites/Money/money.png" id="10_6n8ya"]
+[ext_resource type="Texture2D" uid="uid://kg0rgio3a2qf" path="res://Assets/UI/character-portrait.png" id="10_j40si"]
+[ext_resource type="Texture2D" uid="uid://ohw67ov6tsam" path="res://Assets/UI/input.png" id="11_tuqfe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yiqvs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v586r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ud5mb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g6ap4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xb5uu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vrpsa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ftorx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ypfal"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_718yt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_824vd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64ucu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xg4lt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_irjax"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cvrip"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ty3b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d8lcr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68jap"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3finp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_unh52"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1pba"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x4cm4"]
 atlas = ExtResource("10_6n8ya")
@@ -53,86 +97,17 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yiqvs"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v586r"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ud5mb"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g6ap4"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xb5uu"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vrpsa"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ftorx"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ypfal"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_718yt"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_824vd"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64ucu"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xg4lt"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_irjax"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cvrip"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ty3b"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d8lcr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68jap"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3finp"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_unh52"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1pba"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h8va3"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_v7k06")
 
-[node name="PlayerIcon" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(136, 556)
-scale = Vector2(5.26563, 5.26563)
-texture = ExtResource("2_w76v0")
-
-[node name="MoneyAnim" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-position = Vector2(288, 576)
-sprite_frames = SubResource("SpriteFrames_mnvvn")
-frame_progress = 0.95
-
-[node name="MoneyText" type="RichTextLabel" parent="."]
-offset_left = 309.0
-offset_top = 564.0
-offset_right = 349.0
-offset_bottom = 604.0
-text = "test"
-
-[node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = 256.0
-offset_top = 608.0
-offset_right = 555.0
-offset_bottom = 637.0
-step = 0.01
-value = 50.0
-nine_patch_stretch = true
-stretch_margin_left = 3
-stretch_margin_top = 3
-stretch_margin_right = 3
-stretch_margin_bottom = 3
-texture_under = ExtResource("2_ngjni")
-texture_over = ExtResource("3_hajsq")
-texture_progress = ExtResource("2_ngjni")
-tint_under = Color(0.643137, 0, 0, 1)
-tint_over = Color(0, 0.0627451, 0.0627451, 1)
-tint_progress = Color(0, 0.956863, 0.380392, 1)
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -13.0
+offset_top = 489.0
+offset_right = 185.0
+offset_bottom = 664.0
+texture = ExtResource("10_j40si")
 
 [node name="HotBar" type="Control" parent="."]
 layout_mode = 3
@@ -148,6 +123,15 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 3
 
+[node name="TextureRect" type="TextureRect" parent="HotBar"]
+visible = false
+layout_mode = 0
+offset_left = -57.0
+offset_top = -228.0
+offset_right = 394.0
+offset_bottom = -164.0
+texture = ExtResource("3_1ux4k")
+
 [node name="HBoxContainer" type="HBoxContainer" parent="HotBar"]
 layout_mode = 1
 anchors_preset = 7
@@ -155,9 +139,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = 17.0
 offset_top = -72.0
-offset_right = 258.0
-offset_bottom = -32.0
+offset_right = 264.0
+offset_bottom = -31.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.55, 1.55)
@@ -210,3 +195,84 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_v1pba")
 disabled = true
 button_mask = 0
 icon = ExtResource("8_4vbfh")
+
+[node name="PlayerIcon" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(90, 571)
+scale = Vector2(2.81299, 2.57471)
+texture = ExtResource("2_w76v0")
+
+[node name="HealthAndMoneyContainer" type="CenterContainer" parent="."]
+layout_direction = 1
+offset_left = 124.0
+offset_top = 529.0
+offset_right = 493.0
+offset_bottom = 646.0
+
+[node name="ContainerBackground" type="TextureRect" parent="HealthAndMoneyContainer"]
+custom_minimum_size = Vector2(270, 110)
+layout_mode = 2
+texture = ExtResource("9_653lp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HealthAndMoneyContainer"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="MoneyContainer" type="CenterContainer" parent="HealthAndMoneyContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="HealthAndMoneyContainer/VBoxContainer/MoneyContainer"]
+visible = false
+custom_minimum_size = Vector2(155, 50)
+layout_mode = 2
+texture = ExtResource("3_1ux4k")
+expand_mode = 2
+
+[node name="Money" type="HBoxContainer" parent="HealthAndMoneyContainer/VBoxContainer/MoneyContainer"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+
+[node name="MoneyAnim" type="AnimatedSprite2D" parent="HealthAndMoneyContainer/VBoxContainer/MoneyContainer/Money"]
+texture_filter = 1
+position = Vector2(14, 12)
+scale = Vector2(1.1875, 1)
+sprite_frames = SubResource("SpriteFrames_mnvvn")
+frame_progress = 0.95
+
+[node name="VSeparator" type="VSeparator" parent="HealthAndMoneyContainer/VBoxContainer/MoneyContainer/Money"]
+layout_mode = 2
+theme_override_constants/separation = 34
+theme_override_styles/separator = SubResource("StyleBoxEmpty_h8va3")
+
+[node name="MoneyText" type="RichTextLabel" parent="HealthAndMoneyContainer/VBoxContainer/MoneyContainer/Money"]
+custom_minimum_size = Vector2(70, 2.08165e-12)
+layout_mode = 2
+text = "test"
+
+[node name="HealthContainer" type="CenterContainer" parent="HealthAndMoneyContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="HealthBarBorder" type="TextureRect" parent="HealthAndMoneyContainer/VBoxContainer/HealthContainer"]
+custom_minimum_size = Vector2(225, 45)
+layout_mode = 2
+texture = ExtResource("11_tuqfe")
+
+[node name="HealthBar" type="TextureProgressBar" parent="HealthAndMoneyContainer/VBoxContainer/HealthContainer"]
+custom_minimum_size = Vector2(207, 30)
+layout_mode = 2
+step = 0.01
+value = 50.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_ngjni")
+texture_over = ExtResource("3_hajsq")
+texture_progress = ExtResource("2_ngjni")
+tint_under = Color(0.643137, 0, 0, 1)
+tint_over = Color(0, 0.0627451, 0.0627451, 1)
+tint_progress = Color(0, 0.956863, 0.380392, 1)

@@ -43,7 +43,7 @@ class_name Player
 @onready var SoundManager = $SoundManager # Capitalizing this
 
 @onready var meleeNode = $WeaponsManager/Melee
-@onready var hud = $HUD
+@onready var HUD = $HUD
 
 
 # Signals here
@@ -149,12 +149,19 @@ var weaponUpgrades : Dictionary
 func _ready():
 	init_weapons(weaponFile)
 	init_shop()
-	update_hud()
+	
 	readyPrompt.connect("toggle_ready", toggle_ready)
 	shop.connect("upgrade", player_upgrade)
 	meleeNode.connect("finished_anim", finished_anim)
 
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	# Set the camera and hud
+	# to only be active for the local player
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+#		add_child(HUD.instantiate())
+		playerCamera.make_current()
+		HUD.visible = true
+		update_hud.rpc()
 	anim.play("idle")
 	
 #	print(GameManager.players[str(name)])
@@ -162,9 +169,7 @@ func _ready():
 	
 	nameLabel.text = str(GameManager.players[name.to_int()].name)
 	
-	#Set the camera to only be active for the local player
-	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		playerCamera.make_current()
+	
 		
 
 func _process(delta):
@@ -229,19 +234,19 @@ func _unhandled_input(event):
 		if event.is_action_released("Fire"):
 			fire.rpc(false)
 			
-		if event.is_action_pressed("SwitchWeapon1"):
+		if event.is_action_pressed("SwitchWeapon1") and currentWeaponIndex != 0:
 #			currentWeaponIndex = 0
 			switch_weapon.rpc(0)
-		if event.is_action_pressed("SwitchWeapon2"):
+		if event.is_action_pressed("SwitchWeapon2") and currentWeaponIndex != 1:
 #			currentWeaponIndex = 1
 			switch_weapon.rpc(1)
-		if event.is_action_pressed("SwitchWeapon3"):
+		if event.is_action_pressed("SwitchWeapon3") and currentWeaponIndex != 2:
 #			currentWeaponIndex = 2
 			switch_weapon.rpc(2)
-		if event.is_action_pressed("SwitchWeapon4"):
+		if event.is_action_pressed("SwitchWeapon4") and currentWeaponIndex != 3:
 			switch_weapon.rpc(3)
 		
-		update_hud()
+		update_hud.rpc()
 	pass
 
 func init_weapons(weaponFile):
@@ -343,40 +348,43 @@ func init_shop():
 	}
 	update_money_label()
 
+@rpc("any_peer", "call_local")
 func update_hud():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		if shop.visible: # hide HUD when shop is open
-			hud.visible = false
-		else:
-			hud.visible = true
-		hud.moneyText.text = str(money)
+#		if shop.visible: # hide HUD when shop is open
+#			HUD.visible = false
+#		else:
+#			HUD.visible = true
+		HUD.moneyText.text = str(money)
 		# Calculate max health to healthbar
-		hud.healthBar.max_value = maxHealth
-		hud.healthBar.value = health
+		HUD.healthBar.max_value = maxHealth
+		HUD.healthBar.value = health
 		
-		for buttonIndex in range(hud.hotBarButtons.size()):
+		for buttonIndex in range(HUD.hotBarButtons.size()):
 			if buttonIndex == currentWeaponIndex:
-				hud.hotBarButtons[buttonIndex].disabled = false
+				HUD.hotBarButtons[buttonIndex].disabled = false
 			else:
-				hud.hotBarButtons[buttonIndex].disabled = true
+				HUD.hotBarButtons[buttonIndex].disabled = true
 		
 
 func update_money_label():
 	shopMoneyLabel.text = str(money) + " Credits"
-	update_hud()
+	update_hud.rpc()
 	
 @rpc("any_peer", "call_local")
 func show_shop():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		shop.visible = true
 		update_shop_buttons()
-		update_hud()
+		HUD.visible = false
+		update_hud.rpc()
 		
 @rpc("any_peer", "call_local")
 func hide_shop():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		shop.visible = false
-		update_hud()
+		HUD.visible = true
+		update_hud.rpc()
 
 @rpc("any_peer", "call_local")
 func show_ready():
@@ -575,7 +583,7 @@ func handle_hit(dmg):
 	SoundManager.playerHit.play()
 	health -= dmg
 	print("Player hit", health)
-	update_hud()
+	update_hud.rpc()
 	
 func toggle_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
@@ -619,4 +627,4 @@ func _on_respawn_timer_timeout():
 	respawnLabel.hide()
 	collision.disabled = false
 	health = maxHealth
-	update_hud()
+	update_hud.rpc()

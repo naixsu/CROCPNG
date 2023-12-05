@@ -1,31 +1,52 @@
-[gd_scene load_steps=2 format=3 uid="uid://v7cwyu2s7km1"]
+[gd_scene load_steps=5 format=3 uid="uid://v7cwyu2s7km1"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ReadyPrompt.gd" id="1_k1gbb"]
+[ext_resource type="Texture2D" uid="uid://c4mteccnfadll" path="res://Assets/UI/panel-brown.png" id="2_uulud"]
+[ext_resource type="FontFile" uid="uid://dxpm1nv67r84l" path="res://Assets/Fonts/Ac437_LE_Model_D_CGA.ttf" id="3_jf24d"]
+[ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="4_u0u6b"]
 
 [node name="ReadyPrompt" type="CanvasLayer"]
 script = ExtResource("1_k1gbb")
+
+[node name="BG" type="TextureRect" parent="."]
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -170.0
+offset_top = 48.0
+offset_right = 170.0
+offset_bottom = 173.0
+grow_horizontal = 2
+texture = ExtResource("2_uulud")
 
 [node name="PlayerReadyCount" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -102.5
-offset_top = 69.0
-offset_right = 102.5
-offset_bottom = 95.0
+offset_left = -166.5
+offset_top = 87.0
+offset_right = 166.5
+offset_bottom = 113.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_jf24d")
+theme_override_font_sizes/font_size = 12
 text = "Number of Players Ready: "
+horizontal_alignment = 1
 
 [node name="ReadyButton" type="Button" parent="PlayerReadyCount"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -28.0
-offset_top = 58.0
-offset_right = 28.0
-offset_bottom = 89.0
+offset_left = -64.5
+offset_top = 25.0
+offset_right = 65.5
+offset_bottom = 58.0
 grow_horizontal = 2
+theme = ExtResource("4_u0u6b")
+theme_override_fonts/font = ExtResource("3_jf24d")
+theme_override_font_sizes/font_size = 14
 text = "Ready"
 
 [node name="Respawn" type="Label" parent="."]
@@ -47,11 +68,13 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -102.5
-offset_top = 69.0
+offset_top = 102.0
 offset_right = 102.5
-offset_bottom = 95.0
+offset_bottom = 128.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_jf24d")
 text = "Wave Starts In:"
+horizontal_alignment = 1
 
 [node name="WaveCountdown" type="Timer" parent="WaveNotif"]
 wait_time = 5.0

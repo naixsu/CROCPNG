@@ -10,6 +10,7 @@ extends CanvasLayer
 @onready var waveNotif = $WaveNotif
 @onready var waveCountdown = $WaveNotif/WaveCountdown
 @onready var respawnLabel = $Respawn
+@onready var bg = $BG
 
 @export var readyCount : int = 0
 
@@ -30,6 +31,7 @@ func _on_ready_button_button_down():
 
 func _physics_process(delta):
 	if showReady:
+		bg.show()
 		update_ready_count()
 	
 	if startCountdown: 
@@ -92,6 +94,7 @@ func ready_up():
 func _on_wave_countdown_timeout():
 	displayCountdown = false
 	waveNotif.hide()
+	bg.hide()
 	start_wave.emit()
 	if GameManager.wave > 1:
 		reward_players.emit()

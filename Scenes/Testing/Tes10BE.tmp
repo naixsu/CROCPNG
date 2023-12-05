@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://br6p5ok3ywn07"]
+
+[ext_resource type="Script" path="res://Scripts/Testing/AdiTestScripts/TestBulletHell.gd" id="1_jp2bo"]
+[ext_resource type="PackedScene" uid="uid://bkb83aql5hcqm" path="res://Scenes/Enemies/FinalBoss/FinalBoss.tscn" id="1_tloyb"]
+[ext_resource type="PackedScene" uid="uid://cmksfq3oqnge3" path="res://Scenes/Bullet/Bullet.tscn" id="2_n456c"]
+[ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="2_tnvxf"]
+
+[node name="TestBulletHell" type="Node"]
+script = ExtResource("1_jp2bo")
+
+[node name="Player" parent="." instance=ExtResource("2_tnvxf")]
+position = Vector2(225, 146)
+
+[node name="FinalBoss" parent="." instance=ExtResource("1_tloyb")]
+position = Vector2(632, 341)
+Bullet = ExtResource("2_n456c")

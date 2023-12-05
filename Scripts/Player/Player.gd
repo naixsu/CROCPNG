@@ -172,7 +172,7 @@ func _process(delta):
 	readyLabel.text = str(readyState)
 	moneyLabel.text = str(money)
 	healthLabel.text = str(health)
-	update_hud()
+#	update_hud()
 	
 	if respawn:
 		respawnTimer.start()
@@ -240,6 +240,8 @@ func _unhandled_input(event):
 			switch_weapon.rpc(2)
 		if event.is_action_pressed("SwitchWeapon4"):
 			switch_weapon.rpc(3)
+		
+		update_hud()
 	pass
 
 func init_weapons(weaponFile):
@@ -351,20 +353,30 @@ func update_hud():
 		# Calculate max health to healthbar
 		hud.healthBar.max_value = maxHealth
 		hud.healthBar.value = health
+		
+		for buttonIndex in range(hud.hotBarButtons.size()):
+			if buttonIndex == currentWeaponIndex:
+				hud.hotBarButtons[buttonIndex].disabled = false
+			else:
+				hud.hotBarButtons[buttonIndex].disabled = true
+		
 
 func update_money_label():
 	shopMoneyLabel.text = str(money) + " Credits"
+	update_hud()
 	
 @rpc("any_peer", "call_local")
 func show_shop():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		shop.visible = true
 		update_shop_buttons()
+		update_hud()
 		
 @rpc("any_peer", "call_local")
 func hide_shop():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		shop.visible = false
+		update_hud()
 
 @rpc("any_peer", "call_local")
 func show_ready():
@@ -511,25 +523,11 @@ func fire(held_down):
 	elif !held_down:
 		weapon_held_down = false
 	
-#	if fireCooldown.is_stopped():
-#		print("Fire")
-#		var b = BulletCB.instantiate()
-#		b.global_position = gunRotation.get_node("BulletSpawn").global_position
-#		b.rotation_degrees = gunRotation.rotation_degrees
-###		Add bullet to the tree
-#		get_tree().root.add_child(b)
-#		fireCooldown.start()
 	while weapon_held_down:
 		if dead:
 			break
 		if currentWeapon.get_node("FireCooldown").is_stopped():
 			SoundManager.gunSounds[currentWeaponIndex].play()
-#			print("{0} Fire!".format({
-#				"0": str(currentWeapon.name)
-#			}))
-	#		var b = BulletCB.instantiate()
-	#		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
-			
 			# add the mods from weaponMods
 			dmgAdd = weaponUpgrades.values()[currentWeaponIndex]["damage"][2]
 			if currentWeaponIndex != 3:
@@ -577,8 +575,8 @@ func handle_hit(dmg):
 	SoundManager.playerHit.play()
 	health -= dmg
 	print("Player hit", health)
+	update_hud()
 	
-
 func toggle_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		SoundManager.click.play()
@@ -588,19 +586,6 @@ func toggle_ready():
 #		playerSelf["readyState"] = readyState
 #		update_ready.emit()
 		readyPrompt.update_ready_count()
-
-#func _on_ready_prompt_toggle_ready():
-##	print("here")
-#	readyState = !readyState
-##	print("readyState " + str(readyState))
-#	var idSelf = multiplayer.get_unique_id()
-#	var playerSelf = GameManager.players[idSelf]
-#	playerSelf["readyState"] = readyState
-##	var root = get_tree().get_root()
-##	var multiplayerController = root.get_node("Multiplayer")
-##	multiplayerController.test_pass(str(name), idSelf, readyState)
-#	update_ready_state.emit()
-
 
 @rpc("any_peer", "call_local")
 func die():
@@ -634,3 +619,4 @@ func _on_respawn_timer_timeout():
 	respawnLabel.hide()
 	collision.disabled = false
 	health = maxHealth
+	update_hud()

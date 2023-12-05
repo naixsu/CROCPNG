@@ -6,12 +6,18 @@ extends CanvasLayer
 @onready var hotBar = $HotBar
 @onready var moneyAnim = $MoneyAnim
 @onready var moneyText = $MoneyText
+@onready var pistolButton = $HotBar/HBoxContainer/PistolButton
+@onready var rifleButton = $HotBar/HBoxContainer/RifleButton
+@onready var shotgunButton = $HotBar/HBoxContainer/ShotgunButton
+@onready var meleeButton = $HotBar/HBoxContainer/MeleeButton
 
+var hotBarButtons : Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	moneyAnim.play("default")
-	pass # Replace with function body.
+	# The order matters
+	hotBarButtons = [pistolButton, rifleButton, shotgunButton, meleeButton]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

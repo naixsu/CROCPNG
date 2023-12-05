@@ -1,17 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://bpi2k8viyaihf"]
+[gd_scene load_steps=10 format=3 uid="uid://bpi2k8viyaihf"]
 
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="1_v7k06"]
 [ext_resource type="Texture2D" uid="uid://3mur45ljt52o" path="res://Assets/Sprites/HUD/ProgressBar.png" id="2_ngjni"]
+[ext_resource type="Texture2D" uid="uid://c53ojbxeknsfx" path="res://Assets/Sprites/Player/Player_icon.png" id="2_w76v0"]
 [ext_resource type="Texture2D" uid="uid://bnnfgcdhyqfg5" path="res://Assets/Sprites/HUD/Over.png" id="3_hajsq"]
+[ext_resource type="Script" path="res://Scripts/HUD/HotBar.gd" id="4_tpuga"]
+[ext_resource type="Texture2D" uid="uid://d3h07pkq442w4" path="res://Assets/Weapons/pistol_equipped.png" id="5_qxsee"]
+[ext_resource type="Texture2D" uid="uid://2651msniwivg" path="res://Assets/Weapons/rifle_equipped.png" id="6_5r1ue"]
+[ext_resource type="Texture2D" uid="uid://cuye14fit4nx7" path="res://Assets/Weapons/shotgun_equipped.png" id="7_74o6n"]
+[ext_resource type="Texture2D" uid="uid://dty6a8v7bthsa" path="res://Assets/Weapons/melee_equipped.png" id="8_4vbfh"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_v7k06")
 
+[node name="PlayerIcon" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(110, 541)
+scale = Vector2(6.53125, 6.53125)
+texture = ExtResource("2_w76v0")
+
 [node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = 79.0
-offset_top = 624.0
-offset_right = 318.0
-offset_bottom = 642.0
+offset_left = 214.0
+offset_top = 613.0
+offset_right = 652.0
+offset_bottom = 646.0
 value = 100.0
 nine_patch_stretch = true
 stretch_margin_left = 3
@@ -24,3 +36,55 @@ texture_progress = ExtResource("2_ngjni")
 tint_under = Color(0.643137, 0, 0, 1)
 tint_over = Color(0, 0.0627451, 0.0627451, 1)
 tint_progress = Color(0, 0.956863, 0.380392, 1)
+
+[node name="HotBar" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -40.0
+offset_right = -180.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("4_tpuga")
+
+[node name="GridContainer" type="GridContainer" parent="HotBar"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+columns = 4
+
+[node name="PistolButton" type="Button" parent="HotBar/GridContainer"]
+texture_filter = 1
+layout_mode = 2
+disabled = true
+icon = ExtResource("5_qxsee")
+
+[node name="RifleButton" type="Button" parent="HotBar/GridContainer"]
+texture_filter = 1
+layout_mode = 2
+disabled = true
+icon = ExtResource("6_5r1ue")
+
+[node name="ShotgunButton" type="Button" parent="HotBar/GridContainer"]
+texture_filter = 1
+layout_mode = 2
+disabled = true
+icon = ExtResource("7_74o6n")
+
+[node name="MeleeButton" type="Button" parent="HotBar/GridContainer"]
+texture_filter = 1
+layout_mode = 2
+disabled = true
+icon = ExtResource("8_4vbfh")

@@ -1,10 +1,14 @@
-[gd_scene load_steps=41 format=3 uid="uid://bpi2k8viyaihf"]
+[gd_scene load_steps=35 format=3 uid="uid://bpi2k8viyaihf"]
 
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="1_v7k06"]
+[ext_resource type="Texture2D" uid="uid://clu57w3dwagyn" path="res://Assets/UI/button-normal.png" id="2_6lom0"]
+[ext_resource type="Texture2D" uid="uid://cm1v3h3n0df1e" path="res://Assets/UI/toolbar-bg2.png" id="2_8tnyt"]
 [ext_resource type="Texture2D" uid="uid://3mur45ljt52o" path="res://Assets/Sprites/HUD/ProgressBar.png" id="2_ngjni"]
 [ext_resource type="Texture2D" uid="uid://c53ojbxeknsfx" path="res://Assets/Sprites/Player/Player_icon.png" id="2_w76v0"]
 [ext_resource type="Texture2D" uid="uid://b486t6uq5pmuw" path="res://Assets/UI/hotbar-bg.png" id="3_1ux4k"]
+[ext_resource type="Texture2D" uid="uid://dvltnidogq8wh" path="res://Assets/UI/button-hover.png" id="3_7a3b4"]
 [ext_resource type="Texture2D" uid="uid://bnnfgcdhyqfg5" path="res://Assets/Sprites/HUD/Over.png" id="3_hajsq"]
+[ext_resource type="Texture2D" uid="uid://cgabyw6mh7aua" path="res://Assets/UI/button-active.png" id="4_mlwe3"]
 [ext_resource type="Texture2D" uid="uid://d3h07pkq442w4" path="res://Assets/Weapons/pistol_equipped.png" id="5_qxsee"]
 [ext_resource type="Texture2D" uid="uid://2651msniwivg" path="res://Assets/Weapons/rifle_equipped.png" id="6_5r1ue"]
 [ext_resource type="Texture2D" uid="uid://cuye14fit4nx7" path="res://Assets/Weapons/shotgun_equipped.png" id="7_74o6n"]
@@ -13,42 +17,24 @@
 [ext_resource type="Texture2D" uid="uid://brf2ri8fovlqp" path="res://Assets/Sprites/Money/money.png" id="10_6n8ya"]
 [ext_resource type="Texture2D" uid="uid://kg0rgio3a2qf" path="res://Assets/UI/character-portrait.png" id="10_j40si"]
 [ext_resource type="Texture2D" uid="uid://ohw67ov6tsam" path="res://Assets/UI/input.png" id="11_tuqfe"]
+[ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="14_urlq7"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yiqvs"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dk723"]
+texture = ExtResource("2_6lom0")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v586r"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gtj3v"]
+texture = ExtResource("3_7a3b4")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ud5mb"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g6ap4"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xb5uu"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vrpsa"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ftorx"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ypfal"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d6qes"]
+texture = ExtResource("4_mlwe3")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_718yt"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_824vd"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64ucu"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xg4lt"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_irjax"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cvrip"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ty3b"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d8lcr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68jap"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3finp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_unh52"]
 
@@ -103,11 +89,13 @@ animations = [{
 script = ExtResource("1_v7k06")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_left = -13.0
-offset_top = 489.0
-offset_right = 185.0
-offset_bottom = 664.0
-texture = ExtResource("10_j40si")
+offset_top = 547.0
+offset_right = 1153.0
+offset_bottom = 648.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("2_8tnyt")
+expand_mode = 2
 
 [node name="HotBar" type="Control" parent="."]
 layout_mode = 3
@@ -117,19 +105,22 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -20.0
-offset_top = -40.0
-offset_right = 20.0
+offset_top = -37.0
+offset_right = 64.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 3
 
 [node name="TextureRect" type="TextureRect" parent="HotBar"]
-visible = false
-layout_mode = 0
-offset_left = -57.0
-offset_top = -228.0
-offset_right = 394.0
-offset_bottom = -164.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -100.0
+offset_right = 548.0
+offset_bottom = -6.0
+grow_vertical = 0
 texture = ExtResource("3_1ux4k")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HotBar"]
@@ -139,10 +130,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 17.0
-offset_top = -72.0
-offset_right = 264.0
-offset_bottom = -31.0
+offset_left = -58.0
+offset_top = -90.0
+offset_right = 273.0
+offset_bottom = -45.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.55, 1.55)
@@ -150,117 +141,111 @@ alignment = 1
 
 [node name="PistolButton" type="Button" parent="HotBar/HBoxContainer"]
 texture_filter = 1
+custom_minimum_size = Vector2(75, 45)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_yiqvs")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_v586r")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_ud5mb")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_g6ap4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_xb5uu")
-disabled = true
+theme_override_styles/normal = SubResource("StyleBoxTexture_dk723")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gtj3v")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_d6qes")
 button_mask = 0
 icon = ExtResource("5_qxsee")
+icon_alignment = 1
 
 [node name="RifleButton" type="Button" parent="HotBar/HBoxContainer"]
 texture_filter = 1
+custom_minimum_size = Vector2(75, 45)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_vrpsa")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ftorx")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_ypfal")
+theme_override_styles/normal = SubResource("StyleBoxTexture_dk723")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gtj3v")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_d6qes")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_718yt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_824vd")
-disabled = true
 button_mask = 0
 icon = ExtResource("6_5r1ue")
+icon_alignment = 1
 
 [node name="ShotgunButton" type="Button" parent="HotBar/HBoxContainer"]
 texture_filter = 1
+custom_minimum_size = Vector2(75, 45)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_64ucu")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_xg4lt")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_irjax")
+theme_override_styles/normal = SubResource("StyleBoxTexture_dk723")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gtj3v")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_d6qes")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_cvrip")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_6ty3b")
-disabled = true
 button_mask = 0
 icon = ExtResource("7_74o6n")
+icon_alignment = 1
 
 [node name="MeleeButton" type="Button" parent="HotBar/HBoxContainer"]
 texture_filter = 1
+custom_minimum_size = Vector2(75, 45)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_d8lcr")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_68jap")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_3finp")
+theme_override_styles/normal = SubResource("StyleBoxTexture_dk723")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gtj3v")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_d6qes")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_unh52")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_v1pba")
-disabled = true
 button_mask = 0
 icon = ExtResource("8_4vbfh")
+icon_alignment = 1
 
-[node name="PlayerIcon" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(90, 571)
-scale = Vector2(2.81299, 2.57471)
-texture = ExtResource("2_w76v0")
+[node name="PlayerStats" type="HBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 503.0
+offset_right = 404.0
+offset_bottom = 648.0
+theme_override_constants/separation = -10
 
-[node name="HealthAndMoneyContainer" type="CenterContainer" parent="."]
+[node name="PlayerPortrait" type="TextureRect" parent="PlayerStats"]
+layout_mode = 2
+texture = ExtResource("10_j40si")
+
+[node name="HealthAndMoneyContainer" type="CenterContainer" parent="PlayerStats"]
 layout_direction = 1
-offset_left = 124.0
-offset_top = 529.0
-offset_right = 493.0
-offset_bottom = 646.0
+layout_mode = 2
 
-[node name="ContainerBackground" type="TextureRect" parent="HealthAndMoneyContainer"]
+[node name="ContainerBackground" type="TextureRect" parent="PlayerStats/HealthAndMoneyContainer"]
 custom_minimum_size = Vector2(270, 110)
 layout_mode = 2
 texture = ExtResource("9_653lp")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HealthAndMoneyContainer"]
+[node name="Details" type="VBoxContainer" parent="PlayerStats/HealthAndMoneyContainer"]
 layout_mode = 2
 theme_override_constants/separation = -2
 
-[node name="MoneyContainer" type="CenterContainer" parent="HealthAndMoneyContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="TextureRect" type="TextureRect" parent="HealthAndMoneyContainer/VBoxContainer/MoneyContainer"]
-visible = false
-custom_minimum_size = Vector2(155, 50)
-layout_mode = 2
-texture = ExtResource("3_1ux4k")
-expand_mode = 2
-
-[node name="Money" type="HBoxContainer" parent="HealthAndMoneyContainer/VBoxContainer/MoneyContainer"]
+[node name="Money" type="HBoxContainer" parent="PlayerStats/HealthAndMoneyContainer/Details"]
 custom_minimum_size = Vector2(50, 30)
 layout_mode = 2
 
-[node name="MoneyAnim" type="AnimatedSprite2D" parent="HealthAndMoneyContainer/VBoxContainer/MoneyContainer/Money"]
+[node name="MoneyAnim" type="AnimatedSprite2D" parent="PlayerStats/HealthAndMoneyContainer/Details/Money"]
 texture_filter = 1
 position = Vector2(14, 12)
 scale = Vector2(1.1875, 1)
 sprite_frames = SubResource("SpriteFrames_mnvvn")
 frame_progress = 0.95
 
-[node name="VSeparator" type="VSeparator" parent="HealthAndMoneyContainer/VBoxContainer/MoneyContainer/Money"]
+[node name="VSeparator" type="VSeparator" parent="PlayerStats/HealthAndMoneyContainer/Details/Money"]
 layout_mode = 2
 theme_override_constants/separation = 34
 theme_override_styles/separator = SubResource("StyleBoxEmpty_h8va3")
 
-[node name="MoneyText" type="RichTextLabel" parent="HealthAndMoneyContainer/VBoxContainer/MoneyContainer/Money"]
+[node name="MoneyText" type="RichTextLabel" parent="PlayerStats/HealthAndMoneyContainer/Details/Money"]
 custom_minimum_size = Vector2(70, 2.08165e-12)
 layout_mode = 2
+theme = ExtResource("14_urlq7")
 text = "test"
 
-[node name="HealthContainer" type="CenterContainer" parent="HealthAndMoneyContainer/VBoxContainer"]
+[node name="HealthContainer" type="CenterContainer" parent="PlayerStats/HealthAndMoneyContainer/Details"]
 custom_minimum_size = Vector2(100, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="HealthBarBorder" type="TextureRect" parent="HealthAndMoneyContainer/VBoxContainer/HealthContainer"]
+[node name="HealthBarBorder" type="TextureRect" parent="PlayerStats/HealthAndMoneyContainer/Details/HealthContainer"]
 custom_minimum_size = Vector2(225, 45)
 layout_mode = 2
 texture = ExtResource("11_tuqfe")
 
-[node name="HealthBar" type="TextureProgressBar" parent="HealthAndMoneyContainer/VBoxContainer/HealthContainer"]
+[node name="HealthBar" type="TextureProgressBar" parent="PlayerStats/HealthAndMoneyContainer/Details/HealthContainer"]
 custom_minimum_size = Vector2(207, 30)
 layout_mode = 2
 step = 0.01
@@ -276,3 +261,9 @@ texture_progress = ExtResource("2_ngjni")
 tint_under = Color(0.643137, 0, 0, 1)
 tint_over = Color(0, 0.0627451, 0.0627451, 1)
 tint_progress = Color(0, 0.956863, 0.380392, 1)
+
+[node name="PlayerIcon" type="Sprite2D" parent="PlayerStats"]
+texture_filter = 1
+position = Vector2(74, 66)
+scale = Vector2(2.34387, 2.06555)
+texture = ExtResource("2_w76v0")

@@ -213,6 +213,8 @@ func final_wave():
 @rpc("any_peer", "call_local")
 func set_game_over():
 	GameManager.gameOver = true
+	SoundManager.startWave.stop()
+	SoundManager.finalWave.stop()
 	print("Game Over")
 
 func win_banner():

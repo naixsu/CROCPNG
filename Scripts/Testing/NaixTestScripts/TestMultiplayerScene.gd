@@ -9,12 +9,15 @@ var spawn_points = []
 @onready var readyPrompt = $ReadyPrompt
 @export var waveResources : Array[Resource]
 @onready var endBanner = $EndBanner
+@onready var SoundManager = $SoundManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	readyPrompt.connect("start_wave", start_wave)
 	readyPrompt.connect("reward_players", reward_players) # Give money after beating a round
 	readyPrompt.connect("win_banner", win_banner)
+	readyPrompt.connect("pre_wave", pre_wave)
+	pre_wave()
 	var index = 0
 #	var bulletManagerInstance = BulletManager.instantiate()
 #	add_child(bulletManagerInstance)
@@ -104,18 +107,30 @@ func lose():
 	print("You lost")
 	lose_banner()
 
+func pre_wave():
+	if multiplayer.is_server():
+		SoundManager.startWave.stop()
+		SoundManager.preWave.play()
+		
+
 func start_wave():
 #	if is_multiplayer_authority():
 	if multiplayer.is_server():
-		clear_money.rpc()
 		add_wave.rpc()
+		clear_money.rpc()
+		SoundManager.preWave.stop()
+		if GameManager.wave == GameManager.maxWave: # Change for final wave
+#			final_wave()
+			
+			final_wave.rpc()
+		else:
+			SoundManager.startWave.play()
+		
+		
 		
 #		if GameManager.wave == GameManager.maxWave: # Stopping at 5 for now
 #			final_wave()
 
-		if GameManager.wave == 1:
-#			final_wave()
-			final_wave.rpc()
 			
 			
 			
@@ -141,6 +156,7 @@ func start_wave():
 		if GameManager.finalWave:
 			await get_tree().create_timer(spawnDelay).timeout
 			spawn_enemy("D")
+			SoundManager.nootNoot.play()
 			await get_tree().create_timer(0.1).timeout
 			if not bombSpawned:
 				var child = enemyGroups.get_child(0) # get first child, first enemy
@@ -190,21 +206,26 @@ func add_enemy():
 		
 @rpc("any_peer", "call_local")
 func final_wave():
+	SoundManager.finalWave.play()
 	GameManager.finalWave = true
 	print("Final Wave")
 
 @rpc("any_peer", "call_local")
 func set_game_over():
 	GameManager.gameOver = true
+	SoundManager.startWave.stop()
+	SoundManager.finalWave.stop()
 	print("Game Over")
 
 func win_banner():
 	endBanner.visible = true
+	SoundManager.win.play()
 	endBanner.get_node("Banners").get_node("WinBanner").visible = true
 	set_game_over.rpc()
 
 func lose_banner():
 	endBanner.visible = true
+	SoundManager.lose.play()
 	endBanner.get_node("Banners").get_node("LoseBanner").visible = true
 	set_game_over.rpc()
 

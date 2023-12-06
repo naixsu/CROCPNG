@@ -180,7 +180,8 @@ func get_vector(angle):
 	return rot
 
 func _on_speed_timeout():
-	if parent.dead: return # stop shooting
+	if parent.dead or parent.ai.current_state == parent.ai.State.IDLE: 
+		return # stop shooting
 	match currentPattern:
 		Pattern.CLOCKWISE:
 			shoot_clockwise(theta)
@@ -192,6 +193,8 @@ func _on_speed_timeout():
 			shoot_radial(theta)
 		Pattern.CROSS:
 			shoot_cross(theta)
+		
+	parent.SoundManager.bossShoot.play()
 
 
 func _on_pattern_duration_timeout():

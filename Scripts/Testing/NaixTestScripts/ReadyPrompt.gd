@@ -23,6 +23,7 @@ signal toggle_ready
 signal start_wave
 signal reward_players
 signal win_banner
+signal pre_wave
 
 func _on_ready_button_button_down():
 #	ready_up.rpc()
@@ -53,6 +54,8 @@ func _physics_process(delta):
 			checkForEnemies = false
 			showReady = true
 			playerReadyCount.show()
+			pre_wave.emit()
+			
 	
 func display_countdown():
 	startCountdown = false

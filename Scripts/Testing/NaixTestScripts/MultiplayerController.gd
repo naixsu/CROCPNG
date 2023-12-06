@@ -16,6 +16,7 @@ var serverName = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	SoundManager.mainMenu.play()
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
@@ -135,6 +136,7 @@ func start_game():
 	var scene = load("res://Scenes/Testing/NaixTestScenes/TestMultiplayerScene.tscn").instantiate()
 	get_tree().root.add_child(scene)
 	self.hide()
+	SoundManager.mainMenu.stop()
 	
 
 func _on_start_game_button_down():

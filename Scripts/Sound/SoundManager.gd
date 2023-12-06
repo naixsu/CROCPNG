@@ -10,6 +10,7 @@ extends Node
 
 @onready var enemyHit = $EnemySounds/EnemyHit
 @onready var bossShoot = $EnemySounds/BossShoot
+@onready var nootNoot = $EnemySounds/NootNoot
 
 @onready var pistol = $PlayerSounds/Pistol
 @onready var rifle = $PlayerSounds/Rifle

@@ -7,14 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://chavk7wh0g8k8" path="res://Scenes/Testing/NaixTestScenes/ServerInfo.tscn" id="3_bgp3x"]
 [ext_resource type="Texture2D" uid="uid://d1jku4yxq3q35" path="res://Assets/UI/crocs-logo.png" id="4_ggktp"]
 [ext_resource type="Theme" uid="uid://dbgqyu07lw23u" path="res://Assets/UI/start_button.tres" id="4_me80j"]
-[ext_resource type="LabelSettings" path="res://Assets/UI/row_label.tres" id="5_0jqkf"]
+[ext_resource type="LabelSettings" uid="uid://ddochaiamxtox" path="res://Assets/UI/row_label.tres" id="5_0jqkf"]
 [ext_resource type="Theme" uid="uid://dld16dcqgxplk" path="res://Assets/UI/exit_button.tres" id="5_wsvfy"]
 [ext_resource type="Texture2D" uid="uid://tgn747f8282c" path="res://Assets/UI/title.png" id="6_1x86m"]
 [ext_resource type="Texture2D" uid="uid://bj18ethdhw8au" path="res://Assets/UI/name-border.png" id="6_6o4cb"]
 [ext_resource type="FontFile" uid="uid://ctxdq4lqft0lv" path="res://Assets/Fonts/Ac437_IBM_EGA_8x8.ttf" id="6_t0i5g"]
 [ext_resource type="Texture2D" uid="uid://28re37q6ajrt" path="res://Assets/UI/panel-brown-big.png" id="7_vnst6"]
-[ext_resource type="Theme" path="res://Assets/UI/helper_text.tres" id="10_54314"]
-[ext_resource type="PackedScene" path="res://Scenes/Sound/SoundManager.tscn" id="15_rep7u"]
+[ext_resource type="Theme" uid="uid://byyncocqpbdnj" path="res://Assets/UI/helper_text.tres" id="10_54314"]
+[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="15_rep7u"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7jsei"]
 

@@ -156,6 +156,7 @@ func start_wave():
 		if GameManager.finalWave:
 			await get_tree().create_timer(spawnDelay).timeout
 			spawn_enemy("D")
+			SoundManager.nootNoot.play()
 			await get_tree().create_timer(0.1).timeout
 			if not bombSpawned:
 				var child = enemyGroups.get_child(0) # get first child, first enemy

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=33 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
 [ext_resource type="PackedScene" uid="uid://cmksfq3oqnge3" path="res://Scenes/Bullet/Bullet.tscn" id="2_m4sy4"]
@@ -7,12 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://dxjulnx8uck65" path="res://Assets/Sprites/Player/PlayerIdle.png" id="3_qjmfi"]
 [ext_resource type="PackedScene" uid="uid://c5hp4o5b5b853" path="res://Scenes/Bullet/BulletCB.tscn" id="4_52lxj"]
 [ext_resource type="Texture2D" uid="uid://clug3m78gurbu" path="res://Assets/Sprites/Player/PlayerRun.png" id="4_xxbxq"]
-[ext_resource type="PackedScene" uid="uid://cd3kn0qojj0bm" path="res://Scenes/Testing/JoshTestScenes/Gun.tscn" id="8_l3ssp"]
+[ext_resource type="PackedScene" path="res://Scenes/Testing/JoshTestScenes/Gun.tscn" id="8_l3ssp"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/CameraZoom.gd" id="9_vptfm"]
 [ext_resource type="Script" path="res://Scripts/Player/Dash.gd" id="10_4nm7p"]
-[ext_resource type="PackedScene" uid="uid://cyhantwrwy4de" path="res://Scenes/Weapons/MeleeSwing.tscn" id="10_gi0mu"]
-[ext_resource type="PackedScene" uid="uid://drd34lgtxp0nd" path="res://Scenes/Shop/Shop.tscn" id="11_m3tdw"]
-[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="12_x5l6h"]
+[ext_resource type="PackedScene" path="res://Scenes/Weapons/MeleeSwing.tscn" id="10_gi0mu"]
+[ext_resource type="PackedScene" uid="uid://celt44dqho3nh" path="res://Scenes/Shop/Shop.tscn" id="11_m3tdw"]
+[ext_resource type="PackedScene" path="res://Scenes/Sound/SoundManager.tscn" id="12_x5l6h"]
+[ext_resource type="PackedScene" uid="uid://bpi2k8viyaihf" path="res://Scenes/HUD/HUD.tscn" id="14_r5vth"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -322,12 +323,14 @@ wait_time = 5.0
 one_shot = true
 
 [node name="MoneyLabel" type="Label" parent="."]
+visible = false
 offset_left = -21.0
 offset_top = -97.0
 offset_right = 19.0
 offset_bottom = -74.0
 
 [node name="NameLabel" type="Label" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -345,6 +348,7 @@ z_index = 11
 position = Vector2(-576, -324)
 
 [node name="HealthLabel" type="Label" parent="."]
+visible = false
 offset_left = -20.0
 offset_top = 47.0
 offset_right = 20.0
@@ -354,6 +358,9 @@ offset_bottom = 70.0
 one_shot = true
 
 [node name="SoundManager" parent="." instance=ExtResource("12_x5l6h")]
+
+[node name="HUD" parent="." instance=ExtResource("14_r5vth")]
+visible = false
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

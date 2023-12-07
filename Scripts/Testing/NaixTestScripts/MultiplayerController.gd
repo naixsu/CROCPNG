@@ -6,6 +6,7 @@ extends Control
 
 @onready var nameEdit = $NameEdit
 @onready var SoundManager = $SoundManager # Capitalizing this
+@onready var startGame = $StartGame
 
 # Deprecated
 #@onready var line_edit = $LineEdit
@@ -91,6 +92,7 @@ func host_game():
 	multiplayer.set_multiplayer_peer(peer)
 #	print("Waiting for players. Hosted at: " + ipAddress)
 	$ServerBrowser.set_up_broadcast(nameEdit.text + "'s server")
+	startGame.visible = true
 	# send_player_information(nameEdit.text, multiplayer.get_unique_id())
 
 func custom_host(serverName):
@@ -104,6 +106,7 @@ func custom_host(serverName):
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
 	multiplayer.set_multiplayer_peer(peer)
 	$ServerBrowser.set_up_broadcast(serverName + "'s server")
+	startGame.visible = true
 
 func _on_host_button_down():
 	SoundManager.click.play()
@@ -130,6 +133,7 @@ func join_by_ip(ip):
 	peer.create_client(ip, port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
+	startGame.visible = true
 
 
 @rpc("any_peer", "call_local") # anyone can call this. maybe try only the host can click start

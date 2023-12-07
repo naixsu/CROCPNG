@@ -87,14 +87,14 @@ func _process(delta):
 		var data = bytes.get_string_from_ascii()
 		var roomInfo = JSON.parse_string(data)
 		
-#		print(
-#			"Server IP: {0} Server Port: {1} Room Info: {2}"
-#			.format({
-#				"0": serverip,
-#				"1": str(serverport),
-#				"2": str(roomInfo)
-#			})
-#		)
+		print(
+			"Server IP: {0} Server Port: {1} Room Info: {2}"
+			.format({
+				"0": serverip,
+				"1": str(serverport),
+				"2": str(roomInfo)
+			})
+		)
 		
 
 		for i in $Panel/VBoxContainer.get_children():
@@ -102,12 +102,21 @@ func _process(delta):
 				updateServer.emit(serverip, serverport, roomInfo)
 				i.get_node("IP").text = str(serverip)
 				i.get_node("PlayerCount").text = str(roomInfo.playerCount)
+				
+				if i.get_node("IP").text != "":
+					i.joinButton.visible = true
 				return
 
 		var currentInfo = ServerInfo.instantiate()
 		currentInfo.name = roomInfo.name
 		currentInfo.get_node("Name").text = roomInfo.name
 		currentInfo.get_node("IP").text = str(serverip)
+		
+#		if currentInfo.get_node("IP").text == str(serverip):
+#			print("not null")
+#		else:
+#			print("null")
+		
 		currentInfo.get_node("PlayerCount").text = str(roomInfo.playerCount)
 		
 		$Panel/VBoxContainer.add_child(currentInfo)
@@ -143,6 +152,7 @@ func _exit_tree():
 
 func join_by_ip(ip):
 	joinGame.emit(ip)
+	
 
 
 func _on_find_server_button_down():

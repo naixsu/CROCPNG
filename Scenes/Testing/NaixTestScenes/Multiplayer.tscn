@@ -79,6 +79,7 @@ offset_bottom = 167.0
 text = "Join"
 
 [node name="StartGame" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 871.0
 offset_top = 533.0

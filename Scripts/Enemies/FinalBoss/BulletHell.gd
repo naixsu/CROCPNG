@@ -71,7 +71,6 @@ func set_step():
 			
 	reset_theta()
 
-@rpc("any_peer", "call_local")
 func spawn_bullet(pos, bulletSpeed, dmg, rot, bulletLifeTime):
 	if multiplayer.is_server():
 		bulletSpawner.spawn([
@@ -93,7 +92,7 @@ func shoot_clockwise(angle):
 		var rot = (theta + ((maxAngle / 2) * i)) * flip
 		
 #			print(rot)
-		spawn_bullet.rpc(
+		spawn_bullet(
 			self.global_position, # position
 			bulletSpeed, # bulletSpeed
 			parent.resource.damage, # damage
@@ -109,7 +108,7 @@ func shoot_clover(angle):
 	for i in range(step):
 		var rot = theta + (circleDiv * i)
 #			print(rot)
-		spawn_bullet.rpc(
+		spawn_bullet(
 			self.global_position, # position
 			bulletSpeed, # bulletSpeed
 			parent.resource.damage, # damage
@@ -126,7 +125,7 @@ func shoot_radial(angle):
 	for i in range(step):
 		var rot = circleDiv * i
 #			print(rot)
-		spawn_bullet.rpc(
+		spawn_bullet(
 			self.global_position, # position
 			bulletSpeed, # bulletSpeed
 			parent.resource.damage, # damage
@@ -144,7 +143,7 @@ func shoot_cross(angle):
 	for i in range(step):
 		var rot = theta + (circleDiv * i)
 #			print(rot)
-		spawn_bullet.rpc(
+		spawn_bullet(
 			self.global_position, # position
 			bulletSpeed, # bulletSpeed
 			parent.resource.damage, # damage

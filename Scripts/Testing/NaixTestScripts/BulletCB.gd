@@ -68,23 +68,22 @@ func _physics_process(delta):
 # 			if collider.is_in_group("Platform"):
 # 				collider.handle_hit()
 # 				queue_free()
-			if collider is Object:
-				var collisionLayer = collider.get_collision_layer()
-				var collisionMask = collider.get_collision_mask()
-				
+		if collider is Object:
+			var collisionLayer = collider.get_collision_layer()
+			var collisionMask = collider.get_collision_mask()
+			
 
-				if collider.is_in_group("Enemy"):
-					print("Collided with enemy ", collider)
-					collider.handle_hit(damage)
-					queue_free()
-					
-				if collider.is_in_group("Player"):
-			#				print("Collided with player. Ignoring ", collider)
-					collider.handle_hit(damage)
-					queue_free()
+			if collider.is_in_group("Enemy"):
+				print("Collided with enemy ", collider)
+				collider.handle_hit(damage)
+				if multiplayer.is_server(): queue_free()
 				
-				if collider.is_in_group("Platform"):
-					collider.handle_hit()
-					queue_free()
-
+			if collider.is_in_group("Player"):
+		#		print("Collided with player. Ignoring ", collider)
+				collider.handle_hit(damage)
+				if multiplayer.is_server(): queue_free()
+			
+			if collider.is_in_group("Platform"):
+				collider.handle_hit()
+				if multiplayer.is_server(): queue_free()
 

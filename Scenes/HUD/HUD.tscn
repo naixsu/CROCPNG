@@ -1,32 +1,22 @@
-[gd_scene load_steps=35 format=3 uid="uid://bpi2k8viyaihf"]
+[gd_scene load_steps=32 format=3 uid="uid://bpi2k8viyaihf"]
 
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="1_v7k06"]
 [ext_resource type="Texture2D" uid="uid://clu57w3dwagyn" path="res://Assets/UI/button-normal.png" id="2_6lom0"]
 [ext_resource type="Texture2D" uid="uid://cm1v3h3n0df1e" path="res://Assets/UI/toolbar-bg2.png" id="2_8tnyt"]
-[ext_resource type="Texture2D" uid="uid://3mur45ljt52o" path="res://Assets/Sprites/HUD/ProgressBar.png" id="2_ngjni"]
 [ext_resource type="Texture2D" uid="uid://c53ojbxeknsfx" path="res://Assets/Sprites/Player/Player_icon.png" id="2_w76v0"]
 [ext_resource type="Texture2D" uid="uid://b486t6uq5pmuw" path="res://Assets/UI/hotbar-bg.png" id="3_1ux4k"]
-[ext_resource type="Texture2D" uid="uid://dvltnidogq8wh" path="res://Assets/UI/button-hover.png" id="3_7a3b4"]
-[ext_resource type="Texture2D" uid="uid://bnnfgcdhyqfg5" path="res://Assets/Sprites/HUD/Over.png" id="3_hajsq"]
-[ext_resource type="Texture2D" uid="uid://cgabyw6mh7aua" path="res://Assets/UI/button-active.png" id="4_mlwe3"]
 [ext_resource type="Texture2D" uid="uid://d3h07pkq442w4" path="res://Assets/Weapons/pistol_equipped.png" id="5_qxsee"]
 [ext_resource type="Texture2D" uid="uid://2651msniwivg" path="res://Assets/Weapons/rifle_equipped.png" id="6_5r1ue"]
 [ext_resource type="Texture2D" uid="uid://cuye14fit4nx7" path="res://Assets/Weapons/shotgun_equipped.png" id="7_74o6n"]
 [ext_resource type="Texture2D" uid="uid://dty6a8v7bthsa" path="res://Assets/Weapons/melee_equipped.png" id="8_4vbfh"]
 [ext_resource type="Texture2D" uid="uid://c4mteccnfadll" path="res://Assets/UI/panel-brown.png" id="9_653lp"]
 [ext_resource type="Texture2D" uid="uid://brf2ri8fovlqp" path="res://Assets/Sprites/Money/money.png" id="10_6n8ya"]
-[ext_resource type="Texture2D" uid="uid://kg0rgio3a2qf" path="res://Assets/UI/character-portrait.png" id="10_j40si"]
-[ext_resource type="Texture2D" uid="uid://ohw67ov6tsam" path="res://Assets/UI/input.png" id="11_tuqfe"]
+[ext_resource type="Texture2D" uid="uid://crlhybqx06c42" path="res://Assets/UI/player-border.png" id="10_jhf4q"]
+[ext_resource type="Texture2D" uid="uid://c857pqypq3x43" path="res://Assets/UI/ui_big_pieces.png" id="14_de8uc"]
 [ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="14_urlq7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dk723"]
 texture = ExtResource("2_6lom0")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gtj3v"]
-texture = ExtResource("3_7a3b4")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d6qes"]
-texture = ExtResource("4_mlwe3")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_718yt"]
 
@@ -85,13 +75,29 @@ animations = [{
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h8va3"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5u5u"]
+atlas = ExtResource("14_de8uc")
+region = Rect2(258, 39, 76, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ivjvq"]
+atlas = ExtResource("14_de8uc")
+region = Rect2(284, 41, 24, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exi3g"]
+atlas = ExtResource("14_de8uc")
+region = Rect2(370, 72, 8, 14)
+filter_clip = true
+
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_v7k06")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_top = 547.0
-offset_right = 1153.0
-offset_bottom = 648.0
+visible = false
+offset_left = 29.0
+offset_top = 599.0
+offset_right = 1182.0
+offset_bottom = 637.0
 size_flags_horizontal = 4
 size_flags_vertical = 8
 texture = ExtResource("2_8tnyt")
@@ -104,9 +110,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -37.0
-offset_right = 64.0
+offset_left = -9.0
+offset_top = -36.0
+offset_right = 75.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 3
@@ -116,11 +123,12 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -100.0
-offset_right = 548.0
-offset_bottom = -6.0
+offset_left = -70.0
+offset_top = -118.0
+offset_right = 542.0
+offset_bottom = -24.0
 grow_vertical = 0
+mouse_filter = 2
 texture = ExtResource("3_1ux4k")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HotBar"]
@@ -130,10 +138,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -58.0
-offset_top = -90.0
-offset_right = 273.0
-offset_bottom = -45.0
+offset_left = -61.0
+offset_top = -109.0
+offset_right = 270.0
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.55, 1.55)
@@ -144,8 +152,8 @@ texture_filter = 1
 custom_minimum_size = Vector2(75, 45)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_dk723")
-theme_override_styles/hover = SubResource("StyleBoxTexture_gtj3v")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_d6qes")
+theme_override_styles/hover = SubResource("StyleBoxTexture_dk723")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_dk723")
 button_mask = 0
 icon = ExtResource("5_qxsee")
 icon_alignment = 1
@@ -155,8 +163,8 @@ texture_filter = 1
 custom_minimum_size = Vector2(75, 45)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_dk723")
-theme_override_styles/hover = SubResource("StyleBoxTexture_gtj3v")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_d6qes")
+theme_override_styles/hover = SubResource("StyleBoxTexture_dk723")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_dk723")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_718yt")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_824vd")
 button_mask = 0
@@ -168,8 +176,8 @@ texture_filter = 1
 custom_minimum_size = Vector2(75, 45)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_dk723")
-theme_override_styles/hover = SubResource("StyleBoxTexture_gtj3v")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_d6qes")
+theme_override_styles/hover = SubResource("StyleBoxTexture_dk723")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_dk723")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_cvrip")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_6ty3b")
 button_mask = 0
@@ -181,8 +189,8 @@ texture_filter = 1
 custom_minimum_size = Vector2(75, 45)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_dk723")
-theme_override_styles/hover = SubResource("StyleBoxTexture_gtj3v")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_d6qes")
+theme_override_styles/hover = SubResource("StyleBoxTexture_dk723")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_dk723")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_unh52")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_v1pba")
 button_mask = 0
@@ -194,24 +202,24 @@ offset_left = 8.0
 offset_top = 503.0
 offset_right = 404.0
 offset_bottom = 648.0
-theme_override_constants/separation = -10
+theme_override_constants/separation = -4
 
-[node name="PlayerPortrait" type="TextureRect" parent="PlayerStats"]
+[node name="PlayerBorder" type="TextureRect" parent="PlayerStats"]
 layout_mode = 2
-texture = ExtResource("10_j40si")
+texture = ExtResource("10_jhf4q")
 
 [node name="HealthAndMoneyContainer" type="CenterContainer" parent="PlayerStats"]
 layout_direction = 1
 layout_mode = 2
 
-[node name="ContainerBackground" type="TextureRect" parent="PlayerStats/HealthAndMoneyContainer"]
-custom_minimum_size = Vector2(270, 110)
+[node name="ContainerBorder" type="TextureRect" parent="PlayerStats/HealthAndMoneyContainer"]
+custom_minimum_size = Vector2(265, 115)
 layout_mode = 2
 texture = ExtResource("9_653lp")
 
 [node name="Details" type="VBoxContainer" parent="PlayerStats/HealthAndMoneyContainer"]
 layout_mode = 2
-theme_override_constants/separation = -2
+theme_override_constants/separation = 1
 
 [node name="Money" type="HBoxContainer" parent="PlayerStats/HealthAndMoneyContainer/Details"]
 custom_minimum_size = Vector2(50, 30)
@@ -219,14 +227,14 @@ layout_mode = 2
 
 [node name="MoneyAnim" type="AnimatedSprite2D" parent="PlayerStats/HealthAndMoneyContainer/Details/Money"]
 texture_filter = 1
-position = Vector2(14, 12)
+position = Vector2(20, 14)
 scale = Vector2(1.1875, 1)
 sprite_frames = SubResource("SpriteFrames_mnvvn")
 frame_progress = 0.95
 
 [node name="VSeparator" type="VSeparator" parent="PlayerStats/HealthAndMoneyContainer/Details/Money"]
 layout_mode = 2
-theme_override_constants/separation = 34
+theme_override_constants/separation = 36
 theme_override_styles/separator = SubResource("StyleBoxEmpty_h8va3")
 
 [node name="MoneyText" type="RichTextLabel" parent="PlayerStats/HealthAndMoneyContainer/Details/Money"]
@@ -241,12 +249,13 @@ layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="HealthBarBorder" type="TextureRect" parent="PlayerStats/HealthAndMoneyContainer/Details/HealthContainer"]
+clip_contents = true
 custom_minimum_size = Vector2(225, 45)
 layout_mode = 2
-texture = ExtResource("11_tuqfe")
+texture = SubResource("AtlasTexture_l5u5u")
 
 [node name="HealthBar" type="TextureProgressBar" parent="PlayerStats/HealthAndMoneyContainer/Details/HealthContainer"]
-custom_minimum_size = Vector2(207, 30)
+custom_minimum_size = Vector2(170, 34)
 layout_mode = 2
 step = 0.01
 value = 50.0
@@ -255,15 +264,13 @@ stretch_margin_left = 3
 stretch_margin_top = 3
 stretch_margin_right = 3
 stretch_margin_bottom = 3
-texture_under = ExtResource("2_ngjni")
-texture_over = ExtResource("3_hajsq")
-texture_progress = ExtResource("2_ngjni")
-tint_under = Color(0.643137, 0, 0, 1)
-tint_over = Color(0, 0.0627451, 0.0627451, 1)
-tint_progress = Color(0, 0.956863, 0.380392, 1)
+texture_under = SubResource("AtlasTexture_ivjvq")
+texture_over = SubResource("AtlasTexture_ivjvq")
+texture_progress = SubResource("AtlasTexture_exi3g")
+tint_over = Color(1, 1, 1, 0.0196078)
 
 [node name="PlayerIcon" type="Sprite2D" parent="PlayerStats"]
 texture_filter = 1
-position = Vector2(74, 66)
+position = Vector2(74, 68)
 scale = Vector2(2.34387, 2.06555)
 texture = ExtResource("2_w76v0")

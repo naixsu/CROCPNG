@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://chwjij2h3jwlu"]
+[gd_scene load_steps=5 format=3 uid="uid://chwjij2h3jwlu"]
 
 [ext_resource type="Texture2D" uid="uid://b06vqoxnswap1" path="res://Assets/Win-Lose Banners/BlackScreen.png" id="1_gpkor"]
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/EndBanner.gd" id="1_shht8"]
 [ext_resource type="Texture2D" uid="uid://be4kfwuaqquyw" path="res://Assets/Win-Lose Banners/Lose banner.png" id="2_b0o60"]
 [ext_resource type="Texture2D" uid="uid://dx02m8mky7vlm" path="res://Assets/Win-Lose Banners/Win banner.png" id="3_68l2h"]
 
 [node name="EndBanner" type="CanvasLayer"]
+script = ExtResource("1_shht8")
 
 [node name="BGModal" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.392157)
@@ -29,3 +31,43 @@ texture_filter = 1
 position = Vector2(576, 192)
 scale = Vector2(4, 4)
 texture = ExtResource("3_68l2h")
+
+[node name="Buttons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RestartButton" type="Button" parent="Buttons"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 373.0
+offset_top = 512.0
+offset_right = 438.0
+offset_bottom = 543.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Restart"
+
+[node name="QuitButton" type="Button" parent="Buttons"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 603.0
+offset_top = 512.0
+offset_right = 668.0
+offset_bottom = 543.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Quit"
+
+[connection signal="pressed" from="Buttons/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Buttons/QuitButton" to="." method="_on_quit_button_pressed"]

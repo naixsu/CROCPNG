@@ -18,6 +18,7 @@ func _ready():
 	readyPrompt.connect("reward_players", reward_players) # Give money after beating a round
 	readyPrompt.connect("win_banner", win_banner)
 	readyPrompt.connect("pre_wave", pre_wave)
+	endBanner.connect("restart_game", restart_game)
 	pre_wave()
 	var index = 0
 #	var bulletManagerInstance = BulletManager.instantiate()
@@ -112,7 +113,9 @@ func pre_wave():
 	if multiplayer.is_server():
 		SoundManager.startWave.stop()
 		SoundManager.preWave.play()
-		
+
+func restart_game():
+	reset_wave.rpc()
 
 func start_wave():
 #	if is_multiplayer_authority():
@@ -202,6 +205,16 @@ func clear_money():
 @rpc("any_peer", "call_local")
 func add_wave():
 	GameManager.wave += 1
+	
+@rpc("any_peer", "call_local")
+func reset_wave():
+	print("Reset Wave")
+	GameManager.wave = 0
+	GameManager.gameOver = false
+#	start_wave()
+	endBanner.get_node("Banners").get_node("LoseBanner").visible = false
+	endBanner.get_node("Buttons").visible = false
+	readyPrompt.visible = true
 		
 @rpc("any_peer", "call_local")
 func add_enemy():
@@ -219,6 +232,9 @@ func set_game_over():
 	SoundManager.startWave.stop()
 	SoundManager.finalWave.stop()
 	print("Game Over")
+	var players = get_tree().get_nodes_in_group("Player")
+	for player in players:
+		player.HUD.visible = false
 
 @rpc("any_peer", "call_local")
 func reset_player_health():

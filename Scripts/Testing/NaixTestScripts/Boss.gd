@@ -14,6 +14,7 @@ class_name Boss
 @export var resource : Resource
 @export var dead = false
 @export var hasBomb : bool = false
+@export var bulletDmg : int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,6 +23,7 @@ func _ready():
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
 	bulletHell.initialize(self)
+	bulletDmg = resource.damage
 
 func _process(delta):
 #	healthLabel.text = str(health)

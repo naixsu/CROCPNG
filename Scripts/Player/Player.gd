@@ -580,11 +580,12 @@ func finished_anim():
 	meleeNode.visible = false
 
 func handle_hit(dmg):
-	iFramesTimer.start()
-	SoundManager.playerHit.play()
-	health -= dmg
-	print("Player hit", health)
-	update_hud.rpc()
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		iFramesTimer.start()
+		SoundManager.playerHit.play()
+		health -= dmg
+		print("Player hit", health)
+		update_hud.rpc()
 	
 func toggle_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():

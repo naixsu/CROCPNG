@@ -95,7 +95,7 @@ func shoot_clockwise(angle):
 		spawn_bullet(
 			self.global_position, # position
 			bulletSpeed, # bulletSpeed
-			parent.resource.damage, # damage
+			parent.bulletDmg, # damage
 			rot, # rotation
 			bulletLifeTime # lifetime
 		)

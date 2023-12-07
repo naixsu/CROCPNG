@@ -2,7 +2,7 @@ extends Node2D
 
 #@export var BulletManager: PackedScene
 @export var PlayerScene: PackedScene
-@export var EnemyA: PackedScene
+@export var baseReward = 150
 #@onready var bullet_manager = $BulletManager
 var spawn_points = []
 
@@ -120,10 +120,10 @@ func start_wave():
 		add_wave.rpc()
 		clear_money.rpc()
 		SoundManager.preWave.stop()
+		reset_player_health.rpc()
 #		if GameManager.wave == GameManager.maxWave: # Change for final wave
 		if GameManager.wave == 1:
 #			final_wave()
-			
 			final_wave.rpc()
 		else:
 			SoundManager.startWave.play()
@@ -183,10 +183,11 @@ func start_wave():
 func reward_players():
 	print("Reward Players")
 	var players = get_tree().get_nodes_in_group("Player")
-	var rewardMoney = 150 * GameManager.wave
+	var rewardMoney = baseReward * GameManager.wave
 	
 	for player in players:
 		player.set_money(rewardMoney)
+		player.update_hud.rpc()
 
 					
 @rpc("any_peer", "call_local")
@@ -218,6 +219,14 @@ func set_game_over():
 	SoundManager.startWave.stop()
 	SoundManager.finalWave.stop()
 	print("Game Over")
+
+@rpc("any_peer", "call_local")
+func reset_player_health():
+	print("Resetting health")
+	var players = get_tree().get_nodes_in_group("Player")
+	for player in players:
+		player.health = player.maxHealth
+		player.update_hud.rpc()
 
 func win_banner():
 	endBanner.visible = true

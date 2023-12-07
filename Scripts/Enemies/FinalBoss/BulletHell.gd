@@ -73,13 +73,14 @@ func set_step():
 
 @rpc("any_peer", "call_local")
 func spawn_bullet(pos, bulletSpeed, dmg, rot, bulletLifeTime):
-	bulletSpawner.spawn([
-		pos, # position
-		bulletSpeed, # bulletSpeed
-		dmg, # damage
-		rot, # rotation
-		bulletLifeTime # lifetime
-	])
+	if multiplayer.is_server():
+		bulletSpawner.spawn([
+			pos, # position
+			bulletSpeed, # bulletSpeed
+			dmg, # damage
+			rot, # rotation
+			bulletLifeTime # lifetime
+		])
 
 func shoot_clockwise(angle):
 #	if multiplayer.is_server():

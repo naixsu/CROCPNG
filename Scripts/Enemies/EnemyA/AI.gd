@@ -190,7 +190,7 @@ func _on_spawn_detector_area_shape_entered(area_rid, area, area_shape_index, loc
 	var areaName = area.get_parent().name
 	spawn = areaName.to_int()
 	await get_tree().physics_frame
-	print("Set parent " + str(parent.name) + " at Spawn Area: " + str(spawn))
+	# print("Set parent " + str(parent.name) + " at Spawn Area: " + str(spawn))
 	parent.spawn = spawn
 	initialize_path_finding()
 	# Toggle state

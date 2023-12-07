@@ -166,7 +166,7 @@ func set_pattern(newPattern):
 		return
 	
 	currentPattern = newPattern
-	print("currentPattern " + str(currentPattern))
+	# print("currentPattern " + str(currentPattern))
 	
 func get_vector(angle):
 	# update theta
@@ -202,7 +202,7 @@ func _on_pattern_duration_timeout():
 	var nextPattern = currentPattern + 1
 	if nextPattern > Pattern.size() - 1:
 		nextPattern = 0
-	print("SwitchPattern")
+	# print("SwitchPattern")
 	set_pattern(nextPattern)
 	set_step()
 	

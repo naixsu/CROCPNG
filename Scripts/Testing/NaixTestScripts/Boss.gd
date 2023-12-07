@@ -50,7 +50,8 @@ func run():
 	anim.play("run")
 
 func attack_player(player):
-	if player.iFramesTimer.is_stopped():
+	# if player.iFramesTimer.is_stopped():
+	if not player.showIframes:
 		print("Attacking player " + str(player.name))
 		player.handle_hit(resource.damage)
 

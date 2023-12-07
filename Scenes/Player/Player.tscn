@@ -250,6 +250,10 @@ properties/26/path = NodePath("NameLabel:text")
 properties/26/spawn = true
 properties/26/sync = true
 properties/26/watch = false
+properties/27/path = NodePath(".:showIframes")
+properties/27/spawn = true
+properties/27/sync = true
+properties/27/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -363,3 +367,4 @@ visible = false
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]
+[connection signal="timeout" from="IFramesTimer" to="." method="_on_i_frames_timer_timeout"]

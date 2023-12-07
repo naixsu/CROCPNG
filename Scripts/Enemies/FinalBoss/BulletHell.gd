@@ -50,22 +50,22 @@ func set_step():
 	match currentPattern:
 		Pattern.CLOCKWISE, Pattern.COUNTER:
 			step = 2
-			bulletInterval.set_wait_time(0.4)
+			bulletInterval.set_wait_time(0.9)
 			circleDiv = maxAngle / step
 			interval = rightAngle / step
 		Pattern.CLOVER:
 			step = 6
-			bulletInterval.set_wait_time(0.5)
+			bulletInterval.set_wait_time(0.9)
 			circleDiv = maxAngle / step
 			interval = rightAngle / step
 		Pattern.RADIAL:
 			step = 8
-			bulletInterval.set_wait_time(0.7)
+			bulletInterval.set_wait_time(0.9)
 			circleDiv = maxAngle / step
 			interval = rightAngle / step
 		Pattern.CROSS:
 			step = 4
-			bulletInterval.set_wait_time(0.8)
+			bulletInterval.set_wait_time(0.9)
 			circleDiv = maxAngle / step
 			interval = circleDiv / 2
 			

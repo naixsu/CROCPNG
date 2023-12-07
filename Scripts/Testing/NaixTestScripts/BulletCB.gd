@@ -80,8 +80,9 @@ func _physics_process(delta):
 				
 			if collider.is_in_group("Player"):
 		#		print("Collided with player. Ignoring ", collider)
-				if collider.iFramesTimer.is_stopped():
-					collider.handle_hit(damage)
+				if not collider.showIframes:
+#					collider.handle_hit(damage)
+					collider.handle_boss_bullet.rpc(damage)
 				if multiplayer.is_server(): queue_free()
 			
 			if collider.is_in_group("Platform"):

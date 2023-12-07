@@ -146,6 +146,8 @@ var weaponUpgrades : Dictionary
 #var syncPos = Vector2(0, 0)
 #var syncRot = 0
 
+@export var showIframes = false
+
 func _ready():
 	init_weapons(weaponFile)
 	init_shop()
@@ -174,6 +176,7 @@ func _ready():
 
 func _process(delta):
 	if GameManager.gameOver: return 
+	
 	readyLabel.text = str(readyState)
 	moneyLabel.text = str(money)
 	healthLabel.text = str(health)
@@ -190,6 +193,8 @@ func _process(delta):
 func _physics_process(delta):
 	if GameManager.gameOver: return 
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		if showIframes:
+			print(iFramesTimer.time_left)
 		var direction = Input.get_vector("Left", "Right", "Up", "Down")
 #		speed = dashSpeed if dash.is_dashing() else tempSpeed
 #		velocity = direction * speed
@@ -215,7 +220,14 @@ func _physics_process(delta):
 		if not dead:
 			update_gun_rotation()
 #			move_and_slide()
-			move_and_collide(velocity * delta)
+			var collision = move_and_collide(velocity * delta)
+#			if collision:
+#				var collider = collision.get_collider()
+##				print("Collider " + str(collider))
+#				if collider.is_in_group("BossBullet"):
+#					print("Boss Bullet")
+#					handle_boss_bullet.rpc(collider)
+						
 			update_animation()
 			check_hit()
 
@@ -580,13 +592,19 @@ func finished_anim():
 	meleeNode.visible = false
 
 func handle_hit(dmg):
-	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() and not showIframes:
 		iFramesTimer.start()
+		showIframes = true
 		SoundManager.playerHit.play()
 		health -= dmg
 		print("Player hit", health)
 		update_hud.rpc()
 	
+@rpc("any_peer", "call_local")
+func handle_boss_bullet(damage):
+	handle_hit(damage)
+#	if multiplayer.is_server():
+#		collider.queue_free()
 func toggle_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		SoundManager.click.play()
@@ -631,3 +649,7 @@ func _on_respawn_timer_timeout():
 	collision.disabled = false
 	health = maxHealth
 	update_hud.rpc()
+
+
+func _on_i_frames_timer_timeout():
+	showIframes = false # Replace with function body.

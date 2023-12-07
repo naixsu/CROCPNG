@@ -526,13 +526,14 @@ func switch_weapon(index):
 	
 @rpc("any_peer", "call_local")
 func fire(held_down):
+	if GameManager.gameOver: return 
 	if held_down:
 		weapon_held_down = true
 	elif !held_down:
 		weapon_held_down = false
 	
 	while weapon_held_down:
-		if dead:
+		if dead or GameManager.gameOver:
 			break
 		if currentWeapon.get_node("FireCooldown").is_stopped():
 			SoundManager.gunSounds[currentWeaponIndex].play()

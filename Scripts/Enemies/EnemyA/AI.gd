@@ -78,6 +78,7 @@ func set_movement_target(targetPoint: Vector2):
 	
 
 func _physics_process(delta):	
+	if GameManager.gameOver: return 
 	if parent.health <= 0:
 		set_state(State.DEAD)
 	

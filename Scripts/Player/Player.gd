@@ -197,12 +197,8 @@ func _physics_process(delta):
 #			print(iFramesTimer.time_left)
 			var mapped_value = iFramesTimer.time_left / iFramesTimer.wait_time
 			# Interpolate between 100 and 255 based on the mapped value
-			var iFramesModulate = lerp(100, 255, 1.0 - mapped_value)
-#			print(iFramesModulate)
-#			anim.set_modulate(int(iFramesModulate))
-#			anim.modulate = Color(1, 1, 1, iFramesModulate)
-			anim.set_modulate(Color(1,1,1,iFramesModulate))
-#			anim.set_modulate(100)
+			var iFramesModulate = lerp(0, 1, 1.0 - mapped_value)
+			anim.set_self_modulate(Color(1, 1, 1, iFramesModulate))
 		var direction = Input.get_vector("Left", "Right", "Up", "Down")
 #		speed = dashSpeed if dash.is_dashing() else tempSpeed
 #		velocity = direction * speed
@@ -661,5 +657,4 @@ func _on_respawn_timer_timeout():
 
 func _on_i_frames_timer_timeout():
 	showIframes = false # Replace with function body.
-#	anim.modulate = Color(1, 1, 1, 255)
-	anim.set_modulate(1, 1, 1, 255)
+	anim.set_self_modulate(Color(1, 1, 1, 1))

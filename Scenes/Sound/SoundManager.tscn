@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bsabsu06d6xb3"]
+[gd_scene load_steps=23 format=3 uid="uid://bsabsu06d6xb3"]
 
 [ext_resource type="Script" path="res://Scripts/Sound/SoundManager.gd" id="1_xt0a1"]
 [ext_resource type="AudioStream" uid="uid://bj61q38nwdri1" path="res://Assets/Sound/click.wav" id="2_besm3"]
@@ -21,6 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://byf6tasg84j3a" path="res://Assets/Sound/Win.wav" id="17_h2mtf"]
 [ext_resource type="AudioStream" uid="uid://bkleibuw1qgpw" path="res://Assets/Sound/BossMusic2.mp3" id="18_ft50g"]
 [ext_resource type="AudioStream" uid="uid://po1ob3fm2rqc" path="res://Assets/Sound/RE Aoharu 8bit ver.mp3" id="18_pfo3f"]
+[ext_resource type="AudioStream" uid="uid://b5u3b8k5jadpi" path="res://Assets/Sound/Bomb.wav" id="22_w6i5j"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_xt0a1")
@@ -116,3 +117,7 @@ stream = ExtResource("17_h2mtf")
 [node name="MainMenu" type="AudioStreamPlayer" parent="StreamPlayer"]
 stream = ExtResource("18_pfo3f")
 volume_db = -10.0
+
+[node name="Bomb" type="AudioStreamPlayer" parent="StreamPlayer"]
+stream = ExtResource("22_w6i5j")
+volume_db = 10.0

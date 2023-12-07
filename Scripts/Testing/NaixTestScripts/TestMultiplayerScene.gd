@@ -11,6 +11,7 @@ var spawn_points = []
 @onready var endBanner = $EndBanner
 @onready var SoundManager = $SoundManager
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	readyPrompt.connect("start_wave", start_wave)
@@ -27,31 +28,31 @@ func _ready():
 		if child is Marker2D:
 			spawn_points.append(child)
 	
+#		if multiplayer.is_server():
+	var root = get_tree().get_root()
+	var playerSpawnPoint = root.get_node("TestMultiplayerScene/PlayerSpawnPoints")
+	var spawnPoints = playerSpawnPoint.get_children()
+	
 	for i in GameManager.players:
 		var currentPlayer = PlayerScene.instantiate()
-		
 
 		currentPlayer.name = str(GameManager.players[i].id)
-#		currentPlayer.name = str(GameManager.players[i].name)
-#		currentPlayer.connect("player_fired_bullet", bullet_manager.handle_bullet_spawned)
-#		currentPlayer.connect("player_fired_bullet", BulletManager.handle_bullet_spawned)
-#		currentPlayer.connect("player_fired_bullet", bulletManagerInstance.handle_bullet_spawned)
+##		currentPlayer.name = str(GameManager.players[i].name)
+##		currentPlayer.connect("player_fired_bullet", bullet_manager.handle_bullet_spawned)
+##		currentPlayer.connect("player_fired_bullet", BulletManager.handle_bullet_spawned)
+##		currentPlayer.connect("player_fired_bullet", bulletManagerInstance.handle_bullet_spawned)
 		add_child(currentPlayer)
-#		add_child(bulletManagerInstance)
-		
+##		add_child(bulletManagerInstance)
+#
 		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
 			if spawn.name == str(index):
 				currentPlayer.global_position = spawn.global_position
 		index += 1
+		
+		if index > get_tree().get_nodes_in_group("PlayerSpawnPoint").size():
+			index = 0
 				
 	# playerScene.connect("player_fired_bullet", bullet_manager.handle_bullet_spawned)
-
-#func _unhandled_input(event):
-#	if event.is_action_pressed("Spawn"):
-##		spawn_enemy.rpc()
-#		spawn_enemy()
-#		pass
-
 
 # Might wanna use a resource here so that the wave feature
 # so that waves aren't randomized

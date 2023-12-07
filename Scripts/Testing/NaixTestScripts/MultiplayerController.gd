@@ -2,6 +2,7 @@ extends Control
 
 @export var address = "127.0.0.1"
 @export var port = 8910
+@export var maxPlayers = 4
 
 @onready var nameEdit = $NameEdit
 @onready var SoundManager = $SoundManager # Capitalizing this
@@ -80,7 +81,7 @@ func connection_failed():
 
 func host_game():
 	peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(port, 32)
+	var error = peer.create_server(port, maxPlayers)
 	
 	if error != OK:
 		print("Cannot host: " + str(error))

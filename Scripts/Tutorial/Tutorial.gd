@@ -3,6 +3,9 @@ extends Control
 var panels : Array
 var currentPanelIndex : int
 
+signal back_to_main
+signal from_tutorial_next_prev_clicked
+
 func _ready():
 	panels = [$Movement, $Attack, $Weapon, $Zoom, $Shop]
 	# Initialize panels' visibility
@@ -22,6 +25,8 @@ func _on_next_pressed():
 		
 	panels[currentPanelIndex].visible = true
 	
+	from_tutorial_next_prev_clicked.emit()
+	
 #"Previous" button
 func _on_prev_pressed():
 	panels[currentPanelIndex].visible = false
@@ -30,3 +35,8 @@ func _on_prev_pressed():
 		currentPanelIndex = panels.size() - 1
 
 	panels[currentPanelIndex].visible = true
+	from_tutorial_next_prev_clicked.emit()
+
+
+func _on_main_menu_pressed():
+	back_to_main.emit()

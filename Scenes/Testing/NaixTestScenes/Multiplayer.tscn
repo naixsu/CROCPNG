@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bxtn8e8m61sj3"]
+[gd_scene load_steps=21 format=3 uid="uid://bxtn8e8m61sj3"]
 
 [ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="1_f14hw"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/MultiplayerController.gd" id="1_wmt0j"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://28re37q6ajrt" path="res://Assets/UI/panel-brown-big.png" id="7_vnst6"]
 [ext_resource type="Theme" uid="uid://byyncocqpbdnj" path="res://Assets/UI/helper_text.tres" id="10_54314"]
 [ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="15_rep7u"]
+[ext_resource type="PackedScene" uid="uid://dde2f35ut0e4f" path="res://Scenes/Tutorial/Tutorial.tscn" id="16_uxhrd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7jsei"]
 
@@ -267,6 +268,21 @@ texture = ExtResource("6_1x86m")
 
 [node name="SoundManager" parent="." instance=ExtResource("15_rep7u")]
 
+[node name="Tutorial" parent="." instance=ExtResource("16_uxhrd")]
+visible = false
+layout_mode = 1
+
+[node name="TutorialButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 472.0
+offset_top = 546.0
+offset_right = 660.0
+offset_bottom = 584.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7jsei")
+text = "TUTORIAL"
+
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
 [connection signal="button_down" from="StartGame" to="." method="_on_start_game_button_down"]
@@ -275,3 +291,4 @@ texture = ExtResource("6_1x86m")
 [connection signal="timeout" from="ServerBrowser/BroadcastTimer" to="ServerBrowser" method="_on_broadcast_timer_timeout"]
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_down" from="FindServer" to="ServerBrowser" method="_on_find_server_button_down"]
+[connection signal="pressed" from="TutorialButton" to="." method="_on_tutorial_button_pressed"]

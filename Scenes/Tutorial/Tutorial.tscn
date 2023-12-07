@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dde2f35ut0e4f"]
+[gd_scene load_steps=38 format=3 uid="uid://dde2f35ut0e4f"]
 
 [ext_resource type="Script" path="res://Scripts/Tutorial/Tutorial.gd" id="1_5fhuw"]
 [ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="2_2sgqo"]
@@ -79,6 +79,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_um8mj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xogff"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ctgyo"]
+
 [node name="Tutorial" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -90,7 +96,6 @@ theme = ExtResource("2_2sgqo")
 script = ExtResource("1_5fhuw")
 
 [node name="Movement" type="Panel" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 20.0
 offset_top = 16.0
@@ -122,6 +127,7 @@ offset_bottom = 303.0
 texture = ExtResource("4_c0u72")
 
 [node name="TextureRect2" type="TextureRect" parent="Movement"]
+layout_mode = 0
 offset_left = 311.0
 offset_top = 382.0
 offset_right = 358.0
@@ -129,6 +135,7 @@ offset_bottom = 434.0
 texture = ExtResource("5_gjwn5")
 
 [node name="TextureRect3" type="TextureRect" parent="Movement"]
+layout_mode = 0
 offset_left = 464.0
 offset_top = 251.0
 offset_right = 511.0
@@ -136,6 +143,7 @@ offset_bottom = 303.0
 texture = ExtResource("6_p5dd0")
 
 [node name="TextureRect4" type="TextureRect" parent="Movement"]
+layout_mode = 0
 offset_left = 312.0
 offset_top = 118.0
 offset_right = 359.0
@@ -157,6 +165,7 @@ offset_bottom = 564.0
 text = "Press Shift to dash"
 
 [node name="TextureRect5" type="TextureRect" parent="Movement"]
+layout_mode = 0
 offset_left = 735.0
 offset_top = 357.0
 offset_right = 862.0
@@ -165,6 +174,7 @@ texture = ExtResource("9_wgwfh")
 
 [node name="Attack" type="Panel" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 20.0
 offset_top = 16.0
 offset_right = 1132.0
@@ -187,6 +197,7 @@ offset_bottom = 345.0
 texture = ExtResource("10_cbit6")
 
 [node name="Label" type="Label" parent="Attack"]
+layout_mode = 0
 offset_left = 315.0
 offset_top = 447.0
 offset_right = 807.0
@@ -194,6 +205,8 @@ offset_bottom = 490.0
 text = "Left Click to attack/Fire the weapon you're using."
 
 [node name="Label2" type="Label" parent="Attack"]
+visible = false
+layout_mode = 0
 offset_left = 385.0
 offset_top = 482.0
 offset_right = 750.0
@@ -209,6 +222,8 @@ offset_bottom = 409.0
 texture = ExtResource("11_7du33")
 
 [node name="TextureRect3" type="TextureRect" parent="Attack"]
+visible = false
+layout_mode = 0
 offset_left = 827.0
 offset_top = 209.0
 offset_right = 1027.0
@@ -216,6 +231,7 @@ offset_bottom = 409.0
 texture = ExtResource("11_7du33")
 
 [node name="TextureRect4" type="TextureRect" parent="Attack"]
+layout_mode = 0
 offset_left = 154.0
 offset_top = 268.0
 offset_right = 204.0
@@ -223,6 +239,8 @@ offset_bottom = 318.0
 texture = ExtResource("12_hrn32")
 
 [node name="TextureRect5" type="TextureRect" parent="Attack"]
+visible = false
+layout_mode = 0
 offset_left = 946.0
 offset_top = 271.0
 offset_right = 996.0
@@ -231,6 +249,7 @@ texture = ExtResource("12_hrn32")
 
 [node name="Weapon" type="Panel" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 20.0
 offset_top = 16.0
 offset_right = 1132.0
@@ -238,6 +257,7 @@ offset_bottom = 632.0
 theme = ExtResource("2_2sgqo")
 
 [node name="Label" type="Label" parent="Weapon"]
+layout_mode = 0
 offset_left = 284.0
 offset_top = 465.0
 offset_right = 831.0
@@ -245,6 +265,7 @@ offset_bottom = 508.0
 text = "You can switch different weapons by pressing 1, 2, 3, 4."
 
 [node name="TextureRect2" type="TextureRect" parent="Weapon"]
+layout_mode = 0
 offset_left = 818.0
 offset_top = 271.0
 offset_right = 992.0
@@ -252,6 +273,7 @@ offset_bottom = 398.0
 texture = ExtResource("13_gypqa")
 
 [node name="TextureRect3" type="TextureRect" parent="Weapon"]
+layout_mode = 0
 offset_left = 553.0
 offset_top = 269.0
 offset_right = 773.0
@@ -259,6 +281,7 @@ offset_bottom = 396.0
 texture = ExtResource("14_p107h")
 
 [node name="TextureRect4" type="TextureRect" parent="Weapon"]
+layout_mode = 0
 offset_left = 272.0
 offset_top = 270.0
 offset_right = 500.0
@@ -266,6 +289,7 @@ offset_bottom = 397.0
 texture = ExtResource("10_cbit6")
 
 [node name="TextureRect5" type="TextureRect" parent="Weapon"]
+layout_mode = 0
 offset_left = 108.0
 offset_top = 278.0
 offset_right = 236.0
@@ -273,6 +297,7 @@ offset_bottom = 405.0
 texture = ExtResource("15_70gar")
 
 [node name="TextureRect6" type="TextureRect" parent="Weapon"]
+layout_mode = 0
 offset_left = 141.0
 offset_top = 194.0
 offset_right = 211.0
@@ -280,6 +305,7 @@ offset_bottom = 264.0
 texture = ExtResource("16_v24uo")
 
 [node name="TextureRect10" type="TextureRect" parent="Weapon/TextureRect6"]
+layout_mode = 0
 offset_left = 39.0
 offset_top = 47.0
 offset_right = 79.0
@@ -287,6 +313,7 @@ offset_bottom = 87.0
 texture = ExtResource("12_hrn32")
 
 [node name="TextureRect7" type="TextureRect" parent="Weapon"]
+layout_mode = 0
 offset_left = 387.0
 offset_top = 193.0
 offset_right = 457.0
@@ -294,6 +321,7 @@ offset_bottom = 263.0
 texture = ExtResource("17_xhtma")
 
 [node name="TextureRect11" type="TextureRect" parent="Weapon/TextureRect7"]
+layout_mode = 0
 offset_left = 37.0
 offset_top = 47.0
 offset_right = 77.0
@@ -301,6 +329,7 @@ offset_bottom = 87.0
 texture = ExtResource("12_hrn32")
 
 [node name="TextureRect8" type="TextureRect" parent="Weapon"]
+layout_mode = 0
 offset_left = 642.0
 offset_top = 196.0
 offset_right = 712.0
@@ -308,6 +337,7 @@ offset_bottom = 266.0
 texture = ExtResource("18_sjb8j")
 
 [node name="TextureRect10" type="TextureRect" parent="Weapon/TextureRect8"]
+layout_mode = 0
 offset_left = 41.0
 offset_top = 45.0
 offset_right = 81.0
@@ -315,6 +345,7 @@ offset_bottom = 85.0
 texture = ExtResource("12_hrn32")
 
 [node name="TextureRect9" type="TextureRect" parent="Weapon"]
+layout_mode = 0
 offset_left = 879.0
 offset_top = 197.0
 offset_right = 949.0
@@ -322,6 +353,7 @@ offset_bottom = 267.0
 texture = ExtResource("19_sojrn")
 
 [node name="TextureRect10" type="TextureRect" parent="Weapon/TextureRect9"]
+layout_mode = 0
 offset_left = 43.0
 offset_top = 42.0
 offset_right = 83.0
@@ -330,6 +362,7 @@ texture = ExtResource("12_hrn32")
 
 [node name="Zoom" type="Panel" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 20.0
 offset_top = 16.0
 offset_right = 1132.0
@@ -347,11 +380,12 @@ scale = Vector2(0.367664, 0.367664)
 texture = ExtResource("21_yeclv")
 
 [node name="Label" type="Label" parent="Zoom"]
+layout_mode = 0
 offset_left = 260.0
 offset_top = 476.0
 offset_right = 860.0
 offset_bottom = 519.0
-text = "Press - (minus) and = (equal) to zoom in and out respectively."
+text = "Press - (minus) and + (plus) to zoom in and out respectively."
 
 [node name="Arrow" type="Sprite2D" parent="Zoom"]
 position = Vector2(546, 283)
@@ -363,6 +397,7 @@ rotation = 3.14159
 texture = ExtResource("22_wanux")
 
 [node name="TextureRect2" type="TextureRect" parent="Zoom"]
+layout_mode = 0
 offset_left = 521.0
 offset_top = 354.0
 offset_right = 581.0
@@ -370,6 +405,7 @@ offset_bottom = 414.0
 texture = ExtResource("23_v0ahg")
 
 [node name="TextureRect3" type="TextureRect" parent="Zoom"]
+layout_mode = 0
 offset_left = 519.0
 offset_top = 189.0
 offset_right = 579.0
@@ -377,6 +413,7 @@ offset_bottom = 249.0
 texture = ExtResource("24_bnkas")
 
 [node name="TextureRect10" type="TextureRect" parent="Zoom"]
+layout_mode = 0
 offset_left = 554.0
 offset_top = 225.0
 offset_right = 585.0
@@ -384,6 +421,7 @@ offset_bottom = 256.0
 texture = ExtResource("12_hrn32")
 
 [node name="TextureRect11" type="TextureRect" parent="Zoom"]
+layout_mode = 0
 offset_left = 559.0
 offset_top = 394.0
 offset_right = 590.0
@@ -391,6 +429,8 @@ offset_bottom = 425.0
 texture = ExtResource("12_hrn32")
 
 [node name="Shop" type="Panel" parent="."]
+visible = false
+layout_mode = 0
 offset_left = 20.0
 offset_top = 16.0
 offset_right = 1132.0
@@ -398,6 +438,7 @@ offset_bottom = 632.0
 theme = ExtResource("2_2sgqo")
 
 [node name="Label" type="Label" parent="Shop"]
+layout_mode = 0
 offset_left = 218.0
 offset_top = 476.0
 offset_right = 923.0
@@ -424,26 +465,41 @@ position = Vector2(583, 68)
 texture = ExtResource("3_n81uy")
 
 [node name="Next" type="Button" parent="."]
+layout_mode = 0
 offset_left = 839.0
 offset_top = 542.0
 offset_right = 984.0
 offset_bottom = 587.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_um8mj")
 text = "NEXT"
 
 [node name="Prev" type="Button" parent="."]
+layout_mode = 0
 offset_left = 166.0
 offset_top = 542.0
 offset_right = 311.0
 offset_bottom = 587.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xogff")
 text = "PREVIOUS"
 
 [node name="Play" type="Button" parent="."]
 visible = false
+layout_mode = 0
 offset_left = 839.0
 offset_top = 542.0
 offset_right = 984.0
 offset_bottom = 587.0
 text = "PLAY"
 
+[node name="MainMenu" type="Button" parent="."]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 51.0
+offset_right = 202.0
+offset_bottom = 96.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ctgyo")
+text = "MAIN MENU"
+
 [connection signal="pressed" from="Next" to="." method="_on_next_pressed"]
 [connection signal="pressed" from="Prev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="MainMenu" to="." method="_on_main_menu_pressed"]

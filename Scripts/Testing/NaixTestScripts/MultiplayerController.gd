@@ -5,6 +5,8 @@ extends Control
 
 @onready var nameEdit = $NameEdit
 @onready var SoundManager = $SoundManager # Capitalizing this
+@onready var tutorial = $Tutorial
+@onready var tutorialButton = $TutorialButton
 
 # Deprecated
 #@onready var line_edit = $LineEdit
@@ -21,6 +23,9 @@ func _ready():
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
+	
+	tutorial.connect("back_to_main", back_to_main)
+	tutorial.connect("from_tutorial_next_prev_clicked", from_tutorial_next_prev_clicked)
 	
 	# TODO:
 	# work on this so that it only works for server
@@ -162,3 +167,17 @@ func _on_exit_game_button_down():
 func _on_name_edit_text_changed(new_text):
 #	SoundManager.type.set_pitch_scale(randf_range(0.4, 0.5))
 	SoundManager.type.play()
+
+
+func _on_tutorial_button_pressed():
+	SoundManager.click.play()
+	tutorialButton.visible = false
+	tutorial.visible = true
+
+func back_to_main():
+	SoundManager.click.play()
+	tutorial.visible = false
+	tutorialButton.visible = true
+
+func from_tutorial_next_prev_clicked():
+	SoundManager.click.play()

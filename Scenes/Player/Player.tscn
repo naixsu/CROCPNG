@@ -254,6 +254,10 @@ properties/27/path = NodePath(".:showIframes")
 properties/27/spawn = true
 properties/27/sync = true
 properties/27/watch = false
+properties/28/path = NodePath("AnimatedSprite2D:modulate")
+properties/28/spawn = true
+properties/28/sync = true
+properties/28/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -270,6 +274,7 @@ sprite_frames = SubResource("SpriteFrames_u23x5")
 animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_yqhsm")
 

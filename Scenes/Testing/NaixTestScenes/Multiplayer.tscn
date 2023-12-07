@@ -118,6 +118,10 @@ offset_left = 99.0
 offset_top = 267.0
 offset_right = 341.0
 offset_bottom = 323.264
+theme_override_font_sizes/font_size = 25
+max_length = 10
+clear_button_enabled = true
+caret_blink = true
 
 [node name="NameEditLabel" type="Label" parent="."]
 layout_mode = 0

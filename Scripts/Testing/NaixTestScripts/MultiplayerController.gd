@@ -3,6 +3,7 @@ extends Control
 @export var address = "127.0.0.1"
 @export var port = 8910
 @export var maxPlayers = 4
+@export var maxCharLimit = 10
 
 @onready var nameEdit = $NameEdit
 @onready var SoundManager = $SoundManager # Capitalizing this
@@ -18,6 +19,7 @@ var serverName = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	nameEdit.max_length = maxCharLimit
 	SoundManager.mainMenu.play()
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
@@ -167,3 +169,5 @@ func _on_exit_game_button_down():
 func _on_name_edit_text_changed(new_text):
 #	SoundManager.type.set_pitch_scale(randf_range(0.4, 0.5))
 	SoundManager.type.play()
+	if new_text.length() > maxCharLimit:
+		return

@@ -95,7 +95,7 @@ func host_game():
 
 func custom_host(serverName):
 	peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(port, 32)
+	var error = peer.create_server(port, maxPlayers)
 	
 	if error != OK:
 		print("Cannot host: " + str(error))

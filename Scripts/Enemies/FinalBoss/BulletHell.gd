@@ -81,74 +81,74 @@ func spawn_bullet(pos, bulletSpeed, dmg, rot, bulletLifeTime):
 	])
 
 func shoot_clockwise(angle):
-	if multiplayer.is_server():
-		get_vector(angle)
-		var flip = 1
-		if currentPattern == Pattern.COUNTER:
-			flip = -1
+#	if multiplayer.is_server():
+	get_vector(angle)
+	var flip = 1
+	if currentPattern == Pattern.COUNTER:
+		flip = -1
+	
+	for i in range(step):
+		var rot = (theta + ((maxAngle / 2) * i)) * flip
 		
-		for i in range(step):
-			var rot = (theta + ((maxAngle / 2) * i)) * flip
-			
 #			print(rot)
-			spawn_bullet(
-				self.global_position, # position
-				bulletSpeed, # bulletSpeed
-				parent.resource.damage, # damage
-				rot, # rotation
-				bulletLifeTime # lifetime
-			)
+		spawn_bullet(
+			self.global_position, # position
+			bulletSpeed, # bulletSpeed
+			parent.resource.damage, # damage
+			rot, # rotation
+			bulletLifeTime # lifetime
+		)
 #		print("\n")
 
 func shoot_clover(angle):
-	if multiplayer.is_server():
-		get_vector(angle)
+#	if multiplayer.is_server():
+	get_vector(angle)
 #		print("Shoot clover")
-		for i in range(step):
-			var rot = theta + (circleDiv * i)
+	for i in range(step):
+		var rot = theta + (circleDiv * i)
 #			print(rot)
-			spawn_bullet(
-				self.global_position, # position
-				bulletSpeed, # bulletSpeed
-				parent.resource.damage, # damage
-				rot, # rotation
-				bulletLifeTime # lifetime
-			)
+		spawn_bullet(
+			self.global_position, # position
+			bulletSpeed, # bulletSpeed
+			parent.resource.damage, # damage
+			rot, # rotation
+			bulletLifeTime # lifetime
+		)
 #		print("\n")
 
 func shoot_radial(angle):
-	if multiplayer.is_server():
-		get_vector(angle)
+#	if multiplayer.is_server():
+	get_vector(angle)
 #		print("shoot radial")
-		
-		for i in range(step):
-			var rot = circleDiv * i
+	
+	for i in range(step):
+		var rot = circleDiv * i
 #			print(rot)
-			spawn_bullet(
-				self.global_position, # position
-				bulletSpeed, # bulletSpeed
-				parent.resource.damage, # damage
-				rot, # rotation
-				bulletLifeTime # lifetime
+		spawn_bullet(
+			self.global_position, # position
+			bulletSpeed, # bulletSpeed
+			parent.resource.damage, # damage
+			rot, # rotation
+			bulletLifeTime # lifetime
 			)
 #		print("\n")
 
 func shoot_cross(angle):
-	if multiplayer.is_server():
+#	if multiplayer.is_server():
 		
-		get_vector(angle)
+	get_vector(angle)
 #		print("shoot cross")
-		
-		for i in range(step):
-			var rot = theta + (circleDiv * i)
+	
+	for i in range(step):
+		var rot = theta + (circleDiv * i)
 #			print(rot)
-			spawn_bullet(
-				self.global_position, # position
-				bulletSpeed, # bulletSpeed
-				parent.resource.damage, # damage
-				rot, # rotation
-				bulletLifeTime # lifetime
-			)
+		spawn_bullet(
+			self.global_position, # position
+			bulletSpeed, # bulletSpeed
+			parent.resource.damage, # damage
+			rot, # rotation
+			bulletLifeTime # lifetime
+		)
 
 func initialize(parent):
 	self.parent = parent

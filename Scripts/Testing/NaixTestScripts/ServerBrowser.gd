@@ -12,9 +12,9 @@ var listener : PacketPeerUDP
 @export var listenPort : int = 8911
 @export var broadcastPort : int = 8912
 #@export var broadcastAddress : String = "192.168.1.255"
-#@export var broadcastAddress : String = "255.255.255.255"
+@export var broadcastAddress : String = "255.255.255.255"
 #@export var broadcastAddress : String = "172.16.0.255"
-@export var broadcastAddress : String
+#@export var broadcastAddress : String
 
 @export var ServerInfo : PackedScene
 @onready var SoundManager = $"../SoundManager"
@@ -27,19 +27,20 @@ func _ready():
 #	Comment out for windows	
 #	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
 	print("test")
-	if OS.has_feature("windows"):
-		ip =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
-	elif OS.has_feature("x11"):
-		ip =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
-	elif OS.has_feature("macos"):
-		ip = IP.resolve_hostname("localhost", 1)
-	print("Local IP: " + str(ip))
-	var ipOctets = ip.split(".")
-	ipOctets[2] = "1"
-	ipOctets[3] = "255"
-	var modifiedIP = str(ipOctets[0] + "." + ipOctets[1] + "." + ipOctets[2] + "." + ipOctets[3])
-#	print(modifiedIP)
-	broadcastAddress = str(modifiedIP)
+#	if OS.has_feature("windows"):
+#		ip =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+#	elif OS.has_feature("x11"):
+#		ip =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+#	elif OS.has_feature("macos"):
+#		ip = IP.resolve_hostname("localhost", 1)
+#	print("Local IP: " + str(ip))
+#	var ipOctets = ip.split(".")
+#	ipOctets[2] = "0"
+#	ipOctets[3] = "255"
+#	var modifiedIP = str(ipOctets[0] + "." + ipOctets[1] + "." + ipOctets[2] + "." + ipOctets[3])
+##	print(modifiedIP)
+#	print("modified " + str(modifiedIP))
+#	broadcastAddress = str(modifiedIP)
 	
 	print("BroadcastAddress: " + str(broadcastAddress))
 	

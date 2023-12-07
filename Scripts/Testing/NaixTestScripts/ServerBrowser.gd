@@ -87,14 +87,14 @@ func _process(delta):
 		var data = bytes.get_string_from_ascii()
 		var roomInfo = JSON.parse_string(data)
 		
-		print(
-			"Server IP: {0} Server Port: {1} Room Info: {2}"
-			.format({
-				"0": serverip,
-				"1": str(serverport),
-				"2": str(roomInfo)
-			})
-		)
+#		print(
+#			"Server IP: {0} Server Port: {1} Room Info: {2}"
+#			.format({
+#				"0": serverip,
+#				"1": str(serverport),
+#				"2": str(roomInfo)
+#			})
+#		)
 		
 
 		for i in $Panel/VBoxContainer.get_children():

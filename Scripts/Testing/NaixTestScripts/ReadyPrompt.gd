@@ -11,6 +11,7 @@ extends CanvasLayer
 @onready var waveCountdown = $WaveNotif/WaveCountdown
 @onready var respawnLabel = $Respawn
 @onready var bg = $BG
+@onready var readyButton = $PlayerReadyCount/ReadyButton
 
 @export var readyCount : int = 0
 
@@ -18,6 +19,7 @@ var showReady : bool = true
 var startCountdown : bool = false
 var displayCountdown : bool = false
 var checkForEnemies : bool = false
+var readyClicked : bool = false
 
 signal toggle_ready
 signal start_wave
@@ -28,7 +30,7 @@ signal pre_wave
 func _on_ready_button_button_down():
 #	ready_up.rpc()
 	ready_up()
-
+	
 
 func _physics_process(delta):
 	if showReady:
@@ -92,6 +94,12 @@ func check_all_ready():
 
 func ready_up():
 	toggle_ready.emit()
+	readyClicked = !readyClicked
+	# Toggle the ready button
+	if readyClicked:
+		readyButton.text = "Unready"
+	else:
+		readyButton.text = "Ready"
 
 
 func _on_wave_countdown_timeout():

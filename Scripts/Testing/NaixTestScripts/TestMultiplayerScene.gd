@@ -12,6 +12,7 @@ var spawn_points = []
 @onready var SoundManager = $SoundManager
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	readyPrompt.connect("start_wave", start_wave)
@@ -115,7 +116,13 @@ func pre_wave():
 		SoundManager.preWave.play()
 
 func restart_game():
-	reset_wave.rpc()
+#	reset_wave.rpc()
+#	restart_game_to_server_browser.emit()
+	var root = get_tree().get_root()
+	var multiplayerNode = root.get_node("Multiplayer")
+	var serverBrowser = multiplayerNode.get_node("ServerBrowser")
+#	serverBrowser.clean_up()
+	multiplayerNode.restart()
 
 func start_wave():
 #	if is_multiplayer_authority():

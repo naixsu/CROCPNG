@@ -148,12 +148,11 @@ ServerInfo = ExtResource("3_bgp3x")
 [node name="BroadcastTimer" type="Timer" parent="ServerBrowser"]
 
 [node name="Label" type="Label" parent="ServerBrowser"]
-visible = false
 layout_mode = 0
-offset_left = 757.0
-offset_top = 44.0
-offset_right = 921.0
-offset_bottom = 70.0
+offset_left = 775.0
+offset_top = 142.0
+offset_right = 980.0
+offset_bottom = 169.0
 scale = Vector2(1, 1.00725)
 text = "Bound to listen port: "
 

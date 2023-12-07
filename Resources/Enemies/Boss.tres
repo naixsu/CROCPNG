@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_oa682")
-speed = 75
+speed = 1000
 health = 1000.0
 damage = 20

@@ -154,6 +154,7 @@ func start_game():
 func _on_start_game_button_down():
 	SoundManager.click.play()
 	start_game.rpc()
+	startGame.visible = false
 	pass # Replace with function body.
 
 
@@ -190,3 +191,31 @@ func back_to_main():
 
 func from_tutorial_next_prev_clicked():
 	SoundManager.click.play()
+
+func restart():
+	print("Restarting Game")
+	var root = get_tree().get_root()
+	var testMultiplayerScene = root.get_node("TestMultiplayerScene")
+	
+#	var players = get_tree().get_nodes_in_group("Player")
+#	for i in players:
+#		i.queue_free()
+	testMultiplayerScene.queue_free()
+	$ServerBrowser.clean_up()
+	reset_game_manager()
+	clear_server_info()
+#	multiplayer.queue_free()
+	peer.close()
+#	peer = null
+	self.show()
+
+func reset_game_manager():
+	GameManager.players = {}
+	GameManager.wave = 0
+	GameManager.finalWave = false
+	GameManager.gameOver = false
+	GameManager.enemyCount = 0
+
+func clear_server_info():
+	for panel in $ServerBrowser.vBoxContainer.get_children():
+		panel.queue_free()

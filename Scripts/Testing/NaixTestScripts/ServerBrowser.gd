@@ -18,6 +18,8 @@ var listener : PacketPeerUDP
 
 @export var ServerInfo : PackedScene
 @onready var SoundManager = $"../SoundManager"
+@onready var vBoxContainer = $Panel/VBoxContainer
+
 var ip : String
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -140,6 +142,7 @@ func _on_broadcast_timer_timeout():
 	
 
 func clean_up():
+	print("Cleaning Up")
 	if listener != null:
 		listener.close()
 	broadcastTimer.stop()

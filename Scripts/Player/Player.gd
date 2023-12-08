@@ -108,6 +108,7 @@ var dashProgressBar
 var hb
 var sb
 var db
+var playerPrices
 
 var pistolShop
 var pistolDmgProgressBar
@@ -116,6 +117,7 @@ var pistolBSProgressBar
 var pdb # damage button
 var pab # acc button
 var pbb # bulletspeed button
+var pistolPrices
 
 var rifleShop
 var rifleDmgProgressBar
@@ -124,6 +126,7 @@ var rifleBSProgressBar
 var rdb
 var rab
 var rbb
+var riflePrices
 
 var shotgunShop
 var shotgunDmgProgressBar
@@ -132,15 +135,18 @@ var shotgunBSProgressBar
 var sdb
 var sab
 var sbb
+var shotgunPrices
 
 var meleeShop
 var meleeDmgProgressBar
 var mdb
+var meleePrices
 
 var shopMoneyLabel
 
 var shopButtons = []
 var shopPrices = []
+var shopPricesDisplay = []
 var weaponUpgrades : Dictionary
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
@@ -171,9 +177,6 @@ func _ready():
 	
 	nameLabel.text = str(GameManager.players[name.to_int()].name)
 	
-	
-		
-
 func _process(delta):
 	if GameManager.gameOver: return 
 	
@@ -285,7 +288,8 @@ func init_shop():
 	hb = playerShop.get_node("Health").get_node("HealthButton")
 	sb = playerShop.get_node("Speed").get_node("SpeedButton")
 	db = playerShop.get_node("Dash").get_node("DashButton")
-	
+	playerPrices = playerShop.get_node("Prices").get_children()
+
 	pistolShop = shop.get_node("TabContainer").get_node("Pistol")
 	pistolDmgProgressBar = pistolShop.get_node("Damage").get_node("ProgressBar")
 	pistolAccProgressBar = pistolShop.get_node("Accuracy").get_node("ProgressBar")
@@ -293,6 +297,7 @@ func init_shop():
 	pdb = pistolShop.get_node("Damage").get_node("PDmgButton")
 	pab = pistolShop.get_node("Accuracy").get_node("PAccButton")
 	pbb = pistolShop.get_node("Bulletspeed").get_node("PBSButton")
+	pistolPrices = pistolShop.get_node("Prices").get_children()
 	
 	rifleShop = shop.get_node("TabContainer").get_node("Rifle")
 	rifleDmgProgressBar = rifleShop.get_node("Damage").get_node("ProgressBar")
@@ -301,6 +306,7 @@ func init_shop():
 	rdb = rifleShop.get_node("Damage").get_node("RDmgButton")
 	rab = rifleShop.get_node("Accuracy").get_node("RAccButton")
 	rbb = rifleShop.get_node("Bulletspeed").get_node("RBSButton")
+	riflePrices = rifleShop.get_node("Prices").get_children()
 	
 	shotgunShop = shop.get_node("TabContainer").get_node("Shotgun")
 	shotgunDmgProgressBar = shotgunShop.get_node("Damage").get_node("ProgressBar")
@@ -309,10 +315,12 @@ func init_shop():
 	sdb = shotgunShop.get_node("Damage").get_node("SDmgButton")
 	sab = shotgunShop.get_node("Accuracy").get_node("SAccButton")
 	sbb = shotgunShop.get_node("Bulletspeed").get_node("SBSButton")
+	shotgunPrices = shotgunShop.get_node("Prices").get_children()
 	
 	meleeShop = shop.get_node("TabContainer").get_node("Melee")
 	meleeDmgProgressBar = meleeShop.get_node("Damage").get_node("ProgressBar")
 	mdb = meleeShop.get_node("Damage").get_node("MDmgButton")
+	meleePrices = meleeShop.get_node("Prices").get_children()
 	
 	shopMoneyLabel = shop.get_node("Money").get_node("MoneyLabel")
 	
@@ -329,7 +337,11 @@ func init_shop():
 					shop.rifleDmgCost, shop.rifleAccCost, shop.rifleBSCost,
 					shop.shotgunDmgCost, shop.shotgunAccCost, shop.shotgunBSCost,
 					shop.meleeDmgCost
-					]
+				]
+	
+	shopPricesDisplay = [
+		playerPrices, pistolPrices, riflePrices, shotgunPrices, meleePrices
+	]
 	
 	weaponUpgrades = {
 		"pistol": {
@@ -360,7 +372,9 @@ func init_shop():
 			"damage": [meleeDmgProgressBar, shop.meleeDmgCost, 0, 5],
 		}
 	}
+	
 	update_money_label()
+	update_shop_prices()
 
 @rpc("any_peer", "call_local")
 func update_hud():
@@ -379,7 +393,16 @@ func update_hud():
 				HUD.hotBarButtons[buttonIndex].disabled = false
 			else:
 				HUD.hotBarButtons[buttonIndex].disabled = true
-		
+			
+#		update_shop_prices()
+
+func update_shop_prices():
+	var i = 0
+	for shopPrice in shopPricesDisplay:
+		for priceDisplay in shopPrice:
+			priceDisplay.text = str(shopPrices[i])
+			i += 1
+
 
 func update_money_label():
 	shopMoneyLabel.text = str(money) + " Credits"
@@ -420,6 +443,7 @@ func update_shop_buttons():
 func player_upgrade(subject, stat):
 	upgrade_stats.rpc(subject, stat)
 
+# General upgrade function
 @rpc("any_peer", "call_local")
 func upgrade_stats(subject, stat):
 	print("Upgrade Pressed " + " " + subject + " " + stat )
@@ -436,6 +460,7 @@ func upgrade_stats(subject, stat):
 			upgrade_melee(stat)
 	update_money_label()
 	update_shop_buttons()
+	update_shop_prices()
 
 func upgrade_player(stat):
 	print("Upgrading player " + stat)
@@ -455,7 +480,7 @@ func upgrade_player(stat):
 			dashProgressBar.value = 100
 			set_money(-shop.playerDashCost)
 
-# General function
+# General weapon function
 func upgrade_weapon(weapon, stat):
 	print("Upgrading " + weapon + " " + stat)
 	if weaponUpgrades.has(weapon) and weaponUpgrades[weapon].has(stat):

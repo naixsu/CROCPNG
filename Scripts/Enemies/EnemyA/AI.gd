@@ -97,7 +97,8 @@ func _physics_process(delta):
 #					parent.idle()
 #				parent.go_towards(player)
 				set_movement_target(player.global_position)
-				go_towards_target_point(global_position,navigationAgent.get_next_path_position())
+				go_towards_target_point(global_position, player.global_position)
+#				go_towards_target_point(global_position,navigationAgent.get_next_path_position())
 #				go_towards_target_point(navigationAgent.get_next_path_position())
 			else:
 				print("No player found")

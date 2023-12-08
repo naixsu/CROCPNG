@@ -97,7 +97,8 @@ func _physics_process(delta):
 #					parent.idle()
 #				parent.go_towards(player)
 				set_movement_target(player.global_position)
-				go_towards_target_point(navigationAgent.get_next_path_position())
+				go_towards_target_point(global_position,navigationAgent.get_next_path_position())
+#				go_towards_target_point(navigationAgent.get_next_path_position())
 			else:
 				print("No player found")
 				set_state(State.IDLE)
@@ -120,7 +121,7 @@ func _physics_process(delta):
 					
 					return
 				set_movement_target(markers[i].position)
-			go_towards_target_point(markers[i].position)
+			go_towards_target_point(global_position, markers[i].position)
 #			var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
 ##			var nextPathPosition: Vector2 = navigationAgent.get_next_path_position()
 #			var nextPathPosition = markers[i].position
@@ -131,7 +132,7 @@ func _physics_process(delta):
 #
 #			parent.velocity = newVelocity
 #			parent.move_and_slide()
-#			parent.coll = parent.move_and_collide(parent.velocity * delta)
+##			parent.coll = parent.move_and_collide(parent.velocity * delta)
 		State.ATTACKING:
 			parent.attack_player(player)
 
@@ -139,8 +140,8 @@ func _physics_process(delta):
 func initialize(parent):
 	self.parent = parent
 
-func go_towards_target_point(nextPathPosition):
-	var newVelocity: Vector2 = nextPathPosition - global_position
+func go_towards_target_point(currentAgentPosition, nextPathPosition):
+	var newVelocity: Vector2 = nextPathPosition - currentAgentPosition
 	newVelocity = newVelocity.normalized()
 	newVelocity = newVelocity * parent.speed
 

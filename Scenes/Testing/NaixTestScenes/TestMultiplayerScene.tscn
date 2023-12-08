@@ -42,6 +42,12 @@ position = Vector2(-1200, 1800)
 [node name="1" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoint"]]
 position = Vector2(-1200, 1950)
 
+[node name="2" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoint"]]
+position = Vector2(-1058, 1950)
+
+[node name="3" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoint"]]
+position = Vector2(-1057, 1800)
+
 [node name="EnemySpawnPoints" type="Node2D" parent="."]
 
 [node name="0" type="Marker2D" parent="EnemySpawnPoints"]

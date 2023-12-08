@@ -138,8 +138,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqhsm"]
-size = Vector2(64, 58)
+[sub_resource type="CircleShape2D" id="CircleShape2D_0gh6j"]
+radius = 32.249
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ffpdr"]
 properties/0/path = NodePath(".:position")
@@ -250,6 +250,14 @@ properties/26/path = NodePath("NameLabel:text")
 properties/26/spawn = true
 properties/26/sync = true
 properties/26/watch = false
+properties/27/path = NodePath(".:showIframes")
+properties/27/spawn = true
+properties/27/sync = true
+properties/27/watch = false
+properties/28/path = NodePath("AnimatedSprite2D:modulate")
+properties/28/spawn = true
+properties/28/sync = true
+properties/28/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -267,7 +275,7 @@ animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
-shape = SubResource("RectangleShape2D_yqhsm")
+shape = SubResource("CircleShape2D_0gh6j")
 
 [node name="GunRotation" parent="." instance=ExtResource("8_l3ssp")]
 visible = false
@@ -275,6 +283,11 @@ visible = false
 [node name="StatsContainer (Not functioning for now)" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -1870
+limit_top = -1750
+limit_right = 2125
+limit_bottom = 2730
+editor_draw_limits = true
 script = ExtResource("9_vptfm")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -308,6 +321,9 @@ script = ExtResource("10_4nm7p")
 wait_time = 0.1
 one_shot = true
 
+[node name="DashCooldown" type="Timer" parent="Dash"]
+one_shot = true
+
 [node name="Respawn" type="Node2D" parent="."]
 
 [node name="RespawnLabel" type="Label" parent="Respawn"]
@@ -330,7 +346,6 @@ offset_right = 19.0
 offset_bottom = -74.0
 
 [node name="NameLabel" type="Label" parent="."]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -364,3 +379,4 @@ visible = false
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]
+[connection signal="timeout" from="IFramesTimer" to="." method="_on_i_frames_timer_timeout"]

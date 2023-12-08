@@ -14,12 +14,11 @@ func _physics_process(delta):
 		var topLeft = -canvas.origin / canvas.get_scale()
 		var size = get_viewport_rect().size / canvas.get_scale()
 		
-		set_pos.rpc(Rect2(topLeft, size), Vector2(20, 20))
+		set_pos(Rect2(topLeft, size), Vector2(20, 20))
 	else:
 		hide()
 #		set_the_rotation()
 
-@rpc("any_peer", "call_local")
 func set_pos(bounds, offset):
 	indicator.global_position.x = clamp(
 		global_position.x, 

@@ -14,5 +14,6 @@ script = ExtResource("1_dwm5i")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_d28w6")
+layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0

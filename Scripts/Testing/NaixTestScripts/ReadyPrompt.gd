@@ -95,11 +95,8 @@ func check_all_ready():
 func ready_up():
 	toggle_ready.emit()
 	readyClicked = !readyClicked
-	# Toggle the ready button
-	if readyClicked:
-		readyButton.text = "Unready"
-	else:
-		readyButton.text = "Ready"
+	
+	update_ready_text()
 
 
 func _on_wave_countdown_timeout():
@@ -117,4 +114,14 @@ func reset_ready(): # Reset the readyState of all players
 	for player in players:
 		player.readyState = false
 	checkForEnemies = true
+	readyClicked = false
+	
+	update_ready_text()
+
+func update_ready_text():
+	# Toggle the ready button
+	if readyClicked:
+		readyButton.text = "Unready"
+	else:
+		readyButton.text = "Ready"
 	

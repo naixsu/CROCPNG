@@ -88,7 +88,7 @@ var currentWeapon
 		"damage": 0,
 		"accuracy": 0,
 		"bulletSpeed": 0,
-		"dUp": 2.5,
+		"dUp": 0.5,
 		"aUp": 7.5,
 		"bsUp": 200
 	}
@@ -352,7 +352,7 @@ func init_shop():
 			"damage": [shotgunDmgProgressBar, shop.shotgunDmgCost, 0, 2.5],
 			"accuracy": [shotgunAccProgressBar, shop.shotgunAccCost, 0, 7.5],
 			"bulletSpeed": [shotgunBSProgressBar, shop.shotgunBSCost, 0, 200],
-#			"dUp": 2.5,
+#			"dUp": 0.5,
 #			"aUp": 7.5,
 #			"bsUp": 200
 		},
@@ -463,7 +463,8 @@ func upgrade_weapon(weapon, stat):
 		values[0].value += 25 # Progress Bar Value
 		set_money(-values[1]) # Upgrade Cost
 		weaponUpgrades[weapon][stat][2] += weaponUpgrades[weapon][stat][3] # Stat - Stat Up
-		print(weaponUpgrades[weapon])
+		print(weaponUpgrades[weapon][stat][3])
+#		print(weaponUpgrades[weapon])
 #		upgrade_weapon_stat(weapon, stat)
 
 func upgrade_pistol(stat):

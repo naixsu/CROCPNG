@@ -316,6 +316,9 @@ script = ExtResource("10_4nm7p")
 wait_time = 0.1
 one_shot = true
 
+[node name="DashCooldown" type="Timer" parent="Dash"]
+one_shot = true
+
 [node name="Respawn" type="Node2D" parent="."]
 
 [node name="RespawnLabel" type="Label" parent="Respawn"]

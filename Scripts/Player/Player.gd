@@ -199,9 +199,10 @@ func _physics_process(delta):
 			# Interpolate between 100 and 255 based on the mapped value
 			var iFramesModulate = lerp(0, 1, 1.0 - mapped_value)
 			anim.set_self_modulate(Color(1, 1, 1, iFramesModulate))
+		
 		var direction = Input.get_vector("Left", "Right", "Up", "Down")
-#		speed = dashSpeed if dash.is_dashing() else tempSpeed
-#		velocity = direction * speed
+		
+		
 		if dash.is_dashing():
 			velocity = direction * dashSpeed
 		else:
@@ -216,22 +217,14 @@ func _physics_process(delta):
 #		if Input.is_action_just_pressed("ui_accept"):
 #			die.rpc()
 
-		if Input.is_action_just_pressed("Dash") and canDash:
-			var mouse_direction = get_local_mouse_position().normalized()
-			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
-			dash.start_dash(dashLength)
+#		if Input.is_action_just_pressed("Dash") and canDash:
+#			var mouse_direction = get_local_mouse_position().normalized()
+#			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
+#			dash.start_dash(dashLength)
 			
 		if not dead:
-			update_gun_rotation()
 			move_and_slide()
-			# move_and_collide(velocity * delta)
-#			if collision:
-#				var collider = collision.get_collider()
-##				print("Collider " + str(collider))
-#				if collider.is_in_group("BossBullet"):
-#					print("Boss Bullet")
-#					handle_boss_bullet.rpc(collider)
-						
+			update_gun_rotation()
 			update_animation()
 			check_hit()
 
@@ -244,6 +237,11 @@ func _unhandled_input(event):
 	# Handle Weapon stuff in a separate node for reusability
 	# using signals to fire off from Weapon -> Player -> BulletManager
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() and not dead:
+		if Input.is_action_just_pressed("Dash") and canDash and dash.dashCooldown.is_stopped():
+			var mouse_direction = get_local_mouse_position().normalized()
+			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
+			dash.start_dash(dashLength)
+		
 		if event.is_action_pressed("Fire"):
 			fire.rpc(true)
 			

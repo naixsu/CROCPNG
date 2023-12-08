@@ -255,9 +255,13 @@ properties/27/spawn = true
 properties/27/sync = true
 properties/27/watch = false
 properties/28/path = NodePath("AnimatedSprite2D:modulate")
-properties/28/spawn = true
-properties/28/sync = true
+properties/28/spawn = false
+properties/28/sync = false
 properties/28/watch = false
+properties/29/path = NodePath("AnimatedSprite2D:self_modulate")
+properties/29/spawn = true
+properties/29/sync = true
+properties/29/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -280,9 +284,7 @@ shape = SubResource("CircleShape2D_0gh6j")
 [node name="GunRotation" parent="." instance=ExtResource("8_l3ssp")]
 visible = false
 
-[node name="StatsContainer (Not functioning for now)" type="Node2D" parent="."]
-
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="PlayerCamera" type="Camera2D" parent="."]
 limit_left = -1870
 limit_top = -1750
 limit_right = 2125

@@ -25,7 +25,7 @@ class_name Player
 @onready var dash = $Dash
 
 # Camera Onready Vars TO BE DEBUGGED
-@onready var playerCamera = $Camera2D
+@onready var playerCamera = $PlayerCamera
 
 @onready var readyPrompt = get_tree().get_root().get_node("TestMultiplayerScene/ReadyPrompt")
 @onready var readyLabel = $ReadyLabel

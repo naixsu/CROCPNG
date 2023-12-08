@@ -18,5 +18,5 @@ void fragment() {
 	vec2 dist = fract((uv - pos) * vec2(vu_count, segment_count)) - 0.5;
 	float led = smoothstep(0.5, 0.35, abs(dist.x)) * smoothstep(0.5, 0.35, abs(dist.y));
 	
-	COLOR = vec4(led * color * mask, 0.5);
+	COLOR = vec4(led * color * mask, 0.1);
 }

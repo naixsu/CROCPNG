@@ -21,6 +21,7 @@ class_name Enemy
 @onready var healthLabel = $Label
 @onready var target = $Target
 @onready var SoundManager = $SoundManager
+@onready var positionIndicator = $PositionIndicator
 
 @export var hasBomb : bool = false
 ###
@@ -35,6 +36,7 @@ func _ready():
 	anim.play("idle")
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
+	positionIndicator.initialize(self)
 #	ai.initialize_path_finding()
 
 func _process(delta):

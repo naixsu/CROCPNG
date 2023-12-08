@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://877xce1h11m1"]
+[gd_scene load_steps=44 format=3 uid="uid://877xce1h11m1"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/Boss.gd" id="1_s21bl"]
 [ext_resource type="Texture2D" uid="uid://bu2rvk5ugp10u" path="res://Assets/Sprites/Boss/BossSpecialAttack.png" id="2_28bn2"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b5hn8tq25p4dg" path="res://Scenes/Enemies/HitBox.tscn" id="5_qjcdv"]
 [ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="8_8jrb1"]
 [ext_resource type="Script" path="res://Scripts/Enemies/FinalBoss/BulletHell.gd" id="10_jitev"]
+[ext_resource type="PackedScene" uid="uid://dfwij515uc8qu" path="res://Scenes/Enemies/PositionIndicator.tscn" id="12_8qta6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ax31q"]
 atlas = ExtResource("2_28bn2")
@@ -264,6 +265,10 @@ properties/6/path = NodePath(".:bulletDmg")
 properties/6/spawn = true
 properties/6/sync = true
 properties/6/watch = false
+properties/7/path = NodePath("PositionIndicator:position")
+properties/7/spawn = true
+properties/7/sync = true
+properties/7/watch = false
 
 [node name="Boss" type="CharacterBody2D" groups=["Enemy"]]
 z_index = 3
@@ -314,6 +319,9 @@ autostart = true
 [node name="PatternDuration" type="Timer" parent="BulletHell"]
 wait_time = 5.0
 autostart = true
+
+[node name="PositionIndicator" parent="." instance=ExtResource("12_8qta6")]
+visible = false
 
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]
 [connection signal="body_entered" from="AI/HitBox" to="AI" method="_on_hit_box_body_entered"]

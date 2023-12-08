@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bpi2k8viyaihf"]
+[gd_scene load_steps=37 format=3 uid="uid://bpi2k8viyaihf"]
 
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="1_v7k06"]
 [ext_resource type="Texture2D" uid="uid://3mur45ljt52o" path="res://Assets/Sprites/HUD/ProgressBar.png" id="2_ngjni"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cuye14fit4nx7" path="res://Assets/Weapons/shotgun_equipped.png" id="7_74o6n"]
 [ext_resource type="Texture2D" uid="uid://dty6a8v7bthsa" path="res://Assets/Weapons/melee_equipped.png" id="8_4vbfh"]
 [ext_resource type="Texture2D" uid="uid://brf2ri8fovlqp" path="res://Assets/Sprites/Money/money.png" id="10_6n8ya"]
+[ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="10_c0maj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x4cm4"]
 atlas = ExtResource("10_6n8ya")
@@ -210,3 +211,19 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_v1pba")
 disabled = true
 button_mask = 0
 icon = ExtResource("8_4vbfh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 50.0
+offset_top = 59.0
+offset_right = 306.0
+offset_bottom = 117.0
+
+[node name="WaveNumber" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("10_c0maj")
+text = "Wave Number: curr / max"
+
+[node name="NumberOfEnemies" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("10_c0maj")
+text = "Number of Enemmies: curr"

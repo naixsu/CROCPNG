@@ -131,8 +131,8 @@ func start_wave():
 		clear_money.rpc()
 		SoundManager.preWave.stop()
 		reset_player_health.rpc()
-#		if GameManager.wave == GameManager.maxWave: # Change for final wave
-		if GameManager.wave == 1:
+		if GameManager.wave == GameManager.maxWave: # Change for final wave
+#		if GameManager.wave == 1:
 #			final_wave()
 			final_wave.rpc()
 		else:

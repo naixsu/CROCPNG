@@ -12,9 +12,6 @@ class_name Player
 @export var dashLength = 0.3
 @export var health = 100
 @export var maxHealth = health
-@export var Bullet : PackedScene
-@export var Enemy : PackedScene
-@export var BulletCB : PackedScene
 
 # Onready vars here
 @onready var anim = $AnimatedSprite2D
@@ -26,7 +23,6 @@ class_name Player
 
 # Camera Onready Vars TO BE DEBUGGED
 @onready var playerCamera = $PlayerCamera
-
 @onready var readyPrompt = get_tree().get_root().get_node("TestMultiplayerScene/ReadyPrompt")
 @onready var readyLabel = $ReadyLabel
 @onready var respawnNode = $Respawn # Avoiding variable names (resoawn)

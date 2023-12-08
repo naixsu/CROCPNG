@@ -359,6 +359,8 @@ text = "Name"
 
 [node name="Shop" parent="." instance=ExtResource("11_m3tdw")]
 visible = false
+z_index = 11
+position = Vector2(-576, -324)
 
 [node name="HealthLabel" type="Label" parent="."]
 visible = false

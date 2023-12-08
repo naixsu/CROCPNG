@@ -223,8 +223,8 @@ func _physics_process(delta):
 			
 		if not dead:
 			update_gun_rotation()
-#			move_and_slide()
-			var collision = move_and_collide(velocity * delta)
+			move_and_slide()
+			# move_and_collide(velocity * delta)
 #			if collision:
 #				var collider = collision.get_collider()
 ##				print("Collider " + str(collider))

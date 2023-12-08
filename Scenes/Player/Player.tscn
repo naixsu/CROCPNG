@@ -138,8 +138,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqhsm"]
-size = Vector2(64, 58)
+[sub_resource type="CircleShape2D" id="CircleShape2D_0gh6j"]
+radius = 32.249
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ffpdr"]
 properties/0/path = NodePath(".:position")
@@ -274,9 +274,8 @@ sprite_frames = SubResource("SpriteFrames_u23x5")
 animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 3)
-shape = SubResource("RectangleShape2D_yqhsm")
+shape = SubResource("CircleShape2D_0gh6j")
 
 [node name="GunRotation" parent="." instance=ExtResource("8_l3ssp")]
 visible = false

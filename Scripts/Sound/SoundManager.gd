@@ -26,6 +26,7 @@ extends Node
 @onready var lose = $StreamPlayer/Lose
 @onready var win = $StreamPlayer/Win
 @onready var mainMenu = $StreamPlayer/MainMenu
+@onready var bomb = $StreamPlayer/Bomb
 
 var gunSounds : Array
 

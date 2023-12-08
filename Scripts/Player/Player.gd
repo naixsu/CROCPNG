@@ -146,6 +146,8 @@ var weaponUpgrades : Dictionary
 #var syncPos = Vector2(0, 0)
 #var syncRot = 0
 
+@export var showIframes = false
+
 func _ready():
 	init_weapons(weaponFile)
 	init_shop()
@@ -174,6 +176,7 @@ func _ready():
 
 func _process(delta):
 	if GameManager.gameOver: return 
+	
 	readyLabel.text = str(readyState)
 	moneyLabel.text = str(money)
 	healthLabel.text = str(health)
@@ -190,9 +193,16 @@ func _process(delta):
 func _physics_process(delta):
 	if GameManager.gameOver: return 
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		if showIframes:
+#			print(iFramesTimer.time_left)
+			var mapped_value = iFramesTimer.time_left / iFramesTimer.wait_time
+			# Interpolate between 100 and 255 based on the mapped value
+			var iFramesModulate = lerp(0, 1, 1.0 - mapped_value)
+			anim.set_self_modulate(Color(1, 1, 1, iFramesModulate))
+		
 		var direction = Input.get_vector("Left", "Right", "Up", "Down")
-#		speed = dashSpeed if dash.is_dashing() else tempSpeed
-#		velocity = direction * speed
+		
+		
 		if dash.is_dashing():
 			velocity = direction * dashSpeed
 		else:
@@ -207,15 +217,14 @@ func _physics_process(delta):
 #		if Input.is_action_just_pressed("ui_accept"):
 #			die.rpc()
 
-		if Input.is_action_just_pressed("Dash") and canDash:
-			var mouse_direction = get_local_mouse_position().normalized()
-			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
-			dash.start_dash(dashLength)
+#		if Input.is_action_just_pressed("Dash") and canDash:
+#			var mouse_direction = get_local_mouse_position().normalized()
+#			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
+#			dash.start_dash(dashLength)
 			
 		if not dead:
+			move_and_slide()
 			update_gun_rotation()
-#			move_and_slide()
-			move_and_collide(velocity * delta)
 			update_animation()
 			check_hit()
 
@@ -228,6 +237,11 @@ func _unhandled_input(event):
 	# Handle Weapon stuff in a separate node for reusability
 	# using signals to fire off from Weapon -> Player -> BulletManager
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() and not dead:
+		if Input.is_action_just_pressed("Dash") and canDash and dash.dashCooldown.is_stopped():
+			var mouse_direction = get_local_mouse_position().normalized()
+			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
+			dash.start_dash(dashLength)
+		
 		if event.is_action_pressed("Fire"):
 			fire.rpc(true)
 			
@@ -526,13 +540,14 @@ func switch_weapon(index):
 	
 @rpc("any_peer", "call_local")
 func fire(held_down):
+	if GameManager.gameOver: return 
 	if held_down:
 		weapon_held_down = true
 	elif !held_down:
 		weapon_held_down = false
 	
 	while weapon_held_down:
-		if dead:
+		if dead or GameManager.gameOver:
 			break
 		if currentWeapon.get_node("FireCooldown").is_stopped():
 			SoundManager.gunSounds[currentWeaponIndex].play()
@@ -579,12 +594,19 @@ func finished_anim():
 	meleeNode.visible = false
 
 func handle_hit(dmg):
-	iFramesTimer.start()
-	SoundManager.playerHit.play()
-	health -= dmg
-	print("Player hit", health)
-	update_hud.rpc()
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() and not showIframes:
+		iFramesTimer.start()
+		showIframes = true
+		SoundManager.playerHit.play()
+		health -= dmg
+		print("Player hit", health)
+		update_hud.rpc()
 	
+@rpc("any_peer", "call_local")
+func handle_boss_bullet(damage):
+	handle_hit(damage)
+#	if multiplayer.is_server():
+#		collider.queue_free()
 func toggle_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		SoundManager.click.play()
@@ -629,3 +651,8 @@ func _on_respawn_timer_timeout():
 	collision.disabled = false
 	health = maxHealth
 	update_hud.rpc()
+
+
+func _on_i_frames_timer_timeout():
+	showIframes = false # Replace with function body.
+	anim.set_self_modulate(Color(1, 1, 1, 1))

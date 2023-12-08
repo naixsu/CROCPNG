@@ -1,10 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://chwjij2h3jwlu"]
+[gd_scene load_steps=8 format=3 uid="uid://chwjij2h3jwlu"]
 
 [ext_resource type="Texture2D" uid="uid://b06vqoxnswap1" path="res://Assets/Win-Lose Banners/BlackScreen.png" id="1_gpkor"]
+[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/EndBanner.gd" id="1_shht8"]
 [ext_resource type="Texture2D" uid="uid://be4kfwuaqquyw" path="res://Assets/Win-Lose Banners/Lose banner.png" id="2_b0o60"]
 [ext_resource type="Texture2D" uid="uid://dx02m8mky7vlm" path="res://Assets/Win-Lose Banners/Win banner.png" id="3_68l2h"]
+[ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="5_b08bu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eqrsm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7aeci"]
 
 [node name="EndBanner" type="CanvasLayer"]
+script = ExtResource("1_shht8")
 
 [node name="BGModal" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.392157)
@@ -14,18 +21,69 @@ offset_right = 1182.0
 offset_bottom = 717.0
 texture = ExtResource("1_gpkor")
 
-[node name="Banners" type="Node2D" parent="."]
+[node name="Banners" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -132.0
+offset_bottom = -132.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="LoseBanner" type="Sprite2D" parent="Banners"]
 visible = false
 texture_filter = 1
-position = Vector2(576, 192)
 scale = Vector2(4, 4)
 texture = ExtResource("2_b0o60")
 
 [node name="WinBanner" type="Sprite2D" parent="Banners"]
 visible = false
 texture_filter = 1
-position = Vector2(576, 192)
 scale = Vector2(4, 4)
 texture = ExtResource("3_68l2h")
+
+[node name="Buttons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Buttons"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -113.0
+offset_top = -200.0
+offset_right = 113.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 200
+
+[node name="RestartButton" type="Button" parent="Buttons/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_b08bu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_eqrsm")
+text = "Restart"
+
+[node name="QuitButton" type="Button" parent="Buttons/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_b08bu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7aeci")
+text = "Quit"
+
+[connection signal="pressed" from="Buttons/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Buttons/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

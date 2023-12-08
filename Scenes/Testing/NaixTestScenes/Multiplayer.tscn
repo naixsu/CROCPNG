@@ -80,6 +80,7 @@ offset_bottom = 167.0
 text = "Join"
 
 [node name="StartGame" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 871.0
 offset_top = 533.0
@@ -118,6 +119,10 @@ offset_left = 99.0
 offset_top = 267.0
 offset_right = 341.0
 offset_bottom = 323.264
+theme_override_font_sizes/font_size = 25
+max_length = 10
+clear_button_enabled = true
+caret_blink = true
 
 [node name="NameEditLabel" type="Label" parent="."]
 layout_mode = 0
@@ -143,12 +148,11 @@ ServerInfo = ExtResource("3_bgp3x")
 [node name="BroadcastTimer" type="Timer" parent="ServerBrowser"]
 
 [node name="Label" type="Label" parent="ServerBrowser"]
-visible = false
 layout_mode = 0
-offset_left = 757.0
-offset_top = 44.0
-offset_right = 921.0
-offset_bottom = 70.0
+offset_left = 775.0
+offset_top = 142.0
+offset_right = 980.0
+offset_bottom = 169.0
 scale = Vector2(1, 1.00725)
 text = "Bound to listen port: "
 

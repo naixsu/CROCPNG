@@ -78,6 +78,7 @@ func set_movement_target(targetPoint: Vector2):
 	
 
 func _physics_process(delta):	
+	if GameManager.gameOver: return 
 	if parent.health <= 0:
 		set_state(State.DEAD)
 	
@@ -189,7 +190,7 @@ func _on_spawn_detector_area_shape_entered(area_rid, area, area_shape_index, loc
 	var areaName = area.get_parent().name
 	spawn = areaName.to_int()
 	await get_tree().physics_frame
-	print("Set parent " + str(parent.name) + " at Spawn Area: " + str(spawn))
+	# print("Set parent " + str(parent.name) + " at Spawn Area: " + str(spawn))
 	parent.spawn = spawn
 	initialize_path_finding()
 	# Toggle state

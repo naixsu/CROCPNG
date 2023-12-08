@@ -1,5 +1,6 @@
 extends HBoxContainer
 @onready var SoundManager = $SoundManager
+@onready var joinButton = $JoinButton
 
 signal joinGame(ip)
 
@@ -15,5 +16,6 @@ func _process(delta):
 
 func _on_join_button_button_down():
 	SoundManager.click.play()
+	joinButton.disabled = true
 	joinGame.emit($IP.text)
 	pass # Replace with function body.

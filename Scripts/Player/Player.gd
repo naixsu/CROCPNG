@@ -43,6 +43,7 @@ class_name Player
 @onready var SoundManager = $SoundManager # Capitalizing this
 
 @onready var meleeNode = $WeaponsManager/Melee
+@onready var HUD = $HUD
 
 
 # Signals here
@@ -145,14 +146,24 @@ var weaponUpgrades : Dictionary
 #var syncPos = Vector2(0, 0)
 #var syncRot = 0
 
+@export var showIframes = false
+
 func _ready():
 	init_weapons(weaponFile)
 	init_shop()
+	
 	readyPrompt.connect("toggle_ready", toggle_ready)
 	shop.connect("upgrade", player_upgrade)
 	meleeNode.connect("finished_anim", finished_anim)
 
 	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	# Set the camera and hud
+	# to only be active for the local player
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+#		add_child(HUD.instantiate())
+		playerCamera.make_current()
+		HUD.visible = true
+		update_hud.rpc()
 	anim.play("idle")
 	
 #	print(GameManager.players[str(name)])
@@ -160,14 +171,16 @@ func _ready():
 	
 	nameLabel.text = str(GameManager.players[name.to_int()].name)
 	
-	#Set the camera to only be active for the local player
-	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		playerCamera.make_current()
+	
+		
 
 func _process(delta):
+	if GameManager.gameOver: return 
+	
 	readyLabel.text = str(readyState)
 	moneyLabel.text = str(money)
 	healthLabel.text = str(health)
+#	update_hud()
 	
 	if respawn:
 		respawnTimer.start()
@@ -178,10 +191,18 @@ func _process(delta):
 		display_respawn()
 
 func _physics_process(delta):
+	if GameManager.gameOver: return 
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		if showIframes:
+#			print(iFramesTimer.time_left)
+			var mapped_value = iFramesTimer.time_left / iFramesTimer.wait_time
+			# Interpolate between 100 and 255 based on the mapped value
+			var iFramesModulate = lerp(0, 1, 1.0 - mapped_value)
+			anim.set_self_modulate(Color(1, 1, 1, iFramesModulate))
+		
 		var direction = Input.get_vector("Left", "Right", "Up", "Down")
-#		speed = dashSpeed if dash.is_dashing() else tempSpeed
-#		velocity = direction * speed
+		
+		
 		if dash.is_dashing():
 			velocity = direction * dashSpeed
 		else:
@@ -196,15 +217,14 @@ func _physics_process(delta):
 #		if Input.is_action_just_pressed("ui_accept"):
 #			die.rpc()
 
-		if Input.is_action_just_pressed("Dash") and canDash:
-			var mouse_direction = get_local_mouse_position().normalized()
-			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
-			dash.start_dash(dashLength)
+#		if Input.is_action_just_pressed("Dash") and canDash:
+#			var mouse_direction = get_local_mouse_position().normalized()
+#			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
+#			dash.start_dash(dashLength)
 			
 		if not dead:
+			move_and_slide()
 			update_gun_rotation()
-#			move_and_slide()
-			move_and_collide(velocity * delta)
 			update_animation()
 			check_hit()
 
@@ -212,27 +232,35 @@ func _physics_process(delta):
 	
 # Commenting as it has synchronization issues
 func _unhandled_input(event): 
+	if GameManager.gameOver: return 
 	# TODO:
 	# Handle Weapon stuff in a separate node for reusability
 	# using signals to fire off from Weapon -> Player -> BulletManager
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() and not dead:
+		if Input.is_action_just_pressed("Dash") and canDash and dash.dashCooldown.is_stopped():
+			var mouse_direction = get_local_mouse_position().normalized()
+			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
+			dash.start_dash(dashLength)
+		
 		if event.is_action_pressed("Fire"):
 			fire.rpc(true)
 			
 		if event.is_action_released("Fire"):
 			fire.rpc(false)
 			
-		if event.is_action_pressed("SwitchWeapon1"):
+		if event.is_action_pressed("SwitchWeapon1") and currentWeaponIndex != 0:
 #			currentWeaponIndex = 0
 			switch_weapon.rpc(0)
-		if event.is_action_pressed("SwitchWeapon2"):
+		if event.is_action_pressed("SwitchWeapon2") and currentWeaponIndex != 1:
 #			currentWeaponIndex = 1
 			switch_weapon.rpc(1)
-		if event.is_action_pressed("SwitchWeapon3"):
+		if event.is_action_pressed("SwitchWeapon3") and currentWeaponIndex != 2:
 #			currentWeaponIndex = 2
 			switch_weapon.rpc(2)
-		if event.is_action_pressed("SwitchWeapon4"):
+		if event.is_action_pressed("SwitchWeapon4") and currentWeaponIndex != 3:
 			switch_weapon.rpc(3)
+		
+		update_hud.rpc()
 	pass
 
 func init_weapons(weaponFile):
@@ -334,19 +362,43 @@ func init_shop():
 	}
 	update_money_label()
 
+@rpc("any_peer", "call_local")
+func update_hud():
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+#		if shop.visible: # hide HUD when shop is open
+#			HUD.visible = false
+#		else:
+#			HUD.visible = true
+		HUD.moneyText.text = str(money)
+		# Calculate max health to healthbar
+		HUD.healthBar.max_value = maxHealth
+		HUD.healthBar.value = health
+		
+		for buttonIndex in range(HUD.hotBarButtons.size()):
+			if buttonIndex == currentWeaponIndex:
+				HUD.hotBarButtons[buttonIndex].disabled = false
+			else:
+				HUD.hotBarButtons[buttonIndex].disabled = true
+		
+
 func update_money_label():
 	shopMoneyLabel.text = str(money) + " Credits"
+	update_hud.rpc()
 	
 @rpc("any_peer", "call_local")
 func show_shop():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		shop.visible = true
 		update_shop_buttons()
+		HUD.visible = false
+		update_hud.rpc()
 		
 @rpc("any_peer", "call_local")
 func hide_shop():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		shop.visible = false
+		HUD.visible = true
+		update_hud.rpc()
 
 @rpc("any_peer", "call_local")
 func show_ready():
@@ -366,7 +418,6 @@ func update_shop_buttons():
 			shopButtons[i].visible = true
 
 func player_upgrade(subject, stat):
-	
 	upgrade_stats.rpc(subject, stat)
 
 @rpc("any_peer", "call_local")
@@ -489,30 +540,17 @@ func switch_weapon(index):
 	
 @rpc("any_peer", "call_local")
 func fire(held_down):
+	if GameManager.gameOver: return 
 	if held_down:
 		weapon_held_down = true
 	elif !held_down:
 		weapon_held_down = false
 	
-#	if fireCooldown.is_stopped():
-#		print("Fire")
-#		var b = BulletCB.instantiate()
-#		b.global_position = gunRotation.get_node("BulletSpawn").global_position
-#		b.rotation_degrees = gunRotation.rotation_degrees
-###		Add bullet to the tree
-#		get_tree().root.add_child(b)
-#		fireCooldown.start()
 	while weapon_held_down:
-		if dead:
+		if dead or GameManager.gameOver:
 			break
 		if currentWeapon.get_node("FireCooldown").is_stopped():
 			SoundManager.gunSounds[currentWeaponIndex].play()
-#			print("{0} Fire!".format({
-#				"0": str(currentWeapon.name)
-#			}))
-	#		var b = BulletCB.instantiate()
-	#		b.global_position = currentWeapon.get_node("BulletSpawn").global_position
-			
 			# add the mods from weaponMods
 			dmgAdd = weaponUpgrades.values()[currentWeaponIndex]["damage"][2]
 			if currentWeaponIndex != 3:
@@ -556,12 +594,19 @@ func finished_anim():
 	meleeNode.visible = false
 
 func handle_hit(dmg):
-	iFramesTimer.start()
-	SoundManager.playerHit.play()
-	health -= dmg
-	print("Player hit", health)
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id() and not showIframes:
+		iFramesTimer.start()
+		showIframes = true
+		SoundManager.playerHit.play()
+		health -= dmg
+		print("Player hit", health)
+		update_hud.rpc()
 	
-
+@rpc("any_peer", "call_local")
+func handle_boss_bullet(damage):
+	handle_hit(damage)
+#	if multiplayer.is_server():
+#		collider.queue_free()
 func toggle_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		SoundManager.click.play()
@@ -572,22 +617,10 @@ func toggle_ready():
 #		update_ready.emit()
 		readyPrompt.update_ready_count()
 
-#func _on_ready_prompt_toggle_ready():
-##	print("here")
-#	readyState = !readyState
-##	print("readyState " + str(readyState))
-#	var idSelf = multiplayer.get_unique_id()
-#	var playerSelf = GameManager.players[idSelf]
-#	playerSelf["readyState"] = readyState
-##	var root = get_tree().get_root()
-##	var multiplayerController = root.get_node("Multiplayer")
-##	multiplayerController.test_pass(str(name), idSelf, readyState)
-#	update_ready_state.emit()
-
-
 @rpc("any_peer", "call_local")
 func die():
 	dead = true
+	SoundManager.playerDeath.play()
 	anim.play("death")
 	collision.disabled = true
 
@@ -617,3 +650,9 @@ func _on_respawn_timer_timeout():
 	respawnLabel.hide()
 	collision.disabled = false
 	health = maxHealth
+	update_hud.rpc()
+
+
+func _on_i_frames_timer_timeout():
+	showIframes = false # Replace with function body.
+	anim.set_self_modulate(Color(1, 1, 1, 1))

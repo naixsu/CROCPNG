@@ -10,6 +10,8 @@ extends CanvasLayer
 @onready var waveNotif = $WaveNotif
 @onready var waveCountdown = $WaveNotif/WaveCountdown
 @onready var respawnLabel = $Respawn
+@onready var bg = $BG
+@onready var readyButton = $PlayerReadyCount/ReadyButton
 
 @export var readyCount : int = 0
 
@@ -17,18 +19,22 @@ var showReady : bool = true
 var startCountdown : bool = false
 var displayCountdown : bool = false
 var checkForEnemies : bool = false
+var readyClicked : bool = false
 
 signal toggle_ready
 signal start_wave
 signal reward_players
+signal win_banner
+signal pre_wave
 
 func _on_ready_button_button_down():
 #	ready_up.rpc()
 	ready_up()
-
+	
 
 func _physics_process(delta):
 	if showReady:
+		bg.show()
 		update_ready_count()
 	
 	if startCountdown: 
@@ -41,11 +47,17 @@ func _physics_process(delta):
 	
 	if checkForEnemies:
 		await get_tree().create_timer(1).timeout
-		if GameManager.enemyCount == 0:
+		if GameManager.finalWave and GameManager.enemyCount == 0:
+			print("\nNo more enemies and Final Wave\n")
+			checkForEnemies = false
+			win_banner.emit()
+		elif GameManager.enemyCount == 0:
 			print("\nNo more enemies\n")
 			checkForEnemies = false
 			showReady = true
 			playerReadyCount.show()
+			pre_wave.emit()
+			
 	
 func display_countdown():
 	startCountdown = false
@@ -82,11 +94,15 @@ func check_all_ready():
 
 func ready_up():
 	toggle_ready.emit()
+	readyClicked = !readyClicked
+	
+	update_ready_text()
 
 
 func _on_wave_countdown_timeout():
 	displayCountdown = false
 	waveNotif.hide()
+	bg.hide()
 	start_wave.emit()
 	if GameManager.wave > 1:
 		reward_players.emit()
@@ -98,4 +114,14 @@ func reset_ready(): # Reset the readyState of all players
 	for player in players:
 		player.readyState = false
 	checkForEnemies = true
+	readyClicked = false
+	
+	update_ready_text()
+
+func update_ready_text():
+	# Toggle the ready button
+	if readyClicked:
+		readyButton.text = "Unready"
+	else:
+		readyButton.text = "Ready"
 	

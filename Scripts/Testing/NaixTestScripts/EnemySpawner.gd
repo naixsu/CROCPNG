@@ -28,6 +28,6 @@ func _spawn_enemy(data):
 	var enemy = load(enemyScenePath).instantiate()
 	enemy.position = data[0]
 		
-	print("Enemey " + enemyType + " spawned at " + str(enemy.position))
+	# print("Enemey " + enemyType + " spawned at " + str(enemy.position))
 
 	return enemy

@@ -44,8 +44,8 @@ func actor_setup():
 	markers = pathPoints
 	set_state(State.OBJECTIVE)
 	
-	print("Markers")
-	print(markers)
+	# print("Markers")
+	# print(markers)
 	
 
 func set_movement_target(targetPoint: Vector2):

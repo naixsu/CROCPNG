@@ -50,105 +50,106 @@ func set_step():
 	match currentPattern:
 		Pattern.CLOCKWISE, Pattern.COUNTER:
 			step = 2
-			bulletInterval.set_wait_time(0.4)
+			bulletInterval.set_wait_time(0.9)
 			circleDiv = maxAngle / step
 			interval = rightAngle / step
 		Pattern.CLOVER:
 			step = 6
-			bulletInterval.set_wait_time(0.5)
+			bulletInterval.set_wait_time(0.9)
 			circleDiv = maxAngle / step
 			interval = rightAngle / step
 		Pattern.RADIAL:
 			step = 8
-			bulletInterval.set_wait_time(0.7)
+			bulletInterval.set_wait_time(0.9)
 			circleDiv = maxAngle / step
 			interval = rightAngle / step
 		Pattern.CROSS:
 			step = 4
-			bulletInterval.set_wait_time(0.8)
+			bulletInterval.set_wait_time(0.9)
 			circleDiv = maxAngle / step
 			interval = circleDiv / 2
 			
 	reset_theta()
 
 func spawn_bullet(pos, bulletSpeed, dmg, rot, bulletLifeTime):
-	bulletSpawner.spawn([
-		pos, # position
-		bulletSpeed, # bulletSpeed
-		dmg, # damage
-		rot, # rotation
-		bulletLifeTime # lifetime
-	])
+	if multiplayer.is_server():
+		bulletSpawner.spawn([
+			pos, # position
+			bulletSpeed, # bulletSpeed
+			dmg, # damage
+			rot, # rotation
+			bulletLifeTime # lifetime
+		])
 
 func shoot_clockwise(angle):
-	if multiplayer.is_server():
-		get_vector(angle)
-		var flip = 1
-		if currentPattern == Pattern.COUNTER:
-			flip = -1
+#	if multiplayer.is_server():
+	get_vector(angle)
+	var flip = 1
+	if currentPattern == Pattern.COUNTER:
+		flip = -1
+	
+	for i in range(step):
+		var rot = (theta + ((maxAngle / 2) * i)) * flip
 		
-		for i in range(step):
-			var rot = (theta + ((maxAngle / 2) * i)) * flip
-			
 #			print(rot)
-			spawn_bullet(
-				self.global_position, # position
-				bulletSpeed, # bulletSpeed
-				parent.resource.damage, # damage
-				rot, # rotation
-				bulletLifeTime # lifetime
-			)
+		spawn_bullet(
+			self.global_position, # position
+			bulletSpeed, # bulletSpeed
+			parent.bulletDmg, # damage
+			rot, # rotation
+			bulletLifeTime # lifetime
+		)
 #		print("\n")
 
 func shoot_clover(angle):
-	if multiplayer.is_server():
-		get_vector(angle)
+#	if multiplayer.is_server():
+	get_vector(angle)
 #		print("Shoot clover")
-		for i in range(step):
-			var rot = theta + (circleDiv * i)
+	for i in range(step):
+		var rot = theta + (circleDiv * i)
 #			print(rot)
-			spawn_bullet(
-				self.global_position, # position
-				bulletSpeed, # bulletSpeed
-				parent.resource.damage, # damage
-				rot, # rotation
-				bulletLifeTime # lifetime
-			)
+		spawn_bullet(
+			self.global_position, # position
+			bulletSpeed, # bulletSpeed
+			parent.resource.damage, # damage
+			rot, # rotation
+			bulletLifeTime # lifetime
+		)
 #		print("\n")
 
 func shoot_radial(angle):
-	if multiplayer.is_server():
-		get_vector(angle)
+#	if multiplayer.is_server():
+	get_vector(angle)
 #		print("shoot radial")
-		
-		for i in range(step):
-			var rot = circleDiv * i
+	
+	for i in range(step):
+		var rot = circleDiv * i
 #			print(rot)
-			spawn_bullet(
-				self.global_position, # position
-				bulletSpeed, # bulletSpeed
-				parent.resource.damage, # damage
-				rot, # rotation
-				bulletLifeTime # lifetime
-			)
+		spawn_bullet(
+			self.global_position, # position
+			bulletSpeed, # bulletSpeed
+			parent.resource.damage, # damage
+			rot, # rotation
+			bulletLifeTime # lifetime
+		)
 #		print("\n")
 
 func shoot_cross(angle):
-	if multiplayer.is_server():
+#	if multiplayer.is_server():
 		
-		get_vector(angle)
+	get_vector(angle)
 #		print("shoot cross")
-		
-		for i in range(step):
-			var rot = theta + (circleDiv * i)
+	
+	for i in range(step):
+		var rot = theta + (circleDiv * i)
 #			print(rot)
-			spawn_bullet(
-				self.global_position, # position
-				bulletSpeed, # bulletSpeed
-				parent.resource.damage, # damage
-				rot, # rotation
-				bulletLifeTime # lifetime
-			)
+		spawn_bullet(
+			self.global_position, # position
+			bulletSpeed, # bulletSpeed
+			parent.resource.damage, # damage
+			rot, # rotation
+			bulletLifeTime # lifetime
+		)
 
 func initialize(parent):
 	self.parent = parent
@@ -165,7 +166,7 @@ func set_pattern(newPattern):
 		return
 	
 	currentPattern = newPattern
-	print("currentPattern " + str(currentPattern))
+	# print("currentPattern " + str(currentPattern))
 	
 func get_vector(angle):
 	# update theta
@@ -180,6 +181,8 @@ func get_vector(angle):
 	return rot
 
 func _on_speed_timeout():
+	if parent.dead or parent.ai.current_state == parent.ai.State.IDLE: 
+		return # stop shooting
 	match currentPattern:
 		Pattern.CLOCKWISE:
 			shoot_clockwise(theta)
@@ -191,13 +194,15 @@ func _on_speed_timeout():
 			shoot_radial(theta)
 		Pattern.CROSS:
 			shoot_cross(theta)
+		
+	parent.SoundManager.bossShoot.play()
 
 
 func _on_pattern_duration_timeout():
 	var nextPattern = currentPattern + 1
 	if nextPattern > Pattern.size() - 1:
 		nextPattern = 0
-	print("SwitchPattern")
+	# print("SwitchPattern")
 	set_pattern(nextPattern)
 	set_step()
 	

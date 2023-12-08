@@ -19,11 +19,11 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7jsei"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wgpcf"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5drjj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p6fp4"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wgpcf"]
 
 [node name="Multiplayer" type="Control"]
 layout_mode = 3
@@ -61,14 +61,25 @@ texture = ExtResource("4_ggktp")
 [node name="Host" type="Button" parent="."]
 layout_mode = 0
 offset_left = 123.0
-offset_top = 401.0
+offset_top = 344.0
 offset_right = 311.0
-offset_bottom = 439.0
+offset_bottom = 382.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7jsei")
 text = "Host
 "
+
+[node name="FindServer" type="Button" parent="."]
+layout_mode = 0
+offset_left = 123.0
+offset_top = 401.0
+offset_right = 313.0
+offset_bottom = 439.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wgpcf")
+text = "Find Servers"
 
 [node name="Join" type="Button" parent="."]
 visible = false
@@ -210,17 +221,6 @@ offset_right = 1118.0
 offset_bottom = 215.0
 text = "test add player (host)"
 
-[node name="FindServer" type="Button" parent="."]
-layout_mode = 0
-offset_left = 121.0
-offset_top = 344.0
-offset_right = 311.0
-offset_bottom = 382.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wgpcf")
-text = "Find Servers"
-
 [node name="DeprecationLabel" type="Label" parent="."]
 visible = false
 layout_mode = 0
@@ -295,11 +295,11 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_7jsei")
 text = "TUTORIAL"
 
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
+[connection signal="button_down" from="FindServer" to="ServerBrowser" method="_on_find_server_button_down"]
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
 [connection signal="button_down" from="StartGame" to="." method="_on_start_game_button_down"]
 [connection signal="button_down" from="ExitGame" to="." method="_on_exit_game_button_down"]
 [connection signal="text_changed" from="NameEdit" to="." method="_on_name_edit_text_changed"]
 [connection signal="timeout" from="ServerBrowser/BroadcastTimer" to="ServerBrowser" method="_on_broadcast_timer_timeout"]
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
-[connection signal="button_down" from="FindServer" to="ServerBrowser" method="_on_find_server_button_down"]
 [connection signal="pressed" from="TutorialButton" to="." method="_on_tutorial_button_pressed"]

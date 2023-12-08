@@ -10,6 +10,9 @@ extends Control
 @onready var startGame = $StartGame
 @onready var tutorial = $Tutorial
 @onready var tutorialButton = $TutorialButton
+@onready var findServer = $FindServer
+@onready var host = $Host
+@onready var serverBrowser = $ServerBrowser
 
 # Deprecated
 #@onready var line_edit = $LineEdit
@@ -18,6 +21,7 @@ extends Control
 var peer
 var ipAddress = ""
 var serverName = ""
+var isHost = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,6 +32,7 @@ func _ready():
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
 	
+	serverBrowser.connect("hide_host", hide_host)
 	tutorial.connect("back_to_main", back_to_main)
 	tutorial.connect("from_tutorial_next_prev_clicked", from_tutorial_next_prev_clicked)
 	
@@ -49,6 +54,8 @@ func _ready():
 
 	$ServerBrowser.joinGame.connect(join_by_ip)
 	pass # Replace with function body.
+
+
 
 # Gets called on the server and clients
 func peer_connected(id):
@@ -88,6 +95,8 @@ func connection_failed():
 	
 
 func host_game():
+	isHost = true
+	findServer.visible = false
 	peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, maxPlayers)
 	
@@ -103,6 +112,8 @@ func host_game():
 	# send_player_information(nameEdit.text, multiplayer.get_unique_id())
 
 func custom_host(serverName):
+	isHost = true
+	findServer.visible = false
 	peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, maxPlayers)
 	
@@ -155,6 +166,8 @@ func _on_start_game_button_down():
 	SoundManager.click.play()
 	start_game.rpc()
 	startGame.visible = false
+	findServer.visible = true
+	host.visible = true
 	pass # Replace with function body.
 
 
@@ -219,3 +232,6 @@ func reset_game_manager():
 func clear_server_info():
 	for panel in $ServerBrowser.vBoxContainer.get_children():
 		panel.queue_free()
+
+func hide_host():
+	host.visible = false

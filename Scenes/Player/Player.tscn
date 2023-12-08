@@ -283,6 +283,11 @@ visible = false
 [node name="StatsContainer (Not functioning for now)" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -1870
+limit_top = -1750
+limit_right = 2125
+limit_bottom = 2730
+editor_draw_limits = true
 script = ExtResource("9_vptfm")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

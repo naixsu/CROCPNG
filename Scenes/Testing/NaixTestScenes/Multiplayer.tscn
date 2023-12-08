@@ -1,9 +1,9 @@
-[gd_scene load_steps=26 format=3 uid="uid://bxtn8e8m61sj3"]
+[gd_scene load_steps=27 format=3 uid="uid://bxtn8e8m61sj3"]
 
 [ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="1_f14hw"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/MultiplayerController.gd" id="1_wmt0j"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ServerBrowser.gd" id="2_7edh8"]
-[ext_resource type="PackedScene" path="res://Scenes/Testing/NaixTestScenes/PlayerLogs.tscn" id="3_3hrac"]
+[ext_resource type="PackedScene" uid="uid://ctbgfn7ix71js" path="res://Scenes/Testing/NaixTestScenes/PlayerLogs.tscn" id="3_3hrac"]
 [ext_resource type="Texture2D" uid="uid://bvmiicc2tjbiy" path="res://Assets/Splash Screen/SplashScreenBG.png" id="3_37vqk"]
 [ext_resource type="PackedScene" uid="uid://chavk7wh0g8k8" path="res://Scenes/Testing/NaixTestScenes/ServerInfo.tscn" id="3_bgp3x"]
 [ext_resource type="Texture2D" uid="uid://d1jku4yxq3q35" path="res://Assets/UI/crocs-logo.png" id="4_ggktp"]
@@ -18,6 +18,7 @@
 [ext_resource type="Theme" uid="uid://byyncocqpbdnj" path="res://Assets/UI/helper_text.tres" id="10_54314"]
 [ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="15_rep7u"]
 [ext_resource type="PackedScene" uid="uid://dde2f35ut0e4f" path="res://Scenes/Tutorial/Tutorial.tscn" id="16_uxhrd"]
+[ext_resource type="PackedScene" uid="uid://spa8ucmvj5wp" path="res://Scenes/SplashScreen/Analyzer.tscn" id="19_72jpx"]
 
 [sub_resource type="Animation" id="Animation_rhytu"]
 length = 0.001
@@ -81,6 +82,9 @@ layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = ExtResource("3_37vqk")
+
+[node name="Analyzer" parent="." instance=ExtResource("19_72jpx")]
+mouse_filter = 2
 
 [node name="Torch" type="Sprite2D" parent="."]
 visible = false

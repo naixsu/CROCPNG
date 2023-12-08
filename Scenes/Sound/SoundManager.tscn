@@ -117,6 +117,7 @@ stream = ExtResource("17_h2mtf")
 [node name="MainMenu" type="AudioStreamPlayer" parent="StreamPlayer"]
 stream = ExtResource("18_pfo3f")
 volume_db = -10.0
+bus = &"MainMenu"
 
 [node name="Bomb" type="AudioStreamPlayer" parent="StreamPlayer"]
 stream = ExtResource("22_w6i5j")

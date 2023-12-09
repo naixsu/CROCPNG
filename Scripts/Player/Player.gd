@@ -530,9 +530,14 @@ func update_gun_rotation():
 
 func update_bomb_indicator_rotation():
 	var enemies = get_tree().get_nodes_in_group("Enemy")
+	if enemies.size() == 0:
+		bombIndicator.hide()
+		return
+		
 	for enemy in enemies:
 		if enemy.hasBomb:
 			bombIndicator.look_at(enemy.global_position)
+			bombIndicator.show()
 
 func update_animation():
 	flip_sprite()

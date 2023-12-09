@@ -1,6 +1,7 @@
-[gd_scene load_steps=30 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=31 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
+[ext_resource type="PackedScene" uid="uid://bqb817lb7hfbn" path="res://Scenes/HUD/BombIndicator.tscn" id="2_ksmmv"]
 [ext_resource type="Texture2D" uid="uid://7trsw0omcww3" path="res://Assets/Sprites/Player/PlayerDeath.png" id="2_wignm"]
 [ext_resource type="Texture2D" uid="uid://dxjulnx8uck65" path="res://Assets/Sprites/Player/PlayerIdle.png" id="3_qjmfi"]
 [ext_resource type="Texture2D" uid="uid://clug3m78gurbu" path="res://Assets/Sprites/Player/PlayerRun.png" id="4_xxbxq"]
@@ -144,8 +145,8 @@ properties/0/spawn = true
 properties/0/sync = true
 properties/0/watch = false
 properties/1/path = NodePath("GunRotation:rotation")
-properties/1/spawn = true
-properties/1/sync = true
+properties/1/spawn = false
+properties/1/sync = false
 properties/1/watch = false
 properties/2/path = NodePath(".:syncPos")
 properties/2/spawn = false
@@ -259,10 +260,16 @@ properties/29/path = NodePath("AnimatedSprite2D:self_modulate")
 properties/29/spawn = true
 properties/29/sync = true
 properties/29/watch = false
+properties/30/path = NodePath("BombIndicator:rotation")
+properties/30/spawn = true
+properties/30/sync = true
+properties/30/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
 script = ExtResource("1_xmmu7")
+
+[node name="BombIndicator" parent="." instance=ExtResource("2_ksmmv")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
@@ -274,9 +281,6 @@ animation = &"death"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_0gh6j")
-
-[node name="GunRotation" parent="." instance=ExtResource("8_l3ssp")]
-visible = false
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
 limit_left = -1870

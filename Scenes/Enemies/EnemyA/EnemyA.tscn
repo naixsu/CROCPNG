@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bvfw8vhc4i3ac"]
+[gd_scene load_steps=34 format=3 uid="uid://bvfw8vhc4i3ac"]
 
 [ext_resource type="Texture2D" uid="uid://dhjqul1exjhlp" path="res://Assets/Sprites/EnemyA/EnemyAIdle.png" id="1_2t4uv"]
 [ext_resource type="Texture2D" uid="uid://b47o86gd8adkm" path="res://Assets/Sprites/EnemyA/EnemyADeath.png" id="1_gjskw"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://cmpv86pljwd6w" path="res://Scenes/Bomb/Target.tscn" id="8_2l5lc"]
 [ext_resource type="PackedScene" uid="uid://b5hn8tq25p4dg" path="res://Scenes/Enemies/HitBox.tscn" id="8_bncdd"]
 [ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="10_7f535"]
-[ext_resource type="PackedScene" uid="uid://dfwij515uc8qu" path="res://Scenes/Enemies/PositionIndicator.tscn" id="11_ih0vr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_10pra"]
 atlas = ExtResource("1_gjskw")
@@ -203,8 +202,8 @@ properties/7/spawn = true
 properties/7/sync = true
 properties/7/watch = false
 properties/8/path = NodePath("PositionIndicator:position")
-properties/8/spawn = true
-properties/8/sync = true
+properties/8/spawn = false
+properties/8/sync = false
 properties/8/watch = false
 
 [node name="EnemyA" type="CharacterBody2D" groups=["Enemy"]]
@@ -256,9 +255,6 @@ offset_right = 21.0
 offset_bottom = 56.0
 
 [node name="SoundManager" parent="." instance=ExtResource("10_7f535")]
-
-[node name="PositionIndicator" parent="." instance=ExtResource("11_ih0vr")]
-visible = false
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="AI/DetectionZone" to="AI" method="_on_detection_zone_body_entered"]

@@ -20,6 +20,7 @@ class_name Player
 @onready var multiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var weaponsManager = $WeaponsManager
 @onready var dash = $Dash
+@onready var bombIndicator = $BombIndicator
 
 # Camera Onready Vars TO BE DEBUGGED
 @onready var playerCamera = $PlayerCamera
@@ -189,6 +190,7 @@ func _process(delta):
 	if displayRespawn: 
 		display_respawn()
 
+
 func _physics_process(delta):
 	if GameManager.gameOver: return 
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
@@ -228,6 +230,7 @@ func _physics_process(delta):
 			check_hit()
 
 	update_camera(delta)
+	update_bomb_indicator_rotation()
 	
 # Commenting as it has synchronization issues
 func _unhandled_input(event): 
@@ -525,6 +528,12 @@ func update_gun_rotation():
 	weaponsManager.look_at(get_global_mouse_position())
 	pass
 
+func update_bomb_indicator_rotation():
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	for enemy in enemies:
+		if enemy.hasBomb:
+			bombIndicator.look_at(enemy.global_position)
+
 func update_animation():
 	flip_sprite()
 	# Updates player animation based on velocity
@@ -540,7 +549,7 @@ func update_camera(delta):
 		playerCamera.zoomFactor -= 0.01
 	else:
 		playerCamera.zoomFactor = 1.0
-	
+
 func flip_sprite():
 	# Flipts the sprite depending on the mouse position
 	if get_global_mouse_position().x < global_position.x:

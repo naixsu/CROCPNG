@@ -21,7 +21,6 @@ class_name Enemy
 @onready var healthLabel = $Label
 @onready var target = $Target
 @onready var SoundManager = $SoundManager
-@onready var positionIndicator = $PositionIndicator
 
 @export var hasBomb : bool = false
 ###
@@ -36,7 +35,6 @@ func _ready():
 	anim.play("idle")
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
-	positionIndicator.initialize(self)
 #	ai.initialize_path_finding()
 
 func _process(delta):
@@ -127,7 +125,7 @@ func run():
 func on_state_changed(new_state):
 	print("ENEMY ", new_state)
 	
-func attack_player(player):
-	if player.iFramesTimer.is_stopped():
-		print("Attacking player " + str(player.name))
-		player.handle_hit(resource.damage)
+func attack_player(playerNode):
+	if playerNode.iFramesTimer.is_stopped():
+		print("Attacking player " + str(playerNode.name))
+		playerNode.handle_hit(resource.damage)

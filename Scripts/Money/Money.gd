@@ -14,5 +14,4 @@ func _on_area_2d_body_entered(body):
 		if body.has_method("set_money"):
 			body.set_money(self.value)
 			if multiplayer.is_server():
-#				SoundManager.pickup.play()
 				queue_free()

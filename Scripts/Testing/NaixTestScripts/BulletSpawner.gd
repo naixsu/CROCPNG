@@ -8,7 +8,7 @@ func _spawn_bullet(data):
 	# position
 	# bulletSpeed
 	# Damage
-	# bullet rotation
+	# bullet rotation"
 	var bulletScenePath = "res://Scenes/Bullet/BulletCB.tscn"
 	var bullet = load(bulletScenePath).instantiate()
 	bullet.global_position = data[0]

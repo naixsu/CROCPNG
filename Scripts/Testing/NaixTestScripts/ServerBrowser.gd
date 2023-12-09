@@ -61,8 +61,8 @@ func set_up():
 		$Label.text = "Bound to listen port: false"
 
 # Setup Broadcast
-func set_up_broadcast(name):
-	roomInfo.name = name
+func set_up_broadcast(roomName):
+	roomInfo.name = roomName
 	roomInfo.playerCount = GameManager.players.size()
 	
 	broadcaster = PacketPeerUDP.new()
@@ -80,7 +80,7 @@ func set_up_broadcast(name):
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if listener == null:
 		return
 	if listener.get_available_packet_count() > 0:
@@ -88,7 +88,7 @@ func _process(delta):
 		var serverport = listener.get_packet_port()
 		var bytes = listener.get_packet()
 		var data = bytes.get_string_from_ascii()
-		var roomInfo = JSON.parse_string(data)
+		var currentRoomInfo = JSON.parse_string(data)
 		
 #		print(
 #			"Server IP: {0} Server Port: {1} Room Info: {2}"
@@ -101,18 +101,18 @@ func _process(delta):
 		
 
 		for i in $Panel/VBoxContainer.get_children():
-			if i.name == roomInfo.name:
-				updateServer.emit(serverip, serverport, roomInfo)
+			if i.name == currentRoomInfo.name:
+				updateServer.emit(serverip, serverport, currentRoomInfo)
 				i.get_node("IP").text = str(serverip)
-				i.get_node("PlayerCount").text = str(roomInfo.playerCount)
+				i.get_node("PlayerCount").text = str(currentRoomInfo.playerCount)
 				
 				if i.get_node("IP").text != "":
 					i.joinButton.visible = true
 				return
 
 		var currentInfo = ServerInfo.instantiate()
-		currentInfo.name = roomInfo.name
-		currentInfo.get_node("Name").text = roomInfo.name
+		currentInfo.name = currentRoomInfo.name
+		currentInfo.get_node("Name").text = currentRoomInfo.name
 		currentInfo.get_node("IP").text = str(serverip)
 		
 #		if currentInfo.get_node("IP").text == str(serverip):
@@ -120,12 +120,12 @@ func _process(delta):
 #		else:
 #			print("null")
 		
-		currentInfo.get_node("PlayerCount").text = str(roomInfo.playerCount)
+		currentInfo.get_node("PlayerCount").text = str(currentRoomInfo.playerCount)
 		
 		$Panel/VBoxContainer.add_child(currentInfo)
 #		connect(currentInfo.joinGame, joinByIP)
 		currentInfo.joinGame.connect(join_by_ip)
-		foundServer.emit(serverip, serverport, roomInfo)
+		foundServer.emit(serverip, serverport, currentRoomInfo)
 			
 
 func _on_broadcast_timer_timeout():
@@ -154,8 +154,8 @@ func clean_up():
 func _exit_tree():
 	clean_up()
 
-func join_by_ip(ip):
-	joinGame.emit(ip)
+func join_by_ip(joinIP):
+	joinGame.emit(joinIP)
 	
 
 

@@ -21,7 +21,7 @@ func _ready():
 	readyPrompt.connect("pre_wave", pre_wave)
 	endBanner.connect("restart_game", restart_game)
 	pre_wave()
-	var index = 0
+#	var index = 0
 #	var bulletManagerInstance = BulletManager.instantiate()
 #	add_child(bulletManagerInstance)
 	var spawn_point_parent = get_node("EnemySpawnPoints")
@@ -45,14 +45,17 @@ func _ready():
 ##		currentPlayer.connect("player_fired_bullet", bulletManagerInstance.handle_bullet_spawned)
 		add_child(currentPlayer)
 ##		add_child(bulletManagerInstance)
+
+		var spawnPoint = spawnPoints.pick_random()
+		currentPlayer.global_position = spawnPoint.global_position
 #
-		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
-			if spawn.name == str(index):
-				currentPlayer.global_position = spawn.global_position
-		index += 1
-		
-		if index > get_tree().get_nodes_in_group("PlayerSpawnPoint").size():
-			index = 0
+#		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoint"):
+#			if spawn.name == str(index):
+#				currentPlayer.global_position = spawn.global_position
+#		index += 1
+#
+#		if index > get_tree().get_nodes_in_group("PlayerSpawnPoint").size():
+#			index = 0
 				
 	# playerScene.connect("player_fired_bullet", bullet_manager.handle_bullet_spawned)
 
@@ -120,7 +123,7 @@ func restart_game():
 #	restart_game_to_server_browser.emit()
 	var root = get_tree().get_root()
 	var multiplayerNode = root.get_node("Multiplayer")
-	var serverBrowser = multiplayerNode.get_node("ServerBrowser")
+#	var serverBrowser = multiplayerNode.get_node("ServerBrowser")
 #	serverBrowser.clean_up()
 	multiplayerNode.restart()
 

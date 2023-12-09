@@ -18,7 +18,7 @@
 [ext_resource type="Theme" uid="uid://byyncocqpbdnj" path="res://Assets/UI/helper_text.tres" id="10_54314"]
 [ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="15_rep7u"]
 [ext_resource type="PackedScene" uid="uid://dde2f35ut0e4f" path="res://Scenes/Tutorial/Tutorial.tscn" id="16_uxhrd"]
-[ext_resource type="PackedScene" path="res://Scenes/SplashScreen/Analyzer.tscn" id="19_72jpx"]
+[ext_resource type="PackedScene" uid="uid://spa8ucmvj5wp" path="res://Scenes/SplashScreen/Analyzer.tscn" id="19_72jpx"]
 
 [sub_resource type="Animation" id="Animation_rhytu"]
 length = 0.001

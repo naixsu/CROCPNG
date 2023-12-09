@@ -33,7 +33,7 @@ func _on_ready_button_button_down():
 	ready_up()
 	
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if showReady:
 		bg.show()
 		update_ready_count()

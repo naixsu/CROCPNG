@@ -92,10 +92,10 @@ func connected_to_server():
 	send_player_information.rpc_id(1, nameEdit.text, multiplayer.get_unique_id())
 
 @rpc("any_peer")
-func send_player_information(name, id):
+func send_player_information(playerName, id):
 	if !GameManager.players.has(id):
 		GameManager.players[id] = {
-			"name": name,
+			"name": playerName,
 			"id": id,
 			"readyState": false
 			# other: other
@@ -129,7 +129,7 @@ func host_game():
 	startGame.show()
 	# send_player_information(nameEdit.text, multiplayer.get_unique_id())
 
-func custom_host(serverName):
+func custom_host(customServerName):
 	isHost = true
 	serverInfoHeading.hide()
 	findServer.hide()
@@ -143,7 +143,7 @@ func custom_host(serverName):
 	
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER) # Make sure to have the same compression
 	multiplayer.set_multiplayer_peer(peer)
-	$ServerBrowser.set_up_broadcast(serverName + "'s server")
+	$ServerBrowser.set_up_broadcast(customServerName + "'s server")
 	startGame.show()
 
 func _on_host_button_down():
@@ -206,11 +206,8 @@ func _on_exit_game_button_down():
 	get_tree().quit()
 
 
-func _on_name_edit_text_changed(new_text):
-#	SoundManager.type.set_pitch_scale(randf_range(0.4, 0.5))
+func _on_name_edit_text_changed(_new_text):
 	SoundManager.type.play()
-	# if new_text.length() > maxCharLimit:
-	# 	return
 
 
 func _on_tutorial_button_pressed():

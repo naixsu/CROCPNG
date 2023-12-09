@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bsabsu06d6xb3"]
+[gd_scene load_steps=24 format=3 uid="uid://bsabsu06d6xb3"]
 
 [ext_resource type="Script" path="res://Scripts/Sound/SoundManager.gd" id="1_xt0a1"]
 [ext_resource type="AudioStream" uid="uid://bj61q38nwdri1" path="res://Assets/Sound/click.wav" id="2_besm3"]
@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://cwnv7qdqb5s34" path="res://Assets/Sound/Switch2.wav" id="10_fwfya"]
 [ext_resource type="AudioStream" uid="uid://51iyxr7n88b6" path="res://Assets/Sound/PlayerDeath.wav" id="12_cjc4c"]
 [ext_resource type="AudioStream" uid="uid://dnveuvp8hgrew" path="res://Assets/Sound/BossShoot6.wav" id="13_a6k2v"]
+[ext_resource type="AudioStream" uid="uid://djttohtvcjleq" path="res://Assets/Sound/respawn.wav" id="13_dj2cy"]
 [ext_resource type="AudioStream" uid="uid://drfqdo14ik6wr" path="res://Assets/Sound/ミオシティ 8bit ver.mp3" id="15_6xnf5"]
 [ext_resource type="AudioStream" uid="uid://caofstmdt08lm" path="res://Assets/Sound/Unwelcome School 8bit ver.mp3" id="15_57gns"]
 [ext_resource type="AudioStream" uid="uid://drfxtl3d4u60u" path="res://Assets/Sound/Pingu - Noot Noot Sound Effect.mp3" id="15_a4ltp"]
@@ -76,7 +77,12 @@ max_distance = 1000.0
 
 [node name="PlayerDeath" type="AudioStreamPlayer2D" parent="PlayerSounds"]
 stream = ExtResource("12_cjc4c")
-volume_db = -5.0
+volume_db = 5.0
+max_distance = 1000.0
+
+[node name="PlayerRespawn" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("13_dj2cy")
+volume_db = 5.0
 max_distance = 1000.0
 
 [node name="EnemySounds" type="Node2D" parent="."]

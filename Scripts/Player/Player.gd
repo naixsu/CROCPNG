@@ -602,6 +602,8 @@ func _on_respawn_timer_timeout():
 		collision.disabled = false
 		health = maxHealth
 		update_hud.rpc()
+		
+		SoundManager.playerRespawn.play()
 
 
 func _on_i_frames_timer_timeout():

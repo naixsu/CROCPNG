@@ -30,15 +30,14 @@ class_name Enemy
 ###
 
 func _ready():
-#	multiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	init_enemy()
 	anim.play("idle")
 	ai.initialize(self)
 	ai.connect("state_changed", on_state_changed)
-#	ai.initialize_path_finding()
 
-func _process(delta):
-	healthLabel.text = str(health)
+func _process(_delta):
+	# clamping health
+	healthLabel.text = str(max(health, 0))
 	
 	if hasBomb:
 		target.visible = true
@@ -69,13 +68,14 @@ func handle_hit(dmg):
 func handle_death():
 	if not dead:
 		dead = true
+
 		if hasBomb:
 			handle_bomb_transfer()
+
 		collision.disabled = true
 		hasBomb = false
 		anim.play("death")
 		
-
 func handle_bomb_drop():
 	if multiplayer.is_server():
 		var root = get_tree().get_root()
@@ -88,34 +88,13 @@ func handle_bomb_transfer():
 		var root = get_tree().get_root()
 		var multiplayerScene = root.get_node("TestMultiplayerScene")
 		multiplayerScene.find_to_hold_bomb.rpc()
-#		multiplayerScene.spawn_bomb(self)
-		# Find the next enemy
-#		var root = get_tree().get_root()
-#		var enemyGroups = root.get_node("TestMultiplayerScene/EnemyGroups")
-#
-#		if enemyGroups.get_children().size() == 0: return
-#
-#		var child = enemyGroups.get_child(-1)
-#		child.hasBomb = true
-		
-		pass
-		
-	
 
-func flip_sprite(player):
-	if player.global_position.x < global_position.x:
+func flip_sprite(playerNode):
+	if playerNode.global_position.x < global_position.x:
 		anim.flip_h = true
-	elif player.global_position.x > global_position.x:
+	elif playerNode.global_position.x > global_position.x:
 		anim.flip_h = false
 
-#func go_towards(player):
-#	anim.play("run")
-#	var direction = (player.global_position - global_position).normalized()
-#	var new_position = global_position + direction * speed * get_process_delta_time()
-##	global_position = new_position
-#	velocity = direction * speed
-#	move_and_slide()
-	
 func idle():
 	anim.play("idle")
 	
@@ -127,5 +106,4 @@ func on_state_changed(new_state):
 	
 func attack_player(playerNode):
 	if playerNode.iFramesTimer.is_stopped():
-		print("Attacking player " + str(playerNode.name))
 		playerNode.handle_hit(resource.damage)

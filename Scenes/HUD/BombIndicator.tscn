@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://gktggddc0ha"]
+
+[ext_resource type="Texture2D" uid="uid://b6168omykfbl2" path="res://Assets/Sprites/HUD/BombIndicator.png" id="1_l1l85"]
+
+[node name="BombIndicator" type="Node2D"]
+z_index = 20
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(40, 0)
+texture = ExtResource("1_l1l85")

@@ -1,8 +1,70 @@
-[gd_scene load_steps=4 format=3 uid="uid://bxtn8e8m61sj3"]
+[gd_scene load_steps=27 format=3 uid="uid://bxtn8e8m61sj3"]
 
+[ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="1_f14hw"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/MultiplayerController.gd" id="1_wmt0j"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ServerBrowser.gd" id="2_7edh8"]
+[ext_resource type="PackedScene" path="res://Scenes/Testing/NaixTestScenes/PlayerLogs.tscn" id="3_3hrac"]
+[ext_resource type="Texture2D" uid="uid://bvmiicc2tjbiy" path="res://Assets/Splash Screen/SplashScreenBG.png" id="3_37vqk"]
 [ext_resource type="PackedScene" uid="uid://chavk7wh0g8k8" path="res://Scenes/Testing/NaixTestScenes/ServerInfo.tscn" id="3_bgp3x"]
+[ext_resource type="Texture2D" uid="uid://d1jku4yxq3q35" path="res://Assets/UI/crocs-logo.png" id="4_ggktp"]
+[ext_resource type="Theme" uid="uid://dbgqyu07lw23u" path="res://Assets/UI/start_button.tres" id="4_me80j"]
+[ext_resource type="Texture2D" uid="uid://c8x2yqmj0iifc" path="res://Assets/UI/torch.png" id="4_n4mnp"]
+[ext_resource type="Texture2D" uid="uid://cpag2dhpq1m7g" path="res://Assets/UI/panel-brown-big-textured.png" id="4_negk3"]
+[ext_resource type="LabelSettings" uid="uid://ddochaiamxtox" path="res://Assets/UI/row_label.tres" id="5_0jqkf"]
+[ext_resource type="Theme" uid="uid://dld16dcqgxplk" path="res://Assets/UI/exit_button.tres" id="5_wsvfy"]
+[ext_resource type="Texture2D" uid="uid://tgn747f8282c" path="res://Assets/UI/title.png" id="6_1x86m"]
+[ext_resource type="Texture2D" uid="uid://bj18ethdhw8au" path="res://Assets/UI/name-border.png" id="6_6o4cb"]
+[ext_resource type="FontFile" uid="uid://ctxdq4lqft0lv" path="res://Assets/Fonts/Ac437_IBM_EGA_8x8.ttf" id="6_t0i5g"]
+[ext_resource type="Theme" uid="uid://byyncocqpbdnj" path="res://Assets/UI/helper_text.tres" id="10_54314"]
+[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="15_rep7u"]
+[ext_resource type="PackedScene" uid="uid://dde2f35ut0e4f" path="res://Scenes/Tutorial/Tutorial.tscn" id="16_uxhrd"]
+[ext_resource type="PackedScene" path="res://Scenes/SplashScreen/Analyzer.tscn" id="19_72jpx"]
+
+[sub_resource type="Animation" id="Animation_rhytu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_5sxo2"]
+resource_name = "idle"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m433w"]
+_data = {
+"RESET": SubResource("Animation_rhytu"),
+"idle": SubResource("Animation_5sxo2")
+}
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7jsei"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wgpcf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5drjj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p6fp4"]
 
 [node name="Multiplayer" type="Control"]
 layout_mode = 3
@@ -11,46 +73,147 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_f14hw")
 script = ExtResource("1_wmt0j")
+PlayerLogs = ExtResource("3_3hrac")
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("3_37vqk")
+
+[node name="Analyzer" parent="." instance=ExtResource("19_72jpx")]
+mouse_filter = 2
+
+[node name="Torch" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(35, 337)
+rotation = -0.139626
+scale = Vector2(2.31818, 2.31818)
+texture = ExtResource("4_n4mnp")
+hframes = 8
+frame = 7
+
+[node name="Idle" type="AnimationPlayer" parent="Torch"]
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_m433w")
+}
+
+[node name="Torch2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1119, 337)
+rotation = 0.139626
+scale = Vector2(2.31818, 2.31818)
+texture = ExtResource("4_n4mnp")
+hframes = 8
+frame = 7
+
+[node name="Idle" type="AnimationPlayer" parent="Torch2"]
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_m433w")
+}
+
+[node name="Border" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 91.0
+offset_right = 1084.0
+offset_bottom = 565.0
+texture = ExtResource("4_negk3")
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 178.0
+offset_top = 114.0
+offset_right = 338.0
+offset_bottom = 274.0
+scale = Vector2(0.68, 0.68)
+texture = ExtResource("4_ggktp")
 
 [node name="Host" type="Button" parent="."]
 layout_mode = 0
-offset_left = 553.0
-offset_top = 193.0
-offset_right = 608.0
-offset_bottom = 224.0
+offset_left = 123.0
+offset_top = 344.0
+offset_right = 311.0
+offset_bottom = 382.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7jsei")
 text = "Host
 "
 
-[node name="Join" type="Button" parent="."]
+[node name="FindServer" type="Button" parent="."]
 layout_mode = 0
 offset_left = 123.0
-offset_top = 129.0
-offset_right = 260.0
-offset_bottom = 167.0
-text = "Join"
+offset_top = 401.0
+offset_right = 313.0
+offset_bottom = 439.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wgpcf")
+text = "Find Servers"
 
 [node name="StartGame" type="Button" parent="."]
+visible = false
 layout_mode = 0
-offset_left = 301.0
-offset_top = 127.0
-offset_right = 438.0
-offset_bottom = 165.0
-text = "Start Game"
+offset_left = 871.0
+offset_top = 533.0
+offset_right = 1042.0
+offset_bottom = 595.0
+theme = ExtResource("4_me80j")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5drjj")
+text = "Start "
+
+[node name="ExitGame" type="Button" parent="."]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 533.0
+offset_right = 270.0
+offset_bottom = 595.0
+theme = ExtResource("5_wsvfy")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_p6fp4")
+text = "Exit"
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 231.0
+offset_right = 226.0
+offset_bottom = 305.0
+texture = ExtResource("6_6o4cb")
+expand_mode = 2
 
 [node name="NameEdit" type="LineEdit" parent="."]
 layout_mode = 0
-offset_left = 121.0
-offset_top = 47.0
-offset_right = 477.0
-offset_bottom = 95.0
+offset_left = 99.0
+offset_top = 267.0
+offset_right = 341.0
+offset_bottom = 323.264
+theme_override_font_sizes/font_size = 25
+max_length = 10
+clear_button_enabled = true
+caret_blink = true
 
-[node name="NameEditLabel" type="Label" parent="NameEdit"]
+[node name="NameEditLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = -64.0
-offset_top = 5.0
-offset_bottom = 42.0
-text = "Name"
+offset_left = 113.0
+offset_top = 241.0
+offset_right = 211.0
+offset_bottom = 260.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("6_t0i5g")
+theme_override_font_sizes/font_size = 13
+text = "ENTER NAME"
+vertical_alignment = 1
 
 [node name="ServerBrowser" type="Control" parent="."]
 anchors_preset = 0
@@ -62,55 +225,64 @@ ServerInfo = ExtResource("3_bgp3x")
 [node name="BroadcastTimer" type="Timer" parent="ServerBrowser"]
 
 [node name="Label" type="Label" parent="ServerBrowser"]
+visible = false
 layout_mode = 0
-offset_left = 757.0
-offset_top = 44.0
-offset_right = 921.0
-offset_bottom = 70.0
+offset_left = 775.0
+offset_top = 142.0
+offset_right = 980.0
+offset_bottom = 169.0
 scale = Vector2(1, 1.00725)
 text = "Bound to listen port: "
 
 [node name="Panel" type="Panel" parent="ServerBrowser"]
 layout_mode = 0
-offset_left = 163.0
-offset_top = 435.0
-offset_right = 851.0
-offset_bottom = 682.0
+offset_left = 355.0
+offset_top = 170.0
+offset_right = 1056.0
+offset_bottom = 457.0
 
 [node name="ServerInfoHeading" type="HBoxContainer" parent="ServerBrowser/Panel"]
 layout_mode = 2
-offset_top = 34.0
-offset_right = 687.0
-offset_bottom = 92.0
+offset_left = 25.18
+offset_top = 19.0
+offset_right = 684.18
+offset_bottom = 61.0
 
 [node name="Name" type="Label" parent="ServerBrowser/Panel/ServerInfoHeading"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Name"
+text = "NAME"
+label_settings = ExtResource("5_0jqkf")
 
 [node name="IP" type="Label" parent="ServerBrowser/Panel/ServerInfoHeading"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "IP"
+label_settings = ExtResource("5_0jqkf")
 
 [node name="PlayerCount" type="Label" parent="ServerBrowser/Panel/ServerInfoHeading"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Player Count"
+text = "PLAYER COUNT"
+label_settings = ExtResource("5_0jqkf")
+horizontal_alignment = 1
 
 [node name="Join" type="Label" parent="ServerBrowser/Panel/ServerInfoHeading"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Join
-"
+text = "JOIN"
+label_settings = ExtResource("5_0jqkf")
+horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ServerBrowser/Panel"]
 layout_mode = 0
+offset_left = 18.0
 offset_top = 93.0
-offset_right = 687.0
-offset_bottom = 242.0
+offset_right = 673.0
+offset_bottom = 271.0
 
 [node name="Button" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 1041.0
 offset_top = 168.0
@@ -118,16 +290,8 @@ offset_right = 1118.0
 offset_bottom = 215.0
 text = "test add player (host)"
 
-[node name="FindServer" type="Button" parent="."]
-layout_mode = 0
-offset_left = 929.0
-offset_top = 313.0
-offset_right = 1101.0
-offset_bottom = 360.0
-text = "Find Servers
-"
-
 [node name="DeprecationLabel" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 85.0
 offset_top = 190.0
@@ -136,6 +300,7 @@ offset_bottom = 216.0
 text = "This is deprecated ^"
 
 [node name="DeprecationLabel2" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 996.0
 offset_top = 228.0
@@ -145,23 +310,66 @@ text = "This is deprecated ^"
 
 [node name="InstructionLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 423.0
-offset_top = 244.0
-offset_right = 576.0
-offset_bottom = 270.0
-text = "For testers: Press this ^ When bound to listen port is false"
+offset_left = 121.0
+offset_top = 457.0
+offset_right = 323.0
+offset_bottom = 524.0
+theme = ExtResource("10_54314")
+theme_override_colors/font_color = Color(0.18, 0.081, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "Press 'Host' if there is no host yet. Otherwise, press 'Find Servers'"
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="InstructionLabel2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 197.0
-offset_top = 442.0
-offset_right = 822.0
-offset_bottom = 468.0
-text = "For testers: Press the join button that shows up here in Bound to listen port: true"
+offset_left = 355.0
+offset_top = 466.0
+offset_right = 1046.0
+offset_bottom = 493.0
+theme_override_colors/font_color = Color(0.180392, 0.105882, 0.0470588, 1)
+theme_override_font_sizes/font_size = 21
+text = "When finding for servers, press the 'Join' button whenever a server is found
+For multiplayer, when all the players are connected, press 'Start'
+For single player, press 'Host' and 'Start'"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 387.0
+offset_top = 58.0
+offset_right = 790.0
+offset_bottom = 137.0
+texture = ExtResource("6_1x86m")
+
+[node name="SoundManager" parent="." instance=ExtResource("15_rep7u")]
+
+[node name="Tutorial" parent="." instance=ExtResource("16_uxhrd")]
+visible = false
+layout_mode = 1
+
+[node name="TutorialButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -94.0
+offset_top = -104.0
+offset_right = 94.0
+offset_bottom = -66.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7jsei")
+text = "TUTORIAL"
 
 [connection signal="button_down" from="Host" to="." method="_on_host_button_down"]
-[connection signal="button_down" from="Join" to="." method="_on_join_button_down"]
+[connection signal="button_down" from="FindServer" to="ServerBrowser" method="_on_find_server_button_down"]
 [connection signal="button_down" from="StartGame" to="." method="_on_start_game_button_down"]
+[connection signal="button_down" from="ExitGame" to="." method="_on_exit_game_button_down"]
+[connection signal="text_changed" from="NameEdit" to="." method="_on_name_edit_text_changed"]
 [connection signal="timeout" from="ServerBrowser/BroadcastTimer" to="ServerBrowser" method="_on_broadcast_timer_timeout"]
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
-[connection signal="button_down" from="FindServer" to="ServerBrowser" method="_on_find_server_button_down"]
+[connection signal="pressed" from="TutorialButton" to="." method="_on_tutorial_button_pressed"]

@@ -8,6 +8,7 @@ class_name Boss
 @onready var SoundManager = $SoundManager
 @onready var bulletHell = $BulletHell
 @onready var collision = $CollisionShape2D
+@onready var healthLabel = $Label
 
 @export var health : int
 @export var speed : int
@@ -26,7 +27,7 @@ func _ready():
 	bulletDmg = resource.damage
 
 func _process(delta):
-#	healthLabel.text = str(health)
+	healthLabel.text = str(max(health, 0))
 	
 	if hasBomb:
 		target.visible = true
@@ -37,8 +38,6 @@ func _process(delta):
 func init_enemy():
 	self.health = resource.health
 	self.speed = resource.speed
-	
-	print("Health " + str(health))
 
 func on_state_changed(new_state):
 	print("BOSS ", new_state)
@@ -50,9 +49,7 @@ func run():
 	anim.play("run")
 
 func attack_player(player):
-	# if player.iFramesTimer.is_stopped():
 	if not player.showIframes:
-		print("Attacking player " + str(player.name))
 		player.handle_hit(resource.damage)
 
 func handle_bomb_drop():
@@ -71,7 +68,6 @@ func handle_bomb_transfer():
 func handle_hit(dmg):
 	SoundManager.enemyHit.play()
 	health -= dmg
-	print("Enemy hit", health)
 
 func handle_death():
 	if not dead:

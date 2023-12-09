@@ -21,6 +21,6 @@ func _ready():
 	hotBarButtons = [pistolButton, rifleButton, shotgunButton, meleeButton]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	waveNumber.text = "Wave Number %d / %d" % [GameManager.wave, GameManager.maxWave]
 	numberOfEnemies.text = "Number of Enemies: %d" % [GameManager.enemyCount]

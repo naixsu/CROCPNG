@@ -19,16 +19,12 @@ func play_melee():
 #	melee.play(\"MeleeSwing\")
 	anim.play(\"Swing\")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func _on_melee_hit_body_entered(body):
 	if body.is_in_group(\"Enemy\"):
 		body.handle_hit(dmg)
 		cd.start()
 
-func _on_animation_player_animation_finished(anim_name):
+func _on_animation_player_animation_finished(_anim_name):
 	finished_anim.emit()
 "
 

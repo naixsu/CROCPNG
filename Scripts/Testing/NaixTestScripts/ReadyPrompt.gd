@@ -28,11 +28,10 @@ signal win_banner
 signal pre_wave
 
 func _on_ready_button_button_down():
-#	ready_up.rpc()
 	ready_up()
 	
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if showReady:
 		bg.show()
 		update_ready_count()
@@ -66,7 +65,6 @@ func display_countdown():
 	startCountdown = false
 	waveNotif.text = "Wave Starts In: %0.1fs" % waveCountdown.time_left
 	
-#@rpc("any_peer")
 func update_ready_count():
 	readyCount = 0
 	# Get all players in the tree
@@ -74,10 +72,7 @@ func update_ready_count():
 	for player in players:
 		if player.readyState == true: 
 			readyCount += 1
-#	var players = GameManager.players
-#	for player in players:
-#		if players[player].readyState: readyCount += 1
-	
+
 	var text = "Number of Players Ready: {0}/{1}".format({
 		"0": str(readyCount),
 		"1": GameManager.players.size()
@@ -114,21 +109,21 @@ func ready_up():
 	
 	update_ready_text()
 
-
 func _on_wave_countdown_timeout():
 	displayCountdown = false
 	waveNotif.hide()
 	bg.hide()
 	start_wave.emit()
-#	if GameManager.wave > 1:
-#		reward_players.emit()
 	rewardCalled = false
+
 	reset_ready()
 
 func reset_ready(): # Reset the readyState of all players
 	var players = get_tree().get_nodes_in_group("Player")
+
 	for player in players:
 		player.readyState = false
+
 	checkForEnemies = true
 	readyClicked = false
 	

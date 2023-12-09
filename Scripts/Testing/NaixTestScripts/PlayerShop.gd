@@ -40,7 +40,7 @@ var shotgunBSCost = 60
 
 var meleeDmgCost = 50
 
-func _process(delta):
+func _process(_delta):
 	if health.get_node("ProgressBar").value == 100:
 		health.get_node("HealthButton").visible = false
 	if speed.get_node("ProgressBar").value == 100:

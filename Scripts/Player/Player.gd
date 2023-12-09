@@ -12,9 +12,6 @@ class_name Player
 @export var dashLength = 0.3
 @export var health = 100
 @export var maxHealth = health
-@export var Bullet : PackedScene
-@export var Enemy : PackedScene
-@export var BulletCB : PackedScene
 
 # Onready vars here
 @onready var anim = $AnimatedSprite2D
@@ -23,10 +20,10 @@ class_name Player
 @onready var multiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var weaponsManager = $WeaponsManager
 @onready var dash = $Dash
+@onready var bombIndicator = $BombIndicator
 
 # Camera Onready Vars TO BE DEBUGGED
-@onready var playerCamera = $Camera2D
-
+@onready var playerCamera = $PlayerCamera
 @onready var readyPrompt = get_tree().get_root().get_node("TestMultiplayerScene/ReadyPrompt")
 @onready var readyLabel = $ReadyLabel
 @onready var respawnNode = $Respawn # Avoiding variable names (resoawn)
@@ -88,7 +85,7 @@ var currentWeapon
 		"damage": 0,
 		"accuracy": 0,
 		"bulletSpeed": 0,
-		"dUp": 2.5,
+		"dUp": 0.5,
 		"aUp": 7.5,
 		"bsUp": 200
 	}
@@ -108,6 +105,7 @@ var dashProgressBar
 var hb
 var sb
 var db
+var playerPrices
 
 var pistolShop
 var pistolDmgProgressBar
@@ -116,6 +114,7 @@ var pistolBSProgressBar
 var pdb # damage button
 var pab # acc button
 var pbb # bulletspeed button
+var pistolPrices
 
 var rifleShop
 var rifleDmgProgressBar
@@ -124,6 +123,7 @@ var rifleBSProgressBar
 var rdb
 var rab
 var rbb
+var riflePrices
 
 var shotgunShop
 var shotgunDmgProgressBar
@@ -132,15 +132,18 @@ var shotgunBSProgressBar
 var sdb
 var sab
 var sbb
+var shotgunPrices
 
 var meleeShop
 var meleeDmgProgressBar
 var mdb
+var meleePrices
 
 var shopMoneyLabel
 
 var shopButtons = []
 var shopPrices = []
+var shopPricesDisplay = []
 var weaponUpgrades : Dictionary
 # multiplayer syncing
 #var syncPos = Vector2(0, 0)
@@ -171,9 +174,6 @@ func _ready():
 	
 	nameLabel.text = str(GameManager.players[name.to_int()].name)
 	
-	
-		
-
 func _process(delta):
 	if GameManager.gameOver: return 
 	
@@ -189,6 +189,7 @@ func _process(delta):
 	
 	if displayRespawn: 
 		display_respawn()
+
 
 func _physics_process(delta):
 	if GameManager.gameOver: return 
@@ -229,6 +230,7 @@ func _physics_process(delta):
 			check_hit()
 
 	update_camera(delta)
+	update_bomb_indicator_rotation()
 	
 # Commenting as it has synchronization issues
 func _unhandled_input(event): 
@@ -285,7 +287,8 @@ func init_shop():
 	hb = playerShop.get_node("Health").get_node("HealthButton")
 	sb = playerShop.get_node("Speed").get_node("SpeedButton")
 	db = playerShop.get_node("Dash").get_node("DashButton")
-	
+	playerPrices = playerShop.get_node("Prices").get_children()
+
 	pistolShop = shop.get_node("TabContainer").get_node("Pistol")
 	pistolDmgProgressBar = pistolShop.get_node("Damage").get_node("ProgressBar")
 	pistolAccProgressBar = pistolShop.get_node("Accuracy").get_node("ProgressBar")
@@ -293,6 +296,7 @@ func init_shop():
 	pdb = pistolShop.get_node("Damage").get_node("PDmgButton")
 	pab = pistolShop.get_node("Accuracy").get_node("PAccButton")
 	pbb = pistolShop.get_node("Bulletspeed").get_node("PBSButton")
+	pistolPrices = pistolShop.get_node("Prices").get_children()
 	
 	rifleShop = shop.get_node("TabContainer").get_node("Rifle")
 	rifleDmgProgressBar = rifleShop.get_node("Damage").get_node("ProgressBar")
@@ -301,6 +305,7 @@ func init_shop():
 	rdb = rifleShop.get_node("Damage").get_node("RDmgButton")
 	rab = rifleShop.get_node("Accuracy").get_node("RAccButton")
 	rbb = rifleShop.get_node("Bulletspeed").get_node("RBSButton")
+	riflePrices = rifleShop.get_node("Prices").get_children()
 	
 	shotgunShop = shop.get_node("TabContainer").get_node("Shotgun")
 	shotgunDmgProgressBar = shotgunShop.get_node("Damage").get_node("ProgressBar")
@@ -309,10 +314,12 @@ func init_shop():
 	sdb = shotgunShop.get_node("Damage").get_node("SDmgButton")
 	sab = shotgunShop.get_node("Accuracy").get_node("SAccButton")
 	sbb = shotgunShop.get_node("Bulletspeed").get_node("SBSButton")
+	shotgunPrices = shotgunShop.get_node("Prices").get_children()
 	
 	meleeShop = shop.get_node("TabContainer").get_node("Melee")
 	meleeDmgProgressBar = meleeShop.get_node("Damage").get_node("ProgressBar")
 	mdb = meleeShop.get_node("Damage").get_node("MDmgButton")
+	meleePrices = meleeShop.get_node("Prices").get_children()
 	
 	shopMoneyLabel = shop.get_node("Money").get_node("MoneyLabel")
 	
@@ -329,7 +336,11 @@ func init_shop():
 					shop.rifleDmgCost, shop.rifleAccCost, shop.rifleBSCost,
 					shop.shotgunDmgCost, shop.shotgunAccCost, shop.shotgunBSCost,
 					shop.meleeDmgCost
-					]
+				]
+	
+	shopPricesDisplay = [
+		playerPrices, pistolPrices, riflePrices, shotgunPrices, meleePrices
+	]
 	
 	weaponUpgrades = {
 		"pistol": {
@@ -341,7 +352,7 @@ func init_shop():
 #			"bsUp": 62.5
 		},
 		"rifle": {
-			"damage": [rifleDmgProgressBar, shop.rifleDmgCost, 0, 2.5],
+			"damage": [rifleDmgProgressBar, shop.rifleDmgCost, 0, 1.5],
 			"accuracy": [rifleAccProgressBar, shop.rifleAccCost, 0, 1.25],
 			"bulletSpeed": [rifleBSProgressBar, shop.rifleBSCost, 0, 75],
 #			"dUp": 2.5,
@@ -349,10 +360,10 @@ func init_shop():
 #			"bsUp": 75
 		},
 		"shotgun": {
-			"damage": [shotgunDmgProgressBar, shop.shotgunDmgCost, 0, 2.5],
+			"damage": [shotgunDmgProgressBar, shop.shotgunDmgCost, 0, 0.5],
 			"accuracy": [shotgunAccProgressBar, shop.shotgunAccCost, 0, 7.5],
-			"bulletSpeed": [shotgunBSProgressBar, shop.shotgunBSCost, 0, 200],
-#			"dUp": 2.5,
+			"bulletSpeed": [shotgunBSProgressBar, shop.shotgunBSCost, 0, 50],
+#			"dUp": 0.5,
 #			"aUp": 7.5,
 #			"bsUp": 200
 		},
@@ -360,7 +371,9 @@ func init_shop():
 			"damage": [meleeDmgProgressBar, shop.meleeDmgCost, 0, 5],
 		}
 	}
+	
 	update_money_label()
+	update_shop_prices()
 
 @rpc("any_peer", "call_local")
 func update_hud():
@@ -379,7 +392,16 @@ func update_hud():
 				HUD.hotBarButtons[buttonIndex].disabled = false
 			else:
 				HUD.hotBarButtons[buttonIndex].disabled = true
-		
+			
+#		update_shop_prices()
+
+func update_shop_prices():
+	var i = 0
+	for shopPrice in shopPricesDisplay:
+		for priceDisplay in shopPrice:
+			priceDisplay.text = str(shopPrices[i])
+			i += 1
+
 
 func update_money_label():
 	shopMoneyLabel.text = str(money) + " Credits"
@@ -420,6 +442,7 @@ func update_shop_buttons():
 func player_upgrade(subject, stat):
 	upgrade_stats.rpc(subject, stat)
 
+# General upgrade function
 @rpc("any_peer", "call_local")
 func upgrade_stats(subject, stat):
 	print("Upgrade Pressed " + " " + subject + " " + stat )
@@ -436,6 +459,7 @@ func upgrade_stats(subject, stat):
 			upgrade_melee(stat)
 	update_money_label()
 	update_shop_buttons()
+	update_shop_prices()
 
 func upgrade_player(stat):
 	print("Upgrading player " + stat)
@@ -455,7 +479,7 @@ func upgrade_player(stat):
 			dashProgressBar.value = 100
 			set_money(-shop.playerDashCost)
 
-# General function
+# General weapon function
 func upgrade_weapon(weapon, stat):
 	print("Upgrading " + weapon + " " + stat)
 	if weaponUpgrades.has(weapon) and weaponUpgrades[weapon].has(stat):
@@ -463,7 +487,8 @@ func upgrade_weapon(weapon, stat):
 		values[0].value += 25 # Progress Bar Value
 		set_money(-values[1]) # Upgrade Cost
 		weaponUpgrades[weapon][stat][2] += weaponUpgrades[weapon][stat][3] # Stat - Stat Up
-		print(weaponUpgrades[weapon])
+#		print(weaponUpgrades[weapon][stat][3])
+#		print(weaponUpgrades[weapon])
 #		upgrade_weapon_stat(weapon, stat)
 
 func upgrade_pistol(stat):
@@ -504,6 +529,17 @@ func update_gun_rotation():
 	weaponsManager.look_at(get_global_mouse_position())
 	pass
 
+func update_bomb_indicator_rotation():
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	if enemies.size() == 0:
+		bombIndicator.hide()
+		return
+		
+	for enemy in enemies:
+		if enemy.hasBomb:
+			bombIndicator.look_at(enemy.global_position)
+			bombIndicator.show()
+
 func update_animation():
 	flip_sprite()
 	# Updates player animation based on velocity
@@ -519,7 +555,7 @@ func update_camera(delta):
 		playerCamera.zoomFactor -= 0.01
 	else:
 		playerCamera.zoomFactor = 1.0
-	
+
 func flip_sprite():
 	# Flipts the sprite depending on the mouse position
 	if get_global_mouse_position().x < global_position.x:

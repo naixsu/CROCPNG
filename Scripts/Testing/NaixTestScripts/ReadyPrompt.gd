@@ -20,6 +20,7 @@ var startCountdown : bool = false
 var displayCountdown : bool = false
 var checkForEnemies : bool = false
 var readyClicked : bool = false
+var rewardCalled: bool = false
 
 signal toggle_ready
 signal start_wave
@@ -57,6 +58,9 @@ func _physics_process(delta):
 			showReady = true
 			playerReadyCount.show()
 			pre_wave.emit()
+			if !rewardCalled:
+				reward_players.emit()
+				rewardCalled = !rewardCalled
 			
 	
 func display_countdown():
@@ -86,11 +90,24 @@ func update_ready_count():
 
 func check_all_ready():
 	if readyCount == GameManager.players.size() and showReady:
-		showReady = false
-		startCountdown = true
-		playerReadyCount.hide()
+		await get_tree().physics_frame
+		if last_check_ready():
+			showReady = false
+			startCountdown = true
+			playerReadyCount.hide()
 	
+func last_check_ready():
+	var count = 0
+	var players = get_tree().get_nodes_in_group("Player")
 	
+	for player in players:
+		if player.readyState == true: 
+			count += 1
+	
+	if count == GameManager.players.size():
+		return true
+	
+	return false
 
 func ready_up():
 	toggle_ready.emit()
@@ -104,9 +121,9 @@ func _on_wave_countdown_timeout():
 	waveNotif.hide()
 	bg.hide()
 	start_wave.emit()
-	if GameManager.wave > 1:
-		reward_players.emit()
-	
+#	if GameManager.wave > 1:
+#		reward_players.emit()
+	rewardCalled = false
 	reset_ready()
 
 func reset_ready(): # Reset the readyState of all players

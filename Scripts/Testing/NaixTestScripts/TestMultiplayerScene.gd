@@ -2,7 +2,7 @@ extends Node2D
 
 #@export var BulletManager: PackedScene
 @export var PlayerScene: PackedScene
-@export var baseReward = 150
+@export var baseReward = 100
 #@onready var bullet_manager = $BulletManager
 var spawn_points = []
 

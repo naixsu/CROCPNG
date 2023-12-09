@@ -3,6 +3,7 @@ extends Control
 signal foundServer(ip, port, roomInfo)
 signal updateServer(ip, port, roomInfo)
 signal joinGame(ip)
+signal hide_host
 
 var broadcastTimer : Timer
 
@@ -160,4 +161,5 @@ func join_by_ip(ip):
 
 func _on_find_server_button_down():
 	SoundManager.click.play()
+	hide_host.emit()
 	set_up() # Replace with function body.

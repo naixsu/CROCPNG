@@ -85,6 +85,8 @@ func _physics_process(delta):
 	match current_state:
 		State.IDLE:
 			parent.idle()
+			if reachedFinal and parent.hasBomb:
+				parent.handle_bomb_drop()
 		State.ENGAGE:
 			if player != null:
 #				set_movement_target(Vector2.ZERO)
@@ -116,6 +118,9 @@ func _physics_process(delta):
 				if i >= markers.size():
 					set_state(State.IDLE)
 					reachedFinal = true
+					
+#					if reachedFinal and current_state == State.IDLE and parent.hasBomb:
+#						parent.handle_bomb_drop()
 					
 					if parent.hasBomb:
 						parent.handle_bomb_drop()

@@ -30,10 +30,8 @@ func initialize_path_finding():
 
 
 func actor_setup():
-	
 	if parent.dead: return
-	
-	# await get_tree().physics_frame
+
 	await get_tree().create_timer(0.2).timeout
 	
 	# Set paths
@@ -43,10 +41,6 @@ func actor_setup():
 	var pathPoints = navPathParent.get_children()
 	markers = pathPoints
 	set_state(State.OBJECTIVE)
-	
-	# print("Markers")
-	# print(markers)
-	
 
 func set_movement_target(targetPoint: Vector2):
 	navigationAgent.target_position = targetPoint
@@ -59,11 +53,12 @@ func _physics_process(delta):
 	match current_state:
 		State.IDLE:
 			parent.idle()
+
 		State.DEAD:
 			parent.handle_death()
+
 		State.OBJECTIVE:
 			parent.run()
-
 #			#Checks if the current target was reached and goes directly to the next one
 			if navigationAgent.is_navigation_finished():
 				i += 1
@@ -78,7 +73,6 @@ func _physics_process(delta):
 				set_movement_target(markers[i].position)
 
 			var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
-#			var nextPathPosition: Vector2 = navigationAgent.get_next_path_position()
 			var nextPathPosition = markers[i].position
 			var newVelocity: Vector2 = nextPathPosition - currentAgentPosition
 
@@ -91,9 +85,6 @@ func _physics_process(delta):
 		State.ATTACKING:
 			parent.attack_player(player)
 
-
-
-
 func set_state(new_state):
 	if new_state == current_state:
 		return
@@ -101,26 +92,12 @@ func set_state(new_state):
 	current_state = new_state
 	emit_signal("state_changed", current_state)
 
-
-#func _on_hit_box_body_entered(body):
-#	if body.is_in_group("Player") and current_state != State.DEAD:
-#		print("Colliding with player")
-#		player = body
-#		set_state(State.ATTACKING)
-
-		
-
-
 func _on_hit_box_body_entered(body):
 	if body.is_in_group("Player") and current_state != State.DEAD:
-		print("Colliding with player")
 		player = body
+
 		set_state(State.ATTACKING)
-
-
-
 
 func _on_hit_box_body_exited(body):
 	if body.is_in_group("Player") and current_state != State.DEAD:
-		print("Not colliding with player") # Replace with function body.
 		set_state(State.OBJECTIVE)

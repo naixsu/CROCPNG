@@ -28,17 +28,10 @@ func initialize_path_finding():
 	navigationAgent.target_desired_distance = 4.0
 	
 	call_deferred("actor_setup")
-#
-#	#Below is the beginning for the pathfinding
-##	set_movement_target(parent.movementTargets[i].position) #Very first target position
-#	init_pathfinding(parent)
-#	i += 1
 
 func actor_setup():
-	
 	if parent.dead: return
-	
-	# await get_tree().physics_frame
+
 	await get_tree().create_timer(0.2).timeout
 	
 	# Set paths
@@ -72,13 +65,12 @@ func actor_setup():
 	# Set state after init
 	set_state(State.OBJECTIVE)
 	
-
 func set_movement_target(targetPoint: Vector2):
 	navigationAgent.target_position = targetPoint
 	
-
-func _physics_process(delta):	
+func _physics_process(_delta):	
 	if GameManager.gameOver: return 
+
 	if parent.health <= 0:
 		set_state(State.DEAD)
 	
@@ -87,30 +79,22 @@ func _physics_process(delta):
 			parent.idle()
 			if reachedFinal and parent.hasBomb:
 				parent.handle_bomb_drop()
+
 		State.ENGAGE:
 			if player != null:
-#				set_movement_target(Vector2.ZERO)
 				parent.flip_sprite(player)
-#				var threshold_distance = 100
-#				if parent.global_position.distance_to(player.global_position)\
-#					> threshold_distance:
-#					parent.go_towards(player)
-#				else:
-#					parent.idle()
-#				parent.go_towards(player)
 				set_movement_target(player.global_position)
 				go_towards_target_point(global_position, player.global_position)
-#				go_towards_target_point(global_position,navigationAgent.get_next_path_position())
-#				go_towards_target_point(navigationAgent.get_next_path_position())
 			else:
 				print("No player found")
 				set_state(State.IDLE)
+
 		State.DEAD:
 			parent.handle_death()
+
 		State.OBJECTIVE:
 			parent.run()
 			set_movement_target(markers[i].position)
-#			return 
 			parent.flip_sprite(markers[i])
 			#Checks if the current target was reached and goes directly to the next one
 			if navigationAgent.is_navigation_finished():
@@ -118,39 +102,26 @@ func _physics_process(delta):
 				if i >= markers.size():
 					set_state(State.IDLE)
 					reachedFinal = true
-					
-#					if reachedFinal and current_state == State.IDLE and parent.hasBomb:
-#						parent.handle_bomb_drop()
-					
+
 					if parent.hasBomb:
 						parent.handle_bomb_drop()
 					
 					return
 				set_movement_target(markers[i].position)
 			go_towards_target_point(global_position, markers[i].position)
-#			var currentAgentPosition: Vector2 = global_position #Position of the enemy relative to the world
-##			var nextPathPosition: Vector2 = navigationAgent.get_next_path_position()
-#			var nextPathPosition = markers[i].position
-#			var newVelocity: Vector2 = nextPathPosition - currentAgentPosition
-#
-#			newVelocity = newVelocity.normalized()
-#			newVelocity = newVelocity * parent.speed
-#
-#			parent.velocity = newVelocity
-#			parent.move_and_slide()
-##			parent.coll = parent.move_and_collide(parent.velocity * delta)
+
 		State.ATTACKING:
 			parent.attack_player(player)
 
 
-func initialize(parent):
-	self.parent = parent
+func initialize(parentNode):
+	self.parent = parentNode
 
 func go_towards_target_point(currentAgentPosition, nextPathPosition):
 	var newVelocity: Vector2 = nextPathPosition - currentAgentPosition
+
 	newVelocity = newVelocity.normalized()
 	newVelocity = newVelocity * parent.speed
-
 	parent.velocity = newVelocity
 	parent.move_and_slide()
 	
@@ -163,9 +134,9 @@ func set_state(new_state):
 
 
 func _on_detection_zone_body_entered(body):
-	print("_on_detection_zone_body_entered ", body)
 	if body == null:
 		return 
+
 	if body.is_in_group("Player") and current_state != State.DEAD and current_state != State.ENGAGE:
 		set_state(State.ENGAGE)
 		player = body
@@ -173,15 +144,6 @@ func _on_detection_zone_body_entered(body):
 func _on_detection_zone_body_exited(body):
 	if body.is_in_group("Player") and current_state != State.DEAD: # Player exited radius
 		# Check if there are still nav markers
-#		if reachedFinal:
-#			i -= 1
-#			set_movement_target(markers[i].position)
-#		if navigationAgent.is_navigation_finished():
-#			if i >= markers.size():
-#				set_state(State.IDLE)
-#				return
-#		else:
-#			set_state(State.OBJECTIVE)
 		set_reset()
 		player = null
 		
@@ -200,9 +162,9 @@ func check_for_player():
 		return null
 
 
-func _on_spawn_detector_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+func _on_spawn_detector_area_shape_entered(_area_rid, area, _area_shape_index, _local_shape_index):
 	# Get name of parent
-	# o, 1, 2, 3, 4, n
+	# 0, 1, 2, 3, 4, n
 	if foundInitialSpawn: return
 	# Get parent name and set it to spawn
 	var areaName = area.get_parent().name
@@ -217,15 +179,13 @@ func _on_spawn_detector_area_shape_entered(area_rid, area, area_shape_index, loc
 
 func _on_hit_box_body_entered(body):
 	if body.is_in_group("Player") and current_state != State.DEAD:
-		print("Colliding with player")
 		player = body
+
 		set_state(State.ATTACKING)
 
 
 func _on_hit_box_body_exited(body):
 	if body.is_in_group("Player") and current_state != State.DEAD:
-		print("Not colliding with player") # Replace with function body.
-		
 		_on_detection_zone_body_entered(player)
 		
 	
@@ -234,6 +194,7 @@ func set_reset():
 		if reachedFinal:
 			i -= 1
 			set_movement_target(markers[i].position)
+
 		if navigationAgent.is_navigation_finished():
 			if i >= markers.size():
 				set_state(State.IDLE)

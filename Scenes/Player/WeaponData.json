@@ -12,7 +12,7 @@
 	{
 		"name": "Rifle",
 		"texture": "res://Assets/Weapons/rifle_equipped.png",
-		"damage": 15,
+		"damage": 8,
 		"wait_time": 0.15,
 		"multishot": 1,
 		"deviation_angle": 15,

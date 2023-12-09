@@ -9,13 +9,10 @@ func _spawn_enemy(data):
 		print("Here")
 		print(data)
 		return null
-#	var bomb = preload("res://bomb.tscn").instantiate()
+
 	var enemyType = data[1]
-#	var enemy = null
 	var enemyScenePath = ""
-#	if enemy_type == "A": enemy = preload("res://Scenes/Enemies/EnemyA/EnemyA.tscn").instantiate()
-#	elif enemy_type == "B": enemy = preload("res://Scenes/Enemies/EnemyB/EnemyB.tscn").instantiate()
-#	elif enemy_type == "C": enemy = preload("res://Scenes/Enemies/EnemyC/EnemyC.tscn").instantiate()
+
 	match enemyType:
 		"A":
 			enemyScenePath = "res://Scenes/Enemies/EnemyA/EnemyA.tscn"
@@ -27,7 +24,5 @@ func _spawn_enemy(data):
 			enemyScenePath = "res://Scenes/Enemies/FinalBoss/Boss.tscn"
 	var enemy = load(enemyScenePath).instantiate()
 	enemy.position = data[0]
-		
-	# print("Enemey " + enemyType + " spawned at " + str(enemy.position))
 
 	return enemy

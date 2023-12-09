@@ -17,3 +17,5 @@ mono_crash.*.json
 # Mac specific ignores
 *.DS_Store
 # Assets/UI/base_theme.tres
+
+/[Ee]xports/

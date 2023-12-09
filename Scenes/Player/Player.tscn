@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=34 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
 [ext_resource type="PackedScene" uid="uid://gktggddc0ha" path="res://Scenes/HUD/BombIndicator.tscn" id="2_ksmmv"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://celt44dqho3nh" path="res://Scenes/Shop/Shop.tscn" id="11_m3tdw"]
 [ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="12_x5l6h"]
 [ext_resource type="PackedScene" uid="uid://bpi2k8viyaihf" path="res://Scenes/HUD/HUD.tscn" id="14_r5vth"]
+[ext_resource type="PackedScene" uid="uid://cv758bb6rxmmp" path="res://Scenes/HUD/MultiplayerWarning.tscn" id="15_hu0u3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -402,6 +403,8 @@ one_shot = true
 
 [node name="HUD" parent="." instance=ExtResource("14_r5vth")]
 visible = false
+
+[node name="MultiplayerWarning" parent="." instance=ExtResource("15_hu0u3")]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

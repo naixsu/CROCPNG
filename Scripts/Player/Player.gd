@@ -53,6 +53,7 @@ class_name Player
 
 @onready var meleeNode = $WeaponsManager/Melee
 @onready var HUD = $HUD
+@onready var multiplayerWarning = $MultiplayerWarning
 
 
 # Signals here
@@ -207,6 +208,9 @@ func _unhandled_input(event):
 
 		if event.is_action_pressed("SwitchWeapon4") and currentWeaponIndex != 3:
 			switch_weapon.rpc(3)
+		
+		if event.is_action_pressed("Escape"):
+			multiplayerWarning.warn()
 		
 		update_hud.rpc()
 

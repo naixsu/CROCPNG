@@ -13,6 +13,7 @@ class_name Enemy
 @export var health : int
 @export var speed : int
 @onready var collision = $CollisionShape2D
+@onready var bloodsplash = $bloodsplash
 
 @export var movementTargets: Array[Node2D]
 @export var resource : Resource
@@ -63,6 +64,7 @@ func subtract_enemy():
 func handle_hit(dmg):
 	SoundManager.enemyHit.play()
 	health -= dmg
+	bloodsplash.emitting = true
 	print("Enemy hit", health)
 
 func handle_death():

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b2tvgg15mdvg3"]
 
-[ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/BulletCB.gd" id="1_w21w5"]
+[ext_resource type="Script" path="res://Scripts/Bullet/BulletCB.gd" id="1_w21w5"]
 [ext_resource type="Texture2D" uid="uid://rpy5yt612pbl" path="res://Assets/Weapons/bullet.png" id="2_6g4qb"]
 [ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="3_2dist"]
 

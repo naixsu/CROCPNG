@@ -20,6 +20,7 @@ extends Node
 @onready var weaponSwitch = $PlayerSounds/WeaponSwitch
 @onready var playerDeath = $PlayerSounds/PlayerDeath
 @onready var playerRespawn = $PlayerSounds/PlayerRespawn
+@onready var playerDash = $PlayerSounds/PlayerDash
 
 @onready var preWave = $StreamPlayer/PreWave
 @onready var startWave = $StreamPlayer/StartWave

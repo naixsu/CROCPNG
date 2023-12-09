@@ -18,8 +18,8 @@ var markers : Array
 
 var reachedFinal = false
 
-func initialize(parent):
-	self.parent = parent
+func initialize(parentNode):
+	self.parent = parentNode
 	initialize_path_finding()
 
 func initialize_path_finding():
@@ -46,7 +46,7 @@ func set_movement_target(targetPoint: Vector2):
 	navigationAgent.target_position = targetPoint
 	
 
-func _physics_process(delta):	
+func _physics_process(_delta):	
 	if parent.health <= 0:
 		set_state(State.DEAD)
 	

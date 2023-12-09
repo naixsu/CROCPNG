@@ -82,6 +82,7 @@ func _physics_process(_delta):
 
 		State.ENGAGE:
 			if player != null:
+				parent.run()
 				parent.flip_sprite(player)
 				set_movement_target(player.global_position)
 				go_towards_target_point(global_position, player.global_position)

@@ -3,7 +3,7 @@
 extends Node
 
 var players = {}
-var wave = 0
+var wave = 4
 var finalWave = false
 var gameOver = false
 var enemyCount = 0

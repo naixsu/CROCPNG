@@ -9,6 +9,7 @@ class_name Boss
 @onready var bulletHell = $BulletHell
 @onready var collision = $CollisionShape2D
 @onready var healthLabel = $Label
+@onready var bloodsplash = $bloodsplash
 
 @export var health : int
 @export var speed : int
@@ -26,7 +27,7 @@ func _ready():
 	bulletHell.initialize(self)
 	bulletDmg = resource.damage
 
-func _process(delta):
+func _process(_delta):
 	healthLabel.text = str(max(health, 0))
 	
 	if hasBomb:
@@ -68,6 +69,7 @@ func handle_bomb_transfer():
 func handle_hit(dmg):
 	SoundManager.enemyHit.play()
 	health -= dmg
+	bloodsplash.emitting = true
 
 func handle_death():
 	if not dead:

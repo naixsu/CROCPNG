@@ -42,38 +42,38 @@ func set_step():
 	match currentPattern:
 		Pattern.CLOCKWISE, Pattern.COUNTER:
 			step = 2
-			bulletInterval.set_wait_time(0.9)
+			bulletInterval.set_wait_time(0.7)
 			circleDiv = maxAngle / step
 			interval = rightAngle / step
 
 		Pattern.CLOVER:
 			step = 6
-			bulletInterval.set_wait_time(0.9)
+			bulletInterval.set_wait_time(0.7)
 			circleDiv = maxAngle / step
 			interval = rightAngle / step
 
 		Pattern.RADIAL:
 			step = 8
-			bulletInterval.set_wait_time(0.9)
+			bulletInterval.set_wait_time(0.7)
 			circleDiv = maxAngle / step
 			interval = rightAngle / step
 
 		Pattern.CROSS:
 			step = 4
-			bulletInterval.set_wait_time(0.9)
+			bulletInterval.set_wait_time(0.7)
 			circleDiv = maxAngle / step
 			interval = circleDiv / 2
 			
 	reset_theta()
 
-func spawn_bullet(pos, bulletSpeed, dmg, rot, bulletLifeTime):
+func spawn_bullet(pos, bulletSpeedParam, dmg, rot, bulletLifeTimeParam):
 	if multiplayer.is_server():
 		bulletSpawner.spawn([
 			pos, # position
-			bulletSpeed, # bulletSpeed
+			bulletSpeedParam, # bulletSpeed
 			dmg, # damage
 			rot, # rotation
-			bulletLifeTime # lifetime
+			bulletLifeTimeParam # lifetime
 		])
 
 func shoot_clockwise(angle):
@@ -132,8 +132,8 @@ func shoot_cross(angle):
 			bulletLifeTime # lifetime
 		)
 
-func initialize(parent):
-	self.parent = parent
+func initialize(parentNode):
+	self.parent = parentNode
 
 func set_pattern_variables():
 	set_pattern(randi_range (0, Pattern.size()))

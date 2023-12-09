@@ -26,7 +26,7 @@ func _ready():
 	bulletHell.initialize(self)
 	bulletDmg = resource.damage
 
-func _process(delta):
+func _process(_delta):
 	healthLabel.text = str(max(health, 0))
 	
 	if hasBomb:

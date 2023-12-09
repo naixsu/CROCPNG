@@ -9,7 +9,6 @@ extends CanvasLayer
 @onready var playerReadyCount = $PlayerReadyCount
 @onready var waveNotif = $WaveNotif
 @onready var waveCountdown = $WaveNotif/WaveCountdown
-@onready var respawnLabel = $Respawn
 @onready var bg = $BG
 @onready var readyButton = $PlayerReadyCount/ReadyButton
 

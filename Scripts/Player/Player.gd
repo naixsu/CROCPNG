@@ -276,6 +276,7 @@ func init_shop():
 					pdb, pab, pbb,
 					rdb, rab, rbb,
 					sdb, sab, sbb,
+					mdb
 					]
 
 	shopPrices = [	shop.playerHealthCost, shop.playerSpeedCost, shop.playerDashCost,

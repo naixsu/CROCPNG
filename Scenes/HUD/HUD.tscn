@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bpi2k8viyaihf"]
+[gd_scene load_steps=33 format=3 uid="uid://bpi2k8viyaihf"]
 
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="1_v7k06"]
 [ext_resource type="Texture2D" uid="uid://clu57w3dwagyn" path="res://Assets/UI/button-normal.png" id="2_6lom0"]
@@ -29,6 +29,8 @@ texture = ExtResource("2_6lom0")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_unh52"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1pba"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fa0dg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x4cm4"]
 atlas = ExtResource("10_6n8ya")
@@ -154,6 +156,7 @@ layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_dk723")
 theme_override_styles/hover = SubResource("StyleBoxTexture_dk723")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_dk723")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_718yt")
 button_mask = 0
 icon = ExtResource("5_qxsee")
 icon_alignment = 1
@@ -206,6 +209,7 @@ theme_override_constants/separation = -4
 
 [node name="PlayerBorder" type="TextureRect" parent="PlayerStats"]
 layout_mode = 2
+theme = ExtResource("14_urlq7")
 texture = ExtResource("10_jhf4q")
 
 [node name="HealthAndMoneyContainer" type="CenterContainer" parent="PlayerStats"]
@@ -221,14 +225,18 @@ texture = ExtResource("9_653lp")
 layout_mode = 2
 theme_override_constants/separation = 1
 
+[node name="HSeparator" type="HSeparator" parent="PlayerStats/HealthAndMoneyContainer/Details"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_fa0dg")
+
 [node name="Money" type="HBoxContainer" parent="PlayerStats/HealthAndMoneyContainer/Details"]
 custom_minimum_size = Vector2(50, 30)
 layout_mode = 2
 
 [node name="MoneyAnim" type="AnimatedSprite2D" parent="PlayerStats/HealthAndMoneyContainer/Details/Money"]
 texture_filter = 1
-position = Vector2(20, 14)
-scale = Vector2(1.1875, 1)
+position = Vector2(21, 12)
+scale = Vector2(1.125, 0.9375)
 sprite_frames = SubResource("SpriteFrames_mnvvn")
 frame_progress = 0.95
 
@@ -250,7 +258,7 @@ size_flags_horizontal = 0
 
 [node name="HealthBarBorder" type="TextureRect" parent="PlayerStats/HealthAndMoneyContainer/Details/HealthContainer"]
 clip_contents = true
-custom_minimum_size = Vector2(225, 45)
+custom_minimum_size = Vector2(223, 45)
 layout_mode = 2
 texture = SubResource("AtlasTexture_l5u5u")
 

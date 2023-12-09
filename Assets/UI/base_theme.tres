@@ -38,7 +38,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_1ttuw"]
+
 image = SubResource("Image_56ijt")
+
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_clo6b"]
 texture = ExtResource("5_dcce0")

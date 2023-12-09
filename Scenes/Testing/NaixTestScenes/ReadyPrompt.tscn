@@ -1,9 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://v7cwyu2s7km1"]
+[gd_scene load_steps=10 format=3 uid="uid://v7cwyu2s7km1"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ReadyPrompt.gd" id="1_k1gbb"]
 [ext_resource type="Texture2D" uid="uid://c4mteccnfadll" path="res://Assets/UI/panel-brown.png" id="2_uulud"]
+[ext_resource type="Texture2D" uid="uid://c5va13okpwu6c" path="res://Assets/UI/bord.png" id="3_gt70e"]
 [ext_resource type="FontFile" uid="uid://dxpm1nv67r84l" path="res://Assets/Fonts/Ac437_LE_Model_D_CGA.ttf" id="3_jf24d"]
 [ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="4_u0u6b"]
+[ext_resource type="Texture2D" uid="uid://bv3uqtlqdowgc" path="res://Assets/UI/ui-big-pieces.png" id="6_eydcn"]
+[ext_resource type="Texture2D" uid="uid://d1jku4yxq3q35" path="res://Assets/UI/crocs-logo.png" id="7_m8ul0"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d5vbp"]
+texture = ExtResource("6_eydcn")
+texture_margin_left = 24.3808
+texture_margin_top = 6.75382
+texture_margin_right = 21.5054
+texture_margin_bottom = 4.12804
+region_rect = Rect2(634, 25, 122, 24)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ldox6"]
 
@@ -15,25 +26,46 @@ texture_filter = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -170.0
+offset_left = -177.0
 offset_top = 48.0
-offset_right = 170.0
+offset_right = 163.0
 offset_bottom = 173.0
 grow_horizontal = 2
 texture = ExtResource("2_uulud")
+
+[node name="Logo" type="TextureRect" parent="."]
+visible = false
+offset_left = 429.0
+offset_top = 111.0
+offset_right = 490.0
+offset_bottom = 157.0
+texture = ExtResource("7_m8ul0")
+expand_mode = 1
+
+[node name="Border" type="TextureRect" parent="."]
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -198.0
+offset_top = 37.0
+offset_right = 174.0
+offset_bottom = 183.0
+grow_horizontal = 2
+texture = ExtResource("3_gt70e")
 
 [node name="PlayerReadyCount" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -166.5
-offset_top = 87.0
-offset_right = 166.5
-offset_bottom = 113.0
+offset_left = -181.0
+offset_top = 86.0
+offset_right = 152.0
+offset_bottom = 112.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("3_jf24d")
-theme_override_font_sizes/font_size = 12
-text = "Number of Players Ready: "
+theme_override_font_sizes/font_size = 11
+text = "NUMBER OF PLAYERS READY:"
 horizontal_alignment = 1
 
 [node name="ReadyButton" type="Button" parent="PlayerReadyCount"]
@@ -41,16 +73,17 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -64.5
+offset_left = -63.5
 offset_top = 25.0
-offset_right = 65.5
+offset_right = 66.5
 offset_bottom = 58.0
 grow_horizontal = 2
 theme = ExtResource("4_u0u6b")
 theme_override_fonts/font = ExtResource("3_jf24d")
 theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxTexture_d5vbp")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ldox6")
-text = "Ready"
+text = "READY"
 
 [node name="Respawn" type="Label" parent="."]
 visible = false

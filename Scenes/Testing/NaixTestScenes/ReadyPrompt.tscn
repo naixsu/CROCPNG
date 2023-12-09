@@ -34,6 +34,7 @@ grow_horizontal = 2
 texture = ExtResource("2_uulud")
 
 [node name="Logo" type="TextureRect" parent="."]
+visible = false
 offset_left = 429.0
 offset_top = 111.0
 offset_right = 490.0

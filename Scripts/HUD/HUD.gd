@@ -2,7 +2,6 @@ extends CanvasLayer
 
 
 @onready var healthBar = $PlayerStats/HealthAndMoney/Stats/Health/HealthBar
-@onready var playerIcon = $PlayerIcon
 @onready var hotBar = $HotBar
 @onready var moneyAnim = $PlayerStats/HealthAndMoney/Stats/Money/MoneyAnim
 @onready var moneyText = $PlayerStats/HealthAndMoney/Stats/Money/MoneyText

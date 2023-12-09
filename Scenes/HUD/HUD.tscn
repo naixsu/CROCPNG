@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="1_v7k06"]
 [ext_resource type="Texture2D" uid="uid://bv3uqtlqdowgc" path="res://Assets/UI/ui-big-pieces.png" id="2_26liy"]
+[ext_resource type="Texture2D" uid="uid://c6xjx38183mdu" path="res://Assets/UI/hotbar2.png" id="2_gantp"]
 [ext_resource type="Texture2D" uid="uid://c53ojbxeknsfx" path="res://Assets/Sprites/Player/Player_icon.png" id="2_w76v0"]
 [ext_resource type="Texture2D" uid="uid://clu57w3dwagyn" path="res://Assets/UI/button-normal.png" id="3_ic5gt"]
 [ext_resource type="Texture2D" uid="uid://d3h07pkq442w4" path="res://Assets/Weapons/pistol_equipped.png" id="5_qxsee"]
@@ -12,10 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://brf2ri8fovlqp" path="res://Assets/Sprites/Money/money.png" id="10_6n8ya"]
 [ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="10_c0maj"]
 [ext_resource type="Texture2D" uid="uid://c4mteccnfadll" path="res://Assets/UI/panel-brown.png" id="11_e70th"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8ahpl"]
-atlas = ExtResource("2_26liy")
-region = Rect2(634, 24, 122, 25)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_asioy"]
 texture = ExtResource("3_ic5gt")
@@ -138,7 +135,7 @@ offset_left = -72.0
 offset_top = -51.0
 offset_right = 540.0
 offset_bottom = 43.0
-texture = SubResource("AtlasTexture_8ahpl")
+texture = ExtResource("2_gantp")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HotBar"]
 layout_mode = 1
@@ -147,9 +144,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = -72.0
-offset_right = 258.0
-offset_bottom = -32.0
+offset_left = -27.0
+offset_top = -79.0
+offset_right = 285.0
+offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.55, 1.55)
@@ -229,10 +227,10 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 33.0
 offset_top = -150.0
-offset_right = 444.0
+offset_right = 453.0
 offset_bottom = -5.0
 grow_vertical = 0
-theme_override_constants/separation = -5
+theme_override_constants/separation = 10
 
 [node name="Border" type="TextureRect" parent="PlayerStats"]
 custom_minimum_size = Vector2(140, 145)

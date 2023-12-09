@@ -108,13 +108,13 @@ func flip_sprite(player):
 	elif player.global_position.x > global_position.x:
 		anim.flip_h = false
 
-func go_towards(player):
-	anim.play("run")
-	var direction = (player.global_position - global_position).normalized()
-	var new_position = global_position + direction * speed * get_process_delta_time()
-#	global_position = new_position
-	velocity = direction * speed
-	move_and_slide()
+#func go_towards(player):
+#	anim.play("run")
+#	var direction = (player.global_position - global_position).normalized()
+#	var new_position = global_position + direction * speed * get_process_delta_time()
+##	global_position = new_position
+#	velocity = direction * speed
+#	move_and_slide()
 	
 func idle():
 	anim.play("idle")
@@ -125,7 +125,7 @@ func run():
 func on_state_changed(new_state):
 	print("ENEMY ", new_state)
 	
-func attack_player(player):
-	if player.iFramesTimer.is_stopped():
-		print("Attacking player " + str(player.name))
-		player.handle_hit(resource.damage)
+func attack_player(playerNode):
+	if playerNode.iFramesTimer.is_stopped():
+		print("Attacking player " + str(playerNode.name))
+		playerNode.handle_hit(resource.damage)

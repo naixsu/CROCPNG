@@ -73,11 +73,11 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 200
 
-[node name="RestartButton" type="Button" parent="Buttons/HBoxContainer"]
+[node name="MenuButton" type="Button" parent="Buttons/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("5_b08bu")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_eqrsm")
-text = "Restart"
+text = "Main Menu"
 
 [node name="QuitButton" type="Button" parent="Buttons/HBoxContainer"]
 layout_mode = 2
@@ -85,5 +85,5 @@ theme = ExtResource("5_b08bu")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7aeci")
 text = "Quit"
 
-[connection signal="pressed" from="Buttons/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Buttons/HBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="Buttons/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

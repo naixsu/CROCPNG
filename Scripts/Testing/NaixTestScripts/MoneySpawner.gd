@@ -6,6 +6,7 @@ func _init():
 func _spawn_money(data):
 	var moneyScenePath = "res://Scenes/Money/Money.tscn"
 	var money = load(moneyScenePath).instantiate()
+	
 	money.position = data[0]
 	
 	return money

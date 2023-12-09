@@ -1,8 +1,7 @@
 extends Control
 
-@export var address = "127.0.0.1"
 @export var port = 8910
-@export var maxPlayers = 4
+@export var maxPlayers = 3
 @export var maxCharLimit = 10
 @export var PlayerLogs : PackedScene
 
@@ -16,10 +15,6 @@ extends Control
 @onready var serverBrowser = $ServerBrowser
 @onready var serverInfoHeading = $ServerBrowser/Panel/ServerInfoHeading
 @onready var serverVBoxContainer = $ServerBrowser/Panel/VBoxContainer
-
-# Deprecated
-#@onready var line_edit = $LineEdit
-#@onready var addressEdit = $Address
 
 var peer
 var ipAddress = ""
@@ -39,26 +34,12 @@ func _ready():
 	tutorial.connect("back_to_main", back_to_main)
 	tutorial.connect("from_tutorial_next_prev_clicked", from_tutorial_next_prev_clicked)
 	
-	# TODO:
-	# work on this so that it only works for server
-	# or deprecate
-#	if OS.has_feature("windows"):
-#		if OS.has_environment("COMPUTERNAME"):
-#			ipAddress =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
-#
-#	line_edit.text = ipAddress
-	
-#	if "--server" in OS.get_cmdline_args():
-#		host_game()
 	if "--server" in OS.get_cmdline_args():
 		var serverIndex = OS.get_cmdline_args().find("--server")
 		serverName = OS.get_cmdline_args()[serverIndex + 1]
 		custom_host(serverName)
 
 	$ServerBrowser.joinGame.connect(join_by_ip)
-	pass # Replace with function body.
-
-
 
 # Gets called on the server and clients
 func peer_connected(id):
@@ -153,19 +134,6 @@ func _on_host_button_down():
 	$ServerBrowser.set_up_broadcast($NameEdit.text + "'s server")
 	pass # Replace with function body.
 
-
-func _on_join_button_down():
-	peer = ENetMultiplayerPeer.new()
-	peer.create_client(address, port)
-	# Deprecated
-#	var ip = addressEdit.text
-#	print("IP: " + ip)
-#	peer.create_client(ip, port)
-	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
-	multiplayer.set_multiplayer_peer(peer)
-	
-	pass # Replace with function body.
-
 func join_by_ip(ip):
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client(ip, port)
@@ -228,16 +196,12 @@ func restart():
 	var root = get_tree().get_root()
 	var testMultiplayerScene = root.get_node("TestMultiplayerScene")
 	
-#	var players = get_tree().get_nodes_in_group("Player")
-#	for i in players:
-#		i.queue_free()
 	testMultiplayerScene.queue_free()
 	$ServerBrowser.clean_up()
 	reset_game_manager()
 	clear_server_info()
-#	multiplayer.queue_free()
 	peer.close()
-#	peer = null
+
 	self.show()
 
 func reset_game_manager():

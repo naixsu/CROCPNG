@@ -36,7 +36,8 @@ func _ready():
 	ai.connect("state_changed", on_state_changed)
 
 func _process(_delta):
-	healthLabel.text = str(health)
+	# clamping health
+	healthLabel.text = str(max(health, 0))
 	
 	if hasBomb:
 		target.visible = true

@@ -18,5 +18,11 @@ In the game, the players battle and defend themselves from waves of Phantom Naz 
 
 ## ![Skeleton](Assets/GIFs/skeleton_idle.gif) INSTALLATION
 
+1) Check the [latest](https://github.com/naixsu/CROCPNG/releases/tag/v1.0.2) release branch and download the zip file depending on your OS.
+2) You can also download them through here for [Windows](https://github.com/naixsu/CROCPNG/releases/download/v1.0.2/Windows.zip) and [Linux](https://github.com/naixsu/CROCPNG/releases/download/v1.0.2/Linux.zip)
+3) For Windows, launch the game using the `crocpng.exe` file. For Linux, launch the game using the `crocpng.x86_64` file.
+4) If your computer is preventing the app from running, just ignore it. I swear it's not a virus, I just don't have a developer certificate.
+5) Enjoy!
 
 ## ![Pingu](Assets/GIFs/pingu_idle.gif) UNINSTALLATION
+Pretty simple, just delete the files that you installed. This game doesn't have any file saving/manipulation so no new files are created and stored in your machine when running the game.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=33 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
 [ext_resource type="PackedScene" uid="uid://gktggddc0ha" path="res://Scenes/HUD/BombIndicator.tscn" id="2_ksmmv"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/CameraZoom.gd" id="9_vptfm"]
 [ext_resource type="Script" path="res://Scripts/Player/Dash.gd" id="10_4nm7p"]
 [ext_resource type="PackedScene" uid="uid://cyhantwrwy4de" path="res://Scenes/Weapons/MeleeSwing.tscn" id="10_gi0mu"]
+[ext_resource type="Texture2D" uid="uid://b06vqoxnswap1" path="res://Assets/Win-Lose Banners/BlackScreen.png" id="10_hb27v"]
+[ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="11_4cnf3"]
 [ext_resource type="PackedScene" uid="uid://celt44dqho3nh" path="res://Scenes/Shop/Shop.tscn" id="11_m3tdw"]
 [ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="12_x5l6h"]
 [ext_resource type="PackedScene" uid="uid://bpi2k8viyaihf" path="res://Scenes/HUD/HUD.tscn" id="14_r5vth"]
@@ -229,8 +231,8 @@ properties/21/spawn = true
 properties/21/sync = true
 properties/21/watch = false
 properties/22/path = NodePath(".:weaponMods")
-properties/22/spawn = true
-properties/22/sync = true
+properties/22/spawn = false
+properties/22/sync = false
 properties/22/watch = false
 properties/23/path = NodePath(".:dmgAdd")
 properties/23/spawn = true
@@ -326,13 +328,39 @@ one_shot = true
 
 [node name="Respawn" type="Node2D" parent="."]
 
+[node name="RespawnModal" type="TextureRect" parent="Respawn"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.392157)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2204.0
+offset_top = -1450.0
+offset_right = 2204.0
+offset_bottom = 1450.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_hb27v")
+
 [node name="RespawnLabel" type="Label" parent="Respawn"]
 visible = false
-offset_left = -57.0
-offset_top = 38.0
-offset_right = 65.0
-offset_bottom = 64.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.5
+offset_top = -13.5
+offset_right = 76.5
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("11_4cnf3")
+theme_override_font_sizes/font_size = 100
 text = "Respawning In: "
+horizontal_alignment = 1
 
 [node name="RespawnTimer" type="Timer" parent="Respawn"]
 wait_time = 5.0

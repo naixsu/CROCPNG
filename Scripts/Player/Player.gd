@@ -39,6 +39,7 @@ class_name Player
 @onready var readyLabel = $ReadyLabel
 @onready var respawnNode = $Respawn # Avoiding variable names (resoawn)
 @onready var respawnLabel = $Respawn/RespawnLabel
+@onready var respawnModal = $Respawn/RespawnModal
 @onready var respawnTimer = $Respawn/RespawnTimer
 @onready var moneyLabel = $MoneyLabel
 @onready var shop = $Shop
@@ -145,9 +146,11 @@ func _process(_delta):
 	healthLabel.text = str(health)
 	
 	if respawn:
-		respawnTimer.start()
-		respawnLabel.show()
-		displayRespawn = true
+		if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+			respawnTimer.start()
+			respawnLabel.show()
+			respawnModal.show()
+			displayRespawn = true
 	
 	if displayRespawn: 
 		display_respawn()
@@ -338,34 +341,34 @@ func update_money_label():
 @rpc("any_peer", "call_local")
 func show_shop():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		shop.visible = true
+		shop.show()
 		update_shop_buttons()
-		HUD.visible = false
+		HUD.hide()
 		update_hud.rpc()
 		
 @rpc("any_peer", "call_local")
 func hide_shop():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		shop.visible = false
-		HUD.visible = true
+		shop.hide()
+		HUD.show()
 		update_hud.rpc()
 
 @rpc("any_peer", "call_local")
 func show_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		readyPrompt.visible = true
+		readyPrompt.show()
 		
 @rpc("any_peer", "call_local")
 func hide_ready():
 	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		readyPrompt.visible = false
+		readyPrompt.hide()
 
 func update_shop_buttons():
 	for i in shopButtons.size():
 		if money < shopPrices[i]:
-			shopButtons[i].visible = false
+			shopButtons[i].hide()
 		else:
-			shopButtons[i].visible = true
+			shopButtons[i].show()
 
 func player_upgrade(subject, stat):
 	upgrade_stats.rpc(subject, stat)
@@ -579,20 +582,22 @@ func display_respawn():
 	respawnLabel.text = "Respawning In: %0.1fs" % respawnTimer.time_left
 
 func _on_respawn_timer_timeout():
-	var root = get_tree().get_root()
-	var playerSpawnPoint = root.get_node("TestMultiplayerScene/PlayerSpawnPoints")
-	var spawnPoints = playerSpawnPoint.get_children()
+	if multiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		var root = get_tree().get_root()
+		var playerSpawnPoint = root.get_node("TestMultiplayerScene/PlayerSpawnPoints")
+		var spawnPoints = playerSpawnPoint.get_children()
 
-	var randomIndex = randi_range(0, spawnPoints.size() - 1)
-	var randomSpawnPoint = spawnPoints[randomIndex].position
-	
-	self.position = randomSpawnPoint
-	
-	dead = false
-	respawnLabel.hide()
-	collision.disabled = false
-	health = maxHealth
-	update_hud.rpc()
+		var randomIndex = randi_range(0, spawnPoints.size() - 1)
+		var randomSpawnPoint = spawnPoints[randomIndex].position
+		
+		self.position = randomSpawnPoint
+		
+		dead = false
+		respawnLabel.hide()
+		respawnModal.hide()
+		collision.disabled = false
+		health = maxHealth
+		update_hud.rpc()
 
 
 func _on_i_frames_timer_timeout():

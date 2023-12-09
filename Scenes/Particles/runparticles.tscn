@@ -1,30 +1,40 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwvfvwbhwhi86"]
+[gd_scene load_steps=7 format=3 uid="uid://bwvfvwbhwhi86"]
 
 [ext_resource type="Texture2D" uid="uid://doxqvx0wr60p4" path="res://Assets/Sprites/Player/dust.png" id="1_albt7"]
 
-[sub_resource type="Curve" id="Curve_05n5d"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_koxy1"]
+_data = [Vector2(0, 0.252632), 0.0, 0.0, 0, 0, Vector2(0.498316, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_mt4r8"]
-curve = SubResource("Curve_05n5d")
+curve = SubResource("Curve_koxy1")
+
+[sub_resource type="Curve" id="Curve_27y8s"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 200), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ed220"]
+curve = SubResource("Curve_27y8s")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kvja8"]
+emission_shape = 1
+emission_sphere_radius = 5.0
 particle_flag_disable_z = true
-direction = Vector3(-90, 0, 0)
-spread = 10.0
+direction = Vector3(0, 0, 0)
+spread = 50.0
 gravity = Vector3(0, 0, 0)
-initial_velocity_min = 45.0
-initial_velocity_max = 45.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
-scale_min = 0.7
-scale_max = 0.7
+tangential_accel_max = 1.0
+tangential_accel_curve = SubResource("CurveTexture_ed220")
+scale_max = 2.0
 scale_curve = SubResource("CurveTexture_mt4r8")
 
 [node name="runparticles" type="GPUParticles2D"]
 emitting = false
-amount = 5
+amount = 50
 process_material = SubResource("ParticleProcessMaterial_kvja8")
 texture = ExtResource("1_albt7")
 lifetime = 0.5

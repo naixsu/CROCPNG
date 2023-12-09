@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=36 format=3 uid="uid://bgucyml2yx36p"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
 [ext_resource type="PackedScene" uid="uid://gktggddc0ha" path="res://Scenes/HUD/BombIndicator.tscn" id="2_ksmmv"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bpi2k8viyaihf" path="res://Scenes/HUD/HUD.tscn" id="14_r5vth"]
 [ext_resource type="PackedScene" uid="uid://cv758bb6rxmmp" path="res://Scenes/HUD/MultiplayerWarning.tscn" id="15_hu0u3"]
 [ext_resource type="PackedScene" uid="uid://o0vxjk4pdl8s" path="res://Scenes/Particles/gunfire.tscn" id="16_2hept"]
+[ext_resource type="PackedScene" uid="uid://bwvfvwbhwhi86" path="res://Scenes/Particles/runparticles.tscn" id="17_dhy5a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -268,6 +269,14 @@ properties/30/path = NodePath("BombIndicator:rotation")
 properties/30/spawn = true
 properties/30/sync = true
 properties/30/watch = false
+properties/31/path = NodePath("ParticleFX/runparticles:emitting")
+properties/31/spawn = true
+properties/31/sync = true
+properties/31/watch = false
+properties/32/path = NodePath("ParticleFX/gunfire:emitting")
+properties/32/spawn = true
+properties/32/sync = true
+properties/32/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -410,6 +419,9 @@ visible = false
 [node name="ParticleFX" type="Node2D" parent="."]
 
 [node name="gunfire" parent="ParticleFX" instance=ExtResource("16_2hept")]
+
+[node name="runparticles" parent="ParticleFX" instance=ExtResource("17_dhy5a")]
+position = Vector2(0, 32)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]

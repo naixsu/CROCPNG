@@ -56,6 +56,7 @@ class_name Player
 @onready var multiplayerWarning = $MultiplayerWarning
 
 @onready var gunfire = $ParticleFX/gunfire
+@onready var runparticles = $ParticleFX/runparticles
 
 # Signals here
 signal update_ready
@@ -191,6 +192,9 @@ func _unhandled_input(event):
 			var mouse_direction = get_local_mouse_position().normalized()
 			velocity = Vector2(dashSpeed * mouse_direction.x, dashSpeed * mouse_direction.y)
 			dash.start_dash(dashLength)
+			runparticles.emitting = true
+			SoundManager.playerDash.play()
+			
 		
 		if event.is_action_pressed("Fire"):
 			fire.rpc(true)

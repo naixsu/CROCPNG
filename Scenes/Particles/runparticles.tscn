@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwvfvwbhwhi86"]
+
+[ext_resource type="Texture2D" uid="uid://doxqvx0wr60p4" path="res://Assets/Sprites/Player/dust.png" id="1_albt7"]
+
+[sub_resource type="Curve" id="Curve_05n5d"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mt4r8"]
+curve = SubResource("Curve_05n5d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kvja8"]
+particle_flag_disable_z = true
+direction = Vector3(-90, 0, 0)
+spread = 10.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 45.0
+initial_velocity_max = 45.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.7
+scale_max = 0.7
+scale_curve = SubResource("CurveTexture_mt4r8")
+
+[node name="runparticles" type="GPUParticles2D"]
+emitting = false
+amount = 5
+process_material = SubResource("ParticleProcessMaterial_kvja8")
+texture = ExtResource("1_albt7")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.5

@@ -22,23 +22,6 @@ offset_bottom = 218.0
 grow_horizontal = 2
 texture = ExtResource("2_8ium1")
 
-[node name="Logo" type="TextureRect" parent="BG"]
-modulate = Color(0, 0, 0, 0.941176)
-self_modulate = Color(0.0352941, 0.0352941, 0.0352941, 0.788235)
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -166.0
-offset_top = 104.0
-offset_right = -94.0
-offset_bottom = 153.0
-grow_horizontal = 2
-mouse_filter = 2
-texture = ExtResource("3_w8koo")
-expand_mode = 2
-
 [node name="PlayerReadyCount" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0.941176)
 anchors_preset = 5
@@ -60,15 +43,32 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -66.5
-offset_top = 43.0
-offset_right = 63.5
-offset_bottom = 83.0
+offset_left = -70.5
+offset_top = 39.0
+offset_right = 69.5
+offset_bottom = 77.0
 grow_horizontal = 2
 theme = ExtResource("4_u0u6b")
 theme_override_fonts/font = ExtResource("3_jf24d")
 theme_override_font_sizes/font_size = 14
 text = "READY"
+alignment = 2
+
+[node name="Logo" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 0.941176)
+self_modulate = Color(0.0352941, 0.0352941, 0.0352941, 0.788235)
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -62.0
+offset_top = 135.0
+offset_right = -18.0
+offset_bottom = 159.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("3_w8koo")
+expand_mode = 2
 
 [node name="Respawn" type="Label" parent="."]
 visible = false

@@ -87,7 +87,6 @@ texture = ExtResource("3_37vqk")
 mouse_filter = 2
 
 [node name="Torch" type="Sprite2D" parent="."]
-visible = false
 texture_filter = 1
 position = Vector2(35, 337)
 rotation = -0.139626
@@ -103,7 +102,6 @@ libraries = {
 }
 
 [node name="Torch2" type="Sprite2D" parent="."]
-visible = false
 texture_filter = 1
 position = Vector2(1119, 337)
 rotation = 0.139626

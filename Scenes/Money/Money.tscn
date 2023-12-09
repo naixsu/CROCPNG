@@ -63,7 +63,7 @@ properties/1/watch = false
 
 [node name="Money" type="Node2D" groups=["Money"]]
 script = ExtResource("1_utgcy")
-value = 2
+value = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

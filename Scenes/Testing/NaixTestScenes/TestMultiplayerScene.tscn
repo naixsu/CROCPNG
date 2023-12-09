@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/TestMultiplayerScene.gd" id="1_cahup"]
 [ext_resource type="PackedScene" uid="uid://bgucyml2yx36p" path="res://Scenes/Player/Player.tscn" id="3_8q6be"]
+[ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="3_jn6np"]
 [ext_resource type="Resource" uid="uid://bse76jgbkri77" path="res://Resources/Waves/Wave1.tres" id="4_d3b61"]
 [ext_resource type="Resource" uid="uid://bii87ljuvqoak" path="res://Resources/Waves/Wave2.tres" id="5_ayrwn"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/EnemySpawner.gd" id="5_hl27v"]
@@ -10,14 +11,13 @@
 [ext_resource type="Resource" uid="uid://dbwyywkq7wba" path="res://Resources/Waves/Wave3.tres" id="6_jv4mn"]
 [ext_resource type="Resource" uid="uid://b6mokfnhr0864" path="res://Resources/Waves/Wave4.tres" id="7_h5wlv"]
 [ext_resource type="Resource" uid="uid://tojs3bqvecfl" path="res://Resources/Waves/Wave5.tres" id="8_j5emd"]
-[ext_resource type="PackedScene" uid="uid://cvikxkbftncdi" path="res://Scenes/Map/SpawnArea.tscn" id="9_5qv8q"]
-[ext_resource type="PackedScene" uid="uid://chwjij2h3jwlu" path="res://Scenes/Ending Banner/EndBanner.tscn" id="13_0uixb"]
+[ext_resource type="PackedScene" path="res://Scenes/Map/SpawnArea.tscn" id="9_5qv8q"]
+[ext_resource type="PackedScene" path="res://Scenes/Ending Banner/EndBanner.tscn" id="13_0uixb"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/MoneySpawner.gd" id="13_5f8yc"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/Shop.gd" id="14_a0ar7"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/BulletSpawner.gd" id="15_ukqrf"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/BossBulletSpawner.gd" id="16_0xng7"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/BombSpawner.gd" id="16_71ens"]
-[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="19_5ebaw"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qh2qy"]
 vertices = PackedVector2Array(410, 1125, 1968, 1135, 1992, 2745, -1900, 2726, -1869, 1116, -309, 1120, 143, 998, 403, 998, -309, 1006, -61, 1000, -1858, -1745, 1969, -1731, 1962, 741, 156, 770, -1876, 752, -71, 776)
@@ -25,11 +25,12 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1900, 2726, 1992, 2745, 1968, 1135, 410, 1125, 403, 998, 143, 998, 156, 770, 1962, 741, 1969, -1731, -1858, -1745, -1876, 752, -71, 776, -61, 1000, -309, 1006, -309, 1120, -1869, 1116)])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y3mj0"]
-size = Vector2(228, 59)
+size = Vector2(491, 426)
 
 [node name="TestMultiplayerScene" type="Node2D"]
 script = ExtResource("1_cahup")
 PlayerScene = ExtResource("3_8q6be")
+EnemyA = ExtResource("3_jn6np")
 waveResources = Array[Resource]([ExtResource("4_d3b61"), ExtResource("5_ayrwn"), ExtResource("6_jv4mn"), ExtResource("7_h5wlv"), ExtResource("8_j5emd")])
 
 [node name="Enemies" type="Node2D" parent="."]
@@ -41,12 +42,6 @@ position = Vector2(-1200, 1800)
 
 [node name="1" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoint"]]
 position = Vector2(-1200, 1950)
-
-[node name="2" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoint"]]
-position = Vector2(-1058, 1950)
-
-[node name="3" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoint"]]
-position = Vector2(-1057, 1800)
 
 [node name="EnemySpawnPoints" type="Node2D" parent="."]
 
@@ -333,7 +328,7 @@ position = Vector2(-1357, 1571)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShopNode/Area2D"]
-position = Vector2(-37, -32.5)
+position = Vector2(59.5, -146)
 shape = SubResource("RectangleShape2D_y3mj0")
 
 [node name="BulletGroups" type="Node2D" parent="."]
@@ -351,8 +346,6 @@ script = ExtResource("16_0xng7")
 [node name="BombSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../BombGroups")
 script = ExtResource("16_71ens")
-
-[node name="SoundManager" parent="." instance=ExtResource("19_5ebaw")]
 
 [connection signal="body_entered" from="ShopNode/Area2D" to="ShopNode" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="ShopNode/Area2D" to="ShopNode" method="_on_area_2d_body_exited"]

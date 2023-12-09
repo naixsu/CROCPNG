@@ -3,7 +3,6 @@ extends Control
 signal foundServer(ip, port, roomInfo)
 signal updateServer(ip, port, roomInfo)
 signal joinGame(ip)
-signal hide_host
 
 var broadcastTimer : Timer
 
@@ -13,14 +12,12 @@ var listener : PacketPeerUDP
 @export var listenPort : int = 8911
 @export var broadcastPort : int = 8912
 #@export var broadcastAddress : String = "192.168.1.255"
-@export var broadcastAddress : String = "255.255.255.255"
+#@export var broadcastAddress : String = "255.255.255.255"
 #@export var broadcastAddress : String = "172.16.0.255"
-#@export var broadcastAddress : String
+@export var broadcastAddress : String
 
 @export var ServerInfo : PackedScene
 @onready var SoundManager = $"../SoundManager"
-@onready var vBoxContainer = $Panel/VBoxContainer
-
 var ip : String
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,20 +27,19 @@ func _ready():
 #	Comment out for windows	
 #	var ip = IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
 	print("test")
-#	if OS.has_feature("windows"):
-#		ip =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
-#	elif OS.has_feature("x11"):
-#		ip =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
-#	elif OS.has_feature("macos"):
-#		ip = IP.resolve_hostname("localhost", 1)
-#	print("Local IP: " + str(ip))
-#	var ipOctets = ip.split(".")
-#	ipOctets[2] = "0"
-#	ipOctets[3] = "255"
-#	var modifiedIP = str(ipOctets[0] + "." + ipOctets[1] + "." + ipOctets[2] + "." + ipOctets[3])
-##	print(modifiedIP)
-#	print("modified " + str(modifiedIP))
-#	broadcastAddress = str(modifiedIP)
+	if OS.has_feature("windows"):
+		ip =  IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+	elif OS.has_feature("x11"):
+		ip =  IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+	elif OS.has_feature("macos"):
+		ip = IP.resolve_hostname("localhost", 1)
+	print("Local IP: " + str(ip))
+	var ipOctets = ip.split(".")
+	ipOctets[2] = "1"
+	ipOctets[3] = "255"
+	var modifiedIP = str(ipOctets[0] + "." + ipOctets[1] + "." + ipOctets[2] + "." + ipOctets[3])
+#	print(modifiedIP)
+	broadcastAddress = str(modifiedIP)
 	
 	print("BroadcastAddress: " + str(broadcastAddress))
 	
@@ -105,21 +101,12 @@ func _process(delta):
 				updateServer.emit(serverip, serverport, roomInfo)
 				i.get_node("IP").text = str(serverip)
 				i.get_node("PlayerCount").text = str(roomInfo.playerCount)
-				
-				if i.get_node("IP").text != "":
-					i.joinButton.visible = true
 				return
 
 		var currentInfo = ServerInfo.instantiate()
 		currentInfo.name = roomInfo.name
 		currentInfo.get_node("Name").text = roomInfo.name
 		currentInfo.get_node("IP").text = str(serverip)
-		
-#		if currentInfo.get_node("IP").text == str(serverip):
-#			print("not null")
-#		else:
-#			print("null")
-		
 		currentInfo.get_node("PlayerCount").text = str(roomInfo.playerCount)
 		
 		$Panel/VBoxContainer.add_child(currentInfo)
@@ -143,7 +130,6 @@ func _on_broadcast_timer_timeout():
 	
 
 func clean_up():
-	print("Cleaning Up")
 	if listener != null:
 		listener.close()
 	broadcastTimer.stop()
@@ -156,10 +142,8 @@ func _exit_tree():
 
 func join_by_ip(ip):
 	joinGame.emit(ip)
-	
 
 
 func _on_find_server_button_down():
 	SoundManager.click.play()
-	hide_host.emit()
 	set_up() # Replace with function body.

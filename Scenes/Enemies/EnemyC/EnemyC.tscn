@@ -180,10 +180,6 @@ properties/7/path = NodePath(".:hasBomb")
 properties/7/spawn = true
 properties/7/sync = true
 properties/7/watch = false
-properties/8/path = NodePath("PositionIndicator:position")
-properties/8/spawn = false
-properties/8/sync = false
-properties/8/watch = false
 
 [node name="EnemyC" type="CharacterBody2D" groups=["Enemy"]]
 z_index = 3

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bpi2k8viyaihf"]
+[gd_scene load_steps=33 format=3 uid="uid://bpi2k8viyaihf"]
 
 [ext_resource type="Script" path="res://Scripts/HUD/HUD.gd" id="1_v7k06"]
 [ext_resource type="Texture2D" uid="uid://clu57w3dwagyn" path="res://Assets/UI/button-normal.png" id="2_6lom0"]
@@ -31,8 +31,6 @@ texture = ExtResource("2_6lom0")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1pba"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fa0dg"]
-[ext_resource type="Texture2D" uid="uid://brf2ri8fovlqp" path="res://Assets/Sprites/Money/money.png" id="10_6n8ya"]
-[ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="10_c0maj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x4cm4"]
 atlas = ExtResource("10_6n8ya")
@@ -284,19 +282,3 @@ texture_filter = 1
 position = Vector2(74, 68)
 scale = Vector2(2.34387, 2.06555)
 texture = ExtResource("2_w76v0")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_left = 50.0
-offset_top = 59.0
-offset_right = 306.0
-offset_bottom = 117.0
-
-[node name="WaveNumber" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("10_c0maj")
-text = "Wave Number: curr / max"
-
-[node name="NumberOfEnemies" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("10_c0maj")
-text = "Number of Enemmies: curr"

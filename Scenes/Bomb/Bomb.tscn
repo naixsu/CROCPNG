@@ -1,9 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://hkvakno1727t"]
+[gd_scene load_steps=17 format=3 uid="uid://hkvakno1727t"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/Bomb.gd" id="1_empib"]
 [ext_resource type="Texture2D" uid="uid://cxw0xsvn15tig" path="res://Assets/Sprites/Bomb/BombDetonate.png" id="1_nctdh"]
-[ext_resource type="Texture2D" uid="uid://c0irvwpe06f3q" path="res://Assets/Explosion/Explosion_3.png" id="3_o7krj"]
-[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="4_1kuo8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_acw5c"]
 radius = 17.0
@@ -33,33 +31,29 @@ region = Rect2(136, 0, 34, 34)
 atlas = ExtResource("1_nctdh")
 region = Rect2(170, 0, 34, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gms3x"]
-atlas = ExtResource("3_o7krj")
-region = Rect2(0, 0, 256, 256)
+[sub_resource type="AtlasTexture" id="AtlasTexture_58pfn"]
+atlas = ExtResource("1_nctdh")
+region = Rect2(204, 0, 34, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cc1fn"]
-atlas = ExtResource("3_o7krj")
-region = Rect2(256, 0, 256, 256)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fq10r"]
+atlas = ExtResource("1_nctdh")
+region = Rect2(238, 0, 34, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q6ubt"]
-atlas = ExtResource("3_o7krj")
-region = Rect2(512, 0, 256, 256)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fy4qc"]
+atlas = ExtResource("1_nctdh")
+region = Rect2(272, 0, 34, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ce3np"]
-atlas = ExtResource("3_o7krj")
-region = Rect2(768, 0, 256, 256)
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iedd"]
+atlas = ExtResource("1_nctdh")
+region = Rect2(306, 0, 34, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xxqfi"]
-atlas = ExtResource("3_o7krj")
-region = Rect2(1024, 0, 256, 256)
+[sub_resource type="AtlasTexture" id="AtlasTexture_5f7s4"]
+atlas = ExtResource("1_nctdh")
+region = Rect2(340, 0, 34, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tamn2"]
-atlas = ExtResource("3_o7krj")
-region = Rect2(1280, 0, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b7c8a"]
-atlas = ExtResource("3_o7krj")
-region = Rect2(1536, 0, 256, 256)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ev7kd"]
+atlas = ExtResource("1_nctdh")
+region = Rect2(374, 0, 34, 34)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lvc3e"]
 animations = [{
@@ -107,25 +101,22 @@ animations = [{
 "texture": SubResource("AtlasTexture_pxab8")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gms3x")
+"texture": SubResource("AtlasTexture_58pfn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cc1fn")
+"texture": SubResource("AtlasTexture_fq10r")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q6ubt")
+"texture": SubResource("AtlasTexture_fy4qc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ce3np")
+"texture": SubResource("AtlasTexture_6iedd")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xxqfi")
+"texture": SubResource("AtlasTexture_5f7s4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tamn2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b7c8a")
+"texture": SubResource("AtlasTexture_ev7kd")
 }],
 "loop": false,
 "name": &"detonate",
@@ -141,18 +132,15 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BombArea"]
-visible = false
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_acw5c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 15
-texture_filter = 1
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_lvc3e")
 animation = &"detonate"
-
-[node name="SoundManager" parent="." instance=ExtResource("4_1kuo8")]
+frame = 19
+frame_progress = 1.0
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]

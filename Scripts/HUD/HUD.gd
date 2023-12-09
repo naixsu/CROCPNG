@@ -10,8 +10,6 @@ extends CanvasLayer
 @onready var rifleButton = $HotBar/HBoxContainer/RifleButton
 @onready var shotgunButton = $HotBar/HBoxContainer/ShotgunButton
 @onready var meleeButton = $HotBar/HBoxContainer/MeleeButton
-@onready var waveNumber = $VBoxContainer/WaveNumber
-@onready var numberOfEnemies = $VBoxContainer/NumberOfEnemies
 
 var hotBarButtons : Array
 
@@ -21,7 +19,7 @@ func _ready():
 	# The order matters
 	hotBarButtons = [pistolButton, rifleButton, shotgunButton, meleeButton]
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	waveNumber.text = "Wave Number %d / %d" % [GameManager.wave, GameManager.maxWave]
-	numberOfEnemies.text = "Number of Enemies: %d" % [GameManager.enemyCount]
+	pass

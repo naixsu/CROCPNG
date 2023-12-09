@@ -11,7 +11,6 @@ extends CanvasLayer
 @onready var waveCountdown = $WaveNotif/WaveCountdown
 @onready var respawnLabel = $Respawn
 @onready var bg = $BG
-@onready var readyButton = $PlayerReadyCount/ReadyButton
 
 @export var readyCount : int = 0
 
@@ -19,19 +18,16 @@ var showReady : bool = true
 var startCountdown : bool = false
 var displayCountdown : bool = false
 var checkForEnemies : bool = false
-var readyClicked : bool = false
-var rewardCalled: bool = false
 
 signal toggle_ready
 signal start_wave
 signal reward_players
 signal win_banner
-signal pre_wave
 
 func _on_ready_button_button_down():
 #	ready_up.rpc()
 	ready_up()
-	
+
 
 func _physics_process(delta):
 	if showReady:
@@ -57,11 +53,6 @@ func _physics_process(delta):
 			checkForEnemies = false
 			showReady = true
 			playerReadyCount.show()
-			pre_wave.emit()
-			if !rewardCalled:
-				reward_players.emit()
-				rewardCalled = !rewardCalled
-			
 	
 func display_countdown():
 	startCountdown = false
@@ -90,30 +81,14 @@ func update_ready_count():
 
 func check_all_ready():
 	if readyCount == GameManager.players.size() and showReady:
-		await get_tree().physics_frame
-		if last_check_ready():
-			showReady = false
-			startCountdown = true
-			playerReadyCount.hide()
+		showReady = false
+		startCountdown = true
+		playerReadyCount.hide()
 	
-func last_check_ready():
-	var count = 0
-	var players = get_tree().get_nodes_in_group("Player")
 	
-	for player in players:
-		if player.readyState == true: 
-			count += 1
-	
-	if count == GameManager.players.size():
-		return true
-	
-	return false
 
 func ready_up():
 	toggle_ready.emit()
-	readyClicked = !readyClicked
-	
-	update_ready_text()
 
 
 func _on_wave_countdown_timeout():
@@ -121,9 +96,9 @@ func _on_wave_countdown_timeout():
 	waveNotif.hide()
 	bg.hide()
 	start_wave.emit()
-#	if GameManager.wave > 1:
-#		reward_players.emit()
-	rewardCalled = false
+	if GameManager.wave > 1:
+		reward_players.emit()
+	
 	reset_ready()
 
 func reset_ready(): # Reset the readyState of all players
@@ -131,14 +106,4 @@ func reset_ready(): # Reset the readyState of all players
 	for player in players:
 		player.readyState = false
 	checkForEnemies = true
-	readyClicked = false
-	
-	update_ready_text()
-
-func update_ready_text():
-	# Toggle the ready button
-	if readyClicked:
-		readyButton.text = "Unready"
-	else:
-		readyButton.text = "Ready"
 	

@@ -6,8 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://d1jku4yxq3q35" path="res://Assets/UI/crocs-logo.png" id="3_w8koo"]
 [ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="4_u0u6b"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ldox6"]
-
 [node name="ReadyPrompt" type="CanvasLayer"]
 script = ExtResource("1_k1gbb")
 
@@ -53,8 +51,24 @@ grow_horizontal = 2
 theme = ExtResource("4_u0u6b")
 theme_override_fonts/font = ExtResource("3_jf24d")
 theme_override_font_sizes/font_size = 14
-theme_override_styles/focus = SubResource("StyleBoxEmpty_ldox6")
-text = "Ready"
+text = "READY"
+
+[node name="Logo" type="TextureRect" parent="."]
+visible = false
+modulate = Color(0, 0, 0, 0.941176)
+self_modulate = Color(0.0352941, 0.0352941, 0.0352941, 0.788235)
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -62.0
+offset_top = 135.0
+offset_right = -18.0
+offset_bottom = 159.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("3_w8koo")
+expand_mode = 2
 
 [node name="Respawn" type="Label" parent="."]
 visible = false

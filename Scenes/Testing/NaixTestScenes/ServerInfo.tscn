@@ -1,13 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://chavk7wh0g8k8"]
+[gd_scene load_steps=3 format=3 uid="uid://chavk7wh0g8k8"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ServerInfo.gd" id="1_7jrb0"]
-[ext_resource type="Texture2D" uid="uid://cgabyw6mh7aua" path="res://Assets/UI/button-active.png" id="2_a0fmr"]
-[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="2_b7gqd"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_msgls"]
-texture = ExtResource("2_a0fmr")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vsjsy"]
+[ext_resource type="PackedScene" path="res://Scenes/Sound/SoundManager.tscn" id="2_b7gqd"]
 
 [node name="ServerInfo" type="HBoxContainer"]
 script = ExtResource("1_7jrb0")
@@ -28,11 +22,8 @@ size_flags_horizontal = 3
 text = "5"
 
 [node name="JoinButton" type="Button" parent="."]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/disabled = SubResource("StyleBoxTexture_msgls")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_vsjsy")
 text = "Join"
 
 [node name="SoundManager" parent="." instance=ExtResource("2_b7gqd")]

@@ -8,17 +8,12 @@ var _splash_screens: Array[SplashScreen] = []
 
 func _ready() -> void:
 	assert(_move_to)
-	set_process_input(false)
+	
 	for splash_screen in _splash_screen_container.get_children():
 		splash_screen.hide()
 		_splash_screens.push_back(splash_screen)
 	
 	_start_splash_screen()
-	set_process_input(true)
-
-func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("SplashscreenSkip"):
-		_skip()
 
 func _start_splash_screen() -> void:
 	if _splash_screens.size() == 0:
@@ -30,6 +25,3 @@ func _start_splash_screen() -> void:
 		splash_screen.connect("finished", _start_splash_screen)
 		
  
-func _skip() ->void:
-	_splash_screen_container.get_child(0).queue_free()
-	_start_splash_screen()

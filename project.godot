@@ -28,7 +28,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/codeandweb.texturepacker/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 
@@ -113,3 +113,4 @@ Escape={
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
+textures/vram_compression/import_s3tc_bptc=true

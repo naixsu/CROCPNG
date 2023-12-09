@@ -55,6 +55,7 @@ class_name Player
 @onready var HUD = $HUD
 @onready var multiplayerWarning = $MultiplayerWarning
 
+@onready var gunfire = $ParticleFX/gunfire
 
 # Signals here
 signal update_ready
@@ -499,7 +500,7 @@ func fire(held_down):
 	if GameManager.gameOver: return 
 	if held_down:
 		weapon_held_down = true
-	elif !held_down:
+	elif not held_down:
 		weapon_held_down = false
 	
 	while weapon_held_down:
@@ -520,14 +521,29 @@ func fire(held_down):
 				for i in range(multishot):
 					if multiplayer.is_server():
 						var bulletSpawner = get_tree().get_root().get_node("TestMultiplayerScene/BulletSpawner")
-
+						var bulletSpawnPos = Vector2.ZERO
+						
+						if currentWeaponIndex == 0: # Pistol
+							bulletSpawnPos = currentWeapon.get_node("BulletSpawn").global_position
+						else: # Rifle and Shotgun
+							bulletSpawnPos = currentWeapon.get_node("BulletSpawn2").global_position
+						
 						bulletSpawner.spawn([
-							currentWeapon.get_node("BulletSpawn").global_position, # position
+							bulletSpawnPos,
 							currentWeaponData.bullet_speed + bulletSpeedAdd, # bulletSpeed
 							currentWeaponData.damage + dmgAdd, # Damage
 							weaponsManager.rotation_degrees + randi_range(-deviation_angle, deviation_angle), # bullet rotation
 							currentWeaponData.bullet_life
 						])
+
+				if currentWeaponIndex == 0:
+					gunfire.global_position = currentWeapon.get_node("BulletSpawn").global_position
+				else:
+					gunfire.global_position = currentWeapon.get_node("BulletSpawn2").global_position
+					
+				gunfire.rotation_degrees = weaponsManager.rotation_degrees
+				
+				gunfire.emitting = true
 				
 			else:
 				melee()

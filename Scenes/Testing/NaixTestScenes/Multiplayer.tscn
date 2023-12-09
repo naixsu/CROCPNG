@@ -227,6 +227,7 @@ ServerInfo = ExtResource("3_bgp3x")
 [node name="BroadcastTimer" type="Timer" parent="ServerBrowser"]
 
 [node name="Label" type="Label" parent="ServerBrowser"]
+visible = false
 layout_mode = 0
 offset_left = 775.0
 offset_top = 142.0
@@ -318,7 +319,7 @@ offset_bottom = 524.0
 theme = ExtResource("10_54314")
 theme_override_colors/font_color = Color(0.18, 0.081, 0, 1)
 theme_override_font_sizes/font_size = 20
-text = "Press 'Host' when bound to listen port is false"
+text = "Press 'Host' if there is no host yet. Otherwise, press 'Find Servers.'"
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -330,7 +331,7 @@ offset_right = 1046.0
 offset_bottom = 493.0
 theme_override_colors/font_color = Color(0.180392, 0.105882, 0.0470588, 1)
 theme_override_font_sizes/font_size = 21
-text = "For testers: Press the join button that shows up here in Bound to listen port: true"
+text = "When finding for servers, press the 'Join' button whenever a server is found."
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0

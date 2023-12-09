@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://cv758bb6rxmmp"]
+
+[ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="1_c4uku"]
+[ext_resource type="Script" path="res://Scripts/HUD/MultiplayerWarning.gd" id="1_fdsca"]
+
+[node name="MultiplayerWarning" type="CanvasLayer"]
+script = ExtResource("1_fdsca")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -254.0
+offset_top = 138.0
+offset_right = 254.0
+offset_bottom = 179.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_c4uku")
+theme_override_font_sizes/font_size = 40
+text = "Can't pause a multiplayer game"
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

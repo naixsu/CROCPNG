@@ -195,7 +195,6 @@ func _unhandled_input(event):
 			runparticles.emitting = true
 			SoundManager.playerDash.play()
 			
-		
 		if event.is_action_pressed("Fire"):
 			fire.rpc(true)
 			

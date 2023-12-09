@@ -264,6 +264,10 @@ properties/6/path = NodePath(".:bulletDmg")
 properties/6/spawn = true
 properties/6/sync = true
 properties/6/watch = false
+properties/7/path = NodePath("PositionIndicator:position")
+properties/7/spawn = false
+properties/7/sync = false
+properties/7/watch = false
 
 [node name="Boss" type="CharacterBody2D" groups=["Enemy"]]
 z_index = 3

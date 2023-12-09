@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="1_f14hw"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/MultiplayerController.gd" id="1_wmt0j"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/ServerBrowser.gd" id="2_7edh8"]
-[ext_resource type="PackedScene" uid="uid://ctbgfn7ix71js" path="res://Scenes/Testing/NaixTestScenes/PlayerLogs.tscn" id="3_3hrac"]
+[ext_resource type="PackedScene" path="res://Scenes/Testing/NaixTestScenes/PlayerLogs.tscn" id="3_3hrac"]
 [ext_resource type="Texture2D" uid="uid://bvmiicc2tjbiy" path="res://Assets/Splash Screen/SplashScreenBG.png" id="3_37vqk"]
 [ext_resource type="PackedScene" uid="uid://chavk7wh0g8k8" path="res://Scenes/Testing/NaixTestScenes/ServerInfo.tscn" id="3_bgp3x"]
 [ext_resource type="Texture2D" uid="uid://d1jku4yxq3q35" path="res://Assets/UI/crocs-logo.png" id="4_ggktp"]

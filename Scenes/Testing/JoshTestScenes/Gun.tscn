@@ -11,7 +11,11 @@ position = Vector2(71, 0)
 texture = ExtResource("1_vydxv")
 
 [node name="BulletSpawn" type="Node2D" parent="."]
-position = Vector2(93, -4)
+position = Vector2(88, -4)
+rotation = 1.57079
+
+[node name="BulletSpawn2" type="Node2D" parent="."]
+position = Vector2(103, -1)
 rotation = 1.57079
 
 [node name="FireCooldown" type="Timer" parent="."]

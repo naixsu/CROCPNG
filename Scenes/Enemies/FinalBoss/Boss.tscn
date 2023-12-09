@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://877xce1h11m1"]
+[gd_scene load_steps=44 format=3 uid="uid://877xce1h11m1"]
 
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/Boss.gd" id="1_s21bl"]
 [ext_resource type="Texture2D" uid="uid://bu2rvk5ugp10u" path="res://Assets/Sprites/Boss/BossSpecialAttack.png" id="2_28bn2"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b5hn8tq25p4dg" path="res://Scenes/Enemies/HitBox.tscn" id="5_qjcdv"]
 [ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="8_8jrb1"]
 [ext_resource type="Script" path="res://Scripts/Enemies/FinalBoss/BulletHell.gd" id="10_jitev"]
+[ext_resource type="PackedScene" uid="uid://brw4aokh58a3l" path="res://Scenes/Particles/bloodsplash.tscn" id="12_xc2ed"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ax31q"]
 atlas = ExtResource("2_28bn2")
@@ -328,6 +329,9 @@ offset_left = -19.0
 offset_top = 128.0
 offset_right = 21.0
 offset_bottom = 151.0
+
+[node name="bloodsplash" parent="." instance=ExtResource("12_xc2ed")]
+position = Vector2(-19, 128)
 
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]
 [connection signal="body_entered" from="AI/HitBox" to="AI" method="_on_hit_box_body_entered"]

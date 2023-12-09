@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://brw4aokh58a3l"]
 
 [sub_resource type="Gradient" id="Gradient_hndy6"]
-offsets = PackedFloat32Array(0, 0.353982, 0.685841, 1)
-colors = PackedColorArray(0.784314, 0, 0, 0.803922, 0.813125, 0.134454, 0.134454, 0.687875, 0.92549, 0.658824, 0.658824, 0.235294, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0, 0.0075188, 0.353982, 0.685841, 1)
+colors = PackedColorArray(0.784314, 0, 0, 0.803922, 0.78768, 0.0157074, 0.0157074, 0.790365, 0.813125, 0.134454, 0.134454, 0.687875, 0.92549, 0.658824, 0.658824, 0.235294, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_cl14n"]
 gradient = SubResource("Gradient_hndy6")
@@ -16,26 +16,25 @@ curve = SubResource("Curve_nou0t")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p6rft"]
 particle_flag_disable_z = true
-spread = 30.0
-gravity = Vector3(0, 690, 0)
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
 initial_velocity_min = 150.0
 initial_velocity_max = 150.0
-angular_velocity_min = 20.0
-angular_velocity_max = 100.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
 damping_min = 500.0
 damping_max = 500.0
 scale_min = 3.0
-scale_max = 5.0
+scale_max = 10.0
 scale_curve = SubResource("CurveTexture_k1qvp")
 color_ramp = SubResource("GradientTexture1D_cl14n")
 
 [node name="bloodsplash" type="GPUParticles2D"]
 emitting = false
-amount = 16
+amount = 32
 process_material = SubResource("ParticleProcessMaterial_p6rft")
-lifetime = 0.3
+lifetime = 0.5
 one_shot = true
 explosiveness = 0.6
 randomness = 0.2

@@ -172,8 +172,8 @@ func _on_speed_timeout():
 		Pattern.CROSS:
 			shoot_cross(theta)
 
-	# parent.SoundManager.bossShoot.play()
-	parent.SoundManager.play_sound.rpc(SoundManager.bossShoot)
+	parent.SoundManager.bossShoot.play()
+	# parent.SoundManager.play_sound.rpc(SoundManager.bossShoot)
 
 
 func _on_pattern_duration_timeout():

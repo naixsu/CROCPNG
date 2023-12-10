@@ -90,11 +90,14 @@ func lose():
 	lose_banner()
 
 func pre_wave():
-	if multiplayer.is_server():
+	# if multiplayer.is_server():
 		# SoundManager.startWave.stop()
 		# SoundManager.preWave.play()
-		SoundManager.stop_sound.rpc(SoundManager.startWave)
-		SoundManager.play_sound.rpc(SoundManager.preWave)
+	print("Pre wave")
+	# SoundManager.stop_sound.rpc(SoundManager.startWave)
+	# SoundManager.play_sound.rpc(SoundManager.preWave)
+	SoundManager.stop_start_wave.rpc()
+	SoundManager.play_pre_wave.rpc()
 
 func restart_game():
 	var root = get_tree().get_root()
@@ -107,13 +110,15 @@ func start_wave():
 		add_wave.rpc()
 		clear_money.rpc()
 		# SoundManager.preWave.stop()
-		SoundManager.stop_sound.rpc(SoundManager.preWave)
+		# SoundManager.stop_sound.rpc(SoundManager.preWave)
+		SoundManager.stop_pre_wave.rpc()
 		reset_player_health.rpc()
 		if GameManager.wave == GameManager.maxWave: # Change for final wave
 			final_wave.rpc()
 		else:
 			# SoundManager.startWave.play()
-			SoundManager.play_sound.rpc(SoundManager.startWave)
+			# SoundManager.play_sound.rpc(SoundManager.startWave)
+			SoundManager.play_start_wave.rpc()
 		
 		print("Starting Wave %d of %d" % [GameManager.wave, GameManager.maxWave])
 		var spawnDelay = 0.3
@@ -137,7 +142,8 @@ func start_wave():
 			await get_tree().create_timer(spawnDelay).timeout
 			spawn_enemy("D")
 			# SoundManager.nootNoot.play()
-			SoundManager.play_sound.rpc(SoundManager.nootNoot)
+			# SoundManager.play_sound.rpc(SoundManager.nootNoot)
+			SoundManager.play_noot_noot.rpc()
 			await get_tree().create_timer(0.1).timeout
 			if not bombSpawned:
 				var child = enemyGroups.get_child(0) # get first child, first enemy
@@ -196,7 +202,8 @@ func add_enemy():
 @rpc("any_peer", "call_local")
 func final_wave():
 	# SoundManager.finalWave.play()
-	SoundManager.play_sound.rpc(SoundManager.finalWave)
+	# SoundManager.play_sound.rpc(SoundManager.finalWave)
+	SoundManager.play_final_wave.rpc()
 	GameManager.finalWave = true
 	print("Final Wave")
 
@@ -223,14 +230,16 @@ func reset_player_health():
 func win_banner():
 	endBanner.visible = true
 	# SoundManager.win.play()
-	SoundManager.play_sound.rpc(SoundManager.win)
+	# SoundManager.play_sound.rpc(SoundManager.win)
+	SoundManager.play_win.rpc()
 	endBanner.get_node("Banners").get_node("WinBanner").visible = true
 	set_game_over.rpc()
 
 func lose_banner():
 	endBanner.visible = true
 	# SoundManager.lose.play()
-	SoundManager.play_sound.rpc(SoundManager.lose)
+	# SoundManager.play_sound.rpc(SoundManager.lose)
+	SoundManager.play_lose.rpc()
 	endBanner.get_node("Banners").get_node("LoseBanner").visible = true
 	set_game_over.rpc()
 

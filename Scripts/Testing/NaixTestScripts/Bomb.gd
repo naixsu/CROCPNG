@@ -17,5 +17,5 @@ func _on_animated_sprite_2d_animation_finished():
 
 func _on_animated_sprite_2d_frame_changed():
 	if anim.frame == 14:
-		SoundManager.play_sound.rpc(SoundManager.bomb)
-		# SoundManager.bomb.play()
+		# SoundManager.play_sound.rpc(SoundManager.bomb)
+		SoundManager.bomb.play()

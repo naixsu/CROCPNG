@@ -37,11 +37,51 @@ func _ready():
 	gunSounds = [pistol, rifle, shotgun, melee] # Replace with function body.
 
 @rpc("any_peer", "call_local")
-func play_sound(sound):
-	print("Playing ", sound.name)
+func play_sound(sound : AudioStreamPlayer) -> void:
+	print("Playing " + str(sound))
 	sound.play()
 
 @rpc("any_peer", "call_local")
-func stop_sound(sound):
-	print("Stopping ", sound.name)
+func stop_sound(sound : AudioStreamPlayer) -> void:
+	print("Stopping " + str(sound))
 	sound.stop()
+
+@rpc("any_peer", "call_local")
+func play_pre_wave():
+	preWave.play()
+	
+@rpc("any_peer", "call_local")
+func stop_pre_wave():
+	preWave.stop()
+
+@rpc("any_peer", "call_local")
+func play_start_wave():
+	startWave.play()
+	
+@rpc("any_peer", "call_local")
+func stop_start_wave():
+	startWave.stop()
+
+@rpc("any_peer", "call_local")
+func play_final_wave():
+	finalWave.play()
+	
+@rpc("any_peer", "call_local")
+func stop_final_wave():
+	finalWave.stop()
+
+@rpc("any_peer", "call_local")
+func play_noot_noot():
+	nootNoot.play()
+	
+@rpc("any_peer", "call_local")
+func stop_noot_noot():
+	nootNoot.stop()
+
+@rpc("any_peer", "call_local")
+func play_win():
+	win.play()
+
+@rpc("any_peer", "call_local")
+func play_lose():
+	lose.play()

@@ -212,8 +212,10 @@ func set_game_over():
 	GameManager.gameOver = true
 	# SoundManager.startWave.stop()
 	# SoundManager.finalWave.stop()
-	SoundManager.stop_sound.rpc(SoundManager.startWave)
-	SoundManager.stop_sound.rpc(SoundManager.finalWave)
+	# SoundManager.stop_sound.rpc(SoundManager.startWave)
+	# SoundManager.stop_sound.rpc(SoundManager.finalWave)
+	SoundManager.stop_start_wave.rpc()
+	SoundManager.stop_final_wave.rpc()
 	print("Game Over")
 	var players = get_tree().get_nodes_in_group("Player")
 	for player in players:

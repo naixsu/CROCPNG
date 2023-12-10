@@ -5,8 +5,8 @@
 </h2>
 
 
-## ![Slime](Assets/GIFs/slime_idle.gif) Table of contents
-- [ Table of contents](#-table-of-contents)
+## ![Slime](Assets/GIFs/slime_idle.gif) TABLE OF CONTENTS
+- [ TABLE OF CONTENTS](#-table-of-contents)
 - [ INTRODUCTION](#-introduction)
 - [ INSTALLATION AND UNINSTALLATION](#-installation-and-uninstallation)
 - [ HOW TO PLAY THE GAME](#-how-to-play-the-game)
@@ -21,12 +21,16 @@ In the game, the players battle and defend themselves from waves of Phantom Naz 
 
 ⚠️ **Warning:** If any bugs are discovered in the game that were not identified during playtesting, I sincerely apologize. Regrettably, I won't be able to address or continue development for this game beyond 12/11/2023. Your understanding is greatly appreciated.
 
+‼️**NOTE**: Although the game is designed for multiplayer sessions, please be aware that this game exclusively relies on LAN and **does not** incorporate any online features. In line with this, if a new player decides to join the game while there is an ongoing game, they won't be able to do so. They can click the `Join` button on the server, but this will give the host and the already connected clients syncing errors. This limitation stems from the code's design, and regrettably, I haven't come across suitable documentation or tutorials to resolve this issue. There is also no more time for further research and development. Should you wish to include another player, restarting the host instance is the necessary course of action.
+
 ---
 
 ## ![Skeleton](Assets/GIFs/skeleton_idle.gif) INSTALLATION AND UNINSTALLATION
 
+### For installation
+
 1) Check the [latest](https://github.com/naixsu/CROCPNG/releases/tag/v1.0.3) release branch and download the zip file depending on your OS.
-2) You can also download them through here for [Windows](https://github.com/naixsu/CROCPNG/releases/download/v1.0.3/Windows.zip), [Linux](https://github.com/naixsu/CROCPNG/releases/download/v1.0.3/Linux.zip), and [Mac](https://github.com/naixsu/CROCPNG/releases/download/v1.0.3/Mac.zip)
+2) You can also download them through here for [Windows](https://github.com/naixsu/CROCPNG/releases/download/v1.0.3/Windows.zip), [Linux](https://github.com/naixsu/CROCPNG/releases/download/v1.0.3/Linux.zip), and [Mac](https://github.com/naixsu/CROCPNG/releases/download/v1.0.3/Mac.zip).
 3) For Windows, launch the game using the `crocpng.exe` file. For Linux, launch the game using the `crocpng.x86_64` file. For Mac, launch the game using the `CROCPNG` file.
 4) If your computer is preventing the app from running, just ignore it. I swear it's not a virus, I just don't have a developer certificate.
 5) Enjoy!

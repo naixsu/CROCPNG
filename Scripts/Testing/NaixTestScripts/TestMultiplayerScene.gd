@@ -91,8 +91,10 @@ func lose():
 
 func pre_wave():
 	if multiplayer.is_server():
-		SoundManager.startWave.stop()
-		SoundManager.preWave.play()
+		# SoundManager.startWave.stop()
+		# SoundManager.preWave.play()
+		SoundManager.stop_sound.rpc(SoundManager.startWave)
+		SoundManager.play_sound.rpc(SoundManager.preWave)
 
 func restart_game():
 	var root = get_tree().get_root()
@@ -104,12 +106,14 @@ func start_wave():
 	if multiplayer.is_server():
 		add_wave.rpc()
 		clear_money.rpc()
-		SoundManager.preWave.stop()
+		# SoundManager.preWave.stop()
+		SoundManager.stop_sound.rpc(SoundManager.preWave)
 		reset_player_health.rpc()
 		if GameManager.wave == GameManager.maxWave: # Change for final wave
 			final_wave.rpc()
 		else:
-			SoundManager.startWave.play()
+			# SoundManager.startWave.play()
+			SoundManager.play_sound.rpc(SoundManager.startWave)
 		
 		print("Starting Wave %d of %d" % [GameManager.wave, GameManager.maxWave])
 		var spawnDelay = 0.3
@@ -132,7 +136,8 @@ func start_wave():
 		if GameManager.finalWave:
 			await get_tree().create_timer(spawnDelay).timeout
 			spawn_enemy("D")
-			SoundManager.nootNoot.play()
+			# SoundManager.nootNoot.play()
+			SoundManager.play_sound.rpc(SoundManager.nootNoot)
 			await get_tree().create_timer(0.1).timeout
 			if not bombSpawned:
 				var child = enemyGroups.get_child(0) # get first child, first enemy
@@ -190,15 +195,18 @@ func add_enemy():
 		
 @rpc("any_peer", "call_local")
 func final_wave():
-	SoundManager.finalWave.play()
+	# SoundManager.finalWave.play()
+	SoundManager.play_sound.rpc(SoundManager.finalWave)
 	GameManager.finalWave = true
 	print("Final Wave")
 
 @rpc("any_peer", "call_local")
 func set_game_over():
 	GameManager.gameOver = true
-	SoundManager.startWave.stop()
-	SoundManager.finalWave.stop()
+	# SoundManager.startWave.stop()
+	# SoundManager.finalWave.stop()
+	SoundManager.stop_sound.rpc(SoundManager.startWave)
+	SoundManager.stop_sound.rpc(SoundManager.finalWave)
 	print("Game Over")
 	var players = get_tree().get_nodes_in_group("Player")
 	for player in players:
@@ -214,13 +222,15 @@ func reset_player_health():
 
 func win_banner():
 	endBanner.visible = true
-	SoundManager.win.play()
+	# SoundManager.win.play()
+	SoundManager.play_sound.rpc(SoundManager.win)
 	endBanner.get_node("Banners").get_node("WinBanner").visible = true
 	set_game_over.rpc()
 
 func lose_banner():
 	endBanner.visible = true
-	SoundManager.lose.play()
+	# SoundManager.lose.play()
+	SoundManager.play_sound.rpc(SoundManager.lose)
 	endBanner.get_node("Banners").get_node("LoseBanner").visible = true
 	set_game_over.rpc()
 

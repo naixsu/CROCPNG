@@ -36,3 +36,12 @@ var gunSounds : Array
 func _ready():
 	gunSounds = [pistol, rifle, shotgun, melee] # Replace with function body.
 
+@rpc("any_peer", "call_local")
+func play_sound(sound):
+	print("Playing ", sound.name)
+	sound.play()
+
+@rpc("any_peer", "call_local")
+func stop_sound(sound):
+	print("Stopping ", sound.name)
+	sound.stop()

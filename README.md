@@ -50,5 +50,6 @@ While the main menu already provides instructions, allow me to reiterate the ste
 4) `Join` button is exclusively for clients (non-hosts) and facilitates joining the host's server.
 5) `Start` commences the game and can be triggered by both hosts and clients.
 6) If you seek further guidance, the `Tutorial` option provides a brief overview of the gameplay and its features.
+7) Should you wish to host in the console, simply run the console file in the CLI and add `--headless --server "<server-name>"`
 
 

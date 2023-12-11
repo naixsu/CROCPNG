@@ -12,7 +12,7 @@
 - [ HOW TO PLAY THE GAME](#-how-to-play-the-game)
 
 ## ![Ghoul](Assets/GIFs/ghoul_idle.gif) INTRODUCTION
-CROC vs PNG is a game created to showcase BSCS IV students for their Data Communications and Networking course. The game should have the capability to connect and communicate with other computers as the game progresses. This game is inspired by the <i>![Mann vs Machine](https://wiki.teamfortress.com/wiki/Mann_vs._Machine)</i> game mode from ![Team Fortress 2](https://wiki.teamfortress.com/wiki/Main_Page).
+CROC vs PNG is a game created to showcase BSCS IV students for their Data Communications and Networking course. The game should have the capability to connect and communicate with other computers as the game progresses. This game is inspired by the ![Mann vs Machine](https://wiki.teamfortress.com/wiki/Mann_vs._Machine) game mode from ![Team Fortress 2](https://wiki.teamfortress.com/wiki/Main_Page).
 
 In the game, the players battle and defend themselves from waves of Phantom Naz Ghouls (PNGs) and prevent them from killing the players and reaching their goal. The enemy's goal is to destroy the Central Resistance against Otherworldly Creatures (CROC) facility. The game ends either when the facility is destroyed by the enemy, or the CROCs emerge victorious and successfully fend off the waves of PNGs.
 
@@ -29,7 +29,7 @@ In the game, the players battle and defend themselves from waves of Phantom Naz 
 
 ### For installation
 
-1) Check the [latest](https://github.com/naixsu/CROCPNG/releases/tag/v1.0.6) release branch and download the zip file depending on your OS.
+1) Check the [latest](https://github.com/naixsu/CROCPNG/releases/tag/v1.0.6) release notes and download the zip file depending on your OS.
 2) You can also download them through here for [Windows](https://github.com/naixsu/CROCPNG/releases/download/v1.0.6/Windows.zip), [Linux](https://github.com/naixsu/CROCPNG/releases/download/v1.0.6/Linux.zip), and [Mac](https://github.com/naixsu/CROCPNG/releases/download/v1.0.6/Mac.zip).
 3) For Windows, launch the game using the `crocpng.exe` file. For Linux, launch the game using the `crocpng.x86_64` file. For Mac, launch the game using the `CROCPNG` file.
 4) If your computer is preventing the app from running, just ignore it. I swear it's not a virus, I just don't have a developer certificate.

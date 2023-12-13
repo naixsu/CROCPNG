@@ -66,6 +66,10 @@ func peer_disconnected(id):
 	for i in players:
 		if i.name == str(id):
 			i.queue_free()
+	
+	if id == 1:
+		for i in players:
+			i.get_tree().quit()
 
 # Called only from clients
 func connected_to_server():

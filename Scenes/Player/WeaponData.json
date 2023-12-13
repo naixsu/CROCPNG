@@ -2,7 +2,7 @@
 	{
 		"name": "Pistol",
 		"texture": "res://Assets/Weapons/pistol_equipped.png",
-		"damage": 5,
+		"damage": 3,
 		"wait_time": 0.5,
 		"multishot": 1,
 		"deviation_angle": 8,
@@ -12,7 +12,7 @@
 	{
 		"name": "Rifle",
 		"texture": "res://Assets/Weapons/rifle_equipped.png",
-		"damage": 8,
+		"damage": 6,
 		"wait_time": 0.15,
 		"multishot": 1,
 		"deviation_angle": 15,
@@ -22,7 +22,7 @@
 	{
 		"name": "Shotgun",
 		"texture": "res://Assets/Weapons/shotgun_equipped.png",
-		"damage": 4,
+		"damage": 2,
 		"wait_time": 1,
 		"multishot": 5,
 		"deviation_angle": 60,
@@ -32,7 +32,7 @@
 	{
 		"name": "Melee",
 		"texture": "res://Assets/Weapons/melee_equipped.png",
-		"damage": 10,
+		"damage": 7,
 		"wait_time": 1,
 		"multishot": 1,
 		"deviation_angle": 1,

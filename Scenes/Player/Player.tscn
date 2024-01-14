@@ -1,14 +1,22 @@
-[gd_scene load_steps=28 format=3 uid="uid://bgucyml2yx36p"]
+[gd_scene load_steps=36 format=3 uid="uid://bgucyml2yx36p"]
 
-[ext_resource type="Texture2D" uid="uid://gxnhy48xdgac" path="res://icon.svg" id="1_57ol8"]
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="1_xmmu7"]
-[ext_resource type="PackedScene" uid="uid://cmksfq3oqnge3" path="res://Scenes/Bullet/Bullet.tscn" id="2_m4sy4"]
+[ext_resource type="PackedScene" uid="uid://gktggddc0ha" path="res://Scenes/HUD/BombIndicator.tscn" id="2_ksmmv"]
 [ext_resource type="Texture2D" uid="uid://7trsw0omcww3" path="res://Assets/Sprites/Player/PlayerDeath.png" id="2_wignm"]
-[ext_resource type="PackedScene" uid="uid://bvfw8vhc4i3ac" path="res://Scenes/Enemies/EnemyA/EnemyA.tscn" id="3_il21h"]
 [ext_resource type="Texture2D" uid="uid://dxjulnx8uck65" path="res://Assets/Sprites/Player/PlayerIdle.png" id="3_qjmfi"]
-[ext_resource type="PackedScene" uid="uid://c5hp4o5b5b853" path="res://Scenes/Bullet/BulletCB.tscn" id="4_52lxj"]
 [ext_resource type="Texture2D" uid="uid://clug3m78gurbu" path="res://Assets/Sprites/Player/PlayerRun.png" id="4_xxbxq"]
+[ext_resource type="PackedScene" uid="uid://cd3kn0qojj0bm" path="res://Scenes/Testing/JoshTestScenes/Gun.tscn" id="8_l3ssp"]
 [ext_resource type="Script" path="res://Scripts/Testing/NaixTestScripts/CameraZoom.gd" id="9_vptfm"]
+[ext_resource type="Script" path="res://Scripts/Player/Dash.gd" id="10_4nm7p"]
+[ext_resource type="PackedScene" uid="uid://cyhantwrwy4de" path="res://Scenes/Weapons/MeleeSwing.tscn" id="10_gi0mu"]
+[ext_resource type="Texture2D" uid="uid://b06vqoxnswap1" path="res://Assets/Win-Lose Banners/BlackScreen.png" id="10_hb27v"]
+[ext_resource type="Theme" uid="uid://dx7o24cdb0aw" path="res://Assets/UI/base_theme.tres" id="11_4cnf3"]
+[ext_resource type="PackedScene" uid="uid://celt44dqho3nh" path="res://Scenes/Shop/Shop.tscn" id="11_m3tdw"]
+[ext_resource type="PackedScene" uid="uid://bsabsu06d6xb3" path="res://Scenes/Sound/SoundManager.tscn" id="12_x5l6h"]
+[ext_resource type="PackedScene" uid="uid://bpi2k8viyaihf" path="res://Scenes/HUD/HUD.tscn" id="14_r5vth"]
+[ext_resource type="PackedScene" uid="uid://cv758bb6rxmmp" path="res://Scenes/HUD/MultiplayerWarning.tscn" id="15_hu0u3"]
+[ext_resource type="PackedScene" uid="uid://o0vxjk4pdl8s" path="res://Scenes/Particles/gunfire.tscn" id="16_2hept"]
+[ext_resource type="PackedScene" uid="uid://bwvfvwbhwhi86" path="res://Scenes/Particles/runparticles.tscn" id="17_dhy5a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ma3u8"]
 atlas = ExtResource("2_wignm")
@@ -133,8 +141,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqhsm"]
-size = Vector2(64, 58)
+[sub_resource type="CircleShape2D" id="CircleShape2D_0gh6j"]
+radius = 32.249
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ffpdr"]
 properties/0/path = NodePath(".:position")
@@ -142,8 +150,8 @@ properties/0/spawn = true
 properties/0/sync = true
 properties/0/watch = false
 properties/1/path = NodePath("GunRotation:rotation")
-properties/1/spawn = true
-properties/1/sync = true
+properties/1/spawn = false
+properties/1/sync = false
 properties/1/watch = false
 properties/2/path = NodePath(".:syncPos")
 properties/2/spawn = false
@@ -161,50 +169,145 @@ properties/5/path = NodePath("ReadyLabel:text")
 properties/5/spawn = true
 properties/5/sync = true
 properties/5/watch = false
+properties/6/path = NodePath(".:dead")
+properties/6/spawn = true
+properties/6/sync = true
+properties/6/watch = false
+properties/7/path = NodePath("AnimatedSprite2D:animation")
+properties/7/spawn = true
+properties/7/sync = true
+properties/7/watch = false
+properties/8/path = NodePath(".:respawn")
+properties/8/spawn = true
+properties/8/sync = true
+properties/8/watch = false
+properties/9/path = NodePath("Respawn/RespawnLabel:text")
+properties/9/spawn = true
+properties/9/sync = true
+properties/9/watch = false
+properties/10/path = NodePath(".:displayRespawn")
+properties/10/spawn = true
+properties/10/sync = true
+properties/10/watch = false
+properties/11/path = NodePath("AnimatedSprite2D:frame")
+properties/11/spawn = true
+properties/11/sync = true
+properties/11/watch = false
+properties/12/path = NodePath("MoneyLabel:text")
+properties/12/spawn = true
+properties/12/sync = true
+properties/12/watch = false
+properties/13/path = NodePath(".:money")
+properties/13/spawn = true
+properties/13/sync = true
+properties/13/watch = false
+properties/14/path = NodePath("WeaponsManager:rotation")
+properties/14/spawn = true
+properties/14/sync = true
+properties/14/watch = false
+properties/15/path = NodePath(".:currentWeaponIndex")
+properties/15/spawn = true
+properties/15/sync = true
+properties/15/watch = false
+properties/16/path = NodePath(".:weapon_held_down")
+properties/16/spawn = true
+properties/16/sync = true
+properties/16/watch = false
+properties/17/path = NodePath(".:canDash")
+properties/17/spawn = true
+properties/17/sync = true
+properties/17/watch = false
+properties/18/path = NodePath(".:speed")
+properties/18/spawn = true
+properties/18/sync = true
+properties/18/watch = false
+properties/19/path = NodePath(".:health")
+properties/19/spawn = true
+properties/19/sync = true
+properties/19/watch = false
+properties/20/path = NodePath(".:maxHealth")
+properties/20/spawn = true
+properties/20/sync = true
+properties/20/watch = false
+properties/21/path = NodePath(".:maxSpeed")
+properties/21/spawn = true
+properties/21/sync = true
+properties/21/watch = false
+properties/22/path = NodePath(".:weaponMods")
+properties/22/spawn = false
+properties/22/sync = false
+properties/22/watch = false
+properties/23/path = NodePath(".:dmgAdd")
+properties/23/spawn = true
+properties/23/sync = true
+properties/23/watch = false
+properties/24/path = NodePath(".:accSub")
+properties/24/spawn = true
+properties/24/sync = true
+properties/24/watch = false
+properties/25/path = NodePath(".:bulletSpeedAdd")
+properties/25/spawn = true
+properties/25/sync = true
+properties/25/watch = false
+properties/26/path = NodePath("NameLabel:text")
+properties/26/spawn = true
+properties/26/sync = true
+properties/26/watch = false
+properties/27/path = NodePath(".:showIframes")
+properties/27/spawn = true
+properties/27/sync = true
+properties/27/watch = false
+properties/28/path = NodePath("AnimatedSprite2D:modulate")
+properties/28/spawn = false
+properties/28/sync = false
+properties/28/watch = false
+properties/29/path = NodePath("AnimatedSprite2D:self_modulate")
+properties/29/spawn = true
+properties/29/sync = true
+properties/29/watch = false
+properties/30/path = NodePath("BombIndicator:rotation")
+properties/30/spawn = true
+properties/30/sync = true
+properties/30/watch = false
+properties/31/path = NodePath("ParticleFX/runparticles:emitting")
+properties/31/spawn = true
+properties/31/sync = true
+properties/31/watch = false
+properties/32/path = NodePath("ParticleFX/gunfire:emitting")
+properties/32/spawn = true
+properties/32/sync = true
+properties/32/watch = false
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
 script = ExtResource("1_xmmu7")
-Bullet = ExtResource("2_m4sy4")
-Enemy = ExtResource("3_il21h")
-BulletCB = ExtResource("4_52lxj")
+
+[node name="BombIndicator" parent="." instance=ExtResource("2_ksmmv")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_u23x5")
-animation = &"idle"
+animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
-shape = SubResource("RectangleShape2D_yqhsm")
+shape = SubResource("CircleShape2D_0gh6j")
 
-[node name="GunRotation" type="Node2D" parent="."]
-
-[node name="ArrowIndicator" type="Sprite2D" parent="GunRotation"]
-z_index = 10
-position = Vector2(71, 0)
-scale = Vector2(0.285, 0.285)
-texture = ExtResource("1_57ol8")
-
-[node name="BulletSpawn" type="Node2D" parent="GunRotation"]
-position = Vector2(90, 0)
-rotation = 1.57079
-
-[node name="FireCooldown" type="Timer" parent="."]
-wait_time = 0.2
-one_shot = true
-
-[node name="StatsContainer (Not functioning for now)" type="Node2D" parent="."]
-
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="PlayerCamera" type="Camera2D" parent="."]
+limit_left = -1870
+limit_top = -1750
+limit_right = 2125
+limit_bottom = 2730
+editor_draw_limits = true
 script = ExtResource("9_vptfm")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ffpdr")
 
 [node name="ReadyLabel" type="Label" parent="."]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -216,3 +319,110 @@ offset_right = 20.0
 offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="WeaponsManager" type="Node2D" parent="."]
+
+[node name="Gun" parent="WeaponsManager" instance=ExtResource("8_l3ssp")]
+
+[node name="Melee" parent="WeaponsManager" instance=ExtResource("10_gi0mu")]
+visible = false
+
+[node name="Dash" type="Node2D" parent="."]
+script = ExtResource("10_4nm7p")
+
+[node name="DashTimer" type="Timer" parent="Dash"]
+wait_time = 0.1
+one_shot = true
+
+[node name="DashCooldown" type="Timer" parent="Dash"]
+one_shot = true
+
+[node name="Respawn" type="CanvasLayer" parent="."]
+
+[node name="RespawnModal" type="TextureRect" parent="Respawn"]
+visible = false
+self_modulate = Color(1, 1, 1, 0.392157)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2204.0
+offset_top = -1450.0
+offset_right = 2204.0
+offset_bottom = 1450.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_hb27v")
+
+[node name="RespawnLabel" type="Label" parent="Respawn"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.5
+offset_top = -13.5
+offset_right = 76.5
+offset_bottom = 13.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("11_4cnf3")
+theme_override_font_sizes/font_size = 100
+text = "Respawning In: "
+horizontal_alignment = 1
+
+[node name="RespawnTimer" type="Timer" parent="Respawn"]
+wait_time = 5.0
+one_shot = true
+
+[node name="MoneyLabel" type="Label" parent="."]
+visible = false
+offset_left = -21.0
+offset_top = -97.0
+offset_right = 19.0
+offset_bottom = -74.0
+
+[node name="NameLabel" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.5
+offset_top = -61.0
+offset_right = 23.5
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Name"
+
+[node name="Shop" parent="." instance=ExtResource("11_m3tdw")]
+visible = false
+
+[node name="HealthLabel" type="Label" parent="."]
+visible = false
+offset_left = -20.0
+offset_top = 47.0
+offset_right = 20.0
+offset_bottom = 70.0
+
+[node name="IFramesTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SoundManager" parent="." instance=ExtResource("12_x5l6h")]
+
+[node name="HUD" parent="." instance=ExtResource("14_r5vth")]
+visible = false
+
+[node name="MultiplayerWarning" parent="." instance=ExtResource("15_hu0u3")]
+
+[node name="ParticleFX" type="Node2D" parent="."]
+
+[node name="gunfire" parent="ParticleFX" instance=ExtResource("16_2hept")]
+
+[node name="runparticles" parent="ParticleFX" instance=ExtResource("17_dhy5a")]
+position = Vector2(0, 32)
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="Respawn/RespawnTimer" to="." method="_on_respawn_timer_timeout"]
+[connection signal="timeout" from="IFramesTimer" to="." method="_on_i_frames_timer_timeout"]

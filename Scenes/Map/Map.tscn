@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bao0ha1dqrvm6" path="res://Scenes/Testing/NaixTestScenes/Collision.tscn" id="2_1lcvq"]
 [ext_resource type="Texture2D" uid="uid://fd4ejaxo5re4" path="res://Assets/Map/map_without_castle.png" id="2_bo23g"]
 [ext_resource type="Texture2D" uid="uid://cbaguo74v2sh1" path="res://Assets/Map/castle.png" id="3_g1qox"]
-[ext_resource type="PackedScene" uid="uid://dfjy042jx6n0m" path="res://Scenes/Testing/NaixTestScenes/OneWay.tscn" id="5_qolvn"]
+[ext_resource type="PackedScene" uid="uid://78j46c7xa8yj" path="res://Scenes/Testing/NaixTestScenes/OneWay.tscn" id="5_qolvn"]
 
 [node name="Map" type="Node2D"]
 
@@ -34,6 +34,16 @@ position = Vector2(-563, -12)
 
 [node name="Collision" parent="Collisions/Top" instance=ExtResource("2_1lcvq")]
 position = Vector2(-716, -660)
+scale = Vector2(2.449, 6.23)
+
+[node name="Collision8" parent="Collisions/Top" instance=ExtResource("2_1lcvq")]
+position = Vector2(-995, -791)
+rotation = 1.5708
+scale = Vector2(2.449, 6.23)
+
+[node name="Collision9" parent="Collisions/Top" instance=ExtResource("2_1lcvq")]
+position = Vector2(2121, -791)
+rotation = 1.5708
 scale = Vector2(2.449, 6.23)
 
 [node name="Collision2" parent="Collisions/Top" instance=ExtResource("2_1lcvq")]
@@ -147,7 +157,7 @@ position = Vector2(-1029, 1840)
 scale = Vector2(0.71, 1.06)
 
 [node name="Fence4" parent="Collisions/Bottom/Fences" instance=ExtResource("2_1lcvq")]
-position = Vector2(-1001, 1200)
+position = Vector2(-1068, 1075)
 scale = Vector2(1.015, 1.06)
 
 [node name="Fence3" parent="Collisions/Bottom/Fences" instance=ExtResource("2_1lcvq")]
@@ -179,8 +189,12 @@ position = Vector2(788, 1648)
 scale = Vector2(1.83, 1.06)
 
 [node name="Fence5" parent="Collisions/Bottom/Fences" instance=ExtResource("2_1lcvq")]
-position = Vector2(-652, 1200)
-scale = Vector2(2.24, 1.06)
+position = Vector2(-627, 1079)
+scale = Vector2(1.746, 0.826)
+
+[node name="Fence12" parent="Collisions/Bottom/Fences" instance=ExtResource("2_1lcvq")]
+position = Vector2(-627, 1054)
+scale = Vector2(1.746, 0.826)
 
 [node name="FenceV" parent="Collisions/Bottom/Fences" instance=ExtResource("2_1lcvq")]
 position = Vector2(1428, 1458)
@@ -198,12 +212,12 @@ rotation = 1.5708
 scale = Vector2(1.99, 1.06)
 
 [node name="FenceV5" parent="Collisions/Bottom/Fences" instance=ExtResource("2_1lcvq")]
-position = Vector2(-1069, 1061)
+position = Vector2(-1069, 934)
 rotation = 1.5708
 scale = Vector2(1.99, 1.06)
 
 [node name="FenceV6" parent="Collisions/Bottom/Fences" instance=ExtResource("2_1lcvq")]
-position = Vector2(-493, 948)
+position = Vector2(-493, 840)
 rotation = 1.5708
 scale = Vector2(3.225, 1.06)
 

@@ -1,0 +1,225 @@
+[gd_scene load_steps=14 format=3 uid="uid://cyhantwrwy4de"]
+
+[ext_resource type="Texture2D" uid="uid://70iw7qcvkcfr" path="res://Assets/Weapons/melee_swing.png" id="1_ekusu"]
+
+[sub_resource type="GDScript" id="GDScript_heic1"]
+script/source = "extends Node2D
+
+signal finished_anim
+@onready var anim = $AnimationPlayer
+@onready var cd = $CD
+@onready var melee = $MeleeSprite
+var dmg 
+# Called when the node enters the scene tree for the first time.
+func _ready():
+#	melee.play(\"MeleeSwing\")
+	pass
+
+func play_melee():
+#	melee.play(\"MeleeSwing\")
+	anim.play(\"Swing\")
+
+func _on_melee_hit_body_entered(body):
+	if body.is_in_group(\"Enemy\"):
+		body.handle_hit(dmg)
+		cd.start()
+
+func _on_animation_player_animation_finished(_anim_name):
+	finished_anim.emit()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_na2fe"]
+atlas = ExtResource("1_ekusu")
+region = Rect2(0, 0, 65, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6x1ja"]
+atlas = ExtResource("1_ekusu")
+region = Rect2(66, 0, 65, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n2xa"]
+atlas = ExtResource("1_ekusu")
+region = Rect2(132, 0, 65, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4xrw"]
+atlas = ExtResource("1_ekusu")
+region = Rect2(198, 0, 65, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpt5m"]
+atlas = ExtResource("1_ekusu")
+region = Rect2(264, 0, 65, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jiw1k"]
+atlas = ExtResource("1_ekusu")
+region = Rect2(330, 0, 65, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jlxe7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_na2fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6x1ja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1n2xa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4xrw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpt5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jiw1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_na2fe")
+}],
+"loop": false,
+"name": &"MeleeSwing",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_coexp"]
+size = Vector2(19.5512, 36.3565)
+
+[sub_resource type="Animation" id="Animation_ge61a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeleeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeleeHit/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeleeHit/CollisionShape2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeleeHit/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-9.5, -6)]
+}
+
+[sub_resource type="Animation" id="Animation_hyyci"]
+resource_name = "Swing"
+length = 0.707
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeleeSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeleeHit/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeleeHit/CollisionShape2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0.0, -0.411898, 0.389208, 1.37008, 1.5708, 0.759218, 3.48787e-16]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeleeHit/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-9.5, -6), Vector2(-19.3751, -6.9516), Vector2(-2.40613, -5.16104), Vector2(12.1208, 14.6117), Vector2(9.5824, 17.407), Vector2(3.70001, -4.68115), Vector2(-9.99999, -6.00001)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g0le6"]
+_data = {
+"RESET": SubResource("Animation_ge61a"),
+"Swing": SubResource("Animation_hyyci")
+}
+
+[node name="Melee" type="Node2D"]
+script = SubResource("GDScript_heic1")
+
+[node name="MeleeSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_jlxe7")
+animation = &"MeleeSwing"
+speed_scale = 2.0
+
+[node name="MeleeHit" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeHit"]
+position = Vector2(-9.5, -6)
+shape = SubResource("RectangleShape2D_coexp")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
+libraries = {
+"": SubResource("AnimationLibrary_g0le6")
+}
+
+[node name="CD" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[connection signal="body_entered" from="MeleeHit" to="." method="_on_melee_hit_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

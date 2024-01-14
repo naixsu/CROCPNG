@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dypjy0ss8kvlg"
+path="res://.godot/imported/switch to melee.mp3-14b2acb70a6091b3b502b9afd02ee79d.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/switch to melee.mp3"
+dest_files=["res://.godot/imported/switch to melee.mp3-14b2acb70a6091b3b502b9afd02ee79d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

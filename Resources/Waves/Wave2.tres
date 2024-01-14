@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_u0k7f")
 SkeletonCount = 0
-GhostCount = 5
+GhostCount = 10
 SlimeCount = 10
 Boss = false
